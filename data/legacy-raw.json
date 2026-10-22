@@ -1,0 +1,4014 @@
+[
+  {
+    "id": 1,
+    "s": 1,
+    "t": "single",
+    "a": "b",
+    "q": {
+      "es": "¿Cuál es la resolución nativa del cabezal térmico de 53 mm de las impresoras DataFlex 6330 y 6530?",
+      "en": "What is the native resolution of the 53 mm thermal printhead on the DataFlex 6330 and 6530 printers?",
+      "pt": "Qual é a resolução nativa do cabeçote térmico de 53 mm das impressoras DataFlex 6330 e 6530?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "200 ppp (8 puntos/mm)",
+          "en": "200 dpi (8 dots/mm)",
+          "pt": "200 dpi (8 pontos/mm)"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "300 ppp (12 puntos/mm)",
+          "en": "300 dpi (12 dots/mm)",
+          "pt": "300 dpi (12 pontos/mm)"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "600 ppp (24 puntos/mm)",
+          "en": "600 dpi (24 dots/mm)",
+          "pt": "600 dpi (24 pontos/mm)"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "150 ppp (6 puntos/mm)",
+          "en": "150 dpi (6 dots/mm)",
+          "pt": "150 dpi (6 pontos/mm)"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "El cabezal de 53 mm (P/N 407933) imprime a 300 ppp, equivalentes a 12 puntos por milímetro. La 6230 utiliza un cabezal de 32 mm (P/N 408300) y es una plataforma de menor ancho, velocidad y autonomía: 500 mm/s, 150 ppm y rollos de 700 m.",
+      "en": "The 53 mm printhead (P/N 407933) prints at 300 dpi, equivalent to 12 dots per millimetre. The 6230 uses a 32 mm printhead (P/N 408300) and is a platform with lower width, speed and autonomy: 500 mm/s, 150 ppm and 700 m rolls.",
+      "pt": "O cabeçote de 53 mm (P/N 407933) imprime a 300 dpi, equivalentes a 12 pontos por milímetro. A 6230 utiliza um cabeçote de 32 mm (P/N 408300) e é uma plataforma de menor largura, velocidade e autonomia: 500 mm/s, 150 ppm e rolos de 700 m."
+    }
+  },
+  {
+    "id": 2,
+    "s": 1,
+    "t": "single",
+    "a": "b",
+    "q": {
+      "es": "¿Qué tecnología cinemática utilizan los modelos DataFlex 6330 y 6530 para eliminar por completo el uso de aire comprimido?",
+      "en": "Which kinematic technology do the DataFlex 6330 and 6530 use to eliminate compressed air completely?",
+      "pt": "Qual tecnologia cinemática os modelos DataFlex 6330 e 6530 utilizam para eliminar completamente o ar comprimido?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Pneumatic Drive System",
+          "en": "Pneumatic Drive System",
+          "pt": "Pneumatic Drive System"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Intelligent Motion™ / Airless",
+          "en": "Intelligent Motion™ / Airless",
+          "pt": "Intelligent Motion™ / Airless"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Servomotor neumático asistido",
+          "en": "Assisted pneumatic servomotor",
+          "pt": "Servomotor pneumático assistido"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Solenoide de carrera larga",
+          "en": "Long-stroke solenoid",
+          "pt": "Solenoide de curso longo"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "Intelligent Motion™ sustituye el aire comprimido, los embragues y los frenos mecánicos por el control digital de motores paso a paso.",
+      "en": "Intelligent Motion™ replaces compressed air, clutches and mechanical brakes with digital stepper-motor control.",
+      "pt": "O Intelligent Motion™ substitui o ar comprimido, as embreagens e os freios mecânicos pelo controle digital de motores de passo."
+    }
+  },
+  {
+    "id": 3,
+    "s": 1,
+    "t": "single",
+    "a": "c",
+    "q": {
+      "es": "¿Cuál es la longitud máxima de cinta de transferencia térmica (ribbon) que puede alojar un casete simple en las impresoras DataFlex 6330 y 6530?",
+      "en": "What is the maximum thermal transfer ribbon length that a single cassette can hold on DataFlex 6330 and 6530 printers?",
+      "pt": "Qual é o comprimento máximo de ribbon que um cassete simples pode alojar nas impressoras DataFlex 6330 e 6530?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "600 metros",
+          "en": "600 metres",
+          "pt": "600 metros"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "700 metros",
+          "en": "700 metres",
+          "pt": "700 metros"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "1200 metros",
+          "en": "1200 metres",
+          "pt": "1200 metros"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "1500 metros",
+          "en": "1500 metres",
+          "pt": "1500 metros"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "El casete de las DataFlex 6330 y 6530 admite rollos de hasta 1200 m; la 6230 trabaja con rollos de hasta 700 m.",
+      "en": "The DataFlex 6330 and 6530 cassette accepts rolls of up to 1200 m; the 6230 runs rolls of up to 700 m.",
+      "pt": "O cassete das DataFlex 6330 e 6530 aceita rolos de até 1200 m; a 6230 trabalha com rolos de até 700 m."
+    }
+  },
+  {
+    "id": 4,
+    "s": 1,
+    "t": "single",
+    "a": "b",
+    "q": {
+      "es": "¿Cuál es el diámetro nominal estándar de la rueda del encoder óptico oficial de Videojet?",
+      "en": "What is the standard nominal diameter of the official Videojet optical encoder wheel?",
+      "pt": "Qual é o diâmetro nominal padrão da roda do encoder óptico oficial da Videojet?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "40,00 mm",
+          "en": "40.00 mm",
+          "pt": "40,00 mm"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "53,05 mm",
+          "en": "53.05 mm",
+          "pt": "53,05 mm"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "60,10 mm",
+          "en": "60.10 mm",
+          "pt": "60,10 mm"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "100,00 mm",
+          "en": "100.00 mm",
+          "pt": "100,00 mm"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "La rueda estándar de 53,05 mm de diámetro tiene un perímetro de 166,66 mm, base de todos los cálculos de resolución.",
+      "en": "The standard 53.05 mm wheel has a circumference of 166.66 mm, the basis of all resolution calculations.",
+      "pt": "A roda padrão de 53,05 mm de diâmetro tem perímetro de 166,66 mm, base de todos os cálculos de resolução."
+    }
+  },
+  {
+    "id": 5,
+    "s": 1,
+    "t": "single",
+    "a": "c",
+    "q": {
+      "es": "¿Cuántos impulsos por revolución (PPR) genera el encoder de alta resolución utilizado en las plataformas VJ 6330, 6530 y 6230?",
+      "en": "How many pulses per revolution (PPR) does the high-resolution encoder used on the VJ 6330, 6530 and 6230 platforms generate?",
+      "pt": "Quantos pulsos por revolução (PPR) gera o encoder de alta resolução utilizado nas plataformas VJ 6330, 6530 e 6230?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "500 PPR",
+          "en": "500 PPR",
+          "pt": "500 PPR"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "1000 PPR",
+          "en": "1000 PPR",
+          "pt": "1000 PPR"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "3600 PPR",
+          "en": "3600 PPR",
+          "pt": "3600 PPR"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "5000 PPR",
+          "en": "5000 PPR",
+          "pt": "5000 PPR"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "Videojet comercializa encoders de 500 y de 3600 líneas; el de 3600 PPR es el recomendado para las VJ 6230, 6330 y 6530.",
+      "en": "Videojet offers 500-line and 3600-line encoders; the 3600 PPR unit is the recommended one for the VJ 6230, 6330 and 6530.",
+      "pt": "A Videojet oferece encoders de 500 e de 3600 linhas; o de 3600 PPR é o recomendado para as VJ 6230, 6330 e 6530."
+    }
+  },
+  {
+    "id": 6,
+    "s": 1,
+    "t": "single",
+    "a": "c",
+    "q": {
+      "es": "En un encoder de 3600 PPR con rueda de 53,05 mm, ¿cuántos impulsos se generan por cada milímetro de película avanzada?",
+      "en": "On a 3600 PPR encoder with a 53.05 mm wheel, how many pulses are generated per millimetre of film advanced?",
+      "pt": "Em um encoder de 3600 PPR com roda de 53,05 mm, quantos pulsos são gerados por milímetro de filme avançado?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "3 impulsos/mm",
+          "en": "3 pulses/mm",
+          "pt": "3 pulsos/mm"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "12 impulsos/mm",
+          "en": "12 pulses/mm",
+          "pt": "12 pulsos/mm"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "21 impulsos/mm",
+          "en": "21 pulses/mm",
+          "pt": "21 pulsos/mm"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "50 impulsos/mm",
+          "en": "50 pulses/mm",
+          "pt": "50 pulsos/mm"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "Perímetro = π × 53,05 = 166,66 mm; 3600 ÷ 166,66 = 21,6, que Videojet redondea a 21 impulsos/mm.",
+      "en": "Circumference = π × 53.05 = 166.66 mm; 3600 ÷ 166.66 = 21.6, which Videojet rounds to 21 pulses/mm.",
+      "pt": "Perímetro = π × 53,05 = 166,66 mm; 3600 ÷ 166,66 = 21,6, que a Videojet arredonda para 21 pulsos/mm."
+    }
+  },
+  {
+    "id": 7,
+    "s": 1,
+    "t": "single",
+    "a": "c",
+    "q": {
+      "es": "¿Cuál es el área máxima de impresión en modo continuo para la impresora DataFlex 6530 en su versión de 107 mm?",
+      "en": "What is the maximum continuous-mode print area for the DataFlex 6530 in its 107 mm version?",
+      "pt": "Qual é a área máxima de impressão no modo contínuo para a impressora DataFlex 6530 na versão de 107 mm?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "107 mm de ancho × 75 mm de largo",
+          "en": "107 mm wide × 75 mm long",
+          "pt": "107 mm de largura × 75 mm de comprimento"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "107 mm de ancho × 200 mm de largo",
+          "en": "107 mm wide × 200 mm long",
+          "pt": "107 mm de largura × 200 mm de comprimento"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "107 mm de ancho × 300 mm de largo",
+          "en": "107 mm wide × 300 mm long",
+          "pt": "107 mm de largura × 300 mm de comprimento"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "107 mm de ancho × 500 mm de largo",
+          "en": "107 mm wide × 500 mm long",
+          "pt": "107 mm de largura × 500 mm de comprimento"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "En continuo, la 6530 de 107 mm imprime hasta 107 × 300 mm; la de 53 mm llega a 53 × 200 mm.",
+      "en": "In continuous mode the 107 mm 6530 prints up to 107 × 300 mm; the 53 mm version reaches 53 × 200 mm.",
+      "pt": "No modo contínuo, a 6530 de 107 mm imprime até 107 × 300 mm; a de 53 mm chega a 53 × 200 mm."
+    }
+  },
+  {
+    "id": 8,
+    "s": 1,
+    "t": "single",
+    "a": "d",
+    "q": {
+      "es": "¿Cuál es el rendimiento máximo estimado (throughput) en impresiones por minuto (ppm) para la DataFlex 6530 de 53 mm?",
+      "en": "What is the maximum estimated throughput in prints per minute (ppm) for the 53 mm DataFlex 6530?",
+      "pt": "Qual é o rendimento máximo estimado em impressões por minuto (ppm) para a DataFlex 6530 de 53 mm?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Hasta 150 ppm",
+          "en": "Up to 150 ppm",
+          "pt": "Até 150 ppm"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Hasta 250 ppm",
+          "en": "Up to 250 ppm",
+          "pt": "Até 250 ppm"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Hasta 450 ppm",
+          "en": "Up to 450 ppm",
+          "pt": "Até 450 ppm"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Hasta 700 ppm",
+          "en": "Up to 700 ppm",
+          "pt": "Até 700 ppm"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "La 6530 de 53 mm alcanza hasta 700 ppm. La versión de 107 mm llega a 450 ppm, la 6330 a 250 ppm y la 6230 a 150 ppm: cada modelo tiene su propio rendimiento.",
+      "en": "The 53 mm 6530 reaches up to 700 ppm. The 107 mm version reaches 450 ppm, the 6330 250 ppm and the 6230 150 ppm: each model has its own throughput.",
+      "pt": "A 6530 de 53 mm atinge até 700 ppm. A versão de 107 mm chega a 450 ppm, a 6330 a 250 ppm e a 6230 a 150 ppm: cada modelo tem seu próprio rendimento."
+    }
+  },
+  {
+    "id": 9,
+    "s": 1,
+    "t": "single",
+    "a": "b",
+    "q": {
+      "es": "¿Qué mecanismo utiliza la impresora Videojet 6230 para ejecutar el descenso del cabezal térmico sobre el sustrato?",
+      "en": "Which mechanism does the Videojet 6230 use to drive the thermal printhead down onto the substrate?",
+      "pt": "Qual mecanismo a impressora Videojet 6230 utiliza para executar a descida do cabeçote térmico sobre o substrato?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Pistón neumático de carrera corta",
+          "en": "Short-stroke pneumatic piston",
+          "pt": "Pistão pneumático de curso curto"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Conjunto actuador / electroimán magnético asistido por resorte",
+          "en": "Actuator / electromagnet assembly assisted by a spring",
+          "pt": "Conjunto atuador / eletroímã assistido por mola"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Servomotor neumático con válvula solenoide",
+          "en": "Pneumatic servomotor with solenoid valve",
+          "pt": "Servomotor pneumático com válvula solenoide"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Motor paso a paso directo con tornillo sinfín",
+          "en": "Direct stepper motor with worm screw",
+          "pt": "Motor de passo direto com parafuso sem-fim"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "La 6230 es totalmente eléctrica: un electroimán (P/N 408291) accionado eléctricamente y asistido por resorte baja el cabezal sin aire comprimido.",
+      "en": "The 6230 is fully electric: an electrically driven, spring-assisted electromagnet (P/N 408291) lowers the printhead without compressed air.",
+      "pt": "A 6230 é totalmente elétrica: um eletroímã acionado eletricamente e assistido por mola (P/N 408291) desce o cabeçote sem ar comprimido."
+    }
+  },
+  {
+    "id": 10,
+    "s": 1,
+    "t": "single",
+    "a": "d",
+    "q": {
+      "es": "¿Cuál es la velocidad máxima de impresión en modo continuo para la impresora DataFlex 6530 de 53 mm?",
+      "en": "What is the maximum continuous-mode print speed for the 53 mm DataFlex 6530?",
+      "pt": "Qual é a velocidade máxima de impressão no modo contínuo para a impressora DataFlex 6530 de 53 mm?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "500 mm/s",
+          "en": "500 mm/s",
+          "pt": "500 mm/s"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "750 mm/s",
+          "en": "750 mm/s",
+          "pt": "750 mm/s"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "800 mm/s",
+          "en": "800 mm/s",
+          "pt": "800 mm/s"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "1000 mm/s",
+          "en": "1000 mm/s",
+          "pt": "1000 mm/s"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "La 6530 alcanza 1000 mm/s en continuo; la 6330 llega a 750 mm/s y la 6230 a 500 mm/s. Son tres niveles de prestación distintos.",
+      "en": "The 6530 reaches 1000 mm/s in continuous mode; the 6330 reaches 750 mm/s and the 6230 500 mm/s. They are three distinct performance levels.",
+      "pt": "A 6530 atinge 1000 mm/s no modo contínuo; a 6330 chega a 750 mm/s e a 6230 a 500 mm/s. São três níveis de desempenho distintos."
+    }
+  },
+  {
+    "id": 11,
+    "s": 1,
+    "t": "single",
+    "a": "b",
+    "q": {
+      "es": "¿Cómo se denomina el sistema de detección integrado en las impresoras VJ 6330 y 6530 que analiza en tiempo real la calidad de la impresión escaneando la cinta?",
+      "en": "What is the name of the detection system built into the VJ 6330 and 6530 printers that analyses print quality in real time by scanning the ribbon?",
+      "pt": "Como se chama o sistema de detecção integrado nas impressoras VJ 6330 e 6530 que analisa em tempo real a qualidade da impressão escaneando o ribbon?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "CLARiTY Check",
+          "en": "CLARiTY Check",
+          "pt": "CLARiTY Check"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "iAssure™",
+          "en": "iAssure™",
+          "pt": "iAssure™"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "SolidState Vision",
+          "en": "SolidState Vision",
+          "pt": "SolidState Vision"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "AutoPrint Inspect",
+          "en": "AutoPrint Inspect",
+          "pt": "AutoPrint Inspect"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "iAssure™ verifica la huella de tinta transferida y detecta caracteres faltantes, códigos rotos o arrugas sin hardware adicional. No está disponible en el cabezal de 107 mm.",
+      "en": "iAssure™ checks the transferred ink footprint and detects missing characters, broken codes or wrinkles with no extra hardware. It is not available on the 107 mm printhead.",
+      "pt": "O iAssure™ verifica a marca de tinta transferida e detecta caracteres ausentes, códigos quebrados ou rugas sem hardware adicional. Não está disponível no cabeçote de 107 mm."
+    }
+  },
+  {
+    "id": 12,
+    "s": 1,
+    "t": "single",
+    "a": "b",
+    "q": {
+      "es": "¿Cuál es el número de parte (P/N) oficial del kit de toallitas preimpregnadas con alcohol isopropílico para la limpieza del cabezal térmico?",
+      "en": "What is the official P/N of the pre-saturated isopropyl alcohol wipe kit for thermal printhead cleaning?",
+      "pt": "Qual é o número de peça (P/N) oficial do kit de lenços pré-umedecidos com álcool isopropílico para a limpeza do cabeçote térmico?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "P/N 215964",
+          "en": "P/N 215964",
+          "pt": "P/N 215964"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "P/N 216054",
+          "en": "P/N 216054",
+          "pt": "P/N 216054"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "P/N 407954",
+          "en": "P/N 407954",
+          "pt": "P/N 407954"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "P/N 408300",
+          "en": "P/N 408300",
+          "pt": "P/N 408300"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "El kit 216054 contiene toallitas de espuma preimpregnadas con alcohol isopropílico para la línea de resistencias del cabezal.",
+      "en": "Kit 216054 contains foam wipes pre-saturated with isopropyl alcohol for the printhead resistor line.",
+      "pt": "O kit 216054 contém lenços de espuma pré-umedecidos com álcool isopropílico para a linha de resistências do cabeçote."
+    }
+  },
+  {
+    "id": 13,
+    "s": 1,
+    "t": "single",
+    "a": "c",
+    "q": {
+      "es": "¿A qué valor exacto de tensión debe calibrarse la correa mediante el kit de campo (Field Tensioning Kit P/N 407954) en las impresoras DataFlex 6330 y 6530?",
+      "en": "To what exact tension must the belt be calibrated with the field tensioning kit (P/N 407954) on DataFlex 6330 and 6530 printers?",
+      "pt": "A qual valor exato de tensão a correia deve ser calibrada com o kit de campo (Field Tensioning Kit P/N 407954) nas impressoras DataFlex 6330 e 6530?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "5 kg",
+          "en": "5 kg",
+          "pt": "5 kg"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "8 kg",
+          "en": "8 kg",
+          "pt": "8 kg"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "10 kg",
+          "en": "10 kg",
+          "pt": "10 kg"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "12 kg",
+          "en": "12 kg",
+          "pt": "12 kg"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "La correa de las 6330/6530 se ajusta a 10 kg con el kit 407954. La 6230 utiliza 8 kg con su propio kit de campo.",
+      "en": "The 6330/6530 belt is set to 10 kg with kit 407954. The 6230 uses 8 kg with its own field kit.",
+      "pt": "A correia das 6330/6530 é ajustada a 10 kg com o kit 407954. A 6230 utiliza 8 kg com seu próprio kit de campo."
+    }
+  },
+  {
+    "id": 14,
+    "s": 1,
+    "t": "single",
+    "a": "b",
+    "q": {
+      "es": "En la impresora Videojet 6230, ¿cuál es el valor de tensión calibrado de fábrica para la correa del carro?",
+      "en": "On the Videojet 6230, what is the factory-calibrated tension value for the carriage belt?",
+      "pt": "Na impressora Videojet 6230, qual é o valor de tensão calibrado de fábrica para a correia do carro?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "4 kg",
+          "en": "4 kg",
+          "pt": "4 kg"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "8 kg",
+          "en": "8 kg",
+          "pt": "8 kg"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "10 kg",
+          "en": "10 kg",
+          "pt": "10 kg"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "15 kg",
+          "en": "15 kg",
+          "pt": "15 kg"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "El procedimiento de tensión de la 6230 fija la correa en 8 kg mediante el kit de campo correspondiente.",
+      "en": "The 6230 tensioning procedure sets the belt to 8 kg using its matching field kit.",
+      "pt": "O procedimento de tensionamento da 6230 ajusta a correia em 8 kg com o kit de campo correspondente."
+    }
+  },
+  {
+    "id": 15,
+    "s": 1,
+    "t": "single",
+    "a": "b",
+    "q": {
+      "es": "En modo continuo, ¿cuál es la superficie de contrapresión sobre la cual presiona el cabezal térmico?",
+      "en": "In continuous mode, which back-up surface does the thermal printhead press against?",
+      "pt": "No modo contínuo, qual é a superfície de contrapressão contra a qual o cabeçote térmico pressiona?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Platen Pad de goma estática",
+          "en": "Static rubber platen pad",
+          "pt": "Platen Pad de borracha estático"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Platen Roller (rodillo giratorio de goma rectificada)",
+          "en": "Platen Roller (rotating ground rubber roller)",
+          "pt": "Platen Roller (rolo rotativo de borracha retificada)"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Placa de acero inoxidable estática",
+          "en": "Static stainless steel plate",
+          "pt": "Placa de aço inoxidável estática"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Guía teflonada estacionaria",
+          "en": "Stationary PTFE guide",
+          "pt": "Guia de teflon estacionária"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "En continuo el sustrato se mueve, por eso la contrapresión la ejerce un rodillo giratorio (Platen Roller) y no un pad estático.",
+      "en": "In continuous mode the substrate moves, so back-pressure comes from a rotating roller (Platen Roller), not a static pad.",
+      "pt": "No modo contínuo o substrato se move, por isso a contrapressão é exercida por um rolo rotativo (Platen Roller), não por um pad estático."
+    }
+  },
+  {
+    "id": 16,
+    "s": 1,
+    "t": "single",
+    "a": "b",
+    "q": {
+      "es": "¿Cuál es la distancia recomendada de espacio libre (gap) entre la cara del cabezal térmico y la superficie del platen en posición de reposo?",
+      "en": "What is the recommended clearance (gap) between the thermal printhead face and the platen surface in the rest position?",
+      "pt": "Qual é a distância recomendada de folga (gap) entre a face do cabeçote térmico e a superfície do platen na posição de repouso?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Máximo 1 mm",
+          "en": "Maximum 1 mm",
+          "pt": "Máximo 1 mm"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Máximo 5 mm",
+          "en": "Maximum 5 mm",
+          "pt": "Máximo 5 mm"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Entre 10 mm y 12 mm",
+          "en": "Between 10 mm and 12 mm",
+          "pt": "Entre 10 mm e 12 mm"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Exactamente 15 mm",
+          "en": "Exactly 15 mm",
+          "pt": "Exatamente 15 mm"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "El gap se ajusta con la herramienta SAR10222 y no debe superar los 5 mm en reposo.",
+      "en": "The gap is set with tool SAR10222 and must not exceed 5 mm at rest.",
+      "pt": "O gap é ajustado com a ferramenta SAR10222 e não deve exceder 5 mm em repouso."
+    }
+  },
+  {
+    "id": 17,
+    "s": 1,
+    "t": "single",
+    "a": "c",
+    "q": {
+      "es": "¿Cuál es el número de parte (P/N) del cabezal térmico de impresión de 53 mm para los modelos DataFlex 6330 y 6530?",
+      "en": "What is the P/N of the 53 mm thermal printhead for the DataFlex 6330 and 6530 models?",
+      "pt": "Qual é o número de peça (P/N) do cabeçote térmico de impressão de 53 mm para os modelos DataFlex 6330 e 6530?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "P/N 403325",
+          "en": "P/N 403325",
+          "pt": "P/N 403325"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "P/N 215984",
+          "en": "P/N 215984",
+          "pt": "P/N 215984"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "P/N 407933",
+          "en": "P/N 407933",
+          "pt": "P/N 407933"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "P/N 408554",
+          "en": "P/N 408554",
+          "pt": "P/N 408554"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "El cabezal de 53 mm es el P/N 407933; el de 32 mm de la 6230 es el 408300 y el de 107 mm el 408554.",
+      "en": "The 53 mm printhead is P/N 407933; the 6230 32 mm unit is 408300 and the 107 mm unit is 408554.",
+      "pt": "O cabeçote de 53 mm é o P/N 407933; o de 32 mm da 6230 é o 408300 e o de 107 mm é o 408554."
+    }
+  },
+  {
+    "id": 18,
+    "s": 1,
+    "t": "single",
+    "a": "a",
+    "q": {
+      "es": "¿Cuál es el número de parte (P/N) del cabezal térmico de impresión de 32 mm exclusivo para la impresora Videojet 6230?",
+      "en": "What is the P/N of the 32 mm thermal printhead used exclusively on the Videojet 6230?",
+      "pt": "Qual é o número de peça (P/N) do cabeçote térmico de impressão de 32 mm exclusivo para a impressora Videojet 6230?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "P/N 408300",
+          "en": "P/N 408300",
+          "pt": "P/N 408300"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "P/N 408657",
+          "en": "P/N 408657",
+          "pt": "P/N 408657"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "P/N 403325",
+          "en": "P/N 403325",
+          "pt": "P/N 403325"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "P/N 216585",
+          "en": "P/N 216585",
+          "pt": "P/N 216585"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "La 6230 usa el cabezal de 32 mm P/N 408300; no comparte cabezal con la 6330/6530.",
+      "en": "The 6230 uses the 32 mm printhead P/N 408300; it does not share a printhead with the 6330/6530.",
+      "pt": "A 6230 usa o cabeçote de 32 mm P/N 408300; não compartilha cabeçote com a 6330/6530."
+    }
+  },
+  {
+    "id": 19,
+    "s": 1,
+    "t": "single",
+    "a": "c",
+    "q": {
+      "es": "¿Cuántas impresoras secundarias (Followers) se pueden supervisar de manera simultánea desde un único controlador principal CLARiTY?",
+      "en": "How many secondary (Follower) printers can be monitored simultaneously from a single CLARiTY master controller?",
+      "pt": "Quantas impressoras secundárias (Followers) podem ser monitoradas simultaneamente a partir de um único controlador CLARiTY principal?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "1 impresora",
+          "en": "1 printer",
+          "pt": "1 impressora"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Hasta 2 impresoras",
+          "en": "Up to 2 printers",
+          "pt": "Até 2 impressoras"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Hasta 4 impresoras",
+          "en": "Up to 4 printers",
+          "pt": "Até 4 impressoras"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Hasta 8 impresoras",
+          "en": "Up to 8 printers",
+          "pt": "Até 8 impressoras"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "La arquitectura Leader/Follower de CLARiTY permite controlar hasta 4 impresoras desde una sola pantalla táctil.",
+      "en": "The CLARiTY Leader/Follower architecture lets one touchscreen control up to 4 printers.",
+      "pt": "A arquitetura Leader/Follower do CLARiTY permite controlar até 4 impressoras a partir de uma única tela de toque."
+    }
+  },
+  {
+    "id": 20,
+    "s": 1,
+    "t": "single",
+    "a": "a",
+    "q": {
+      "es": "¿Cuál es el número de parte (P/N) de la tarjeta Micro SD que contiene el firmware exclusivo para el reemplazo de la tarjeta PCB principal en una impresora DataFlex 6330?",
+      "en": "What is the P/N of the Micro SD card holding the dedicated firmware for main PCB replacement in a DataFlex 6330 printer?",
+      "pt": "Qual é o número de peça (P/N) do cartão Micro SD que contém o firmware exclusivo para a substituição da placa PCB principal em uma impressora DataFlex 6330?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "P/N 409769",
+          "en": "P/N 409769",
+          "pt": "P/N 409769"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "P/N 409770",
+          "en": "P/N 409770",
+          "pt": "P/N 409770"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "P/N 407912",
+          "en": "P/N 407912",
+          "pt": "P/N 407912"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "P/N 408271",
+          "en": "P/N 408271",
+          "pt": "P/N 408271"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "La Micro SD de la 6330 es 409769; la de la 6530 de 53 mm es 409770. No son intercambiables entre modelos.",
+      "en": "The 6330 Micro SD is 409769; the 53 mm 6530 uses 409770. They are not interchangeable between models.",
+      "pt": "O Micro SD da 6330 é 409769; o da 6530 de 53 mm é 409770. Eles não são intercambiáveis entre modelos."
+    }
+  },
+  {
+    "id": 21,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "c",
+      "d"
+    ],
+    "q": {
+      "es": "¿Cuáles de las siguientes características corresponden a la tecnología de impresión por transferencia térmica (TTO)?",
+      "en": "Which of the following characteristics belong to thermal transfer overprinting (TTO) technology?",
+      "pt": "Quais das seguintes características correspondem à tecnologia de impressão por transferência térmica (TTO)?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Impresión digital directa a 300 ppp sobre materiales flexibles",
+          "en": "Direct digital printing at 300 dpi on flexible materials",
+          "pt": "Impressão digital direta a 300 dpi em materiais flexíveis"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Utilización de tintas líquidas con solventes agresivos como MEK",
+          "en": "Use of liquid inks with aggressive solvents such as MEK",
+          "pt": "Uso de tintas líquidas com solventes agressivos como MEK"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Cambio instantáneo de mensajes variables desde la pantalla táctil",
+          "en": "Instant change of variable messages from the touchscreen",
+          "pt": "Troca instantânea de mensagens variáveis pela tela de toque"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Uso de cinta entintada (ribbon) con cera o resina que se funde por calor",
+          "en": "Use of an inked ribbon with wax or resin that melts with heat",
+          "pt": "Uso de ribbon com cera ou resina que se funde com o calor"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "TTO es un proceso digital en seco: no emplea tintas líquidas ni MEK. La tinta sólida del ribbon se transfiere por calor y presión.",
+      "en": "TTO is a dry digital process: it uses no liquid inks or MEK. Solid ribbon ink is transferred by heat and pressure.",
+      "pt": "TTO é um processo digital a seco: não utiliza tintas líquidas nem MEK. A tinta sólida do ribbon é transferida por calor e pressão."
+    }
+  },
+  {
+    "id": 22,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "c"
+    ],
+    "q": {
+      "es": "¿Cuáles componentes forman parte del sistema de tracción Intelligent Motion™ de las impresoras VJ 6330 y 6530?",
+      "en": "Which components are part of the Intelligent Motion™ drive system on VJ 6330 and 6530 printers?",
+      "pt": "Quais componentes fazem parte do sistema de tração Intelligent Motion™ das impressoras VJ 6330 e 6530?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Motores paso a paso independientes para el avance y la tensión del ribbon",
+          "en": "Independent stepper motors for ribbon advance and tension",
+          "pt": "Motores de passo independentes para o avanço e a tensão do ribbon"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Válvulas solenoides neumáticas de alta velocidad",
+          "en": "High-speed pneumatic solenoid valves",
+          "pt": "Válvulas solenoides pneumáticas de alta velocidade"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Encoders ópticos dedicados en los motores de ribbon y cabezal",
+          "en": "Dedicated optical encoders on the ribbon and printhead motors",
+          "pt": "Encoders ópticos dedicados nos motores do ribbon e do cabeçote"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Cilindros neumáticos de doble efecto",
+          "en": "Double-acting pneumatic cylinders",
+          "pt": "Cilindros pneumáticos de dupla ação"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "Intelligent Motion™ usa motores paso a paso con encoders dedicados; no hay válvulas ni cilindros neumáticos.",
+      "en": "Intelligent Motion™ uses stepper motors with dedicated encoders; there are no pneumatic valves or cylinders.",
+      "pt": "O Intelligent Motion™ usa motores de passo com encoders dedicados; não há válvulas nem cilindros pneumáticos."
+    }
+  },
+  {
+    "id": 23,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c"
+    ],
+    "q": {
+      "es": "¿Cuáles son ventajas operativas directas de la impresora Videojet 6230 frente a equipos neumáticos tradicionales?",
+      "en": "Which are direct operating advantages of the Videojet 6230 over traditional pneumatic equipment?",
+      "pt": "Quais são vantagens operacionais diretas da impressora Videojet 6230 em relação a equipamentos pneumáticos tradicionais?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Funcionamiento 100 % Airless sin consumo de aire comprimido",
+          "en": "100% airless operation with no compressed air consumption",
+          "pt": "Operação 100% airless, sem consumo de ar comprimido"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Casete de cinta simple de fácil enhebrado para rollos de hasta 700 metros",
+          "en": "Simple easy-threading cassette for rolls up to 700 metres",
+          "pt": "Cassete de ribbon simples e fácil de enfiar para rolos de até 700 metros"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Interfaz gráfica táctil de 5 pulgadas tipo tablet",
+          "en": "5-inch tablet-style touchscreen interface",
+          "pt": "Interface gráfica de toque de 5 polegadas tipo tablet"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Capacidad de imprimir en anchos de 107 mm",
+          "en": "Ability to print widths of 107 mm",
+          "pt": "Capacidade de imprimir em larguras de 107 mm"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "La 6230 es airless, usa rollos de 700 m y pantalla de 5\". Su cabezal es de 32 mm, no de 107 mm.",
+      "en": "The 6230 is airless, uses 700 m rolls and a 5\" display. Its printhead is 32 mm, not 107 mm.",
+      "pt": "A 6230 é airless, usa rolos de 700 m e tela de 5\". Seu cabeçote é de 32 mm, não de 107 mm."
+    }
+  },
+  {
+    "id": 24,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c"
+    ],
+    "q": {
+      "es": "¿Cuáles de los siguientes tipos de ribbon están disponibles para la Serie Videojet 6000?",
+      "en": "Which of the following ribbon grades are available for the Videojet 6000 Series?",
+      "pt": "Quais dos seguintes tipos de ribbon estão disponíveis para a Série Videojet 6000?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Grado básico (cera/resina para codificación estándar)",
+          "en": "Basic grade (wax/resin for standard coding)",
+          "pt": "Grau básico (cera/resina para codificação padrão)"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Grado súper estándar / premium (alta resistencia al frotado)",
+          "en": "Super standard / premium grade (high rub resistance)",
+          "pt": "Grau super padrão / premium (alta resistência à fricção)"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Grado resina completa (chemical resistant para químicos)",
+          "en": "Full resin grade (chemical resistant)",
+          "pt": "Grau resina completa (chemical resistant para químicos)"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Grado líquido de inyección directa",
+          "en": "Liquid direct-injection grade",
+          "pt": "Grau líquido de injeção direta"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "Los ribbons TTO son películas secas de cera, resina o mixtas; no existe un grado líquido de inyección directa.",
+      "en": "TTO ribbons are dry wax, resin or mixed films; there is no liquid direct-injection grade.",
+      "pt": "Os ribbons TTO são filmes secos de cera, resina ou mistos; não existe grau líquido de injeção direta."
+    }
+  },
+  {
+    "id": 25,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "q": {
+      "es": "¿Cuáles elementos componen la estructura física multicapa de un ribbon TTO de alta calidad?",
+      "en": "Which elements make up the multilayer physical structure of a high-quality TTO ribbon?",
+      "pt": "Quais elementos compõem a estrutura física multicamadas de um ribbon TTO de alta qualidade?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Capa de recubrimiento posterior (backcoating de silicona antiestática)",
+          "en": "Backcoating (anti-static silicone rear layer)",
+          "pt": "Camada de revestimento traseiro (backcoating de silicone antiestático)"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Película portadora de poliéster (PET) de 4,5 µm",
+          "en": "4.5 µm polyester (PET) carrier film",
+          "pt": "Filme suporte de poliéster (PET) de 4,5 µm"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Capa intermedia de desprendimiento (primer / release layer)",
+          "en": "Intermediate release layer (primer)",
+          "pt": "Camada intermediária de liberação (primer / release)"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Capa de tinta (cera, resina y pigmentos)",
+          "en": "Ink layer (wax, resin and pigments)",
+          "pt": "Camada de tinta (cera, resina e pigmentos)"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "Las cuatro capas son: backcoating antiestático, PET de 4,5 µm, capa de desprendimiento y capa de tinta.",
+      "en": "The four layers are: anti-static backcoating, 4.5 µm PET, release layer and ink layer.",
+      "pt": "As quatro camadas são: backcoating antiestático, PET de 4,5 µm, camada de liberação e camada de tinta."
+    }
+  },
+  {
+    "id": 26,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c"
+    ],
+    "q": {
+      "es": "En el conector de interconexión DB15 de señal de E/S, ¿cuáles pines cumplen funciones críticas de alimentación y señal?",
+      "en": "On the DB15 I/O connector, which pins carry critical power and signal functions?",
+      "pt": "No conector DB15 de sinal de E/S, quais pinos desempenham funções críticas de alimentação e sinal?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Pin 1: alimentación +24 V CC",
+          "en": "Pin 1: +24 V DC supply",
+          "pt": "Pino 1: alimentação +24 V CC"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Pin 2: entrada de señal de impresión / trigger (SIG)",
+          "en": "Pin 2: print signal / trigger input (SIG)",
+          "pt": "Pino 2: entrada de sinal de impressão / trigger (SIG)"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Pin 3: masa / retorno GND (0 V)",
+          "en": "Pin 3: ground / return GND (0 V)",
+          "pt": "Pino 3: terra / retorno GND (0 V)"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Pin 15: entrada de aire comprimido",
+          "en": "Pin 15: compressed air inlet",
+          "pt": "Pino 15: entrada de ar comprimido"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "Los pines 1, 2 y 3 llevan +24 V, trigger y GND. Las impresoras airless no tienen entrada de aire en el DB15.",
+      "en": "Pins 1, 2 and 3 carry +24 V, trigger and GND. Airless printers have no air inlet on the DB15.",
+      "pt": "Os pinos 1, 2 e 3 levam +24 V, trigger e GND. As impressoras airless não têm entrada de ar no DB15."
+    }
+  },
+  {
+    "id": 27,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "b",
+      "c",
+      "d"
+    ],
+    "q": {
+      "es": "¿Cuáles de los siguientes modelos de la Serie 6000 se clasifican como totalmente Airless (sin aire comprimido)?",
+      "en": "Which of the following 6000 Series models are classified as fully airless (no compressed air)?",
+      "pt": "Quais dos seguintes modelos da Série 6000 são classificados como totalmente airless (sem ar comprimido)?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Videojet 6210",
+          "en": "Videojet 6210",
+          "pt": "Videojet 6210"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Videojet 6230",
+          "en": "Videojet 6230",
+          "pt": "Videojet 6230"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "DataFlex 6330",
+          "en": "DataFlex 6330",
+          "pt": "DataFlex 6330"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "DataFlex 6530",
+          "en": "DataFlex 6530",
+          "pt": "DataFlex 6530"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "La 6210 es la plataforma neumática anterior; 6230, 6330 y 6530 son airless.",
+      "en": "The 6210 is the earlier pneumatic platform; the 6230, 6330 and 6530 are airless.",
+      "pt": "A 6210 é a plataforma pneumática anterior; 6230, 6330 e 6530 são airless."
+    }
+  },
+  {
+    "id": 28,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "d"
+    ],
+    "q": {
+      "es": "¿Cuáles parámetros del software CLARiTY afectan directamente la densidad y la calidad de la imagen impresa?",
+      "en": "Which CLARiTY software parameters directly affect printed image density and quality?",
+      "pt": "Quais parâmetros do software CLARiTY afetam diretamente a densidade e a qualidade da imagem impressa?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Print Darkness / Power (oscuridad de impresión)",
+          "en": "Print Darkness / Power",
+          "pt": "Print Darkness / Power (escuridão de impressão)"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Print Speed (velocidad de impresión)",
+          "en": "Print Speed",
+          "pt": "Print Speed (velocidade de impressão)"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Dirección IP de la red Ethernet",
+          "en": "Ethernet IP address",
+          "pt": "Endereço IP da rede Ethernet"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Ribbon Width (ancho de cinta configurado)",
+          "en": "Ribbon Width (configured ribbon width)",
+          "pt": "Ribbon Width (largura de ribbon configurada)"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "Oscuridad, velocidad y ancho de ribbon cambian la energía y la transferencia. La IP solo afecta la comunicación.",
+      "en": "Darkness, speed and ribbon width change energy and transfer. The IP address only affects communications.",
+      "pt": "Escuridão, velocidade e largura do ribbon alteram a energia e a transferência. O IP afeta apenas a comunicação."
+    }
+  },
+  {
+    "id": 29,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c"
+    ],
+    "q": {
+      "es": "¿Cuáles herramientas físicas son indispensables para el mantenimiento y la calibración de campo en equipos VJ 6330 / 6530?",
+      "en": "Which physical tools are essential for field maintenance and calibration on VJ 6330 / 6530 equipment?",
+      "pt": "Quais ferramentas físicas são indispensáveis para a manutenção e a calibração de campo nos equipos VJ 6330 / 6530?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Kit de limpieza de cabezal preimpregnado P/N 216054",
+          "en": "Pre-saturated printhead cleaning kit P/N 216054",
+          "pt": "Kit de limpeza de cabeçote pré-umedecido P/N 216054"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Herramienta de medición de espacio Gap Tool P/N SAR10222",
+          "en": "Gap measuring tool P/N SAR10222",
+          "pt": "Ferramenta de medição de folga Gap Tool P/N SAR10222"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Kit de tensión de correas Field Tensioning Kit P/N 407954",
+          "en": "Field tensioning kit P/N 407954",
+          "pt": "Kit de tensão de correias Field Tensioning Kit P/N 407954"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Manómetro de presión neumática de 10 bar",
+          "en": "10 bar pneumatic pressure gauge",
+          "pt": "Manômetro de pressão pneumática de 10 bar"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "Al ser airless no se necesita manómetro. Limpieza, gap y tensión sí son rutinas de campo obligatorias.",
+      "en": "Being airless, no pressure gauge is needed. Cleaning, gap and belt tension are mandatory field routines.",
+      "pt": "Por ser airless, não é necessário manômetro. Limpeza, gap e tensão são rotinas de campo obrigatórias."
+    }
+  },
+  {
+    "id": 30,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "q": {
+      "es": "En modo continuo, ¿cuáles factores pueden causar distorsión o arrugas en la cinta durante la impresión?",
+      "en": "In continuous mode, which factors can cause ribbon distortion or wrinkles during printing?",
+      "pt": "No modo contínuo, quais fatores podem causar distorção ou rugas no ribbon durante a impressão?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Platen Roller desgastado, desalineado o con hendiduras",
+          "en": "Worn, misaligned or grooved Platen Roller",
+          "pt": "Platen Roller desgastado, desalinhado ou com sulcos"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Excesiva oscuridad o fuerza de impresión configurada en la IHM",
+          "en": "Excessive darkness or print force set on the HMI",
+          "pt": "Escuridão ou força de impressão excessiva configurada na IHM"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Falta de alineación perpendicular entre el cuerpo impresor y el sustrato",
+          "en": "Lack of perpendicular alignment between printhead body and substrate",
+          "pt": "Falta de alinhamento perpendicular entre o corpo de impressão e o substrato"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Configuración incorrecta del ancho de ribbon en el menú Consumibles",
+          "en": "Incorrect ribbon width set in the Consumables menu",
+          "pt": "Configuração incorreta da largura do ribbon no menu Consumíveis"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "Las cuatro condiciones alteran la tracción o la transferencia y pueden arrugar o romper la cinta.",
+      "en": "All four conditions disturb traction or transfer and can wrinkle or break the ribbon.",
+      "pt": "As quatro condições alteram a tração ou a transferência e podem enrugar ou romper o ribbon."
+    }
+  },
+  {
+    "id": 31,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c"
+    ],
+    "q": {
+      "es": "¿Cuáles de los siguientes números de parte corresponden a cabezales térmicos originales de la Serie 6000?",
+      "en": "Which of the following part numbers correspond to genuine 6000 Series thermal printheads?",
+      "pt": "Quais dos seguintes números de peça correspondem a cabeçotes térmicos originais da Série 6000?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "P/N 408300 (cabezal 32 mm VJ 6230)",
+          "en": "P/N 408300 (32 mm printhead, VJ 6230)",
+          "pt": "P/N 408300 (cabeçote 32 mm, VJ 6230)"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "P/N 407933 (cabezal 53 mm VJ 6330/6530)",
+          "en": "P/N 407933 (53 mm printhead, VJ 6330/6530)",
+          "pt": "P/N 407933 (cabeçote 53 mm, VJ 6330/6530)"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "P/N 408554 (cabezal 107 mm VJ 6530)",
+          "en": "P/N 408554 (107 mm printhead, VJ 6530)",
+          "pt": "P/N 408554 (cabeçote 107 mm, VJ 6530)"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "P/N 216054 (cabezal 32 mm VJ 6210)",
+          "en": "P/N 216054 (32 mm printhead, VJ 6210)",
+          "pt": "P/N 216054 (cabeçote 32 mm, VJ 6210)"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "216054 es el kit de toallitas de limpieza, no un cabezal. Los cabezales son 408300, 407933 y 408554.",
+      "en": "216054 is the cleaning wipe kit, not a printhead. The printheads are 408300, 407933 and 408554.",
+      "pt": "216054 é o kit de lenços de limpeza, não um cabeçote. Os cabeçotes são 408300, 407933 e 408554."
+    }
+  },
+  {
+    "id": 32,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b"
+    ],
+    "q": {
+      "es": "¿Qué señales externas pueden conectarse a la impresora para iniciar el ciclo de impresión (Print Trigger)?",
+      "en": "Which external signals can be connected to the printer to start the print cycle (Print Trigger)?",
+      "pt": "Quais sinais externos podem ser conectados à impressora para iniciar o ciclo de impressão (Print Trigger)?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Sensor fotocelda óptico PNP / NPN",
+          "en": "Optical photocell sensor PNP / NPN",
+          "pt": "Sensor fotocélula óptico PNP / NPN"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Contacto seco (volt-free contact) impulsado por PLC",
+          "en": "Dry contact (volt-free) driven by a PLC",
+          "pt": "Contato seco (volt-free) acionado por CLP"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Microswitch de estado del casete",
+          "en": "Cassette status microswitch",
+          "pt": "Microswitch de estado do cassete"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Sensor de presión neumática",
+          "en": "Pneumatic pressure sensor",
+          "pt": "Sensor de pressão pneumática"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "El trigger lo aportan una fotocelda o un contacto seco del PLC. El microswitch del casete solo informa estado y la impresora es airless.",
+      "en": "The trigger comes from a photocell or a dry PLC contact. The cassette microswitch only reports status and the printer is airless.",
+      "pt": "O trigger é fornecido por uma fotocélula ou um contato seco do CLP. O microswitch do cassete apenas informa estado e a impressora é airless."
+    }
+  },
+  {
+    "id": 33,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c"
+    ],
+    "q": {
+      "es": "¿Cuáles son funciones principales del software CLARiSOFT?",
+      "en": "Which are the main functions of CLARiSOFT software?",
+      "pt": "Quais são as principais funções do software CLARiSOFT?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Diseño gráfico WYSIWYG de plantillas de marcado con campos fijos y variables",
+          "en": "WYSIWYG graphic design of marking templates with fixed and variable fields",
+          "pt": "Design gráfico WYSIWYG de modelos de marcação com campos fixos e variáveis"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Configuración de fechas de vencimiento automáticas y contadores de lote",
+          "en": "Automatic expiry dates and batch counters",
+          "pt": "Configuração de datas de validade automáticas e contadores de lote"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Generación e inserción de códigos de barras 1D y códigos 2D DataMatrix/QR",
+          "en": "Generation and insertion of 1D barcodes and 2D DataMatrix/QR codes",
+          "pt": "Geração e inserção de códigos de barras 1D e códigos 2D DataMatrix/QR"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Calibración mecánica de la tensión de los motores paso a paso",
+          "en": "Mechanical calibration of stepper-motor tension",
+          "pt": "Calibração mecânica da tensão dos motores de passo"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "CLARiSOFT diseña el mensaje (.ciff); la calibración mecánica se realiza en la impresora, no en el software.",
+      "en": "CLARiSOFT designs the message (.ciff); mechanical calibration is done on the printer, not in the software.",
+      "pt": "O CLARiSOFT projeta a mensagem (.ciff); a calibração mecânica é feita na impressora, não no software."
+    }
+  },
+  {
+    "id": 34,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c"
+    ],
+    "q": {
+      "es": "¿Qué datos se pueden monitorear en la pantalla de diagnóstico del perfil de encoder (Encoder Profile)?",
+      "en": "Which data can be monitored on the Encoder Profile diagnostic screen?",
+      "pt": "Quais dados podem ser monitorados na tela de diagnóstico do perfil do encoder (Encoder Profile)?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Velocidad real del sustrato en mm/s",
+          "en": "Actual substrate speed in mm/s",
+          "pt": "Velocidade real do substrato em mm/s"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Velocidad de avance de la cinta (ribbon speed)",
+          "en": "Ribbon advance speed",
+          "pt": "Velocidade de avanço do ribbon"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Estado de los canales A y B del encoder en milisegundos",
+          "en": "State of encoder channels A and B in milliseconds",
+          "pt": "Estado dos canais A e B do encoder em milissegundos"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Viscosidad y nivel de solvente en la máquina",
+          "en": "Solvent viscosity and level in the machine",
+          "pt": "Viscosidade e nível de solvente na máquina"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "La pantalla muestra velocidad de sustrato, velocidad de ribbon y los canales A/B. No hay solventes en un sistema TTO.",
+      "en": "The screen shows substrate speed, ribbon speed and A/B channels. There are no solvents in a TTO system.",
+      "pt": "A tela mostra velocidade do substrato, velocidade do ribbon e os canais A/B. Não há solventes em um sistema TTO."
+    }
+  },
+  {
+    "id": 35,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c"
+    ],
+    "q": {
+      "es": "En la impresora Videojet 6230, ¿cuáles componentes forman parte del sistema de accionamiento horizontal y vertical?",
+      "en": "On the Videojet 6230, which components are part of the horizontal and vertical drive system?",
+      "pt": "Na impressora Videojet 6230, quais componentes fazem parte do sistema de acionamento horizontal e vertical?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Motor paso a paso del carro P/N 408296",
+          "en": "Carriage stepper motor P/N 408296",
+          "pt": "Motor de passo do carro P/N 408296"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Motor paso a paso del ribbon P/N 408297",
+          "en": "Ribbon stepper motor P/N 408297",
+          "pt": "Motor de passo do ribbon P/N 408297"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Conjunto actuador / electroimán P/N 408291",
+          "en": "Actuator / electromagnet assembly P/N 408291",
+          "pt": "Conjunto atuador / eletroímã P/N 408291"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Válvula solenoide neumática P/N 215994",
+          "en": "Pneumatic solenoid valve P/N 215994",
+          "pt": "Válvula solenoide pneumática P/N 215994"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "La 6230 combina dos motores paso a paso y un electroimán. No utiliza válvula solenoide neumática.",
+      "en": "The 6230 combines two stepper motors and an electromagnet. It uses no pneumatic solenoid valve.",
+      "pt": "A 6230 combina dois motores de passo e um eletroímã. Não utiliza válvula solenoide pneumática."
+    }
+  },
+  {
+    "id": 36,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "d"
+    ],
+    "q": {
+      "es": "¿Cuáles modos de preservación o ahorro de ribbon están disponibles en los modelos DataFlex 6330 y 6530?",
+      "en": "Which ribbon-saving modes are available on the DataFlex 6330 and 6530 models?",
+      "pt": "Quais modos de preservação ou economia de ribbon estão disponíveis nos modelos DataFlex 6330 e 6530?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Modo intermitente por franjas (Intermittent Stripes)",
+          "en": "Intermittent Stripes mode",
+          "pt": "Modo intermitente por faixas (Intermittent Stripes)"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Modo de retracción variable por matriz de texto",
+          "en": "Variable retraction by text matrix",
+          "pt": "Modo de retração variável por matriz de texto"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Modo de impresión entrelazada (Radial Ribbon Save)",
+          "en": "Interlaced printing (Radial Ribbon Save)",
+          "pt": "Modo de impressão entrelaçada (Radial Ribbon Save)"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Modo de avance proporcional al ancho del mensaje",
+          "en": "Advance proportional to message width",
+          "pt": "Modo de avanço proporcional à largura da mensagem"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "Las DataFlex 6330 y 6530 ofrecen Intermittent Stripes y avance proporcional al mensaje; los otros modos no aplican a esta plataforma.",
+      "en": "The DataFlex 6330 and 6530 offer Intermittent Stripes and message-proportional advance; the other modes do not apply to this platform.",
+      "pt": "As DataFlex 6330 e 6530 oferecem Intermittent Stripes e avanço proporcional à mensagem; os outros modos não se aplicam a esta plataforma."
+    }
+  },
+  {
+    "id": 37,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c"
+    ],
+    "q": {
+      "es": "¿Cuáles son las consecuencias directas de configurar un ancho de cinta incorrecto en el menú Herramientas > Configuración > Consumibles?",
+      "en": "What are the direct consequences of setting an incorrect ribbon width under Tools > Setup > Consumables?",
+      "pt": "Quais são as consequências diretas de configurar uma largura de ribbon incorreta no menu Ferramentas > Configuração > Consumíveis?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Los algoritmos de tensión calculan un torque erróneo en los motores de cinta",
+          "en": "Tension algorithms calculate wrong torque on the ribbon motors",
+          "pt": "Os algoritmos de tensão calculam torque errado nos motores do ribbon"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Generación de fallas recurrentes E3237 (tamaño de carrete incorrecto)",
+          "en": "Recurring E3237 faults (incorrect reel size)",
+          "pt": "Geração de falhas recorrentes E3237 (tamanho de carretel incorreto)"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Rotura recurrente de cinta o formación de arrugas transversales",
+          "en": "Recurring ribbon breakage or transverse wrinkles",
+          "pt": "Ruptura recorrente do ribbon ou formação de rugas transversais"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Daño irreversible en el procesador principal",
+          "en": "Irreversible damage to the main processor",
+          "pt": "Dano irreversível no processador principal"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "Un ancho erróneo desajusta la tensión y genera E3237, arrugas o roturas; no daña el procesador.",
+      "en": "A wrong width unbalances tension and causes E3237, wrinkles or breakage; it does not damage the processor.",
+      "pt": "Uma largura errada desequilibra a tensão e gera E3237, rugas ou rupturas; não danifica o processador."
+    }
+  },
+  {
+    "id": 38,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c"
+    ],
+    "q": {
+      "es": "¿Qué características definen al sensor iAssure™ en los modelos 6330 y 6530?",
+      "en": "Which characteristics define the iAssure™ sensor on the 6330 and 6530 models?",
+      "pt": "Quais características definem o sensor iAssure™ nos modelos 6330 e 6530?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Escanea la huella de cera/resina removida en la cinta tras la impresión",
+          "en": "Scans the wax/resin footprint removed from the ribbon after printing",
+          "pt": "Escaneia a marca de cera/resina removida do ribbon após a impressão"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Detecta en tiempo real caracteres faltantes, códigos rotos o arrugas",
+          "en": "Detects missing characters, broken codes or wrinkles in real time",
+          "pt": "Detecta em tempo real caracteres ausentes, códigos quebrados ou rugas"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Puede enviar una señal de rechazo a la empacadora ante impresiones defectuosas",
+          "en": "Can send a reject signal to the packaging machine on defective prints",
+          "pt": "Pode enviar um sinal de rejeição à empacotadora em impressões defeituosas"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Mide la temperatura ambiente del gabinete",
+          "en": "Measures the cabinet ambient temperature",
+          "pt": "Mede a temperatura ambiente do gabinete"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "iAssure™ compara la huella transferida, detecta defectos y puede accionar el rechazo. No mide temperatura ambiente.",
+      "en": "iAssure™ compares the transferred footprint, detects defects and can trigger rejection. It does not measure ambient temperature.",
+      "pt": "O iAssure™ compara a marca transferida, detecta defeitos e pode acionar a rejeição. Não mede a temperatura ambiente."
+    }
+  },
+  {
+    "id": 39,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c"
+    ],
+    "q": {
+      "es": "¿Cuáles números de parte identifican las tarjetas PCB principales en la plataforma DataFlex 6330 y 6530?",
+      "en": "Which part numbers identify the main PCBs on the DataFlex 6330 and 6530 platform?",
+      "pt": "Quais números de peça identificam as placas PCB principais na plataforma DataFlex 6330 e 6530?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "P/N 407912 (tarjeta PCB principal VJ 6330)",
+          "en": "P/N 407912 (VJ 6330 main PCB)",
+          "pt": "P/N 407912 (placa PCB principal VJ 6330)"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "P/N 407911 (tarjeta PCB principal VJ 6530 53 mm)",
+          "en": "P/N 407911 (VJ 6530 53 mm main PCB)",
+          "pt": "P/N 407911 (placa PCB principal VJ 6530 53 mm)"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "P/N 408659 (tarjeta PCB principal VJ 6530 107 mm)",
+          "en": "P/N 408659 (VJ 6530 107 mm main PCB)",
+          "pt": "P/N 408659 (placa PCB principal VJ 6530 107 mm)"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "P/N 408303 (tarjeta PCB principal VJ 6230)",
+          "en": "P/N 408303 (VJ 6230 main PCB)",
+          "pt": "P/N 408303 (placa PCB principal VJ 6230)"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "407912, 407911 y 408659 son las PCB de la plataforma DataFlex. La 408303 pertenece a la 6230.",
+      "en": "407912, 407911 and 408659 are the DataFlex platform PCBs. 408303 belongs to the 6230.",
+      "pt": "407912, 407911 e 408659 são as PCBs da plataforma DataFlex. A 408303 pertence à 6230."
+    }
+  },
+  {
+    "id": 40,
+    "s": 2,
+    "t": "multi",
+    "a": [
+      "a",
+      "b",
+      "c"
+    ],
+    "q": {
+      "es": "Al realizar el mantenimiento preventivo diario, ¿cuáles procedimientos son obligatorios?",
+      "en": "During daily preventive maintenance, which procedures are mandatory?",
+      "pt": "Na manutenção preventiva diária, quais procedimentos são obrigatórios?"
+    },
+    "o": [
+      [
+        "a",
+        {
+          "es": "Limpiar el cabezal térmico con toallitas preimpregnadas P/N 216054",
+          "en": "Clean the thermal printhead with pre-saturated wipes P/N 216054",
+          "pt": "Limpar o cabeçote térmico com lenços pré-umedecidos P/N 216054"
+        }
+      ],
+      [
+        "b",
+        {
+          "es": "Inspeccionar y limpiar la superficie de hule del Platen Roller o Platen Pad",
+          "en": "Inspect and clean the rubber surface of the Platen Roller or Platen Pad",
+          "pt": "Inspecionar e limpar a superfície de borracha do Platen Roller ou Platen Pad"
+        }
+      ],
+      [
+        "c",
+        {
+          "es": "Limpiar las guías de paso de cinta y los rodillos del casete",
+          "en": "Clean the ribbon path guides and cassette rollers",
+          "pt": "Limpar as guias de passagem do ribbon e os rolos do cassete"
+        }
+      ],
+      [
+        "d",
+        {
+          "es": "Ajustar la presión neumática a 12 bar",
+          "en": "Set pneumatic pressure to 12 bar",
+          "pt": "Ajustar a pressão pneumática para 12 bar"
+        }
+      ]
+    ],
+    "ex": {
+      "es": "La rutina diaria es limpieza de cabezal, platen y guías. La impresora es airless: no existe presión neumática que ajustar.",
+      "en": "The daily routine is printhead, platen and guide cleaning. The printer is airless: there is no pneumatic pressure to set.",
+      "pt": "A rotina diária é limpeza de cabeçote, platen e guias. A impressora é airless: não há pressão pneumática a ajustar."
+    }
+  },
+  {
+    "id": 41,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "Los cabezales térmicos de 53 y 107 mm de las DataFlex 6330 y 6530 tienen una resolución nativa de ____________ ppp, lo que equivale a ____________ puntos por milímetro.",
+      "en": "The 53 mm and 107 mm thermal printheads on the DataFlex 6330 and 6530 have a native resolution of ____________ dpi, which equals ____________ dots per millimetre.",
+      "pt": "Os cabeçotes térmicos de 53 e 107 mm das DataFlex 6330 e 6530 têm uma resolução nativa de ____________ dpi, o que equivale a ____________ pontos por milímetro."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Resolución",
+          "en": "Resolution",
+          "pt": "Resolução"
+        },
+        "unit": "ppp",
+        "num": [
+          300
+        ],
+        "tol": 0.1
+      },
+      {
+        "label": {
+          "es": "Equivalencia",
+          "en": "Equivalent",
+          "pt": "Equivalência"
+        },
+        "unit": "puntos/mm",
+        "num": [
+          12
+        ],
+        "tol": 0.1
+      }
+    ],
+    "ex": {
+      "es": "300 ppp × 0,03937 pulgadas/mm ≈ 12 puntos/mm. La 6230 usa un cabezal de 32 mm con la misma resolución, pero menor ancho y velocidad.",
+      "en": "300 dpi × 0.03937 in/mm ≈ 12 dots/mm. The 6230 uses a 32 mm printhead with the same resolution but lower width and speed.",
+      "pt": "300 dpi × 0,03937 pol/mm ≈ 12 pontos/mm. A 6230 usa um cabeçote de 32 mm com a mesma resolução, mas menor largura e velocidade."
+    }
+  },
+  {
+    "id": 42,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "La tecnología cinemática ____________ elimina el uso de aire comprimido, embragues y frenos mecánicos mediante el control digital de motores paso a paso.",
+      "en": "The ____________ kinematic technology removes the need for compressed air, clutches and mechanical brakes through digital stepper-motor control.",
+      "pt": "A tecnologia cinemática ____________ elimina o uso de ar comprimido, embreagens e freios mecânicos por meio do controle digital de motores de passo."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Tecnología",
+          "en": "Technology",
+          "pt": "Tecnologia"
+        },
+        "unit": "",
+        "accept": [
+          "intelligent motion",
+          "airless",
+          "movimiento inteligente",
+          "movimento inteligente",
+          "inteligente"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "En las DataFlex 6330 y 6530, Intelligent Motion™ (Airless) es la arquitectura de control electrónico de motores. La 6230 también es airless, pero usa su propio conjunto de motores paso a paso y electroimán.",
+      "en": "On the DataFlex 6330 and 6530, Intelligent Motion™ (Airless) is the electronic motor-control architecture. The 6230 is also airless but uses its own stepper-motor and electromagnet assembly.",
+      "pt": "Nas DataFlex 6330 e 6530, o Intelligent Motion™ (Airless) é a arquitetura de controle eletrônico de motores. A 6230 também é airless, mas usa seu próprio conjunto de motores de passo e eletroímã."
+    }
+  },
+  {
+    "id": 43,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "La longitud máxima de rollo de cinta de transferencia térmica admitida en un casete simple para VJ 6330 y 6530 es de ____________ metros.",
+      "en": "The maximum thermal transfer ribbon roll length accepted by a single cassette on the VJ 6330 and 6530 is ____________ metres.",
+      "pt": "O comprimento máximo de rolo de ribbon aceito em um cassete simples para VJ 6330 e 6530 é de ____________ metros."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Longitud máxima",
+          "en": "Maximum length",
+          "pt": "Comprimento máximo"
+        },
+        "unit": "m",
+        "num": [
+          1200
+        ],
+        "tol": 1
+      }
+    ],
+    "ex": {
+      "es": "El casete de las DataFlex 6330 y 6530 admite rollos de 1200 m. La 6230, al ser una plataforma de menor capacidad, usa rollos de hasta 700 m.",
+      "en": "The DataFlex 6330 and 6530 cassette accepts 1200 m rolls. The 6230, being a lower-capacity platform, uses rolls of up to 700 m.",
+      "pt": "O cassete das DataFlex 6330 e 6530 aceita rolos de 1200 m. A 6230, por ser uma plataforma de menor capacidade, usa rolos de até 700 m."
+    }
+  },
+  {
+    "id": 44,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "La rueda de medición estándar del encoder óptico oficial Videojet posee un diámetro nominal de ____________ mm.",
+      "en": "The standard measuring wheel of the official Videojet optical encoder has a nominal diameter of ____________ mm.",
+      "pt": "A roda de medição padrão do encoder óptico oficial Videojet tem diâmetro nominal de ____________ mm."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Diámetro",
+          "en": "Diameter",
+          "pt": "Diâmetro"
+        },
+        "unit": "mm",
+        "num": [
+          53.05
+        ],
+        "tol": 0.06
+      }
+    ],
+    "ex": {
+      "es": "La rueda de 53,05 mm de diámetro produce un perímetro de 166,66 mm.",
+      "en": "The 53.05 mm wheel produces a circumference of 166.66 mm.",
+      "pt": "A roda de 53,05 mm produz um perímetro de 166,66 mm."
+    }
+  },
+  {
+    "id": 45,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "El encoder opcional de alta resolución para las VJ 6230, 6330 y 6530 genera ____________ impulsos por revolución (PPR).",
+      "en": "The optional high-resolution encoder for the VJ 6230, 6330 and 6530 generates ____________ pulses per revolution (PPR).",
+      "pt": "O encoder opcional de alta resolução para as VJ 6230, 6330 e 6530 gera ____________ pulsos por revolução (PPR)."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Resolución del encoder",
+          "en": "Encoder resolution",
+          "pt": "Resolução do encoder"
+        },
+        "unit": "PPR",
+        "num": [
+          3600
+        ],
+        "tol": 1
+      }
+    ],
+    "ex": {
+      "es": "El encoder de 3600 líneas ofrece 7 veces más resolución que el antiguo de 500 PPR y se usa para mejorar el registro en aplicaciones de alta velocidad.",
+      "en": "The 3600-line encoder gives 7 times the resolution of the old 500 PPR unit and is used to improve registration in high-speed applications.",
+      "pt": "O encoder de 3600 linhas oferece 7 vezes mais resolução que o antigo de 500 PPR e é usado para melhorar o registro em aplicações de alta velocidade."
+    }
+  },
+  {
+    "id": 46,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "En un encoder de 3600 PPR y rueda de 53,05 mm, el número de impulsos generados por milímetro de película es de ____________ impulsos/mm.",
+      "en": "On a 3600 PPR encoder with a 53.05 mm wheel, the number of pulses generated per millimetre of film is ____________ pulses/mm.",
+      "pt": "Em um encoder de 3600 PPR e roda de 53,05 mm, o número de pulsos gerados por milímetro de filme é de ____________ pulsos/mm."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Resolución espacial",
+          "en": "Spatial resolution",
+          "pt": "Resolução espacial"
+        },
+        "unit": "impulsos/mm",
+        "num": [
+          21.6
+        ],
+        "tol": 0.61
+      }
+    ],
+    "ex": {
+      "es": "3600 ÷ 166,66 = 21,6 impulsos/mm (Videojet lo redondea a 21 en sus guías).",
+      "en": "3600 ÷ 166.66 = 21.6 pulses/mm (Videojet rounds it to 21 in its guides).",
+      "pt": "3600 ÷ 166,66 = 21,6 pulsos/mm (a Videojet arredonda para 21 em seus guias)."
+    }
+  },
+  {
+    "id": 47,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "El área máxima de impresión en modo continuo para la DataFlex 6530 de 107 mm es de 107 mm de ancho por ____________ mm de largo.",
+      "en": "The maximum continuous-mode print area for the 107 mm DataFlex 6530 is 107 mm wide by ____________ mm long.",
+      "pt": "A área máxima de impressão no modo contínuo para a DataFlex 6530 de 107 mm é de 107 mm de largura por ____________ mm de comprimento."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Longitud de impresión",
+          "en": "Print length",
+          "pt": "Comprimento de impressão"
+        },
+        "unit": "mm",
+        "num": [
+          300
+        ],
+        "tol": 0.5
+      }
+    ],
+    "ex": {
+      "es": "En continuo la 6530 de 107 mm imprime 107 × 300 mm; en intermitente, 107 × 75 mm.",
+      "en": "In continuous mode the 107 mm 6530 prints 107 × 300 mm; in intermittent mode, 107 × 75 mm.",
+      "pt": "No modo contínuo a 6530 de 107 mm imprime 107 × 300 mm; no intermitente, 107 × 75 mm."
+    }
+  },
+  {
+    "id": 48,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "La velocidad máxima de impresión en modo continuo para la impresora DataFlex 6330 de 53 mm alcanza los ____________ mm/s.",
+      "en": "The maximum continuous-mode print speed of the 53 mm DataFlex 6330 reaches ____________ mm/s.",
+      "pt": "A velocidade máxima de impressão no modo contínuo da impressora DataFlex 6330 de 53 mm atinge ____________ mm/s."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Velocidad máxima",
+          "en": "Maximum speed",
+          "pt": "Velocidade máxima"
+        },
+        "unit": "mm/s",
+        "num": [
+          750
+        ],
+        "tol": 1
+      }
+    ],
+    "ex": {
+      "es": "La 6330 alcanza 750 mm/s y 250 ppm. La 6530 de 53 mm llega a 1000 mm/s y 700 ppm; la de 107 mm, a 450 ppm. (Pregunta ajustada a la especificación oficial.)",
+      "en": "The 6330 reaches 750 mm/s and 250 ppm. The 53 mm 6530 reaches 1000 mm/s and 700 ppm; the 107 mm version, 450 ppm. (Question aligned with the official specification.)",
+      "pt": "A 6330 atinge 750 mm/s e 250 ppm. A 6530 de 53 mm chega a 1000 mm/s e 700 ppm; a de 107 mm, a 450 ppm. (Pergunta ajustada à especificação oficial.)"
+    }
+  },
+  {
+    "id": 49,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "El sistema de inspección integrada que analiza la huella de tinta removida en el ribbon inmediatamente después de imprimir se denomina ____________.",
+      "en": "The integrated inspection system that analyses the ink footprint removed from the ribbon immediately after printing is called ____________.",
+      "pt": "O sistema de inspeção integrado que analisa a marca de tinta removida do ribbon imediatamente após a impressão é chamado de ____________."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Sistema",
+          "en": "System",
+          "pt": "Sistema"
+        },
+        "unit": "",
+        "accept": [
+          "iassure",
+          "i assure",
+          "assure"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "iAssure™ es la verificación de calidad de código integrada, sin hardware adicional.",
+      "en": "iAssure™ is the built-in code quality verification, with no additional hardware.",
+      "pt": "O iAssure™ é a verificação de qualidade de código integrada, sem hardware adicional."
+    }
+  },
+  {
+    "id": 50,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "El kit oficial de limpieza de cabezal térmico compuesto por toallitas impregnadas con alcohol isopropílico corresponde al P/N ____________.",
+      "en": "The official thermal printhead cleaning kit made of isopropyl alcohol wipes corresponds to P/N ____________.",
+      "pt": "O kit oficial de limpeza de cabeçote térmico composto por lenços embebidos em álcool isopropílico corresponde ao P/N ____________."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Número de parte",
+          "en": "Part number",
+          "pt": "Número de peça"
+        },
+        "unit": "P/N",
+        "num": [
+          216054
+        ],
+        "tol": 0.5
+      }
+    ],
+    "ex": {
+      "es": "El kit 216054 contiene 10 toallitas de espuma preimpregnadas.",
+      "en": "Kit 216054 contains 10 pre-saturated foam wipes.",
+      "pt": "O kit 216054 contém 10 lenços de espuma pré-umedecidos."
+    }
+  },
+  {
+    "id": 51,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "La tensión de correa recomendada para la calibración en campo de las impresoras DataFlex 6330 y 6530 mediante el kit P/N 407954 debe ajustarse a ____________ kg.",
+      "en": "The recommended belt tension for field calibration of DataFlex 6330 and 6530 printers with kit P/N 407954 must be set to ____________ kg.",
+      "pt": "A tensão de correia recomendada para a calibração de campo das impressoras DataFlex 6330 e 6530 com o kit P/N 407954 deve ser ajustada em ____________ kg."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Tensión",
+          "en": "Tension",
+          "pt": "Tensão"
+        },
+        "unit": "kg",
+        "num": [
+          10
+        ],
+        "tol": 0.1
+      }
+    ],
+    "ex": {
+      "es": "10 kg en 6330/6530. La 6230 se calibra a 8 kg con su kit específico.",
+      "en": "10 kg on 6330/6530. The 6230 is set to 8 kg with its specific kit.",
+      "pt": "10 kg na 6330/6530. A 6230 é calibrada a 8 kg com seu kit específico."
+    }
+  },
+  {
+    "id": 52,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "En la impresora Videojet 6230, la caída del cabezal térmico se ejecuta eléctricamente mediante un conjunto de ____________.",
+      "en": "On the Videojet 6230, the thermal printhead is lowered electrically by an ____________ assembly.",
+      "pt": "Na impressora Videojet 6230, a descida do cabeçote térmico é executada eletricamente por um conjunto de ____________."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Componente (nombre o P/N)",
+          "en": "Component (name or P/N)",
+          "pt": "Componente (nome ou P/N)"
+        },
+        "unit": "",
+        "accept": [
+          "408291",
+          "actuador",
+          "atuador",
+          "electroiman",
+          "eletroima",
+          "electromagnet"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "Conjunto actuador / electroimán magnético asistido por resorte, P/N 408291.",
+      "en": "Spring-assisted actuator / electromagnet assembly, P/N 408291.",
+      "pt": "Conjunto atuador / eletroímã assistido por mola, P/N 408291."
+    }
+  },
+  {
+    "id": 53,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "En modo continuo, el cabezal térmico presiona el ribbon y la película contra un rodillo giratorio de hule denominado ____________.",
+      "en": "In continuous mode, the thermal printhead presses the ribbon and film against a rotating rubber roller called the ____________.",
+      "pt": "No modo contínuo, o cabeçote térmico pressiona o ribbon e o filme contra um rolo rotativo de borracha chamado de ____________."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Rodillo",
+          "en": "Roller",
+          "pt": "Rolo"
+        },
+        "unit": "",
+        "accept": [
+          "platen roller",
+          "platen",
+          "rodillo de contraimpresion",
+          "rolo de contrapressao",
+          "rodillo platen",
+          "rolo platen"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "El Platen Roller es la superficie de contrapresión giratoria del modo continuo.",
+      "en": "The Platen Roller is the rotating back-up surface used in continuous mode.",
+      "pt": "O Platen Roller é a superfície de contrapressão rotativa do modo contínuo."
+    }
+  },
+  {
+    "id": 54,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "La distancia recomendada de espacio libre (gap) entre el cabezal térmico en reposo y la superficie del platen no debe superar los ____________ mm.",
+      "en": "The recommended clearance (gap) between the thermal printhead at rest and the platen surface must not exceed ____________ mm.",
+      "pt": "A distância recomendada de folga (gap) entre o cabeçote térmico em repouso e a superfície do platen não deve exceder ____________ mm."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Gap máximo",
+          "en": "Maximum gap",
+          "pt": "Gap máximo"
+        },
+        "unit": "mm",
+        "num": [
+          5
+        ],
+        "tol": 0.1
+      }
+    ],
+    "ex": {
+      "es": "Se verifica con la Gap Tool P/N SAR10222 y no debe pasar de 5 mm.",
+      "en": "It is checked with Gap Tool P/N SAR10222 and must not exceed 5 mm.",
+      "pt": "É verificado com a Gap Tool P/N SAR10222 e não deve passar de 5 mm."
+    }
+  },
+  {
+    "id": 55,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "El número de parte del cabezal térmico de impresión de 53 mm para los modelos VJ 6330 y VJ 6530 es P/N ____________.",
+      "en": "The part number of the 53 mm thermal printhead for the VJ 6330 and VJ 6530 models is P/N ____________.",
+      "pt": "O número de peça do cabeçote térmico de impressão de 53 mm para os modelos VJ 6330 e VJ 6530 é P/N ____________."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Número de parte",
+          "en": "Part number",
+          "pt": "Número de peça"
+        },
+        "unit": "P/N",
+        "num": [
+          407933
+        ],
+        "tol": 0.5
+      }
+    ],
+    "ex": {
+      "es": "Cabezal de 53 mm: 407933. La 6230 usa 408300 y la 6530 de 107 mm usa 408554.",
+      "en": "53 mm printhead: 407933. The 6230 uses 408300 and the 107 mm 6530 uses 408554.",
+      "pt": "Cabeçote de 53 mm: 407933. A 6230 usa 408300 e a 6530 de 107 mm usa 408554."
+    }
+  },
+  {
+    "id": 56,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "El número de parte del cabezal térmico de impresión de 32 mm exclusivo para la impresora VJ 6230 es P/N ____________.",
+      "en": "The part number of the 32 mm thermal printhead exclusive to the VJ 6230 printer is P/N ____________.",
+      "pt": "O número de peça do cabeçote térmico de impressão de 32 mm exclusivo para a impressora VJ 6230 é P/N ____________."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Número de parte",
+          "en": "Part number",
+          "pt": "Número de peça"
+        },
+        "unit": "P/N",
+        "num": [
+          408300
+        ],
+        "tol": 0.5
+      }
+    ],
+    "ex": {
+      "es": "La 6230 utiliza el cabezal de 32 mm P/N 408300.",
+      "en": "The 6230 uses the 32 mm printhead P/N 408300.",
+      "pt": "A 6230 utiliza o cabeçote de 32 mm P/N 408300."
+    }
+  },
+  {
+    "id": 57,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "La función de control que permite manejar hasta 4 impresoras desde una única pantalla táctil CLARiTY se denomina ____________.",
+      "en": "The control function that allows up to 4 printers to be managed from a single CLARiTY touchscreen is called ____________.",
+      "pt": "A função de controle que permite gerenciar até 4 impressoras a partir de uma única tela de toque CLARiTY é chamada de ____________."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Función",
+          "en": "Function",
+          "pt": "Função"
+        },
+        "unit": "",
+        "accept": [
+          "leader",
+          "follower",
+          "lider",
+          "seguidor"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "Arquitectura Leader/Follower: una impresora maestra controla hasta cuatro seguidoras.",
+      "en": "Leader/Follower architecture: one master printer controls up to four followers.",
+      "pt": "Arquitetura Leader/Follower: uma impressora mestre controla até quatro seguidoras."
+    }
+  },
+  {
+    "id": 58,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "El número de parte de la tarjeta Micro SD que almacena el firmware exclusivo de la tarjeta PCB principal para VJ 6330 es P/N ____________.",
+      "en": "The part number of the Micro SD card storing the dedicated main PCB firmware for the VJ 6330 is P/N ____________.",
+      "pt": "O número de peça do cartão Micro SD que armazena o firmware exclusivo da placa PCB principal para a VJ 6330 é P/N ____________."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Número de parte",
+          "en": "Part number",
+          "pt": "Número de peça"
+        },
+        "unit": "P/N",
+        "num": [
+          409769
+        ],
+        "tol": 0.5
+      }
+    ],
+    "ex": {
+      "es": "Micro SD de la 6330: 409769. No es intercambiable con la de la 6530 (409770).",
+      "en": "6330 Micro SD: 409769. It is not interchangeable with the 6530 card (409770).",
+      "pt": "Micro SD da 6330: 409769. Não é intercambiável com a da 6530 (409770)."
+    }
+  },
+  {
+    "id": 59,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "La tarjeta Micro SD con firmware exclusivo para la tarjeta PCB principal de VJ 6530 de 53 mm corresponde al P/N ____________.",
+      "en": "The Micro SD card with dedicated firmware for the 53 mm VJ 6530 main PCB corresponds to P/N ____________.",
+      "pt": "O cartão Micro SD com firmware exclusivo para a placa PCB principal da VJ 6530 de 53 mm corresponde ao P/N ____________."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Número de parte",
+          "en": "Part number",
+          "pt": "Número de peça"
+        },
+        "unit": "P/N",
+        "num": [
+          409770
+        ],
+        "tol": 0.5
+      }
+    ],
+    "ex": {
+      "es": "La 6530 de 53 mm utiliza la Micro SD 409770.",
+      "en": "The 53 mm 6530 uses Micro SD 409770.",
+      "pt": "A 6530 de 53 mm utiliza o Micro SD 409770."
+    }
+  },
+  {
+    "id": 60,
+    "s": 3,
+    "t": "text",
+    "q": {
+      "es": "Para aislar eléctricamente la salida del micro-relé interno de señal de falla y evitar ruidos inducidos por el PLC del cliente, se debe instalar un relé externo ____________ de 24 V CC.",
+      "en": "To electrically isolate the internal fault-signal micro-relay output and avoid noise induced by the customer PLC, an external 24 V DC ____________ relay must be installed.",
+      "pt": "Para isolar eletricamente a saída do micro-relé interno de sinal de falha e evitar ruídos induzidos pelo CLP do cliente, deve-se instalar um relé externo ____________ de 24 V CC."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Tipo de relé",
+          "en": "Relay type",
+          "pt": "Tipo de relé"
+        },
+        "unit": "",
+        "accept": [
+          "optoacoplador",
+          "optoacoplado",
+          "optoisolador",
+          "opto isolador",
+          "rele optoacoplado"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "El boletín BT1908031 recomienda un relé optoacoplado externo de 24 V CC para aislar galvánicamente la señal de falla del PLC.",
+      "en": "Service bulletin BT1908031 recommends an external 24 V DC opto-isolated relay to galvanically isolate the fault signal from the PLC.",
+      "pt": "O boletim BT1908031 recomenda um relé optoacoplado externo de 24 V CC para isolar galvanicamente o sinal de falha do CLP."
+    }
+  },
+  {
+    "id": 61,
+    "s": 4,
+    "t": "open",
+    "q": {
+      "es": "Describe el cabezal térmico de impresión de 53 mm (VJ 6330 / 6530): función técnica, principio de funcionamiento y número de parte.",
+      "en": "Describe the 53 mm thermal printhead (VJ 6330 / 6530): technical function, operating principle and part number.",
+      "pt": "Descreva o cabeçote térmico de impressão de 53 mm (VJ 6330 / 6530): função técnica, princípio de funcionamento e número de peça."
+    },
+    "model": {
+      "es": "Cabezal térmico de impresión de 53 mm, P/N 407933.\nFunción: matriz lineal de resistencias que transfiere la tinta del ribbon al sustrato mediante calor y presión; es la pieza de desgaste principal del sistema.\nPrincipio: cada resistencia se calienta por efecto Joule según la imagen (300 ppp / 12 puntos/mm) y funde la capa de cera o resina del ribbon.\nMantenimiento: se limpia en frío con el kit 216054 y se sustituye cuando aparecen puntos blancos o líneas faltantes.",
+      "en": "53 mm thermal printhead, P/N 407933.\nFunction: linear resistor array that transfers ribbon ink to the substrate by heat and pressure; it is the main wear part of the system.\nPrinciple: each resistor heats by Joule effect according to the image (300 dpi / 12 dots/mm) and melts the wax or resin layer of the ribbon.\nMaintenance: clean cold with kit 216054 and replace when white dots or missing lines appear.",
+      "pt": "Cabeçote térmico de impressão de 53 mm, P/N 407933.\nFunção: matriz linear de resistências que transfere a tinta do ribbon ao substrato por calor e pressão; é a principal peça de desgaste do sistema.\nPrincípio: cada resistência aquece por efeito Joule conforme a imagem (300 dpi / 12 pontos/mm) e funde a camada de cera ou resina do ribbon.\nManutenção: limpar a frio com o kit 216054 e substituir quando surgirem pontos brancos ou linhas ausentes."
+    },
+    "rubric": [
+      {
+        "es": "Indica el P/N 407933 y que es un cabezal de 53 mm.",
+        "en": "States P/N 407933 and that it is a 53 mm printhead.",
+        "pt": "Indica o P/N 407933 e que é um cabeçote de 53 mm."
+      },
+      {
+        "es": "Explica la transferencia por calor y presión a 300 ppp / 12 puntos/mm.",
+        "en": "Explains heat-and-pressure transfer at 300 dpi / 12 dots/mm.",
+        "pt": "Explica a transferência por calor e pressão a 300 dpi / 12 pontos/mm."
+      },
+      {
+        "es": "Menciona limpieza con 216054 o sustitución como pieza de desgaste.",
+        "en": "Mentions cleaning with 216054 or replacement as a wear part.",
+        "pt": "Menciona limpeza com 216054 ou substituição como peça de desgaste."
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "s": 4,
+    "t": "open",
+    "q": {
+      "es": "Describe el sistema de inspección iAssure™: qué analiza, qué fallas detecta y qué acción puede ejecutar.",
+      "en": "Describe the iAssure™ inspection system: what it analyses, which faults it detects and what action it can take.",
+      "pt": "Descreva o sistema de inspeção iAssure™: o que analisa, quais falhas detecta e que ação pode executar."
+    },
+    "model": {
+      "es": "Sistema de inspección de calidad integrado en las VJ 6330 y 6530 (no disponible en el cabezal de 107 mm).\nAnaliza la huella de tinta removida del ribbon inmediatamente después de la transferencia, comparándola con la imagen esperada.\nDetecta caracteres faltantes, códigos rotos, arrugas, desplazamientos y falta de impresión en tiempo real, sin hardware adicional.\nPuede enviar una señal de rechazo a la empacadora para apartar el producto defectuoso.",
+      "en": "Code quality inspection system built into the VJ 6330 and 6530 (not available on the 107 mm printhead).\nIt analyses the ink footprint removed from the ribbon immediately after transfer, comparing it with the expected image.\nIt detects missing characters, broken codes, wrinkles, displacement and missing print in real time, with no extra hardware.\nIt can send a reject signal to the packaging machine to divert defective product.",
+      "pt": "Sistema de inspeção de qualidade integrado nas VJ 6330 e 6530 (não disponível no cabeçote de 107 mm).\nAnalisa a marca de tinta removida do ribbon imediatamente após a transferência, comparando-a com a imagem esperada.\nDetecta caracteres ausentes, códigos quebrados, rugas, deslocamentos e falta de impressão em tempo real, sem hardware adicional.\nPode enviar um sinal de rejeição à empacotadora para separar o produto defeituoso."
+    },
+    "rubric": [
+      {
+        "es": "Explica que escanea la huella transferida del ribbon.",
+        "en": "Explains that it scans the transferred ribbon footprint.",
+        "pt": "Explica que escaneia a marca transferida do ribbon."
+      },
+      {
+        "es": "Enumera defectos: caracteres faltantes, códigos rotos, arrugas.",
+        "en": "Lists defects: missing characters, broken codes, wrinkles.",
+        "pt": "Enumera defeitos: caracteres ausentes, códigos quebrados, rugas."
+      },
+      {
+        "es": "Menciona la señal de rechazo o la ausencia de hardware adicional.",
+        "en": "Mentions the reject signal or the absence of extra hardware.",
+        "pt": "Menciona o sinal de rejeição ou a ausência de hardware adicional."
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "s": 4,
+    "t": "open",
+    "q": {
+      "es": "Describe el encoder óptico de cuadratura de 3600 PPR: función, señal, rueda y utilidad en modo continuo.",
+      "en": "Describe the 3600 PPR quadrature optical encoder: function, signal, wheel and use in continuous mode.",
+      "pt": "Descreva o encoder óptico de quadratura de 3600 PPR: função, sinal, roda e utilidade no modo contínuo."
+    },
+    "model": {
+      "es": "Encoder óptico incremental de cuadratura, 3600 PPR, P/N 407956 / 408315.\nFunción: medir la velocidad y el desplazamiento reales del sustrato y sincronizar cada disparo del cabezal en modo continuo.\nSeñal: dos canales en cuadratura A/B, 24 V push-pull, con 3600 impulsos por revolución.\nRueda estándar de 53,05 mm de diámetro (perímetro 166,66 mm), lo que da 21,6 impulsos/mm y siete veces más resolución que el encoder de 500 PPR.",
+      "en": "Incremental quadrature optical encoder, 3600 PPR, P/N 407956 / 408315.\nFunction: measures actual substrate speed and displacement and synchronises every printhead trigger in continuous mode.\nSignal: two quadrature channels A/B, 24 V push-pull, with 3600 pulses per revolution.\nStandard 53.05 mm wheel (166.66 mm circumference), giving 21.6 pulses/mm and seven times the resolution of the 500 PPR encoder.",
+      "pt": "Encoder óptico incremental de quadratura, 3600 PPR, P/N 407956 / 408315.\nFunção: medir a velocidade e o deslocamento reais do substrato e sincronizar cada disparo do cabeçote no modo contínuo.\nSinal: dois canais em quadratura A/B, 24 V push-pull, com 3600 pulsos por revolução.\nRoda padrão de 53,05 mm de diâmetro (perímetro 166,66 mm), resultando em 21,6 pulsos/mm e sete vezes mais resolução que o encoder de 500 PPR."
+    },
+    "rubric": [
+      {
+        "es": "Identifica los 3600 PPR y la señal de cuadratura A/B.",
+        "en": "Identifies 3600 PPR and the A/B quadrature signal.",
+        "pt": "Identifica os 3600 PPR e o sinal de quadratura A/B."
+      },
+      {
+        "es": "Menciona la rueda de 53,05 mm y 21,6 impulsos/mm.",
+        "en": "Mentions the 53.05 mm wheel and 21.6 pulses/mm.",
+        "pt": "Menciona a roda de 53,05 mm e 21,6 pulsos/mm."
+      },
+      {
+        "es": "Explica la sincronización de la impresión en modo continuo.",
+        "en": "Explains print synchronisation in continuous mode.",
+        "pt": "Explica a sincronização da impressão no modo contínuo."
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "s": 4,
+    "t": "open",
+    "q": {
+      "es": "Describe el Platen Roller o rodillo de contraimpresión continuo: función, materiales y comprobaciones de mantenimiento.",
+      "en": "Describe the Platen Roller or continuous back-up roller: function, materials and maintenance checks.",
+      "pt": "Descreva o Platen Roller ou rolo de contrapressão contínua: função, materiais e verificações de manutenção."
+    },
+    "model": {
+      "es": "Rodillo cilíndrico de goma rectificada de alta precisión que actúa como superficie de contrapresión en modo continuo.\nFunción: acompañar el movimiento del sustrato y oponer la fuerza necesaria para que el cabezal transfiera la tinta de forma uniforme, sin frenar la película.\nDiseño: gira solidario al sustrato, por lo que evita el rozamiento de un pad estático y las marcas por arrastre.\nMantenimiento: debe estar limpio, sin hendiduras, cortes ni goma endurecida; se inspecciona a diario y se sustituye si produce arrugas o impresión borrosa.",
+      "en": "Precision ground rubber cylindrical roller that provides the back-up surface in continuous mode.\nFunction: follows substrate movement and provides the force needed for uniform ink transfer without dragging the film.\nDesign: rotates with the substrate, avoiding the friction of a static pad and drag marks.\nMaintenance: keep it clean, free of grooves, cuts or hardened rubber; inspect daily and replace if it causes wrinkles or blurred print.",
+      "pt": "Rolo cilíndrico de borracha retificada de alta precisão que atua como superfície de contrapressão no modo contínuo.\nFunção: acompanhar o movimento do substrato e fornecer a força necessária para que o cabeçote transfira a tinta de forma uniforme, sem arrastar o filme.\nProjeto: gira junto com o substrato, evitando o atrito de um pad estático e as marcas de arraste.\nManutenção: deve estar limpo, sem sulcos, cortes ou borracha endurecida; inspecionar diariamente e substituir se causar rugas ou impressão borrada."
+    },
+    "rubric": [
+      {
+        "es": "Define la función de contrapresión en modo continuo.",
+        "en": "Defines the back-up function in continuous mode.",
+        "pt": "Define a função de contrapressão no modo contínuo."
+      },
+      {
+        "es": "Indica que es un rodillo de goma giratorio.",
+        "en": "States that it is a rotating rubber roller.",
+        "pt": "Indica que é um rolo de borracha rotativo."
+      },
+      {
+        "es": "Menciona inspección de hendiduras, limpieza y sustitución.",
+        "en": "Mentions groove inspection, cleaning and replacement.",
+        "pt": "Menciona inspeção de sulcos, limpeza e substituição."
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "s": 4,
+    "t": "open",
+    "q": {
+      "es": "Describe el conjunto actuador / electroimán de la Videojet 6230: función, principio y P/N.",
+      "en": "Describe the Videojet 6230 actuator / electromagnet assembly: function, principle and P/N.",
+      "pt": "Descreva o conjunto atuador / eletroímã da Videojet 6230: função, princípio e P/N."
+    },
+    "model": {
+      "es": "Conjunto actuador / electroimán magnético asistido por resorte, P/N 408291.\nFunción: ejecutar el descenso y el retorno del cabezal térmico sobre el sustrato en cada ciclo de impresión.\nPrincipio: al energizarse, el electroimán vence la fuerza del resorte y baja el cabezal; al desenergizarse, el resorte lo devuelve a la posición de reposo. Todo el movimiento es eléctrico, sin aire comprimido.\nVentaja: elimina válvulas, mangueras y consumos neumáticos, con menor mantenimiento y mayor repetibilidad.",
+      "en": "Spring-assisted actuator / electromagnet assembly, P/N 408291.\nFunction: drives the thermal printhead down onto the substrate and back on every print cycle.\nPrinciple: when energised, the electromagnet overcomes the spring and lowers the printhead; when de-energised, the spring returns it to the rest position. All motion is electric, with no compressed air.\nAdvantage: removes valves, hoses and pneumatic consumption, with less maintenance and greater repeatability.",
+      "pt": "Conjunto atuador / eletroímã assistido por mola, P/N 408291.\nFunção: executar a descida e o retorno do cabeçote térmico sobre o substrato em cada ciclo de impressão.\nPrincípio: ao ser energizado, o eletroímã vence a força da mola e desce o cabeçote; ao ser desenergizado, a mola o retorna à posição de repouso. Todo o movimento é elétrico, sem ar comprimido.\nVantagem: elimina válvulas, mangueiras e consumo pneumático, com menos manutenção e maior repetibilidade."
+    },
+    "rubric": [
+      {
+        "es": "Identifica el P/N 408291 y el nombre del conjunto.",
+        "en": "Identifies P/N 408291 and the assembly name.",
+        "pt": "Identifica o P/N 408291 e o nome do conjunto."
+      },
+      {
+        "es": "Explica el accionamiento eléctrico asistido por resorte.",
+        "en": "Explains the spring-assisted electric actuation.",
+        "pt": "Explica o acionamento elétrico assistido por mola."
+      },
+      {
+        "es": "Destaca la ausencia de aire comprimido.",
+        "en": "Highlights the absence of compressed air.",
+        "pt": "Destaca a ausência de ar comprimido."
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "s": 4,
+    "t": "open",
+    "q": {
+      "es": "Describe la tarjeta PCB principal y la Micro SD de la DataFlex 6330: función, P/N de ambas y por qué no son intercambiables.",
+      "en": "Describe the DataFlex 6330 main PCB and Micro SD: function, P/Ns and why they are not interchangeable.",
+      "pt": "Descreva a placa PCB principal e o Micro SD da DataFlex 6330: função, P/Ns e por que não são intercambiáveis."
+    },
+    "model": {
+      "es": "Tarjeta PCB principal de la VJ 6330: P/N 407912. Es la unidad de procesamiento central: ejecuta CLARiTY, gobierna los motores paso a paso, el cabezal, el encoder y las comunicaciones.\nMicro SD de firmware: P/N 409769. Contiene la compilación de firmware específica de la 6330 y se usa al sustituir la PCB.\nNo son intercambiables: la Micro SD de la 6530 de 53 mm es 409770 y su hardware es distinto. Instalar el firmware equivocado impide el arranque correcto o deja el equipo inoperativo.",
+      "en": "VJ 6330 main PCB: P/N 407912. It is the central processing unit: runs CLARiTY, controls the stepper motors, printhead, encoder and communications.\nFirmware Micro SD: P/N 409769. It holds the 6330-specific firmware build and is used when replacing the PCB.\nThey are not interchangeable: the 53 mm 6530 Micro SD is 409770 and its hardware differs. Installing the wrong firmware prevents a correct start-up or leaves the unit inoperative.",
+      "pt": "Placa PCB principal da VJ 6330: P/N 407912. É a unidade de processamento central: executa o CLARiTY, controla os motores de passo, o cabeçote, o encoder e as comunicações.\nMicro SD de firmware: P/N 409769. Contém a compilação de firmware específica da 6330 e é usada na substituição da PCB.\nNão são intercambiáveis: o Micro SD da 6530 de 53 mm é 409770 e seu hardware é diferente. Instalar o firmware errado impede a inicialização correta ou deixa o equipamento inoperante."
+    },
+    "rubric": [
+      {
+        "es": "Indica PCB 407912 y Micro SD 409769.",
+        "en": "States PCB 407912 and Micro SD 409769.",
+        "pt": "Indica PCB 407912 e Micro SD 409769."
+      },
+      {
+        "es": "Explica la función de proceso y control de la PCB.",
+        "en": "Explains the PCB processing and control function.",
+        "pt": "Explica a função de processamento e controle da PCB."
+      },
+      {
+        "es": "Justifica la incompatibilidad por firmware específico de modelo.",
+        "en": "Justifies incompatibility due to model-specific firmware.",
+        "pt": "Justifica a incompatibilidade pelo firmware específico do modelo."
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "s": 4,
+    "t": "open",
+    "q": {
+      "es": "Describe el casete de ribbon de la VJ 6530 de 107 mm: función, capacidad y P/N.",
+      "en": "Describe the 107 mm VJ 6530 ribbon cassette: function, capacity and P/N.",
+      "pt": "Descreva o cassete de ribbon da VJ 6530 de 107 mm: função, capacidade e P/N."
+    },
+    "model": {
+      "es": "Casete de ribbon de 107 mm, P/N 408682.\nFunción: alojar y guiar el rollo de cinta, mantener la tensión y permitir el cambio rápido del consumible sin desmontar el cabezal.\nCapacidad: rollos de hasta 110 mm de ancho y 1200 m de longitud.\nIncluye el recorrido de cinta, los rodillos guía y los mandriles con resortes de hoja que evitan el deslizamiento del buje de cartón.",
+      "en": "107 mm ribbon cassette, P/N 408682.\nFunction: holds and guides the ribbon roll, maintains tension and allows quick consumable changes without removing the printhead.\nCapacity: rolls up to 110 mm wide and 1200 m long.\nIt includes the ribbon path, guide rollers and mandrels with leaf springs that prevent the cardboard core from slipping.",
+      "pt": "Cassete de ribbon de 107 mm, P/N 408682.\nFunção: alojar e guiar o rolo de ribbon, manter a tensão e permitir a troca rápida do consumível sem remover o cabeçote.\nCapacidade: rolos de até 110 mm de largura e 1200 m de comprimento.\nInclui o percurso do ribbon, os rolos-guia e os mandris com molas de lâmina que evitam o deslizamento do tubete de papelão."
+    },
+    "rubric": [
+      {
+        "es": "Indica el P/N 408682 y el ancho de 107 mm.",
+        "en": "States P/N 408682 and the 107 mm width.",
+        "pt": "Indica o P/N 408682 e a largura de 107 mm."
+      },
+      {
+        "es": "Menciona capacidad de 1200 m y hasta 110 mm de ancho.",
+        "en": "Mentions 1200 m capacity and up to 110 mm width.",
+        "pt": "Menciona capacidade de 1200 m e até 110 mm de largura."
+      },
+      {
+        "es": "Explica cambio rápido, guiado o tensión del ribbon.",
+        "en": "Explains quick change, ribbon guiding or tension.",
+        "pt": "Explica troca rápida, guiamento ou tensão do ribbon."
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "s": 4,
+    "t": "open",
+    "q": {
+      "es": "Describe el kit de tensión de correas de campo (Field Tensioning Kit): uso, valores de tensión por modelo y P/N.",
+      "en": "Describe the field belt tensioning kit: use, tension values per model and P/N.",
+      "pt": "Descreva o kit de tensão de correias de campo (Field Tensioning Kit): uso, valores de tensão por modelo e P/N."
+    },
+    "model": {
+      "es": "Kit de tensión de campo P/N 407954 (TT3 Belt Field Tensioning Kit).\nFunción: medir y ajustar la tensión de la correa de transmisión durante el mantenimiento o tras sustituirla, sin instrumentos improvisados.\nValores: 10 kg en DataFlex 6330 y 6530. La 6230 utiliza su propio kit (408309) y se ajusta a 8 kg.\nUna tensión incorrecta provoca pérdida de pasos, errores de posición del carro (E3236) y desgaste prematuro de poleas y correa.",
+      "en": "Field tensioning kit P/N 407954 (TT3 Belt Field Tensioning Kit).\nFunction: measure and adjust drive belt tension during maintenance or after replacement, without improvised tools.\nValues: 10 kg on DataFlex 6330 and 6530. The 6230 uses its own kit (408309) and is set to 8 kg.\nIncorrect tension causes lost steps, carriage position errors (E3236) and premature wear of pulleys and belt.",
+      "pt": "Kit de tensão de campo P/N 407954 (TT3 Belt Field Tensioning Kit).\nFunção: medir e ajustar a tensão da correia de transmissão durante a manutenção ou após a substituição, sem ferramentas improvisadas.\nValores: 10 kg na DataFlex 6330 e 6530. A 6230 utiliza seu próprio kit (408309) e é ajustada a 8 kg.\nTensão incorreta causa perda de passos, erros de posição do carro (E3236) e desgaste prematuro de polias e correia."
+    },
+    "rubric": [
+      {
+        "es": "Identifica el kit 407954 y su función de calibración.",
+        "en": "Identifies kit 407954 and its calibration function.",
+        "pt": "Identifica o kit 407954 e sua função de calibração."
+      },
+      {
+        "es": "Indica 10 kg en 6330/6530 y 8 kg en 6230.",
+        "en": "States 10 kg on 6330/6530 and 8 kg on 6230.",
+        "pt": "Indica 10 kg na 6330/6530 e 8 kg na 6230."
+      },
+      {
+        "es": "Relaciona la tensión con errores de posición o desgaste.",
+        "en": "Links tension to position errors or wear.",
+        "pt": "Relaciona a tensão com erros de posição ou desgaste."
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "s": 4,
+    "t": "open",
+    "q": {
+      "es": "Describe el kit de limpieza de cabezal térmico: contenido, uso correcto y P/N.",
+      "en": "Describe the thermal printhead cleaning kit: contents, correct use and P/N.",
+      "pt": "Descreva o kit de limpeza de cabeçote térmico: conteúdo, uso correto e P/N."
+    },
+    "model": {
+      "es": "Kit de limpieza P/N 216054.\nContenido: toallitas de espuma preimpregnadas con alcohol isopropílico (presentación habitual de 10 unidades).\nUso: con la impresora parada y el cabezal frío, frotar suavemente la línea de resistencias y la cara del cabezal para retirar residuos de cera o resina; no rascar ni usar objetos metálicos.\nFunción: mantener la transferencia uniforme, evitar puntos blancos y prolongar la vida del cabezal.",
+      "en": "Cleaning kit P/N 216054.\nContents: foam wipes pre-saturated with isopropyl alcohol (usual pack of 10).\nUse: with the printer stopped and the printhead cold, gently wipe the resistor line and printhead face to remove wax or resin residue; do not scrape or use metal objects.\nPurpose: maintain uniform transfer, prevent white dots and extend printhead life.",
+      "pt": "Kit de limpeza P/N 216054.\nConteúdo: lenços de espuma pré-umedecidos com álcool isopropílico (apresentação habitual de 10 unidades).\nUso: com a impressora parada e o cabeçote frio, passar suavemente na linha de resistências e na face do cabeçote para remover resíduos de cera ou resina; não raspar nem usar objetos metálicos.\nFunção: manter a transferência uniforme, evitar pontos brancos e prolongar a vida do cabeçote."
+    },
+    "rubric": [
+      {
+        "es": "Indica el P/N 216054 y que son toallitas con alcohol isopropílico.",
+        "en": "States P/N 216054 and that they are isopropyl alcohol wipes.",
+        "pt": "Indica o P/N 216054 e que são lenços com álcool isopropílico."
+      },
+      {
+        "es": "Especifica limpiar en frío y sin rascar.",
+        "en": "Specifies cleaning cold and without scraping.",
+        "pt": "Especifica limpar a frio e sem raspar."
+      },
+      {
+        "es": "Explica el objetivo: transferencia uniforme y vida del cabezal.",
+        "en": "Explains the goal: uniform transfer and printhead life.",
+        "pt": "Explica o objetivo: transferência uniforme e vida do cabeçote."
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "s": 4,
+    "t": "open",
+    "q": {
+      "es": "Describe el optoacoplador de aislamiento de señal de falla (boletín BT1908031): problema que resuelve, conexión y beneficio.",
+      "en": "Describe the fault-signal isolation optocoupler (bulletin BT1908031): problem solved, connection and benefit.",
+      "pt": "Descreva o optoacoplador de isolamento do sinal de falha (boletim BT1908031): problema que resolve, conexão e benefício."
+    },
+    "model": {
+      "es": "Relé optoacoplado externo de 24 V CC recomendado por el boletín BT1908031.\nProblema: el micro-relé interno de falla comparte referencia con el PLC del cliente y los ruidos inducidos por sus bobinas provocan fallas de comunicación Ethernet aleatorias.\nConexión: se instala en la línea de señal de falla (pines 7 y 8) para desacoplar galvánicamente los contactos secos de la impresora del gabinete de control.\nBeneficio: elimina los disparos falsos y las pérdidas de comunicación sin modificar la impresora.",
+      "en": "External 24 V DC opto-isolated relay recommended by bulletin BT1908031.\nProblem: the internal fault micro-relay shares a reference with the customer PLC and noise induced by its coils causes random Ethernet communication faults.\nConnection: installed on the fault signal line (pins 7 and 8) to galvanically isolate the printer dry contacts from the control cabinet.\nBenefit: eliminates false trips and communication losses without modifying the printer.",
+      "pt": "Relé optoacoplado externo de 24 V CC recomendado pelo boletim BT1908031.\nProblema: o micro-relé interno de falha compartilha referência com o CLP do cliente e os ruídos induzidos por suas bobinas causam falhas aleatórias de comunicação Ethernet.\nConexão: instalado na linha de sinal de falha (pinos 7 e 8) para isolar galvanicamente os contatos secos da impressora do painel de controle.\nBenefício: elimina disparos falsos e perdas de comunicação sem modificar a impressora."
+    },
+    "rubric": [
+      {
+        "es": "Identifica el problema de ruido del PLC y las fallas de comunicación.",
+        "en": "Identifies the PLC noise problem and communication faults.",
+        "pt": "Identifica o problema de ruído do CLP e as falhas de comunicação."
+      },
+      {
+        "es": "Menciona un relé optoacoplado externo de 24 V CC.",
+        "en": "Mentions an external 24 V DC opto-isolated relay.",
+        "pt": "Menciona um relé optoacoplado externo de 24 V CC."
+      },
+      {
+        "es": "Explica el aislamiento galvánico de la señal de falla.",
+        "en": "Explains the galvanic isolation of the fault signal.",
+        "pt": "Explica o isolamento galvânico do sinal de falha."
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "s": 5,
+    "t": "text",
+    "q": {
+      "es": "Cálculo de resolución de encoder. Un encoder óptico tiene 3600 impulsos por revolución y una rueda de tracción de 53,05 mm de diámetro. Calcula el perímetro de la rueda (C) y la resolución en impulsos por milímetro.",
+      "en": "Encoder resolution calculation. An optical encoder has 3600 pulses per revolution and a 53.05 mm traction wheel. Calculate the wheel circumference (C) and the resolution in pulses per millimetre.",
+      "pt": "Cálculo de resolução do encoder. Um encoder óptico tem 3600 pulsos por revolução e uma roda de tração de 53,05 mm de diâmetro. Calcule o perímetro da roda (C) e a resolução em pulsos por milímetro."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Perímetro C",
+          "en": "Circumference C",
+          "pt": "Perímetro C"
+        },
+        "unit": "mm",
+        "num": [
+          166.66
+        ],
+        "tol": 1.5
+      },
+      {
+        "label": {
+          "es": "Resolución",
+          "en": "Resolution",
+          "pt": "Resolução"
+        },
+        "unit": "impulsos/mm",
+        "num": [
+          21.6
+        ],
+        "tol": 0.61
+      }
+    ],
+    "ex": {
+      "es": "C = π × D = 3,14159 × 53,05 mm = 166,66 mm\nResolución = 3600 impulsos ÷ 166,66 mm = 21,6 impulsos/mm\n(Videojet redondea a 21 impulsos/mm en sus guías de campo.)",
+      "en": "C = π × D = 3.14159 × 53.05 mm = 166.66 mm\nResolution = 3600 pulses ÷ 166.66 mm = 21.6 pulses/mm\n(Videojet rounds to 21 pulses/mm in its field guides.)",
+      "pt": "C = π × D = 3,14159 × 53,05 mm = 166,66 mm\nResolução = 3600 pulsos ÷ 166,66 mm = 21,6 pulsos/mm\n(A Videojet arredonda para 21 pulsos/mm em seus guias de campo.)"
+    }
+  },
+  {
+    "id": 72,
+    "s": 5,
+    "t": "text",
+    "q": {
+      "es": "Cálculo de frecuencia de impulsos a velocidad de línea. La línea avanza a 600 mm/s y el encoder es de 3600 PPR con rueda de 53,05 mm (21,6 impulsos/mm). Calcula la frecuencia en hercios de la señal enviada a la impresora.",
+      "en": "Pulse frequency at line speed. The line runs at 600 mm/s and the encoder is 3600 PPR with a 53.05 mm wheel (21.6 pulses/mm). Calculate the frequency in hertz of the signal sent to the printer.",
+      "pt": "Cálculo de frequência de pulsos na velocidade da linha. A linha avança a 600 mm/s e o encoder é de 3600 PPR com roda de 53,05 mm (21,6 pulsos/mm). Calcule a frequência em hertz do sinal enviado à impressora."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Frecuencia",
+          "en": "Frequency",
+          "pt": "Frequência"
+        },
+        "unit": "Hz / kHz",
+        "num": [
+          12960,
+          12.96
+        ],
+        "tol": [
+          260,
+          0.26
+        ]
+      }
+    ],
+    "ex": {
+      "es": "f = velocidad × resolución = 600 mm/s × 21,6 impulsos/mm\nf = 12 960 Hz = 12,96 kHz",
+      "en": "f = speed × resolution = 600 mm/s × 21.6 pulses/mm\nf = 12,960 Hz = 12.96 kHz",
+      "pt": "f = velocidade × resolução = 600 mm/s × 21,6 pulsos/mm\nf = 12.960 Hz = 12,96 kHz"
+    }
+  },
+  {
+    "id": 73,
+    "s": 5,
+    "t": "text",
+    "q": {
+      "es": "Cálculo de consumo de ribbon por turno. Una DataFlex 6330 opera a 180 impresiones/minuto. Cada etiqueta tiene 40 mm de largo y la retracción entre impresiones es de 1 mm. Calcula el consumo total de cinta en metros durante un turno continuo de 8 horas.",
+      "en": "Ribbon consumption per shift. A DataFlex 6330 runs at 180 prints/minute. Each label is 40 mm long and retraction between prints is 1 mm. Calculate total ribbon consumption in metres over a continuous 8-hour shift.",
+      "pt": "Cálculo de consumo de ribbon por turno. Uma DataFlex 6330 opera a 180 impressões/minuto. Cada etiqueta tem 40 mm de comprimento e a retração entre impressões é de 1 mm. Calcule o consumo total de ribbon em metros durante um turno contínuo de 8 horas."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Consumo total",
+          "en": "Total consumption",
+          "pt": "Consumo total"
+        },
+        "unit": "m / km",
+        "num": [
+          3542.4,
+          3.5424
+        ],
+        "tol": [
+          45,
+          0.045
+        ]
+      }
+    ],
+    "ex": {
+      "es": "Avance por impresión = 40 mm + 1 mm = 41 mm = 0,041 m\nImpresiones/h = 180 × 60 = 10 800\nImpresiones en 8 h = 10 800 × 8 = 86 400\nConsumo = 86 400 × 0,041 m = 3 542,4 m",
+      "en": "Advance per print = 40 mm + 1 mm = 41 mm = 0.041 m\nPrints/h = 180 × 60 = 10,800\nPrints in 8 h = 10,800 × 8 = 86,400\nConsumption = 86,400 × 0.041 m = 3,542.4 m",
+      "pt": "Avanço por impressão = 40 mm + 1 mm = 41 mm = 0,041 m\nImpressões/h = 180 × 60 = 10.800\nImpressões em 8 h = 10.800 × 8 = 86.400\nConsumo = 86.400 × 0,041 m = 3.542,4 m"
+    }
+  },
+  {
+    "id": 74,
+    "s": 5,
+    "t": "text",
+    "q": {
+      "es": "Cálculo de autonomía del rollo. Un rollo de ribbon de 1200 m (DataFlex 6330/6530) se consume a 7,38 m/minuto. Calcula su duración total en minutos y en horas de producción continua.",
+      "en": "Roll autonomy. A 1200 m ribbon roll (DataFlex 6330/6530) is consumed at 7.38 m/minute. Calculate its total duration in minutes and in hours of continuous production.",
+      "pt": "Cálculo de autonomia do rolo. Um rolo de ribbon de 1200 m (DataFlex 6330/6530) é consumido a 7,38 m/minuto. Calcule sua duração total em minutos e em horas de produção contínua."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Duración en minutos",
+          "en": "Duration in minutes",
+          "pt": "Duração em minutos"
+        },
+        "unit": "min",
+        "num": [
+          162.6
+        ],
+        "tol": 3
+      },
+      {
+        "label": {
+          "es": "Duración en horas",
+          "en": "Duration in hours",
+          "pt": "Duração em horas"
+        },
+        "unit": "h",
+        "num": [
+          2.71
+        ],
+        "tol": 0.1
+      }
+    ],
+    "ex": {
+      "es": "t = 1200 m ÷ 7,38 m/min = 162,6 min\nEn horas = 162,6 ÷ 60 = 2,71 h ≈ 2 h 42 min",
+      "en": "t = 1200 m ÷ 7.38 m/min = 162.6 min\nIn hours = 162.6 ÷ 60 = 2.71 h ≈ 2 h 42 min",
+      "pt": "t = 1200 m ÷ 7,38 m/min = 162,6 min\nEm horas = 162,6 ÷ 60 = 2,71 h ≈ 2 h 42 min"
+    }
+  },
+  {
+    "id": 75,
+    "s": 5,
+    "t": "text",
+    "q": {
+      "es": "Cálculo de frecuencia máxima de encoder a 1000 mm/s. La DataFlex 6530 opera a su velocidad máxima continua. La resolución del encoder es 21,6 impulsos/mm. Calcula la frecuencia máxima en kHz que debe procesar la tarjeta principal.",
+      "en": "Maximum encoder frequency at 1000 mm/s. The DataFlex 6530 runs at its maximum continuous speed. Encoder resolution is 21.6 pulses/mm. Calculate the maximum frequency in kHz the main board must process.",
+      "pt": "Cálculo de frequência máxima do encoder a 1000 mm/s. A DataFlex 6530 opera em sua velocidade máxima contínua. A resolução do encoder é 21,6 pulsos/mm. Calcule a frequência máxima em kHz que a placa principal deve processar."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Frecuencia máxima",
+          "en": "Maximum frequency",
+          "pt": "Frequência máxima"
+        },
+        "unit": "kHz / Hz",
+        "num": [
+          21.6,
+          21600
+        ],
+        "tol": [
+          0.5,
+          500
+        ]
+      }
+    ],
+    "ex": {
+      "es": "f = 1000 mm/s × 21,6 impulsos/mm = 21 600 Hz\n21 600 Hz ÷ 1000 = 21,6 kHz",
+      "en": "f = 1000 mm/s × 21.6 pulses/mm = 21,600 Hz\n21,600 Hz ÷ 1000 = 21.6 kHz",
+      "pt": "f = 1000 mm/s × 21,6 pulsos/mm = 21.600 Hz\n21.600 Hz ÷ 1000 = 21,6 kHz"
+    }
+  },
+  {
+    "id": 76,
+    "s": 5,
+    "t": "text",
+    "q": {
+      "es": "Cálculo de ahorro con Intermittent Stripes. Una etiqueta de 75 mm contiene dos bloques de texto activo de 15 mm cada uno. El modo Intermittent Stripes avanza cinta solo en los bloques activos. Calcula el porcentaje de ahorro frente al avance continuo de 75 mm.",
+      "en": "Intermittent Stripes saving. A 75 mm label contains two active text blocks of 15 mm each. Intermittent Stripes advances ribbon only over the active blocks. Calculate the percentage saving versus a continuous 75 mm advance.",
+      "pt": "Cálculo de economia com Intermittent Stripes. Uma etiqueta de 75 mm contém dois blocos de texto ativo de 15 mm cada. O modo Intermittent Stripes avança o ribbon apenas nos blocos ativos. Calcule a porcentagem de economia em relação ao avanço contínuo de 75 mm."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Ahorro de ribbon",
+          "en": "Ribbon saving",
+          "pt": "Economia de ribbon"
+        },
+        "unit": "%",
+        "num": [
+          60
+        ],
+        "tol": 1
+      }
+    ],
+    "ex": {
+      "es": "Avance sin ahorro = 75 mm\nAvance con franjas = 15 + 15 = 30 mm\nAhorro = (75 − 30) ÷ 75 × 100 = 60 %",
+      "en": "Advance without saving = 75 mm\nAdvance with stripes = 15 + 15 = 30 mm\nSaving = (75 − 30) ÷ 75 × 100 = 60%",
+      "pt": "Avanço sem economia = 75 mm\nAvanço com faixas = 15 + 15 = 30 mm\nEconomia = (75 − 30) ÷ 75 × 100 = 60%"
+    }
+  },
+  {
+    "id": 77,
+    "s": 5,
+    "t": "text",
+    "q": {
+      "es": "Cálculo del tiempo por ciclo. Una empaquetadora vertical funciona a 120 paquetes/minuto. Calcula el tiempo total disponible por ciclo en milisegundos.",
+      "en": "Cycle time calculation. A vertical packaging machine runs at 120 packs/minute. Calculate the total time available per cycle in milliseconds.",
+      "pt": "Cálculo do tempo por ciclo. Uma empacotadora vertical funciona a 120 pacotes/minuto. Calcule o tempo total disponível por ciclo em milissegundos."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Tiempo por ciclo",
+          "en": "Time per cycle",
+          "pt": "Tempo por ciclo"
+        },
+        "unit": "ms",
+        "num": [
+          500,
+          0.5
+        ],
+        "tol": [
+          10,
+          0.02
+        ]
+      }
+    ],
+    "ex": {
+      "es": "T = 60 s ÷ 120 paquetes = 0,5 s por paquete\n0,5 s × 1000 = 500 ms",
+      "en": "T = 60 s ÷ 120 packs = 0.5 s per pack\n0.5 s × 1000 = 500 ms",
+      "pt": "T = 60 s ÷ 120 pacotes = 0,5 s por pacote\n0,5 s × 1000 = 500 ms"
+    }
+  },
+  {
+    "id": 78,
+    "s": 5,
+    "t": "text",
+    "q": {
+      "es": "Comparación de encoders. Compara la resolución espacial (mm entre impulsos) de un encoder de 500 PPR y otro de 3600 PPR, ambos con rueda de 53,05 mm (C = 166,66 mm). Indica la distancia entre impulsos de cada uno.",
+      "en": "Encoder comparison. Compare the spatial resolution (mm between pulses) of a 500 PPR encoder and a 3600 PPR encoder, both with a 53.05 mm wheel (C = 166.66 mm). Give the distance between pulses for each.",
+      "pt": "Comparação de encoders. Compare a resolução espacial (mm entre pulsos) de um encoder de 500 PPR e outro de 3600 PPR, ambos com roda de 53,05 mm (C = 166,66 mm). Indique a distância entre pulsos de cada um."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Encoder de 500 PPR",
+          "en": "500 PPR encoder",
+          "pt": "Encoder de 500 PPR"
+        },
+        "unit": "mm/impulso",
+        "num": [
+          0.333
+        ],
+        "tol": 0.02
+      },
+      {
+        "label": {
+          "es": "Encoder de 3600 PPR",
+          "en": "3600 PPR encoder",
+          "pt": "Encoder de 3600 PPR"
+        },
+        "unit": "mm/impulso",
+        "num": [
+          0.046
+        ],
+        "tol": 0.006
+      }
+    ],
+    "ex": {
+      "es": "500 PPR: 166,66 mm ÷ 500 = 0,333 mm por impulso (3 impulsos/mm)\n3600 PPR: 166,66 mm ÷ 3600 = 0,046 mm por impulso (21,6 impulsos/mm)\nEl encoder de 3600 PPR tiene 7,2 veces más resolución espacial.",
+      "en": "500 PPR: 166.66 mm ÷ 500 = 0.333 mm per pulse (3 pulses/mm)\n3600 PPR: 166.66 mm ÷ 3600 = 0.046 mm per pulse (21.6 pulses/mm)\nThe 3600 PPR encoder has 7.2 times the spatial resolution.",
+      "pt": "500 PPR: 166,66 mm ÷ 500 = 0,333 mm por pulso (3 pulsos/mm)\n3600 PPR: 166,66 mm ÷ 3600 = 0,046 mm por pulso (21,6 pulsos/mm)\nO encoder de 3600 PPR tem 7,2 vezes mais resolução espacial."
+    }
+  },
+  {
+    "id": 79,
+    "s": 5,
+    "t": "text",
+    "q": {
+      "es": "Distancia mínima entre subimágenes en VJ 6530. Según las especificaciones de registro, al imprimir a 700 mm/s o más, ¿cuál es la distancia mínima entre dos subimágenes consecutivas?",
+      "en": "Minimum distance between sub-images on the VJ 6530. According to the registration specifications, when printing at 700 mm/s or above, what is the minimum distance between two consecutive sub-images?",
+      "pt": "Distância mínima entre subimagens na VJ 6530. Segundo as especificações de registro, ao imprimir a 700 mm/s ou mais, qual é a distância mínima entre duas subimagens consecutivas?"
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Distancia mínima",
+          "en": "Minimum distance",
+          "pt": "Distância mínima"
+        },
+        "unit": "mm",
+        "num": [
+          150
+        ],
+        "tol": 1
+      }
+    ],
+    "ex": {
+      "es": "A partir de 700 mm/s en la 6530, la separación mínima entre subimágenes es de 150 mm (en la 6330 el límite es 500 mm/s).",
+      "en": "From 700 mm/s on the 6530, the minimum separation between sub-images is 150 mm (on the 6330 the threshold is 500 mm/s).",
+      "pt": "A partir de 700 mm/s na 6530, a separação mínima entre subimagens é de 150 mm (na 6330 o limite é 500 mm/s)."
+    }
+  },
+  {
+    "id": 80,
+    "s": 5,
+    "t": "text",
+    "q": {
+      "es": "Cálculo de avance diario. Una empacadora con DataFlex 6330 opera 2 turnos de 8 horas al día y produce 200 ppm, con un avance de ribbon de 35 mm por impresión. Calcula el consumo total en metros y cuántos rollos de 1200 m se necesitan al día.",
+      "en": "Daily advance calculation. A packaging line with a DataFlex 6330 runs 2 shifts of 8 hours per day at 200 ppm, with 35 mm of ribbon advance per print. Calculate total consumption in metres and how many 1200 m rolls are needed per day.",
+      "pt": "Cálculo de avanço diário. Uma empacotadora com DataFlex 6330 opera 2 turnos de 8 horas por dia e produz 200 ppm, com avanço de ribbon de 35 mm por impressão. Calcule o consumo total em metros e quantos rolos de 1200 m são necessários por dia."
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Consumo total",
+          "en": "Total consumption",
+          "pt": "Consumo total"
+        },
+        "unit": "m",
+        "num": [
+          6720
+        ],
+        "tol": 45
+      },
+      {
+        "label": {
+          "es": "Rollos necesarios",
+          "en": "Rolls required",
+          "pt": "Rolos necessários"
+        },
+        "unit": "rollos",
+        "num": [
+          6,
+          5.6
+        ],
+        "tol": [
+          0.06,
+          0.06
+        ]
+      }
+    ],
+    "ex": {
+      "es": "Tiempo = 16 h × 60 = 960 min\nImpresiones = 960 × 200 = 192 000\nConsumo = 192 000 × 0,035 m = 6 720 m\nRollos = 6 720 ÷ 1200 = 5,6 → se necesitan 6 rollos",
+      "en": "Time = 16 h × 60 = 960 min\nPrints = 960 × 200 = 192,000\nConsumption = 192,000 × 0.035 m = 6,720 m\nRolls = 6,720 ÷ 1200 = 5.6 → 6 rolls required",
+      "pt": "Tempo = 16 h × 60 = 960 min\nImpressões = 960 × 200 = 192.000\nConsumo = 192.000 × 0,035 m = 6.720 m\nRolos = 6.720 ÷ 1200 = 5,6 → são necessários 6 rolos"
+    }
+  },
+  {
+    "id": 81,
+    "s": 6,
+    "t": "short",
+    "q": {
+      "es": "¿Cuál es la extensión de archivo estándar que genera CLARiSOFT al guardar una plantilla de diseño de mensaje?",
+      "en": "What is the standard file extension generated by CLARiSOFT when saving a message design template?",
+      "pt": "Qual é a extensão de arquivo padrão gerada pelo CLARiSOFT ao salvar um modelo de mensagem?"
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Extensión",
+          "en": "Extension",
+          "pt": "Extensão"
+        },
+        "unit": "",
+        "accept": [
+          "ciff"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "CLARiSOFT guarda las plantillas en formato .ciff (Common Interface File Format), el archivo que interpreta la impresora CLARiTY.",
+      "en": "CLARiSOFT saves templates as .ciff (Common Interface File Format), the file the CLARiTY printer interprets.",
+      "pt": "O CLARiSOFT salva os modelos no formato .ciff (Common Interface File Format), o arquivo interpretado pela impressora CLARiTY."
+    }
+  },
+  {
+    "id": 82,
+    "s": 6,
+    "t": "short",
+    "q": {
+      "es": "¿Cómo se configura en CLARiSOFT la presencia de una barra separadora para activar el modo de ahorro de cinta Intermittent Stripes?",
+      "en": "How is the separator bar configured in CLARiSOFT to enable Intermittent Stripes ribbon saving?",
+      "pt": "Como se configura no CLARiSOFT a barra separadora para ativar o modo de economia de ribbon Intermittent Stripes?"
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Nombre del campo",
+          "en": "Field name",
+          "pt": "Nome do campo"
+        },
+        "unit": "",
+        "accept": [
+          "imageseparator",
+          "image separator",
+          "separador de imagen",
+          "separador de imagenes",
+          "barra separadora",
+          "linha separadora"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "Se inserta una línea gráfica con el nombre de campo ImageSeparator y se marca como no impresa. La impresora detecta esa marca y avanza el ribbon solo en los bloques activos.",
+      "en": "A graphic line named ImageSeparator is inserted and marked as non-printing. The printer detects that mark and advances ribbon only over the active blocks.",
+      "pt": "Insere-se uma linha gráfica com o nome de campo ImageSeparator e marca-se como não impressa. A impressora detecta essa marca e avança o ribbon apenas nos blocos ativos."
+    }
+  },
+  {
+    "id": 83,
+    "s": 6,
+    "t": "short",
+    "q": {
+      "es": "¿Qué herramienta de CLARiSOFT permite vincular campos de texto variables con tablas de productos externas?",
+      "en": "Which CLARiSOFT tool links variable text fields to external product tables?",
+      "pt": "Qual ferramenta do CLARiSOFT permite vincular campos de texto variáveis a tabelas de produtos externas?"
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Herramienta",
+          "en": "Tool",
+          "pt": "Ferramenta"
+        },
+        "unit": "",
+        "accept": [
+          "database manager",
+          "gestor de base de datos",
+          "gestor de bases de datos",
+          "gerenciador de banco de dados",
+          "administrador de base de datos"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "CLARiSOFT Database Manager permite conectar el diseño con bases de datos o tablas de productos y arrastrar campos variables.",
+      "en": "CLARiSOFT Database Manager connects the design to databases or product tables and lets you drag variable fields.",
+      "pt": "O CLARiSOFT Database Manager conecta o design a bancos de dados ou tabelas de produtos e permite arrastar campos variáveis."
+    }
+  },
+  {
+    "id": 84,
+    "s": 6,
+    "t": "short",
+    "q": {
+      "es": "Al instalar CLARiSOFT sin clave de activación ni dongle USB, ¿en qué modo funciona y cuál es su limitación principal?",
+      "en": "When CLARiSOFT is installed without an activation key or USB dongle, in which mode does it run and what is its main limitation?",
+      "pt": "Ao instalar o CLARiSOFT sem chave de ativação nem dongle USB, em que modo ele funciona e qual é sua principal limitação?"
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Modo",
+          "en": "Mode",
+          "pt": "Modo"
+        },
+        "unit": "",
+        "accept": [
+          "demo",
+          "demostracion",
+          "demonstracao",
+          "evaluacion"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "Funciona en modo demostración: permite diseñar y ver la previsualización, pero bloquea el guardado del archivo .ciff (y por tanto la descarga a la impresora).",
+      "en": "It runs in demo mode: you can design and preview, but saving the .ciff file (and therefore downloading to the printer) is blocked.",
+      "pt": "Funciona no modo demonstração: permite projetar e visualizar, mas bloqueia o salvamento do arquivo .ciff (e, portanto, o download para a impressora)."
+    }
+  },
+  {
+    "id": 85,
+    "s": 6,
+    "t": "short",
+    "q": {
+      "es": "¿Cuál es la función principal del programa utilitario CLARiTY Config?",
+      "en": "What is the main function of the CLARiTY Config utility?",
+      "pt": "Qual é a função principal do utilitário CLARiTY Config?"
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Función principal",
+          "en": "Main function",
+          "pt": "Função principal"
+        },
+        "unit": "",
+        "accept": [
+          "configurar",
+          "configuracion",
+          "configuration",
+          "clonar",
+          "clone",
+          "respaldo",
+          "backup",
+          "firmware",
+          "actualizar",
+          "upload",
+          "download"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "CLARiTY Config sirve para configurar, respaldar (Upload), clonar (Download), actualizar firmware y ajustar parámetros avanzados de las impresoras CLARiTY.",
+      "en": "CLARiTY Config is used to configure, back up (Upload), clone (Download), update firmware and change advanced parameters on CLARiTY printers.",
+      "pt": "O CLARiTY Config serve para configurar, fazer backup (Upload), clonar (Download), atualizar firmware e ajustar parâmetros avançados das impressoras CLARiTY."
+    }
+  },
+  {
+    "id": 86,
+    "s": 6,
+    "t": "short",
+    "q": {
+      "es": "¿Qué función cumple el botón Upload en la interfaz de CLARiTY Config al conectarse a una impresora?",
+      "en": "What does the Upload button do in the CLARiTY Config interface when connected to a printer?",
+      "pt": "Qual é a função do botão Upload na interface do CLARiTY Config ao se conectar a uma impressora?"
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Acción",
+          "en": "Action",
+          "pt": "Ação"
+        },
+        "unit": "",
+        "accept": [
+          "subir",
+          "upload",
+          "extrae",
+          "extract",
+          "descarga",
+          "download",
+          "respaldo",
+          "backup"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "Upload extrae y descarga los parámetros de configuración de la impresora hacia la PC para crear un archivo de respaldo (.xml/.arc).",
+      "en": "Upload extracts and downloads the printer configuration parameters to the PC to create a backup file (.xml/.arc).",
+      "pt": "Upload extrai e baixa os parâmetros de configuração da impressora para o PC, criando um arquivo de backup (.xml/.arc)."
+    }
+  },
+  {
+    "id": 87,
+    "s": 6,
+    "t": "short",
+    "q": {
+      "es": "¿En qué ruta del menú de CLARiTY Config se habilita la función de inicio automático AutoRunning?",
+      "en": "Under which CLARiTY Config menu path is the AutoRunning automatic start function enabled?",
+      "pt": "Em qual caminho de menu do CLARiTY Config é habilitada a função de início automático AutoRunning?"
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Ruta o parámetro",
+          "en": "Path or parameter",
+          "pt": "Caminho ou parâmetro"
+        },
+        "unit": "",
+        "accept": [
+          "autorunning",
+          "auto running",
+          "auto-running",
+          "inicio automatico",
+          "autoarranque"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "En System > AutoRunning, asignando el valor 1: Yes.",
+      "en": "Under System > AutoRunning, set the value to 1: Yes.",
+      "pt": "Em System > AutoRunning, atribuindo o valor 1: Yes."
+    }
+  },
+  {
+    "id": 88,
+    "s": 6,
+    "t": "short",
+    "q": {
+      "es": "En CLARiTY Config, ¿qué parámetro se debe modificar para cambiar la ubicación de la base de datos entre local y remota?",
+      "en": "In CLARiTY Config, which parameter changes the database location between local and remote?",
+      "pt": "No CLARiTY Config, qual parâmetro deve ser alterado para mudar a localização do banco de dados entre local e remoto?"
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Parámetro",
+          "en": "Parameter",
+          "pt": "Parâmetro"
+        },
+        "unit": "",
+        "accept": [
+          "database location",
+          "ubicacion de la base de datos",
+          "localizacao do banco de dados",
+          "database",
+          "base de datos",
+          "banco de dados"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "Database Location, con valores 0: Local y 1: Remote.",
+      "en": "Database Location, with values 0: Local and 1: Remote.",
+      "pt": "Database Location, com valores 0: Local e 1: Remote."
+    }
+  },
+  {
+    "id": 89,
+    "s": 6,
+    "t": "short",
+    "q": {
+      "es": "¿Qué número de puerto de red TCP/IP se asigna por defecto en CLARiTY Config para la comunicación de comandos ASCII?",
+      "en": "Which TCP/IP network port is assigned by default in CLARiTY Config for ASCII command communication?",
+      "pt": "Qual número de porta de rede TCP/IP é atribuído por padrão no CLARiTY Config para a comunicação de comandos ASCII?"
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Puerto",
+          "en": "Port",
+          "pt": "Porta"
+        },
+        "unit": "TCP",
+        "num": [
+          3002
+        ],
+        "tol": 0.5
+      }
+    ],
+    "ex": {
+      "es": "El puerto 3002 (NetworkPort = 3002 en System > TCPIP > TextCommunications).",
+      "en": "Port 3002 (NetworkPort = 3002 under System > TCPIP > TextCommunications).",
+      "pt": "A porta 3002 (NetworkPort = 3002 em System > TCPIP > TextCommunications)."
+    }
+  },
+  {
+    "id": 90,
+    "s": 6,
+    "t": "short",
+    "q": {
+      "es": "¿Qué se requiere físicamente en la PC para que el software de gestión en red CLARiNET pueda transmitir datos a las impresoras?",
+      "en": "What is physically required on the PC for CLARiNET network management software to transmit data to the printers?",
+      "pt": "O que é fisicamente necessário no PC para que o software de gestão em rede CLARiNET transmita dados às impressoras?"
+    },
+    "fields": [
+      {
+        "label": {
+          "es": "Requisito",
+          "en": "Requirement",
+          "pt": "Requisito"
+        },
+        "unit": "",
+        "accept": [
+          "dongle",
+          "hardlock",
+          "hard lock",
+          "llave usb",
+          "llave fisica",
+          "chave usb",
+          "licenca usb",
+          "usb key"
+        ]
+      }
+    ],
+    "ex": {
+      "es": "Una llave física de protección USB (hardlock/dongle) programada con el número de licencias correspondiente.",
+      "en": "A physical USB licence key (hardlock/dongle) programmed with the corresponding number of licences.",
+      "pt": "Uma chave física de proteção USB (hardlock/dongle) programada com o número de licenças correspondente."
+    }
+  },
+  {
+    "id": 91,
+    "s": 7,
+    "t": "open",
+    "q": {
+      "es": "Caso E3337 / E3334 en Videojet 6230. La impresora muestra la falla E3337 o E3334. Identifica la causa mecánica/eléctrica principal y el procedimiento correctivo.",
+      "en": "Case E3337 / E3334 on the Videojet 6230. The printer displays fault E3337 or E3334. Identify the main mechanical/electrical cause and the corrective procedure.",
+      "pt": "Caso E3337 / E3334 na Videojet 6230. A impressora exibe a falha E3337 ou E3334. Identifique a causa mecânica/elétrica principal e o procedimento corretivo."
+    },
+    "model": {
+      "es": "Causa principal: fallo del conjunto actuador / electroimán (P/N 408291), bloqueo mecánico del brazo del cabezal, microswitch de home defectuoso (P/N 408274) o resorte de retorno roto.\nProcedimiento:\n1. Detener la máquina y limpiar/inspeccionar el ensamble del actuador y el libre recorrido del cabezal.\n2. Verificar el microswitch de posición inicial y su cableado.\n3. Comprobar la bobina/continuidad del electroimán; sustituir el conjunto 408291 si no responde.\n4. Ejecutar varios ciclos y confirmar que el cabezal baja y sube sin roce ni ruido anormal.",
+      "en": "Main cause: failed actuator / electromagnet assembly (P/N 408291), mechanical obstruction of the printhead arm, faulty home microswitch (P/N 408274) or broken return spring.\nProcedure:\n1. Stop the machine and clean/inspect the actuator assembly and the free travel of the printhead.\n2. Check the home-position microswitch and its wiring.\n3. Check the electromagnet coil/continuity; replace assembly 408291 if it does not respond.\n4. Run several cycles and confirm the printhead moves down and up without rubbing or abnormal noise.",
+      "pt": "Causa principal: falha do conjunto atuador / eletroímã (P/N 408291), bloqueio mecânico do braço do cabeçote, microswitch de home defeituoso (P/N 408274) ou mola de retorno quebrada.\nProcedimento:\n1. Parar a máquina e limpar/inspecionar o conjunto do atuador e o livre curso do cabeçote.\n2. Verificar o microswitch de posição inicial e sua fiação.\n3. Verificar a bobina/continuidade do eletroímã; substituir o conjunto 408291 se não responder.\n4. Executar vários ciclos e confirmar que o cabeçote desce e sobe sem atrito nem ruído anormal."
+    },
+    "rubric": [
+      {
+        "es": "Identifica el electroimán 408291 o el microswitch 408274 como causa.",
+        "en": "Identifies electromagnet 408291 or microswitch 408274 as the cause.",
+        "pt": "Identifica o eletroímã 408291 ou o microswitch 408274 como causa."
+      },
+      {
+        "es": "Propone limpiar/inspeccionar el conjunto y el recorrido del cabezal.",
+        "en": "Proposes cleaning/inspecting the assembly and printhead travel.",
+        "pt": "Propõe limpar/inspecionar o conjunto e o curso do cabeçote."
+      },
+      {
+        "es": "Incluye verificar cableado y sustituir la pieza si persiste.",
+        "en": "Includes checking wiring and replacing the part if it persists.",
+        "pt": "Inclui verificar a fiação e substituir a peça se persistir."
+      }
+    ]
+  },
+  {
+    "id": 92,
+    "s": 7,
+    "t": "open",
+    "q": {
+      "es": "Caso E3236 en DataFlex 6330 / 6530. Aparece «Printhead Carriage Position Error (E3236)». Indica la causa principal y la acción correctiva según los boletines de servicio.",
+      "en": "Case E3236 on DataFlex 6330 / 6530. The HMI shows “Printhead Carriage Position Error (E3236)”. State the main cause and the corrective action per the service bulletins.",
+      "pt": "Caso E3236 na DataFlex 6330 / 6530. A IHM exibe “Printhead Carriage Position Error (E3236)”. Indique a causa principal e a ação corretiva conforme os boletins de serviço."
+    },
+    "model": {
+      "es": "Causa: desalineación o pérdida de sincronismo entre el encoder de posición y el motor del carro, habitualmente por correa descalibrada o destensada.\nAcción correctiva:\n1. Ajustar la tensión de la correa a 10 kg con el Field Tensioning Kit P/N 407954.\n2. Inspeccionar la fijación y el estado de los encoders y sus conectores.\n3. Comprobar que el carro se desplaza libre, sin obstrucciones ni suciedad.\n4. Actualizar el firmware a la versión más reciente y sustituir la correa si está deformada.",
+      "en": "Cause: misalignment or loss of synchronism between the position encoder and the carriage motor, usually due to a misadjusted or slack belt.\nCorrective action:\n1. Set belt tension to 10 kg with Field Tensioning Kit P/N 407954.\n2. Inspect encoder mounting, condition and connectors.\n3. Confirm the carriage moves freely, without obstruction or dirt.\n4. Update the firmware to the latest version and replace the belt if deformed.",
+      "pt": "Causa: desalinhamento ou perda de sincronismo entre o encoder de posição e o motor do carro, geralmente por correia descalibrada ou frouxa.\nAção corretiva:\n1. Ajustar a tensão da correia a 10 kg com o Field Tensioning Kit P/N 407954.\n2. Inspecionar a fixação e o estado dos encoders e seus conectores.\n3. Confirmar que o carro se desloca livremente, sem obstrução ou sujeira.\n4. Atualizar o firmware para a versão mais recente e substituir a correia se estiver deformada."
+    },
+    "rubric": [
+      {
+        "es": "Relaciona la falla con sincronismo/encoder o correa destensada.",
+        "en": "Links the fault to synchronism/encoder or a slack belt.",
+        "pt": "Relaciona a falha com sincronismo/encoder ou correia frouxa."
+      },
+      {
+        "es": "Indica calibrar la correa a 10 kg con el kit 407954.",
+        "en": "States setting belt tension to 10 kg with kit 407954.",
+        "pt": "Indica calibrar a correia a 10 kg com o kit 407954."
+      },
+      {
+        "es": "Añade revisión de encoders, recorrido del carro o firmware.",
+        "en": "Adds encoder check, carriage travel or firmware.",
+        "pt": "Acrescenta verificação de encoders, curso do carro ou firmware."
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "s": 7,
+    "t": "open",
+    "q": {
+      "es": "Caso E3237 en DataFlex 6330 / 6530. La pantalla indica «E3237 - Incorrect Reel Size». Menciona tres verificaciones indispensables para resolverlo.",
+      "en": "Case E3237 on DataFlex 6330 / 6530. The screen shows “E3237 - Incorrect Reel Size”. Give three essential checks to resolve it.",
+      "pt": "Caso E3237 na DataFlex 6330 / 6530. A tela exibe “E3237 - Incorrect Reel Size”. Mencione três verificações indispensáveis para resolver."
+    },
+    "model": {
+      "es": "1. Confirmar que el software sea r04SP2 o superior.\n2. En Herramientas > Configuración > Consumibles, verificar que el largo y el ancho de cinta configurados coincidan exactamente con el rollo instalado.\n3. Comprobar que los resortes de hoja estén presentes en los mandriles del casete, para que el buje de cartón no deslice.\nAdemás: asentar bien el rollo y verificar que el encoder/sensor de ribbon esté limpio y sin obstrucciones.",
+      "en": "1. Confirm that the software is r04SP2 or later.\n2. Under Tools > Setup > Consumables, check that the configured ribbon length and width exactly match the installed roll.\n3. Confirm the leaf springs are present on the cassette mandrels so the cardboard core cannot slip.\nAlso: seat the roll correctly and check that the ribbon encoder/sensor is clean and unobstructed.",
+      "pt": "1. Confirmar que o software seja r04SP2 ou superior.\n2. Em Ferramentas > Configuração > Consumíveis, verificar se o comprimento e a largura do ribbon configurados correspondem exatamente ao rolo instalado.\n3. Confirmar que as molas de lâmina estão presentes nos mandris do cassete, para que o tubete de papelão não deslize.\nAlém disso: assentar bem o rolo e verificar se o encoder/sensor do ribbon está limpo e desobstruído."
+    },
+    "rubric": [
+      {
+        "es": "Verifica versión de software r04SP2 o superior.",
+        "en": "Checks software version r04SP2 or later.",
+        "pt": "Verifica a versão de software r04SP2 ou superior."
+      },
+      {
+        "es": "Comprueba largo y ancho de ribbon en Consumibles.",
+        "en": "Checks ribbon length and width under Consumables.",
+        "pt": "Verifica comprimento e largura do ribbon em Consumíveis."
+      },
+      {
+        "es": "Revisa resortes de hoja/mandril o asentamiento del rollo.",
+        "en": "Checks mandrel leaf springs or roll seating.",
+        "pt": "Verifica molas de lâmina/mandril ou assentamento do rolo."
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "s": 7,
+    "t": "open",
+    "q": {
+      "es": "Caso E3017 (velocidad de sustrato / encoder). Se genera la falla «E3017 - Verificar configuración / error de detección de velocidad». Indica dos causas comunes y sus correcciones.",
+      "en": "Case E3017 (substrate speed / encoder). Fault “E3017 - Check configuration / speed detection error” appears. Give two common causes and their corrections.",
+      "pt": "Caso E3017 (velocidade do substrato / encoder). Surge a falha “E3017 - Verificar configuração / erro de detecção de velocidade”. Indique duas causas comuns e suas correções."
+    },
+    "model": {
+      "es": "Causa 1: la rueda del encoder patina o está desgastada. Corrección: limpiar o sustituir el O-ring de goma (P/N 215964) y asegurar que la rueda presione firmemente el sustrato.\nCausa 2: cableado o conector del encoder con falso contacto, inversión de canales o ruido. Corrección: revisar continuidad y blindaje de los pines 1, 2 y 3, y confirmar la configuración de resolución del encoder en CLARiTY.\nComprobar también que la velocidad de línea sea estable y esté dentro del rango permitido.",
+      "en": "Cause 1: the encoder wheel slips or is worn. Correction: clean or replace the rubber O-ring (P/N 215964) and ensure the wheel presses firmly on the substrate.\nCause 2: encoder wiring or connector with a bad contact, swapped channels or noise. Correction: check continuity and shielding on pins 1, 2 and 3, and confirm the encoder resolution setting in CLARiTY.\nAlso check that line speed is stable and within the allowed range.",
+      "pt": "Causa 1: a roda do encoder patina ou está desgastada. Correção: limpar ou substituir o O-ring de borracha (P/N 215964) e garantir que a roda pressione firmemente o substrato.\nCausa 2: fiação ou conector do encoder com mau contato, canais invertidos ou ruído. Correção: verificar continuidade e blindagem dos pinos 1, 2 e 3, e confirmar a configuração de resolução do encoder no CLARiTY.\nVerificar também se a velocidade da linha está estável e dentro da faixa permitida."
+    },
+    "rubric": [
+      {
+        "es": "Menciona el patinamiento o desgaste de la rueda del encoder.",
+        "en": "Mentions encoder wheel slipping or wear.",
+        "pt": "Menciona o patinamento ou desgaste da roda do encoder."
+      },
+      {
+        "es": "Propone limpiar o cambiar el O-ring 215964.",
+        "en": "Proposes cleaning or replacing O-ring 215964.",
+        "pt": "Propõe limpar ou trocar o O-ring 215964."
+      },
+      {
+        "es": "Revisa cableado, pines o configuración del encoder.",
+        "en": "Checks wiring, pins or encoder configuration.",
+        "pt": "Verifica fiação, pinos ou configuração do encoder."
+      }
+    ]
+  },
+  {
+    "id": 95,
+    "s": 7,
+    "t": "open",
+    "q": {
+      "es": "Caso E3018 (Ribbon Pull Through). Se presenta «(E3018) Ribbon Pull Through». Explica qué ocurre físicamente y cómo se resuelve.",
+      "en": "Case E3018 (Ribbon Pull Through). The message “(E3018) Ribbon Pull Through” appears. Explain what happens physically and how to resolve it.",
+      "pt": "Caso E3018 (Ribbon Pull Through). Surge a mensagem “(E3018) Ribbon Pull Through”. Explique o que acontece fisicamente e como resolver."
+    },
+    "model": {
+      "es": "Físicamente, la película de empaque se adhiere a la cinta caliente y arrastra el ribbon fuera de su trayectoria, normalmente por exceso de energía o por suciedad en el cabezal.\nSolución:\n1. Reducir el valor de Print Darkness.\n2. Limpiar la cara del cabezal con alcohol isopropílico (kit P/N 216054).\n3. Aumentar el tiempo de retardo/enfriamiento entre impresiones.\n4. Verificar la tensión y el recorrido del ribbon y que el sustrato no se detenga con el cabezal abajo.",
+      "en": "Physically, the packaging film sticks to the hot ribbon and pulls it out of its path, usually due to excessive energy or a dirty printhead.\nSolution:\n1. Reduce Print Darkness.\n2. Clean the printhead face with isopropyl alcohol (kit P/N 216054).\n3. Increase the delay/cooling time between prints.\n4. Check ribbon tension and path, and ensure the substrate does not stop with the printhead down.",
+      "pt": "Fisicamente, o filme de embalagem adere ao ribbon quente e o arrasta para fora de sua trajetória, geralmente por excesso de energia ou sujeira no cabeçote.\nSolução:\n1. Reduzir o valor de Print Darkness.\n2. Limpar a face do cabeçote com álcool isopropílico (kit P/N 216054).\n3. Aumentar o tempo de atraso/resfriamento entre impressões.\n4. Verificar a tensão e o percurso do ribbon e se o substrato não para com o cabeçote abaixado."
+    },
+    "rubric": [
+      {
+        "es": "Explica la adhesión de la película al ribbon caliente.",
+        "en": "Explains film sticking to the hot ribbon.",
+        "pt": "Explica a adesão do filme ao ribbon quente."
+      },
+      {
+        "es": "Indica reducir la oscuridad.",
+        "en": "States reducing Print Darkness.",
+        "pt": "Indica reduzir a escuridão."
+      },
+      {
+        "es": "Añade limpieza del cabezal o aumento del enfriamiento.",
+        "en": "Adds printhead cleaning or increased cooling.",
+        "pt": "Acrescenta limpeza do cabeçote ou aumento do resfriamento."
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "s": 7,
+    "t": "open",
+    "q": {
+      "es": "Caso E3322 (Print Signal Ignored). La pantalla muestra «E3322 - Print Signal Ignored». ¿Por qué la impresora ignora el disparo cuando la velocidad del sustrato cae por debajo de 40 mm/s?",
+      "en": "Case E3322 (Print Signal Ignored). The screen shows “E3322 - Print Signal Ignored”. Why does the printer ignore the trigger when substrate speed drops below 40 mm/s?",
+      "pt": "Caso E3322 (Print Signal Ignored). A tela exibe “E3322 - Print Signal Ignored”. Por que a impressora ignora o disparo quando a velocidade do substrato cai abaixo de 40 mm/s?"
+    },
+    "model": {
+      "es": "La impresora necesita una velocidad mínima de desplazamiento del sustrato (40 mm/s) para garantizar una transferencia térmica uniforme y evitar que el cabezal queme la película o rompa el ribbon.\nPor debajo de ese umbral el tiempo de contacto es excesivo, la energía se concentra y el riesgo de daño es alto; por eso el trigger se ignora de forma controlada.\nAcción: verificar la velocidad real de la línea, el encoder y el modo de impresión configurado.",
+      "en": "The printer needs a minimum substrate speed (40 mm/s) to ensure uniform thermal transfer and prevent the printhead from burning the film or breaking the ribbon.\nBelow that threshold the contact time is excessive, energy concentrates and the risk of damage is high, so the trigger is ignored in a controlled way.\nAction: check actual line speed, the encoder and the configured print mode.",
+      "pt": "A impressora precisa de uma velocidade mínima do substrato (40 mm/s) para garantir transferência térmica uniforme e evitar que o cabeçote queime o filme ou rompa o ribbon.\nAbaixo desse limite, o tempo de contato é excessivo, a energia se concentra e o risco de dano é alto; por isso o disparo é ignorado de forma controlada.\nAção: verificar a velocidade real da linha, o encoder e o modo de impressão configurado."
+    },
+    "rubric": [
+      {
+        "es": "Explica la necesidad de velocidad mínima para transferencia uniforme.",
+        "en": "Explains the minimum speed needed for uniform transfer.",
+        "pt": "Explica a necessidade de velocidade mínima para transferência uniforme."
+      },
+      {
+        "es": "Menciona el riesgo de quemar la película o romper el ribbon.",
+        "en": "Mentions the risk of burning the film or breaking the ribbon.",
+        "pt": "Menciona o risco de queimar o filme ou romper o ribbon."
+      },
+      {
+        "es": "Indica verificar velocidad de línea, encoder o modo.",
+        "en": "States checking line speed, encoder or mode.",
+        "pt": "Indica verificar velocidade da linha, encoder ou modo."
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "s": 7,
+    "t": "open",
+    "q": {
+      "es": "Cinta arrugada o impresión borrosa en modo continuo. La impresión presenta arrugas diagonales en la cinta y zonas borrosas. Indica las comprobaciones mecánicas en el Platen Roller y en el alineamiento del cabezal.",
+      "en": "Wrinkled ribbon or blurred print in continuous mode. Printing shows diagonal ribbon wrinkles and blurred areas. State the mechanical checks on the Platen Roller and printhead alignment.",
+      "pt": "Ribbon enrugado ou impressão borrada no modo contínuo. A impressão apresenta rugas diagonais no ribbon e áreas borradas. Indique as verificações mecânicas no Platen Roller e no alinhamento do cabeçote."
+    },
+    "model": {
+      "es": "Comprobaciones:\n1. Platen Roller: goma sin hendiduras, cortes ni zonas endurecidas; limpio y girando libremente.\n2. Rodillos y guías del casete limpios, sin residuos de cera ni hilos de ribbon.\n3. Alineación: el soporte (bracket) debe mantener el cuerpo de la impresora a 90° respecto a la película, sin inclinación.\n4. Ancho de ribbon correcto en Consumibles y tensión adecuada, sin exceso de oscuridad.\n5. Que el sustrato entre plano y centrado respecto al cabezal.",
+      "en": "Checks:\n1. Platen Roller: rubber free of grooves, cuts or hardened areas; clean and rotating freely.\n2. Cassette rollers and guides clean, with no wax residue or ribbon threads.\n3. Alignment: the bracket must hold the printer body at 90° to the film, without tilt.\n4. Correct ribbon width under Consumables and proper tension, without excessive darkness.\n5. The substrate must enter flat and centred relative to the printhead.",
+      "pt": "Verificações:\n1. Platen Roller: borracha sem sulcos, cortes ou áreas endurecidas; limpo e girando livremente.\n2. Rolos e guias do cassete limpos, sem resíduos de cera nem fios de ribbon.\n3. Alinhamento: o suporte (bracket) deve manter o corpo da impressora a 90° em relação ao filme, sem inclinação.\n4. Largura de ribbon correta em Consumíveis e tensão adequada, sem escuridão excessiva.\n5. O substrato deve entrar plano e centralizado em relação ao cabeçote."
+    },
+    "rubric": [
+      {
+        "es": "Inspecciona hendiduras o desgaste del Platen Roller.",
+        "en": "Inspects Platen Roller grooves or wear.",
+        "pt": "Inspeciona sulcos ou desgaste do Platen Roller."
+      },
+      {
+        "es": "Limpia rodillos/guías del casete.",
+        "en": "Cleans cassette rollers/guides.",
+        "pt": "Limpa rolos/guias do cassete."
+      },
+      {
+        "es": "Verifica alineación a 90° y ancho/tensión del ribbon.",
+        "en": "Checks 90° alignment and ribbon width/tension.",
+        "pt": "Verifica alinhamento a 90° e largura/tensão do ribbon."
+      }
+    ]
+  },
+  {
+    "id": 98,
+    "s": 7,
+    "t": "open",
+    "q": {
+      "es": "Fallas falsas de iAssure™ por cambio de consumible. Al cambiar de ribbon negro a cera/resina de color, el sistema iAssure™ genera paradas continuas. ¿Qué calibración se debe realizar?",
+      "en": "False iAssure™ faults after a consumable change. After switching from black ribbon to coloured wax/resin, iAssure™ causes continuous stops. Which calibration is required?",
+      "pt": "Falhas falsas do iAssure™ após troca de consumível. Ao trocar de ribbon preto para cera/resina colorida, o iAssure™ gera paradas contínuas. Qual calibração deve ser realizada?"
+    },
+    "model": {
+      "es": "Ejecutar la rutina Reset iAssure Lightbox Calibration desde CLARiTY Config o desde el menú de diagnósticos.\nEsta rutina recalibra los umbrales de iluminación óptica según la opacidad y el color del nuevo ribbon, evitando que el sistema interprete como defecto una huella distinta.\nAdemás: seleccionar el tipo de ribbon correcto, limpiar la ventana del sensor y confirmar que no haya arrugas ni residuos en el recorrido.",
+      "en": "Run Reset iAssure Lightbox Calibration from CLARiTY Config or the diagnostics menu.\nThis routine recalibrates the optical illumination thresholds for the opacity and colour of the new ribbon, preventing the system from reading a different footprint as a defect.\nAlso: select the correct ribbon type, clean the sensor window and confirm there are no wrinkles or residue in the path.",
+      "pt": "Executar a rotina Reset iAssure Lightbox Calibration no CLARiTY Config ou no menu de diagnósticos.\nEssa rotina recalibra os limites de iluminação óptica conforme a opacidade e a cor do novo ribbon, evitando que o sistema interprete uma marca diferente como defeito.\nAlém disso: selecionar o tipo correto de ribbon, limpar a janela do sensor e confirmar que não há rugas nem resíduos no percurso."
+    },
+    "rubric": [
+      {
+        "es": "Nombra la calibración iAssure Lightbox.",
+        "en": "Names the iAssure Lightbox calibration.",
+        "pt": "Nomeia a calibração iAssure Lightbox."
+      },
+      {
+        "es": "Explica la recalibración por opacidad/color del ribbon.",
+        "en": "Explains recalibration for ribbon opacity/colour.",
+        "pt": "Explica a recalibração pela opacidade/cor do ribbon."
+      },
+      {
+        "es": "Añade selección de ribbon o limpieza del sensor.",
+        "en": "Adds ribbon selection or sensor cleaning.",
+        "pt": "Acrescenta seleção de ribbon ou limpeza do sensor."
+      }
+    ]
+  },
+  {
+    "id": 99,
+    "s": 7,
+    "t": "open",
+    "q": {
+      "es": "Falla de comunicación Ethernet por inducción eléctrica en el micro-relé. La impresora pierde la comunicación TCP/IP de forma aleatoria al activarse el PLC de la empacadora. Según el boletín BT1908031, ¿cuál es la solución técnica definitiva?",
+      "en": "Ethernet communication fault caused by electrical induction in the micro-relay. The printer randomly loses TCP/IP communication when the packaging machine PLC energises. According to bulletin BT1908031, what is the definitive technical solution?",
+      "pt": "Falha de comunicação Ethernet por indução elétrica no micro-relé. A impressora perde a comunicação TCP/IP de forma aleatória quando o CLP da empacotadora é acionado. Segundo o boletim BT1908031, qual é a solução técnica definitiva?"
+    },
+    "model": {
+      "es": "Instalar un relé optoacoplado externo de 24 V CC en la línea de señal de falla (pines 7 y 8).\nEl optoacoplador aísla galvánicamente los contactos secos de la impresora del gabinete de control del PLC del cliente, de modo que los ruidos inducidos por las bobinas del PLC no se propagan a la electrónica de comunicación.\nComplementar con cable blindado, apantallado a tierra en un solo extremo, y separar físicamente la ruta de los cables de señal de los de potencia.",
+      "en": "Install an external 24 V DC opto-isolated relay on the fault signal line (pins 7 and 8).\nThe optocoupler galvanically isolates the printer dry contacts from the customer PLC control cabinet, so noise induced by the PLC coils does not reach the communication electronics.\nComplete with shielded cable, grounded at one end only, and physically separate signal cables from power cables.",
+      "pt": "Instalar um relé optoacoplado externo de 24 V CC na linha de sinal de falha (pinos 7 e 8).\nO optoacoplador isola galvanicamente os contatos secos da impressora do painel de controle do CLP do cliente, de modo que os ruídos induzidos pelas bobinas do CLP não chegam à eletrônica de comunicação.\nComplementar com cabo blindado, aterrado em apenas uma extremidade, e separar fisicamente a rota dos cabos de sinal dos cabos de potência."
+    },
+    "rubric": [
+      {
+        "es": "Indica un relé optoacoplado externo de 24 V CC.",
+        "en": "States an external 24 V DC opto-isolated relay.",
+        "pt": "Indica um relé optoacoplado externo de 24 V CC."
+      },
+      {
+        "es": "Menciona los pines 7 y 8 o la señal de falla.",
+        "en": "Mentions pins 7 and 8 or the fault signal.",
+        "pt": "Menciona os pinos 7 e 8 ou o sinal de falha."
+      },
+      {
+        "es": "Explica el aislamiento galvánico respecto al PLC.",
+        "en": "Explains galvanic isolation from the PLC.",
+        "pt": "Explica o isolamento galvânico em relação ao CLP."
+      }
+    ]
+  },
+  {
+    "id": 100,
+    "s": 7,
+    "t": "open",
+    "q": {
+      "es": "Error de incompatibilidad al reemplazar la PCB principal en VJ 6330. Un técnico reemplaza la tarjeta madre de una VJ 6330 con la Micro SD de una VJ 6530 y el equipo no arranca correctamente. Explica la razón y cuál es el P/N correcto.",
+      "en": "Incompatibility error when replacing the main PCB on a VJ 6330. A technician replaces the VJ 6330 main board using the Micro SD from a VJ 6530 and the unit does not start correctly. Explain why and give the correct P/N.",
+      "pt": "Erro de incompatibilidade ao substituir a PCB principal na VJ 6330. Um técnico substitui a placa principal da VJ 6330 usando o Micro SD de uma VJ 6530 e o equipamento não inicia corretamente. Explique o motivo e qual é o P/N correto."
+    },
+    "model": {
+      "es": "Razón: las tarjetas Micro SD contienen compilaciones de firmware específicas para cada modelo y revisión de hardware; no son intercambiables. El firmware de la 6530 no reconoce la configuración de la 6330 y el arranque falla.\nSolución: utilizar estrictamente la Micro SD P/N 409769 para la VJ 6330. La 6530 de 53 mm usa 409770.\nAntes de sustituir la PCB, confirmar el modelo y la revisión en la etiqueta y descargar la configuración del equipo para restaurarla después.",
+      "en": "Reason: Micro SD cards contain firmware builds specific to each model and hardware revision; they are not interchangeable. The 6530 firmware does not recognise the 6330 configuration and start-up fails.\nSolution: use strictly Micro SD P/N 409769 for the VJ 6330. The 53 mm 6530 uses 409770.\nBefore replacing the PCB, confirm the model and revision on the label and back up the unit configuration so it can be restored afterwards.",
+      "pt": "Motivo: os cartões Micro SD contêm compilações de firmware específicas para cada modelo e revisão de hardware; não são intercambiáveis. O firmware da 6530 não reconhece a configuração da 6330 e a inicialização falha.\nSolução: utilizar estritamente o Micro SD P/N 409769 para a VJ 6330. A 6530 de 53 mm usa 409770.\nAntes de substituir a PCB, confirmar o modelo e a revisão na etiqueta e fazer backup da configuração do equipamento para restaurá-la depois."
+    },
+    "rubric": [
+      {
+        "es": "Explica que el firmware es específico por modelo.",
+        "en": "Explains that firmware is model-specific.",
+        "pt": "Explica que o firmware é específico por modelo."
+      },
+      {
+        "es": "Indica el P/N correcto 409769 para la 6330.",
+        "en": "States the correct P/N 409769 for the 6330.",
+        "pt": "Indica o P/N correto 409769 para a 6330."
+      },
+      {
+        "es": "Menciona que la 6530 usa 409770 y no es intercambiable.",
+        "en": "Mentions the 6530 uses 409770 and is not interchangeable.",
+        "pt": "Menciona que a 6530 usa 409770 e não é intercambiável."
+      }
+    ]
+  }
+]
