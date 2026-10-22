@@ -234,11 +234,17 @@ def main() -> None:
     parser.add_argument("--repo", default="videojet-tto-lab")
     parser.add_argument("--branch", default="main")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--only", action="append", default=[], metavar="PATH", help="Subir solo este archivo (repetible).")
     parser.add_argument("--skip-pages", action="store_true")
     parser.add_argument("--skip-release", action="store_true")
     args = parser.parse_args()
 
     files = files_to_publish()
+    if args.only:
+        wanted = set(args.only)
+        files = [p for p in files if p.relative_to(ROOT).as_posix() in wanted]
+        if not files:
+            sys.exit("--only no coincide con ningún archivo publicable.")
     total = sum(p.stat().st_size for p in files)
     print(f"Archivos: {len(files)} · {total / 1024:.1f} KB")
     if args.dry_run:
