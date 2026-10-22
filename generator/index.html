@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generador · Videojet TTO Lab</title>
+  <meta name="description" content="Genera evaluaciones TTO por modelo, tiempo, cantidad y tipo de pregunta.">
+  <meta name="theme-color" content="#0b5cab">
+  <link rel="icon" href="../assets/img/favicon.png">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body class="app-page">
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="logo" href="../index.html" aria-label="Videojet TTO Lab">
+        <img src="../assets/img/logo.png" alt="Videojet">
+        <span class="logo-word">TTO <span>Lab</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Principal">
+        <a href="../index.html" data-i18n="nav_home">Inicio</a>
+        <a href="index.html" class="on" data-i18n="nav_generator">Generador</a>
+        <a href="../index.html#models" data-i18n="nav_models">Equipos</a>
+        <a href="../index.html#android" data-i18n="nav_android">Android</a>
+        <a href="https://github.com/emanuelindustri-source/videojet-tto-lab" target="_blank" rel="noopener" data-i18n="nav_github">GitHub</a>
+      </nav>
+      <div class="header-tools">
+        <div class="lang-switch" role="group" aria-label="Idioma">
+          <button type="button" data-lang="es">ES</button>
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="pt">PT</button>
+        </div>
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Tema">◐</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <div class="shell">
+      <!-- ============================ SETUP ============================ -->
+      <section id="setupView">
+        <div class="gen-head">
+          <div>
+            <span class="kicker" data-i18n="setup_kicker">NUEVA SESIÓN</span>
+            <h1 data-i18n="gen_title">Generador de evaluaciones</h1>
+            <p data-i18n="gen_lead">Configura tu sesión. Todo se ejecuta en tu dispositivo y queda guardado en el navegador.</p>
+          </div>
+          <a class="btn" href="../index.html" data-i18n="res_home">Inicio</a>
+        </div>
+
+        <div id="resumeBanner" class="alert ok" style="display:none">
+          <strong id="resumeTitle">Sesión en curso</strong>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+            <button class="btn sm primary" data-action="resume">Continuar sesión</button>
+            <button class="btn sm" data-action="discard-saved">Descartar y empezar de nuevo</button>
+          </div>
+        </div>
+
+        <div class="setup-grid">
+          <div>
+            <section class="panel">
+              <div class="panel-body">
+                <h2 data-i18n="models_title_g">1 · Equipos</h2>
+                <p class="hint" data-i18n="models_help">Selecciona uno o varios modelos. Las preguntas se filtran por compatibilidad.</p>
+                <div class="quick-row">
+                  <button class="btn" type="button" data-preset="all" data-i18n="select_all">Todos</button>
+                  <button class="btn" type="button" data-preset="none" data-i18n="clear_all">Ninguno</button>
+                  <button class="btn" type="button" data-preset="6000" data-i18n="preset_6000">Serie 6000</button>
+                  <button class="btn" type="button" data-preset="legacy" data-i18n="preset_legacy">Legacy</button>
+                  <button class="btn" type="button" data-preset="6530" data-i18n="preset_6530">Solo 6530</button>
+                  <button class="btn" type="button" data-preset="6230" data-i18n="preset_6230">Solo 6230</button>
+                </div>
+                <div class="model-picks" id="modelPicks" style="margin-top:10px"></div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-body">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+                  <div>
+                    <h2 data-i18n="count_title">2 · Cantidad</h2>
+                    <p class="hint" data-i18n="count_help">Preguntas en la sesión.</p>
+                    <select id="countSel" class="inp" aria-label="Cantidad"></select>
+                  </div>
+                  <div>
+                    <h2 data-i18n="duration_title">3 · Duración</h2>
+                    <p class="hint" data-i18n="duration_help">El cronómetro se detiene al llegar a cero.</p>
+                    <select id="durationSel" class="inp" aria-label="Duración"></select>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-body">
+                <h2 data-i18n="types_title_g">4 · Tipos de pregunta</h2>
+                <p class="hint" data-i18n="types_help">Activa solo los formatos que quieres practicar.</p>
+                <div class="type-picks" id="typePicks"></div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-body">
+                <h2 data-i18n="options_title">5 · Opciones</h2>
+                <div class="opt-list" style="margin-top:8px">
+                  <label class="opt-row"><span data-i18n="opt_shuffle">Barajar preguntas y opciones</span><span class="switch"><input type="checkbox" id="optShuffle"><i></i></span></label>
+                  <label class="opt-row"><span data-i18n="opt_partial">Crédito parcial en selección múltiple</span><span class="switch"><input type="checkbox" id="optPartial"><i></i></span></label>
+                  <label class="opt-row"><span data-i18n="opt_instant">Corrección inmediata en modo práctica</span><span class="switch"><input type="checkbox" id="optInstant"><i></i></span></label>
+                  <label class="opt-row"><span data-i18n="opt_exclude">Priorizar preguntas no vistas</span><span class="switch"><input type="checkbox" id="optExclude"><i></i></span></label>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <aside class="summary">
+            <div class="panel">
+              <div class="panel-body">
+                <h2 data-i18n="blueprint">Resumen</h2>
+                <div class="summary-row"><span data-i18n="bp_models">Equipos</span><b id="sumModels">—</b></div>
+                <div class="summary-row"><span data-i18n="bp_count">Preguntas</span><b id="sumCount">—</b></div>
+                <div class="summary-row"><span data-i18n="bp_time">Tiempo</span><b id="sumTime">—</b></div>
+                <div class="summary-row"><span data-i18n="bp_types">Tipos</span><b id="sumTypes">—</b></div>
+                <div class="pool-box">
+                  <b id="poolCount">0</b>
+                  <span data-i18n="pool_label">Preguntas disponibles con esta configuración</span>
+                  <div class="pool-new"><span id="poolNew">0</span> <span data-i18n="pool_new">sin ver aún</span></div>
+                </div>
+                <div id="setupAlert"></div>
+                <button class="btn primary lg block" type="button" id="startBtn" data-i18n="start">Generar y comenzar</button>
+                <button class="btn block" type="button" id="shareBtn" style="margin-top:8px" data-i18n="share_blueprint">Copiar enlace de esta configuración</button>
+                <p class="tiny muted" style="margin:12px 0 0" data-i18n="footer_gen">Los datos se guardan solo en este navegador.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ============================ EXAM ============================ -->
+      <section id="examView" style="display:none">
+        <div class="exam-top">
+          <div class="exam-title"><span id="examTitle">Evaluación TTO</span><small id="examSub"></small></div>
+          <div class="exam-tools">
+            <span class="timer" id="timer">--:--</span>
+            <button class="btn sm mobile-palette" type="button" data-action="palette" data-i18n="exam_palette_short">Mapa</button>
+            <button class="btn sm danger" type="button" data-action="finish" data-i18n="exam_finish">Finalizar</button>
+          </div>
+        </div>
+        <div class="progress"><i id="progressBar" style="width:0"></i></div>
+        <div class="exam-grid">
+          <aside class="exam-side">
+            <div class="side-panel">
+              <h3 data-i18n="exam_palette">Mapa de preguntas</h3>
+              <div class="palette" id="palette"></div>
+              <div class="legend">
+                <span class="l-ans"><i></i><span data-i18n="exam_answered">respondidas</span></span>
+                <span class="l-flag"><i></i><span data-i18n="exam_flag">Marcar para revisar</span></span>
+              </div>
+              <div class="side-meta"><span id="answeredMeta">0/0</span><span id="typeMeta"></span></div>
+            </div>
+          </aside>
+          <section>
+            <div class="q-card" id="qCard"></div>
+            <div class="bottom-nav">
+              <button class="btn" type="button" id="prevBtn" data-action="prev" data-i18n="exam_prev">Anterior</button>
+              <button class="btn" type="button" id="flagBtn" data-action="flag" data-i18n="exam_flag">Marcar para revisar</button>
+              <span class="spacer"></span>
+              <button class="btn primary" type="button" id="nextBtn" data-action="next" data-i18n="exam_next">Siguiente</button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- ============================ RESULTS ============================ -->
+      <section id="resultsView" style="display:none">
+        <div class="res-head">
+          <div class="score-card">
+            <div class="score-label" data-i18n="res_title">Tu resultado</div>
+            <div class="score-num" id="scoreNum">0<small>%</small></div>
+            <div id="scorePill" class="pill ok" style="margin-top:10px">—</div>
+            <div class="score-meta"><span id="scorePoints">0 / 0</span><span id="scoreDate"></span></div>
+          </div>
+          <div class="panel res-overview">
+            <h2 id="resHeadline">Evaluación completada</h2>
+            <p id="resSubline"></p>
+            <div class="res-actions">
+              <button class="btn primary" type="button" data-action="retry" data-i18n="res_retry">Repetir</button>
+              <button class="btn" type="button" data-action="new" data-i18n="res_new">Nuevo examen</button>
+              <button class="btn" type="button" data-action="print" data-i18n="res_print">Imprimir / PDF</button>
+              <button class="btn" type="button" data-action="csv" data-i18n="res_csv">Descargar CSV</button>
+              <button class="btn" type="button" data-action="copy" data-i18n="res_copy">Copiar resumen</button>
+            </div>
+            <div class="res-stats">
+              <div class="res-stat"><b id="statCorrect">0</b><span data-i18n="res_filter_ok">Correctas</span></div>
+              <div class="res-stat"><b id="statWrong">0</b><span data-i18n="res_filter_bad">Incorrectas</span></div>
+              <div class="res-stat"><b id="statBlank">0</b><span data-i18n="res_filter_blank">Sin responder</span></div>
+              <div class="res-stat"><b id="statPending">0</b><span data-i18n="res_pending">Pendientes</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="res-body">
+          <aside class="res-side">
+            <div class="panel self-panel">
+              <h3 data-i18n="res_self">Autoevaluar ahora</h3>
+              <p data-i18n="res_self_note">Las preguntas abiertas se califican comparando tu respuesta con la solución modelo. Sé honesto: cuenta solo lo que hayas escrito.</p>
+              <div id="selfList"></div>
+            </div>
+          </aside>
+          <section>
+            <div class="panel" style="padding:18px;margin-bottom:14px">
+              <div class="review-head"><h2 data-i18n="res_breakdown">Desglose por tipo</h2></div>
+              <div class="breakdown" id="breakdown"></div>
+            </div>
+            <div class="review-head">
+              <h2 data-i18n="res_review">Revisión y solucionario</h2>
+              <div class="filters" id="reviewFilters">
+                <button type="button" data-filter="all" class="on" data-i18n="res_filter_all">Todas</button>
+                <button type="button" data-filter="ok" data-i18n="res_filter_ok">Correctas</button>
+                <button type="button" data-filter="bad" data-i18n="res_filter_bad">Incorrectas</button>
+                <button type="button" data-filter="blank" data-i18n="res_filter_blank">Sin responder</button>
+              </div>
+            </div>
+            <div id="reviewList"></div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div id="modalRoot"></div>
+
+  <footer class="site-footer no-print">
+    <div class="shell footer-note" style="border:0;margin:0;padding:0">
+      <span data-i18n="footer_disclaimer">Proyecto de capacitación técnica. Material no oficial de Videojet Technologies. Uso interno de entrenamiento.</span>
+      <span data-i18n="footer_gen">Los datos se guardan solo en este navegador.</span>
+    </div>
+  </footer>
+
+  <script src="../assets/js/bank.js"></script>
+  <script src="../assets/js/i18n.js"></script>
+  <script src="../assets/js/generator.js"></script>
+</body>
+</html>
