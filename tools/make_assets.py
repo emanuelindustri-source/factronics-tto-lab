@@ -149,17 +149,51 @@ def make_icon(size: int, path: Path) -> None:
     im.save(path, optimize=True)
 
 
+def make_maskable_icon(size: int, path: Path) -> None:
+    """Full-bleed icon for Android/PWA maskable contexts.
+
+    The mark stays inside the central safe zone so launchers can crop the
+    outer edge without cutting the lettering.
+    """
+    im = Image.new("RGBA", (size, size), (11, 92, 171, 255))
+    dr = ImageDraw.Draw(im)
+    band_h = max(10, size // 7)
+    dr.rectangle((0, size - band_h, size, size), fill=(0, 163, 224, 255))
+    f = font("segoeuib.ttf", int(size * 0.46))
+    bb = dr.textbbox((0, 0), "F", font=f)
+    tw, th = bb[2] - bb[0], bb[3] - bb[1]
+    dr.text(
+        ((size - tw) / 2 - bb[0], size * 0.43 - th / 2 - bb[1]),
+        "F",
+        font=f,
+        fill=(255, 255, 255, 255),
+    )
+    tf = font("segoeuib.ttf", max(10, int(size * 0.105)))
+    tb = dr.textbbox((0, 0), "TTO", font=tf)
+    tw2, th2 = tb[2] - tb[0], tb[3] - tb[1]
+    dr.text(
+        ((size - tw2) / 2 - tb[0], size * 0.76 - th2 / 2 - tb[1]),
+        "TTO",
+        font=tf,
+        fill=(235, 249, 255, 245),
+    )
+    im.save(path, optimize=True)
+
+
 def main() -> None:
     build_brand_variants()
     build_og()
     make_icon(128, IMG / "favicon.png")
+    make_icon(192, IMG / "icon-192.png")
+    make_icon(512, IMG / "icon-512.png")
+    make_maskable_icon(512, IMG / "icon-maskable-512.png")
     sizes = {"mdpi": 48, "hdpi": 72, "xhdpi": 96, "xxhdpi": 144, "xxxhdpi": 192}
     for name, size in sizes.items():
         make_icon(size, ROOT / "android" / "app" / "src" / "main" / "res" / f"mipmap-{name}" / "ic_launcher.png")
     (ROOT / "android" / "app" / "src" / "main" / "assets" / "logo.png").write_bytes(
         (IMG / "factronics-transparent.png").read_bytes()
     )
-    print("OK: og.png, favicon.png, launcher icons, Android logo")
+    print("OK: og.png, favicon.png, PWA icons, launcher icons, Android logo")
 
 
 if __name__ == "__main__":
