@@ -3,13 +3,16 @@ package com.factronics.tto.lab;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -40,9 +43,14 @@ import com.factronics.tto.lab.Bank.Question;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -55,28 +63,30 @@ import java.util.Random;
 import java.util.Set;
 
 public class MainActivity extends Activity {
-    private static final int BG = 0xFFF3F7FB;
-    private static final int CARD = 0xFFFFFFFF;
-    private static final int SOFT = 0xFFE6F2FB;
-    private static final int INK = 0xFF0A1B2C;
-    private static final int INK2 = 0xFF2F465C;
-    private static final int MUT = 0xFF647D93;
-    private static final int LINE = 0xFFD8E4EF;
-    private static final int BRAND = 0xFF0B5CAB;
-    private static final int CYAN = 0xFF00A3E0;
-    private static final int OK = 0xFF0B7A58;
-    private static final int BAD = 0xFFB3261E;
-    private static final int WARN = 0xFFA35A00;
+    private int BG;
+    private int CARD;
+    private int SOFT;
+    private int INK;
+    private int INK2;
+    private int MUT;
+    private int LINE;
+    private int BRAND;
+    private int CYAN;
+    private int OK;
+    private int BAD;
+    private int WARN;
     private static final int WHITE = 0xFFFFFFFF;
-    private static final int AMBER_BG = 0xFFFFF2DC;
-    private static final int OK_BG = 0xFFE3F6EE;
-    private static final int BAD_BG = 0xFFFDECEB;
+    private int AMBER_BG;
+    private int OK_BG;
+    private int BAD_BG;
 
     private static final String[] MODEL_ORDER = {"6210", "6230", "6320", "6330", "6420", "6530"};
     private static final String[] TYPE_ORDER = {"single", "multi", "fill", "describe", "calc", "errmap", "errorfix"};
     private static final String[] TYPE_KEYS = {"type_single", "type_multi", "type_fill", "type_describe", "type_calc", "type_errmap", "type_errorfix"};
     private static final int[] COUNTS = {10, 15, 20, 25, 30, 40, 50};
     private static final int[] DURATIONS = {10, 20, 30, 45, 60, 90, 0};
+    private static final long DAY = 86400000L;
+    private static final int REQ_IMPORT = 401;
 
     private enum Screen { SETUP, EXAM, RESULTS }
 
@@ -91,10 +101,14 @@ public class MainActivity extends Activity {
     private int minutes = 30;
     private boolean partial = true;
     private boolean unseen = true;
+    private boolean dark = false;
+    private String mode = "exam";
     private final Map<String, Integer> seen = new HashMap<>();
     private Screen screen = Screen.SETUP;
     private Exam exam;
     private int reviewFilter = 0;
+    private JSONObject progressData;
+    private String pendingImport = null;
 
     private TextView poolView;
     private TextView timerView;
@@ -114,9 +128,14 @@ public class MainActivity extends Activity {
         Map<String, Object> answers = new HashMap<>();
         Set<String> flags = new HashSet<>();
         Map<String, Double> self = new HashMap<>();
+        Map<String, String> errorSnapshot = new HashMap<>();
         int index = 0;
-        long startedAt, endsAt;
+        long startedAt, endsAt, finishedAt;
         boolean submitted;
+        String id = "";
+        String mode = "exam";
+        String attemptId = null;
+        boolean instant = false;
     }
 
     private static class Row {
@@ -140,9 +159,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setStatusBarColor(BRAND);
-        getWindow().setNavigationBarColor(BG);
         prefs = getSharedPreferences("tto", MODE_PRIVATE);
+        applyTheme();
         try {
             Bank.load(this);
             I18n.load(this);
@@ -153,7 +171,62 @@ public class MainActivity extends Activity {
         lang = prefs.getString("lang", "es");
         if (!"es".equals(lang) && !"en".equals(lang) && !"pt".equals(lang)) lang = "es";
         loadConfig();
+        loadProgress();
         showSetup();
+    }
+
+    private void applyTheme() {
+        boolean systemDark = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
+                == Configuration.UI_MODE_NIGHT_YES;
+        dark = prefs.contains("dark") ? prefs.getBoolean("dark", false) : systemDark;
+        if (dark) {
+            BG = 0xFF07131F;
+            CARD = 0xFF0E2234;
+            SOFT = 0xFF132F47;
+            INK = 0xFFEAF4FC;
+            INK2 = 0xFFB7CBDD;
+            MUT = 0xFF89A3B9;
+            LINE = 0xFF244157;
+            BRAND = 0xFF2D8CFF;
+            CYAN = 0xFF34C2FF;
+            OK = 0xFF5CD6A9;
+            BAD = 0xFFFF8A80;
+            WARN = 0xFFFFC46B;
+            AMBER_BG = 0xFF3B2A12;
+            OK_BG = 0xFF11382B;
+            BAD_BG = 0xFF3A1B1B;
+        } else {
+            BG = 0xFFF3F7FB;
+            CARD = 0xFFFFFFFF;
+            SOFT = 0xFFE6F2FB;
+            INK = 0xFF0A1B2C;
+            INK2 = 0xFF2F465C;
+            MUT = 0xFF647D93;
+            LINE = 0xFFD8E4EF;
+            BRAND = 0xFF0B5CAB;
+            CYAN = 0xFF00A3E0;
+            OK = 0xFF0B7A58;
+            BAD = 0xFFB3261E;
+            WARN = 0xFFA35A00;
+            AMBER_BG = 0xFFFFF2DC;
+            OK_BG = 0xFFE3F6EE;
+            BAD_BG = 0xFFFDECEB;
+        }
+        getWindow().setStatusBarColor(BRAND);
+        getWindow().setNavigationBarColor(BG);
+    }
+
+    private void refreshScreen() {
+        if (screen == Screen.EXAM) showExam();
+        else if (screen == Screen.RESULTS) showResults();
+        else showSetup();
+    }
+
+    private void toggleTheme() {
+        dark = !dark;
+        prefs.edit().putBoolean("dark", dark).apply();
+        applyTheme();
+        refreshScreen();
     }
 
     /* ------------------------------------------------------------ config */
@@ -186,6 +259,8 @@ public class MainActivity extends Activity {
         if (!contains(DURATIONS, minutes)) minutes = 30;
         partial = prefs.getBoolean("partial", true);
         unseen = prefs.getBoolean("unseen", true);
+        mode = prefs.getString("mode", "exam");
+        if (!"exam".equals(mode) && !"study".equals(mode) && !"review".equals(mode)) mode = "exam";
         try {
             JSONObject o = new JSONObject(prefs.getString("seen", "{}"));
             for (Iterator<String> it = o.keys(); it.hasNext(); ) {
@@ -203,6 +278,7 @@ public class MainActivity extends Activity {
                 .putInt("minutes", minutes)
                 .putBoolean("partial", partial)
                 .putBoolean("unseen", unseen)
+                .putString("mode", mode)
                 .apply();
     }
 
@@ -219,6 +295,9 @@ public class MainActivity extends Activity {
     private String typeLabel(String type) {
         for (int i = 0; i < TYPE_ORDER.length; i++) if (TYPE_ORDER[i].equals(type)) return t(TYPE_KEYS[i]);
         return type;
+    }
+    private String modeLabel(String m) {
+        return t("study".equals(m) ? "mode_study" : "review".equals(m) ? "mode_review" : "mode_exam");
     }
     private String langName() { return "es".equals(lang) ? "ES" : "en".equals(lang) ? "EN" : "PT"; }
     private void setLang(String l) {
@@ -292,6 +371,391 @@ public class MainActivity extends Activity {
         return out;
     }
 
+    /* ------------------------------------------------------------ progress */
+    private JSONObject newProgressData() {
+        JSONObject root = new JSONObject();
+        try {
+            root.put("version", 2);
+            root.put("active", "Técnico");
+            JSONObject profiles = new JSONObject();
+            JSONObject p = new JSONObject();
+            p.put("name", "Técnico");
+            p.put("createdAt", System.currentTimeMillis());
+            p.put("attempts", new JSONArray());
+            p.put("errors", new JSONObject());
+            profiles.put("Técnico", p);
+            root.put("profiles", profiles);
+        } catch (Exception ignored) {}
+        return root;
+    }
+
+    private void loadProgress() {
+        try {
+            progressData = new JSONObject(prefs.getString("progress_v2", ""));
+        } catch (Exception e) {
+            progressData = null;
+        }
+        if (progressData == null || progressData.optJSONObject("profiles") == null) {
+            progressData = newProgressData();
+        }
+        ensureProfile();
+    }
+
+    private void ensureProfile() {
+        if (progressData == null) progressData = newProgressData();
+        try {
+            JSONObject profiles = progressData.optJSONObject("profiles");
+            if (profiles == null) {
+                profiles = new JSONObject();
+                progressData.put("profiles", profiles);
+            }
+            String active = progressData.optString("active", "Técnico");
+            if (active.isEmpty()) active = "Técnico";
+            JSONObject p = profiles.optJSONObject(active);
+            if (p == null) {
+                p = new JSONObject();
+                p.put("name", active);
+                p.put("createdAt", System.currentTimeMillis());
+                p.put("attempts", new JSONArray());
+                p.put("errors", new JSONObject());
+                profiles.put(active, p);
+            }
+            if (p.optJSONArray("attempts") == null) p.put("attempts", new JSONArray());
+            if (p.optJSONObject("errors") == null) p.put("errors", new JSONObject());
+            progressData.put("active", active);
+        } catch (Exception ignored) {}
+    }
+
+    private String activeName() {
+        if (progressData == null) loadProgress();
+        return progressData.optString("active", "Técnico");
+    }
+
+    private JSONObject profile() {
+        ensureProfile();
+        try {
+            return progressData.getJSONObject("profiles").getJSONObject(activeName());
+        } catch (Exception e) {
+            return new JSONObject();
+        }
+    }
+
+    private void saveProgress() {
+        if (progressData == null) return;
+        prefs.edit().putString("progress_v2", progressData.toString()).apply();
+    }
+
+    private JSONArray attempts() {
+        JSONArray a = profile().optJSONArray("attempts");
+        return a == null ? new JSONArray() : a;
+    }
+
+    private int attemptCount() { return attempts().length(); }
+
+    private double averagePct() {
+        JSONArray a = attempts();
+        if (a.length() == 0) return 0;
+        double total = 0;
+        for (int i = 0; i < a.length(); i++) {
+            JSONObject o = a.optJSONObject(i);
+            if (o != null) total += o.optDouble("percent", 0);
+        }
+        return Math.round(total / a.length() * 10.0) / 10.0;
+    }
+
+    private double bestPct() {
+        JSONArray a = attempts();
+        double best = 0;
+        for (int i = 0; i < a.length(); i++) {
+            JSONObject o = a.optJSONObject(i);
+            if (o != null) best = Math.max(best, o.optDouble("percent", 0));
+        }
+        return Math.round(best * 10.0) / 10.0;
+    }
+
+    private int streakDays() {
+        JSONArray a = attempts();
+        Set<String> days = new HashSet<>();
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        for (int i = 0; i < a.length(); i++) {
+            JSONObject o = a.optJSONObject(i);
+            long at = o == null ? 0 : o.optLong("at", 0);
+            if (at > 0) days.add(f.format(new Date(at)));
+        }
+        long cursor = System.currentTimeMillis();
+        if (!days.contains(f.format(new Date(cursor)))) cursor -= DAY;
+        int streak = 0;
+        while (days.contains(f.format(new Date(cursor)))) {
+            streak++;
+            cursor -= DAY;
+        }
+        return streak;
+    }
+
+    private List<String> errorIds() {
+        final JSONObject errors = profile().optJSONObject("errors");
+        List<String> ids = new ArrayList<>();
+        if (errors != null) {
+            for (Iterator<String> it = errors.keys(); it.hasNext(); ) {
+                String id = it.next();
+                JSONObject e = errors.optJSONObject(id);
+                if (e != null && e.optInt("count", 0) > 0) ids.add(id);
+            }
+        }
+        Collections.sort(ids, (a, b) -> {
+            JSONObject ea = errors == null ? null : errors.optJSONObject(a);
+            JSONObject eb = errors == null ? null : errors.optJSONObject(b);
+            int c = Integer.compare(eb == null ? 0 : eb.optInt("count", 0), ea == null ? 0 : ea.optInt("count", 0));
+            if (c != 0) return c;
+            return Long.compare(ea == null ? 0 : ea.optLong("due", 0), eb == null ? 0 : eb.optLong("due", 0));
+        });
+        return ids;
+    }
+
+    private List<String> dueIds() {
+        List<String> all = errorIds();
+        List<String> out = new ArrayList<>();
+        JSONObject errors = profile().optJSONObject("errors");
+        long now = System.currentTimeMillis();
+        for (String id : all) {
+            JSONObject e = errors == null ? null : errors.optJSONObject(id);
+            if (e != null && e.optLong("due", 0) <= now) out.add(id);
+        }
+        return out;
+    }
+
+    private void applyError(String id, String status, long at) {
+        try {
+            JSONObject errors = profile().getJSONObject("errors");
+            if ("ok".equals(status)) {
+                JSONObject e = errors.optJSONObject(id);
+                if (e == null) return;
+                int streak = e.optInt("streak", 0) + 1;
+                e.put("streak", streak);
+                e.put("last", at);
+                if (streak >= 2) errors.remove(id);
+                else e.put("due", at + 7 * DAY);
+                return;
+            }
+            if (!"bad".equals(status) && !"half".equals(status) && !"blank".equals(status)) return;
+            JSONObject e = errors.optJSONObject(id);
+            if (e == null) e = new JSONObject();
+            int c = e.optInt("count", 0) + 1;
+            e.put("count", c);
+            e.put("streak", 0);
+            e.put("last", at);
+            long[] intervals = {1, 3, 7, 21, 45};
+            e.put("due", at + intervals[Math.min(c - 1, intervals.length - 1)] * DAY);
+            errors.put(id, e);
+        } catch (Exception ignored) {}
+    }
+
+    private void syncErrors(Result r) {
+        if (r == null || exam == null) return;
+        long at = exam.finishedAt > 0 ? exam.finishedAt : System.currentTimeMillis();
+        for (Row row : r.rows) {
+            if (row == null || row.q == null) continue;
+            String id = row.q.id;
+            String prev = exam.errorSnapshot.get(id);
+            if (row.status != null && row.status.equals(prev)) continue;
+            applyError(id, row.status, at);
+            if (row.status != null) exam.errorSnapshot.put(id, row.status);
+        }
+        if (exam.attemptId != null) updateAttempt(r);
+        saveProgress();
+    }
+
+    private JSONObject findAttempt(String id) {
+        JSONArray a = attempts();
+        for (int i = 0; i < a.length(); i++) {
+            JSONObject o = a.optJSONObject(i);
+            if (o != null && id.equals(o.optString("id"))) return o;
+        }
+        return null;
+    }
+
+    private JSONArray wrongIds(Result r) {
+        JSONArray out = new JSONArray();
+        Set<String> used = new HashSet<>();
+        for (Row row : r.rows) {
+            if (row == null || row.q == null) continue;
+            if ("bad".equals(row.status) || "half".equals(row.status) || "blank".equals(row.status)) {
+                if (used.add(row.q.id)) out.put(row.q.id);
+            }
+        }
+        return out;
+    }
+
+    private void updateAttempt(Result r) {
+        JSONObject a = findAttempt(exam.attemptId);
+        if (a == null) return;
+        try {
+            a.put("ok", r.ok);
+            a.put("bad", r.bad);
+            a.put("blank", r.blank);
+            a.put("pending", r.pending);
+            a.put("percent", Math.round((r.total == 0 ? 0 : r.points / r.total * 100) * 10.0) / 10.0);
+            a.put("points", Math.round(r.points * 100.0) / 100.0);
+            a.put("wrongIds", wrongIds(r));
+        } catch (Exception ignored) {}
+    }
+
+    private void recordResult(Result r) {
+        if (r == null || exam == null) return;
+        syncErrors(r);
+        if (exam.attemptId != null) return;
+        long at = exam.finishedAt > 0 ? exam.finishedAt : System.currentTimeMillis();
+        try {
+            JSONObject a = new JSONObject();
+            String id = "att-" + at + "-" + Integer.toHexString(new Random().nextInt(0xFFFF));
+            a.put("id", id);
+            a.put("at", at);
+            a.put("duration", Math.max(0, (at - exam.startedAt) / 1000));
+            a.put("percent", Math.round((r.total == 0 ? 0 : r.points / r.total * 100) * 10.0) / 10.0);
+            a.put("points", Math.round(r.points * 100.0) / 100.0);
+            a.put("total", r.total);
+            a.put("mode", exam.mode);
+            a.put("ok", r.ok);
+            a.put("bad", r.bad);
+            a.put("blank", r.blank);
+            a.put("pending", r.pending);
+            JSONArray models = new JSONArray();
+            JSONArray types = new JSONArray();
+            Set<String> ms = new LinkedHashSet<>();
+            Set<String> ts = new LinkedHashSet<>();
+            for (Question q : exam.qs) {
+                ms.addAll(q.models);
+                ts.add(q.type);
+            }
+            for (String m : ms) models.put(m);
+            for (String ty : ts) types.put(ty);
+            a.put("models", models);
+            a.put("types", types);
+            a.put("wrongIds", wrongIds(r));
+            JSONArray old = attempts();
+            JSONArray next = new JSONArray();
+            next.put(a);
+            for (int i = 0; i < old.length() && i < 59; i++) next.put(old.optJSONObject(i));
+            profile().put("attempts", next);
+            exam.attemptId = id;
+            saveProgress();
+        } catch (Exception ignored) {}
+    }
+
+    /* ------------------------------------------------------- exam persistence */
+    private void saveExamState() {
+        if (exam == null || exam.submitted) return;
+        try {
+            JSONObject o = new JSONObject();
+            o.put("id", exam.id);
+            o.put("startedAt", exam.startedAt);
+            o.put("endsAt", exam.endsAt);
+            o.put("finishedAt", exam.finishedAt);
+            o.put("index", exam.index);
+            o.put("mode", exam.mode);
+            o.put("instant", exam.instant);
+            o.put("attemptId", exam.attemptId == null ? "" : exam.attemptId);
+            JSONArray qs = new JSONArray();
+            JSONObject ans = new JSONObject();
+            for (Question q : exam.qs) {
+                qs.put(q.id);
+                Object a = exam.answers.get(q.id);
+                if (a instanceof Set) {
+                    JSONArray arr = new JSONArray();
+                    for (String s : castSet(a)) arr.put(s);
+                    ans.put(q.id, arr);
+                } else if (a instanceof List) {
+                    JSONArray arr = new JSONArray();
+                    for (String s : castList(a)) arr.put(s == null ? "" : s);
+                    ans.put(q.id, arr);
+                } else if (a != null) {
+                    ans.put(q.id, String.valueOf(a));
+                }
+            }
+            o.put("questions", qs);
+            o.put("answers", ans);
+            JSONArray flags = new JSONArray();
+            for (String f : exam.flags) flags.put(f);
+            o.put("flags", flags);
+            JSONObject self = new JSONObject();
+            for (Map.Entry<String, Double> e : exam.self.entrySet()) self.put(e.getKey(), e.getValue());
+            o.put("self", self);
+            JSONObject snap = new JSONObject();
+            for (Map.Entry<String, String> e : exam.errorSnapshot.entrySet()) snap.put(e.getKey(), e.getValue());
+            o.put("snapshot", snap);
+            prefs.edit().putString("exam_state", o.toString()).apply();
+        } catch (Exception ignored) {}
+    }
+
+    private boolean hasSavedExam() {
+        return !prefs.getString("exam_state", "").isEmpty();
+    }
+
+    private Question questionById(String id) {
+        for (Question q : Bank.QUESTIONS) if (q.id.equals(id)) return q;
+        return null;
+    }
+
+    private Exam loadSavedExam() {
+        try {
+            JSONObject o = new JSONObject(prefs.getString("exam_state", ""));
+            JSONArray qs = o.optJSONArray("questions");
+            if (qs == null || qs.length() == 0) return null;
+            Exam e = new Exam();
+            for (int i = 0; i < qs.length(); i++) {
+                Question q = questionById(qs.optString(i));
+                if (q == null) return null;
+                e.qs.add(q);
+            }
+            e.id = o.optString("id", "exam-" + System.currentTimeMillis());
+            e.startedAt = o.optLong("startedAt", System.currentTimeMillis());
+            e.endsAt = o.optLong("endsAt", 0);
+            e.finishedAt = o.optLong("finishedAt", 0);
+            e.index = Math.max(0, Math.min(e.qs.size() - 1, o.optInt("index", 0)));
+            e.mode = o.optString("mode", "exam");
+            e.instant = o.optBoolean("instant", false);
+            String aid = o.optString("attemptId", "");
+            e.attemptId = aid.isEmpty() ? null : aid;
+            JSONObject ans = o.optJSONObject("answers");
+            if (ans != null) {
+                for (Question q : e.qs) {
+                    Object raw = ans.opt(q.id);
+                    if (raw == null || raw == JSONObject.NULL) continue;
+                    if ("multi".equals(q.type)) {
+                        Set<String> set = new LinkedHashSet<>();
+                        JSONArray arr = ans.optJSONArray(q.id);
+                        if (arr != null) for (int i = 0; i < arr.length(); i++) set.add(arr.optString(i));
+                        e.answers.put(q.id, set);
+                    } else if ("fill".equals(q.type) || "calc".equals(q.type)) {
+                        List<String> list = new ArrayList<>();
+                        JSONArray arr = ans.optJSONArray(q.id);
+                        if (arr != null) for (int i = 0; i < arr.length(); i++) list.add(arr.optString(i));
+                        e.answers.put(q.id, list);
+                    } else {
+                        e.answers.put(q.id, String.valueOf(raw));
+                    }
+                }
+            }
+            JSONArray flags = o.optJSONArray("flags");
+            if (flags != null) for (int i = 0; i < flags.length(); i++) e.flags.add(flags.optString(i));
+            JSONObject self = o.optJSONObject("self");
+            if (self != null) for (Iterator<String> it = self.keys(); it.hasNext(); ) {
+                String id = it.next(); e.self.put(id, self.optDouble(id));
+            }
+            JSONObject snap = o.optJSONObject("snapshot");
+            if (snap != null) for (Iterator<String> it = snap.keys(); it.hasNext(); ) {
+                String id = it.next(); e.errorSnapshot.put(id, snap.optString(id));
+            }
+            return e;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private void discardSavedExam() {
+        prefs.edit().remove("exam_state").apply();
+    }
+
     /* --------------------------------------------------------------- setup */
     private void showSetup() {
         screen = Screen.SETUP;
@@ -309,16 +773,19 @@ public class MainActivity extends Activity {
         c.addView(text(t("gen_lead_android"), 14, INK2, false), top(6));
         c.addView(text(t("credit_line"), 11, MUT, false), top(6));
 
-        c.addView(modelsCard(), top(16));
+        if (hasSavedExam()) c.addView(resumeCard(), top(12));
+        c.addView(modeCard(), top(16));
+        c.addView(modelsCard(), top(10));
         c.addView(countTimeCard(), top(10));
         c.addView(typesCard(), top(10));
         c.addView(optionsCard(), top(10));
+        c.addView(progressCard(), top(10));
 
         LinearLayout bottom = col();
         bottom.setPadding(0, dp(12), 0, 0);
         poolView = text("", 13, MUT, false);
         bottom.addView(poolView);
-        Button start = button(t("start"), true);
+        Button start = button("review".equals(mode) ? t("review_start") : t("start"), true);
         start.setTextSize(16);
         start.setOnClickListener(v -> startExam());
         bottom.addView(start, top(10, 52));
@@ -330,6 +797,372 @@ public class MainActivity extends Activity {
         root.addView(sv, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f));
         setContentView(root);
         updatePoolLabel();
+    }
+
+    private LinearLayout resumeCard() {
+        LinearLayout card = card();
+        card.setBackground(round(AMBER_BG, 14, WARN, 1));
+        card.addView(text(t("resume_title"), 16, INK, true));
+        card.addView(text(t("resume_text"), 12, INK2, false), top(4));
+        LinearLayout r = row();
+        Button cont = smallButton(t("resume_btn"));
+        cont.setOnClickListener(v -> {
+            Exam saved = loadSavedExam();
+            if (saved == null) {
+                discardSavedExam();
+                toast(t("import_error"));
+                showSetup();
+                return;
+            }
+            exam = saved;
+            showExam();
+            startTimer();
+        });
+        Button discard = smallButton(t("resume_discard"));
+        discard.setOnClickListener(v -> { discardSavedExam(); showSetup(); });
+        r.addView(cont, weight());
+        r.addView(discard, weightLeft(8));
+        card.addView(r, top(10));
+        return card;
+    }
+
+    private LinearLayout modeCard() {
+        LinearLayout card = card();
+        addCardHeader(card, t("mode_title"), t("mode_help"));
+        String[] keys = {"mode_exam", "mode_study", "mode_review"};
+        String[] ids = {"exam", "study", "review"};
+        String[] desc = {"mode_exam_d", "mode_study_d", "mode_review_d"};
+        for (int i = 0; i < ids.length; i++) {
+            String m = ids[i];
+            Button b = button(t(keys[i]) + "\n" + t(desc[i]), m.equals(mode));
+            b.setTextSize(12);
+            b.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+            b.setMinHeight(dp(58));
+            b.setPadding(dp(12), dp(8), dp(12), dp(8));
+            b.setOnClickListener(v -> { mode = m; saveConfig(); showSetup(); });
+            card.addView(b, top(i == 0 ? 10 : 6));
+        }
+        if ("review".equals(mode)) card.addView(text(t("review_limit"), 11, MUT, false), top(8));
+        return card;
+    }
+
+    private LinearLayout progressCard() {
+        LinearLayout card = card();
+        addCardHeader(card, t("progress_title"), t("progress_lead_android"));
+        LinearLayout r1 = row();
+        r1.addView(statBox(String.valueOf(attemptCount()), t("stat_attempts")), weight());
+        r1.addView(statBox(fmt(averagePct()) + "%", t("stat_average")), weightLeft(6));
+        r1.addView(statBox(fmt(bestPct()) + "%", t("stat_best")), weightLeft(6));
+        card.addView(r1, top(10));
+        LinearLayout r2 = row();
+        r2.addView(statBox(String.valueOf(dueIds().size()), t("stat_due")), weight());
+        r2.addView(statBox(String.valueOf(errorIds().size()), t("stat_errors")), weightLeft(6));
+        r2.addView(statBox(String.valueOf(streakDays()), t("stat_streak")), weightLeft(6));
+        card.addView(r2, top(6));
+
+        LinearLayout actions = row();
+        Button due = smallButton(t("review_due"));
+        due.setOnClickListener(v -> {
+            List<String> ids = dueIds();
+            if (ids.isEmpty()) { toast(t("review_none")); return; }
+            startReview(ids);
+        });
+        Button errors = smallButton(t("review_errors"));
+        errors.setOnClickListener(v -> {
+            List<String> ids = errorIds();
+            if (ids.isEmpty()) { toast(t("review_errors_none")); return; }
+            startReview(ids);
+        });
+        actions.addView(due, weight());
+        actions.addView(errors, weightLeft(6));
+        card.addView(actions, top(10));
+
+        LinearLayout tools = row();
+        Button lib = smallButton(t("library_open"));
+        lib.setOnClickListener(v -> showLibrary());
+        Button exp = smallButton(t("export_progress"));
+        exp.setOnClickListener(v -> shareProgress());
+        Button imp = smallButton(t("import_progress"));
+        imp.setOnClickListener(v -> importProgress());
+        tools.addView(lib, weight());
+        tools.addView(exp, weightLeft(6));
+        tools.addView(imp, weightLeft(6));
+        card.addView(tools, top(6));
+
+        card.addView(text(t("history_title"), 14, INK, true), top(14));
+        JSONArray at = attempts();
+        if (at.length() == 0) {
+            card.addView(text(t("history_empty"), 12, MUT, false), top(5));
+        } else {
+            for (int i = 0; i < Math.min(4, at.length()); i++) {
+                JSONObject a = at.optJSONObject(i);
+                if (a == null) continue;
+                card.addView(historyItem(a), top(6));
+            }
+        }
+        return card;
+    }
+
+    private LinearLayout historyItem(JSONObject a) {
+        LinearLayout item = col();
+        item.setBackground(round(SOFT, 11, LINE, 1));
+        item.setPadding(dp(10), dp(8), dp(10), dp(8));
+        String date = new SimpleDateFormat("dd MMM yyyy", Locale.forLanguageTag(lang)).format(new Date(a.optLong("at", System.currentTimeMillis())));
+        LinearLayout top = row();
+        top.addView(text(date + " · " + modeLabel(a.optString("mode", "exam")), 12, INK, true), weight());
+        String pct = fmt(a.optDouble("percent", 0)) + "%";
+        top.addView(text(pct, 13, a.optDouble("percent", 0) >= 70 ? OK : BAD, true));
+        item.addView(top);
+        int wrong = a.optJSONArray("wrongIds") == null ? 0 : a.optJSONArray("wrongIds").length();
+        String meta = a.optInt("total", 0) + " " + t("history_questions_short") + " · "
+                + (wrong == 0 ? t("history_no_wrong") : wrong + " " + t("history_wrong"));
+        item.addView(text(meta, 10, MUT, false), top(2));
+        JSONArray ids = a.optJSONArray("wrongIds");
+        if (ids != null && ids.length() > 0) {
+            Button b = smallButton(t("history_review"));
+            b.setOnClickListener(v -> startReview(jsonList(ids)));
+            item.addView(b, top(6));
+        }
+        return item;
+    }
+
+    private List<String> jsonList(JSONArray arr) {
+        List<String> out = new ArrayList<>();
+        if (arr != null) for (int i = 0; i < arr.length(); i++) out.add(arr.optString(i));
+        return out;
+    }
+
+    private void startReview(List<String> ids) {
+        if (ids == null || ids.isEmpty()) { toast(t("review_none")); return; }
+        List<Question> qs = new ArrayList<>();
+        Set<String> used = new HashSet<>();
+        for (String id : ids) {
+            if (!used.add(id)) continue;
+            Question q = questionById(id);
+            if (q != null) qs.add(q);
+            if (qs.size() >= 50) break;
+        }
+        if (qs.isEmpty()) { toast(t("review_none")); return; }
+        exam = new Exam();
+        exam.id = "exam-" + System.currentTimeMillis();
+        exam.qs = qs;
+        exam.startedAt = System.currentTimeMillis();
+        exam.endsAt = 0;
+        exam.mode = "review";
+        exam.instant = true;
+        exam.errorSnapshot = new HashMap<>();
+        discardSavedExam();
+        showExam();
+        startTimer();
+    }
+
+    private void showLibrary() {
+        LinearLayout box = col();
+        box.setPadding(dp(14), dp(6), dp(14), dp(4));
+        EditText search = new EditText(this);
+        search.setHint(t("library_search"));
+        search.setTextSize(14);
+        search.setTextColor(INK);
+        search.setSingleLine(true);
+        search.setBackground(round(CARD, 9, LINE, 1));
+        search.setPadding(dp(10), dp(6), dp(10), dp(6));
+        box.addView(search);
+
+        LinearLayout filters = row();
+        List<String> typeLabels = new ArrayList<>();
+        typeLabels.add(t("library_all"));
+        for (String type : TYPE_ORDER) typeLabels.add(typeLabel(type));
+        Spinner typeSp = new Spinner(this);
+        ArrayAdapter<String> ta = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, typeLabels);
+        ta.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSp.setAdapter(ta);
+        typeSp.setBackground(round(CARD, 9, LINE, 1));
+        List<String> modelLabels = new ArrayList<>();
+        modelLabels.add(t("library_all"));
+        for (String m : MODEL_ORDER) modelLabels.add(m);
+        Spinner modelSp = new Spinner(this);
+        ArrayAdapter<String> ma = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, modelLabels);
+        ma.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        modelSp.setAdapter(ma);
+        modelSp.setBackground(round(CARD, 9, LINE, 1));
+        filters.addView(typeSp, weight());
+        filters.addView(modelSp, weightLeft(7));
+        box.addView(filters, top(7));
+
+        TextView count = text("", 11, MUT, true);
+        box.addView(count, top(6));
+        ScrollView sv = new ScrollView(this);
+        LinearLayout results = col();
+        sv.addView(results);
+        box.addView(sv, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(420)));
+
+        final Runnable[] render = new Runnable[1];
+        render[0] = () -> {
+            results.removeAllViews();
+            String needle = norm(search.getText().toString());
+            int typePos = typeSp.getSelectedItemPosition();
+            int modelPos = modelSp.getSelectedItemPosition();
+            String type = typePos > 0 ? TYPE_ORDER[typePos - 1] : "";
+            String model = modelPos > 0 ? MODEL_ORDER[modelPos - 1] : "";
+            List<Question> matches = new ArrayList<>();
+            Set<String> used = new HashSet<>();
+            for (Question q : Bank.QUESTIONS) {
+                if (!type.isEmpty() && !type.equals(q.type)) continue;
+                if (!model.isEmpty() && !q.models.contains(model)) continue;
+                String hay = norm(q.text(lang) + " " + correctText(q) + " " + q.d(lang).optString("explanation", ""));
+                if (!needle.isEmpty() && !hay.contains(needle)) continue;
+                if (used.add(norm(q.text(lang)))) matches.add(q);
+            }
+            count.setText(matches.size() + " " + t("library_results"));
+            if (matches.isEmpty()) {
+                results.addView(text(t("library_no_results"), 12, MUT, false), top(8));
+                return;
+            }
+            for (int i = 0; i < Math.min(40, matches.size()); i++) {
+                Question q = matches.get(i);
+                LinearLayout item = col();
+                item.setBackground(round(SOFT, 10, LINE, 1));
+                item.setPadding(dp(10), dp(8), dp(10), dp(8));
+                item.addView(text(q.text(lang), 13, INK, true));
+                item.addView(text(t("library_answer") + ": " + correctText(q), 11, OK, true), top(3));
+                String ex = q.d(lang).optString("explanation", "");
+                if (!ex.isEmpty()) item.addView(text(ex, 11, INK2, false), top(3));
+                results.addView(item, top(6));
+            }
+        };
+        search.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int a, int b, int c) {}
+            public void onTextChanged(CharSequence s, int a, int b, int c) {}
+            public void afterTextChanged(Editable s) { render[0].run(); }
+        });
+        typeSp.setOnItemSelectedListener(new SimpleItemSelected(position -> render[0].run()));
+        modelSp.setOnItemSelectedListener(new SimpleItemSelected(position -> render[0].run()));
+        render[0].run();
+
+        new AlertDialog.Builder(this)
+                .setTitle(t("library_title"))
+                .setView(box)
+                .setPositiveButton(t("library_close"), null)
+                .show();
+    }
+
+    private void shareProgress() {
+        Intent send = new Intent(Intent.ACTION_SEND);
+        send.setType("text/plain");
+        send.putExtra(Intent.EXTRA_SUBJECT, "Factronics TTO Lab · Progreso");
+        send.putExtra(Intent.EXTRA_TEXT, progressData == null ? "{}" : progressData.toString());
+        startActivity(Intent.createChooser(send, t("export_progress")));
+    }
+
+    private void importProgress() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/json");
+        try {
+            startActivityForResult(intent, REQ_IMPORT);
+        } catch (Exception e) {
+            toast(t("import_error"));
+        }
+    }
+
+    private void mergeProgress(JSONObject imported) throws Exception {
+        ensureProfile();
+        JSONObject incoming = imported.optJSONObject("profiles");
+        if (incoming == null) throw new Exception("profiles");
+        JSONObject profiles = progressData.getJSONObject("profiles");
+        for (Iterator<String> it = incoming.keys(); it.hasNext(); ) {
+            String name = it.next();
+            JSONObject src = incoming.optJSONObject(name);
+            if (src == null) continue;
+            JSONObject dst = profiles.optJSONObject(name);
+            if (dst == null) {
+                profiles.put(name, src);
+                continue;
+            }
+            JSONArray srcAttempts = src.optJSONArray("attempts");
+            if (srcAttempts != null && srcAttempts.length() > 0) {
+                JSONArray dstAttempts = dst.optJSONArray("attempts");
+                if (dstAttempts == null) dstAttempts = new JSONArray();
+                Set<String> ids = new HashSet<>();
+                for (int i = 0; i < dstAttempts.length(); i++) {
+                    JSONObject a = dstAttempts.optJSONObject(i);
+                    if (a != null) ids.add(a.optString("id"));
+                }
+                JSONArray mergedAttempts = new JSONArray();
+                for (int i = 0; i < srcAttempts.length() && mergedAttempts.length() < 60; i++) {
+                    JSONObject a = srcAttempts.optJSONObject(i);
+                    if (a != null && !ids.contains(a.optString("id"))) {
+                        mergedAttempts.put(a);
+                        ids.add(a.optString("id"));
+                    }
+                }
+                for (int i = 0; i < dstAttempts.length() && mergedAttempts.length() < 60; i++) {
+                    mergedAttempts.put(dstAttempts.optJSONObject(i));
+                }
+                dst.put("attempts", mergedAttempts);
+            }
+            JSONObject srcErrors = src.optJSONObject("errors");
+            if (srcErrors != null) {
+                JSONObject dstErrors = dst.optJSONObject("errors");
+                if (dstErrors == null) dstErrors = new JSONObject();
+                for (Iterator<String> eit = srcErrors.keys(); eit.hasNext(); ) {
+                    String id = eit.next();
+                    JSONObject srcErr = srcErrors.optJSONObject(id);
+                    JSONObject dstErr = dstErrors.optJSONObject(id);
+                    if (srcErr == null) continue;
+                    if (dstErr == null) {
+                        dstErrors.put(id, srcErr);
+                    } else {
+                        dstErr.put("count", Math.max(dstErr.optInt("count", 0), srcErr.optInt("count", 0)));
+                        long dueA = dstErr.optLong("due", Long.MAX_VALUE);
+                        long dueB = srcErr.optLong("due", Long.MAX_VALUE);
+                        dstErr.put("due", Math.min(dueA, dueB));
+                        dstErr.put("last", Math.max(dstErr.optLong("last", 0), srcErr.optLong("last", 0)));
+                    }
+                }
+                dst.put("errors", dstErrors);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != REQ_IMPORT || resultCode != RESULT_OK || data == null || data.getData() == null) return;
+        try {
+            Uri uri = data.getData();
+            InputStream in = getContentResolver().openInputStream(uri);
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            byte[] buf = new byte[8192];
+            int n;
+            while ((n = in.read(buf)) > 0) out.write(buf, 0, n);
+            in.close();
+            String raw = new String(out.toByteArray(), StandardCharsets.UTF_8);
+            JSONObject root = new JSONObject(raw);
+            JSONObject payload = root.optJSONObject("data");
+            if (payload == null) payload = root;
+            if (payload.optJSONObject("profiles") == null) throw new Exception("profiles");
+            pendingImport = payload.toString();
+            new AlertDialog.Builder(this)
+                    .setTitle(t("import_progress"))
+                    .setMessage(t("import_confirm"))
+                    .setPositiveButton(t("import_progress"), (d, w) -> {
+                        try {
+                            mergeProgress(new JSONObject(pendingImport));
+                            pendingImport = null;
+                            ensureProfile();
+                            saveProgress();
+                            toast(t("import_done"));
+                            showSetup();
+                        } catch (Exception e) {
+                            toast(t("import_error"));
+                        }
+                    })
+                    .setNegativeButton(t("exam_confirm_cancel"), null)
+                    .show();
+        } catch (Exception e) {
+            toast(t("import_error"));
+        }
     }
 
     private LinearLayout modelsCard() {
@@ -459,6 +1292,11 @@ public class MainActivity extends Activity {
 
     private void updatePoolLabel() {
         if (poolView == null) return;
+        if ("review".equals(mode)) {
+            poolView.setText(dueIds().size() + " " + t("review_due").toLowerCase()
+                    + " · " + errorIds().size() + " " + t("stat_errors").toLowerCase());
+            return;
+        }
         List<Question> p = pool();
         poolView.setText(p.size() + " " + t("pool_label").toLowerCase() + " · " + unseenCount(p) + " " + t("pool_new"));
     }
@@ -475,6 +1313,12 @@ public class MainActivity extends Activity {
     }
 
     private void startExam() {
+        if ("review".equals(mode)) {
+            List<String> ids = dueIds();
+            if (ids.isEmpty()) { toast(t("review_none")); return; }
+            startReview(ids);
+            return;
+        }
         if (selModels.isEmpty()) { toast(t("choose_model")); return; }
         if (selTypes.isEmpty()) { toast(t("choose_type")); return; }
         List<Question> p = pool();
@@ -485,9 +1329,14 @@ public class MainActivity extends Activity {
         List<Question> picked = pick(p, count);
         if (picked.size() < count) { toast(t("not_enough")); return; }
         exam = new Exam();
+        exam.id = "exam-" + System.currentTimeMillis();
         exam.qs = picked;
         exam.startedAt = System.currentTimeMillis();
-        exam.endsAt = minutes > 0 ? exam.startedAt + minutes * 60000L : 0;
+        exam.mode = mode;
+        exam.instant = "study".equals(mode);
+        exam.endsAt = ("exam".equals(mode) && minutes > 0) ? exam.startedAt + minutes * 60000L : 0;
+        exam.errorSnapshot = new HashMap<>();
+        discardSavedExam();
         showExam();
         startTimer();
     }
@@ -545,7 +1394,7 @@ public class MainActivity extends Activity {
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(dp(33), dp(33));
             lp.setMargins(dp(2), 0, dp(2), 0);
             b.setLayoutParams(lp);
-            b.setOnClickListener(v -> { exam.index = idx; renderQuestion(); updateChrome(); });
+            b.setOnClickListener(v -> { exam.index = idx; saveExamState(); renderQuestion(); updateChrome(); });
             paletteButtons.add(b);
             paletteRow.addView(b);
         }
@@ -567,12 +1416,13 @@ public class MainActivity extends Activity {
         nav.setPadding(dp(14), dp(8), dp(14), dp(12));
         prevButton = button(t("exam_prev"), false);
         prevButton.setOnClickListener(v -> {
-            if (exam.index > 0) { exam.index--; renderQuestion(); updateChrome(); }
+            if (exam.index > 0) { exam.index--; saveExamState(); renderQuestion(); updateChrome(); }
         });
         flagButton = button(t("exam_flag"), false);
         flagButton.setOnClickListener(v -> {
             String id = exam.qs.get(exam.index).id;
             if (exam.flags.contains(id)) exam.flags.remove(id); else exam.flags.add(id);
+            saveExamState();
             updateChrome();
         });
         nextButton = button(t("exam_next"), true);
@@ -587,6 +1437,7 @@ public class MainActivity extends Activity {
         setContentView(root);
         renderQuestion();
         updateChrome();
+        saveExamState();
         tick();
     }
 
@@ -597,7 +1448,7 @@ public class MainActivity extends Activity {
         qCard.removeAllViews();
         LinearLayout chips = row();
         chips.addView(chip(typeLabel(q.type), SOFT, BRAND));
-        for (String m : q.models) chips.addView(chip(m, 0xFFEDF3F9, MUT), left(5));
+        for (String m : q.models) chips.addView(chip(m, SOFT, MUT), left(5));
         qCard.addView(chips);
         TextView qt = text(d.optString("q", ""), 18, INK, true);
         qt.setLineSpacing(dp(3), 1f);
@@ -626,7 +1477,9 @@ public class MainActivity extends Activity {
             group.setOnCheckedChangeListener((g, checkedId) -> {
                 String id = ids.get(checkedId);
                 if (id != null) exam.answers.put(q.id, id);
+                saveExamState();
                 updateChrome();
+                if (exam.instant) renderQuestion();
             });
             qCard.addView(group, top(8));
         } else if ("multi".equals(q.type)) {
@@ -643,7 +1496,9 @@ public class MainActivity extends Activity {
                     Set<String> set = exam.answers.get(q.id) instanceof Set ? castSet(exam.answers.get(q.id)) : new HashSet<>();
                     if (on) set.add(o.id); else set.remove(o.id);
                     exam.answers.put(q.id, set);
+                    saveExamState();
                     updateChrome();
+                    if (exam.instant) renderQuestion();
                 });
                 qCard.addView(cb);
             }
@@ -672,6 +1527,7 @@ public class MainActivity extends Activity {
                         while (list.size() <= idx) list.add("");
                         list.set(idx, s.toString());
                         exam.answers.put(q.id, list);
+                        saveExamState();
                         updateChrome();
                     }
                 });
@@ -696,11 +1552,30 @@ public class MainActivity extends Activity {
                 public void onTextChanged(CharSequence s, int a, int b, int c) {}
                 public void afterTextChanged(Editable s) {
                     exam.answers.put(q.id, s.toString());
+                    saveExamState();
                     updateChrome();
                 }
             });
             qCard.addView(et, top(10));
         }
+        if (exam.instant) {
+            Object latest = exam.answers.get(q.id);
+            if (isAnswered(q, latest)) qCard.addView(instantFeedback(q, latest), top(10));
+        }
+    }
+
+    private LinearLayout instantFeedback(Question q, Object ans) {
+        Double g = grade(q, ans);
+        boolean correct = g != null && g >= 0.999;
+        LinearLayout box = col();
+        box.setBackground(round(correct ? OK_BG : BAD_BG, 10, correct ? OK : BAD, 1));
+        box.setPadding(dp(11), dp(9), dp(11), dp(9));
+        String label = correct ? t("exam_correct") : (g != null && g > 0 ? t("res_partial") : t("exam_incorrect"));
+        box.addView(text(label, 13, correct ? OK : BAD, true));
+        box.addView(text(t("exam_answer_was") + ": " + correctText(q), 12, INK2, false), top(4));
+        String ex = q.d(lang).optString("explanation", "");
+        if (!ex.isEmpty()) box.addView(text(t("exam_explanation") + ": " + ex, 11, MUT, false), top(3));
+        return box;
     }
 
     private String instructions(Question q) {
@@ -803,8 +1678,12 @@ public class MainActivity extends Activity {
         if (exam == null || exam.submitted) return;
         stopTimer();
         exam.submitted = true;
+        exam.finishedAt = System.currentTimeMillis();
         for (Question q : exam.qs) seen.put(q.id, (seen.containsKey(q.id) ? seen.get(q.id) : 0) + 1);
         saveSeen();
+        recordResult(score());
+        discardSavedExam();
+        if (auto) toast(t("exam_time_up"));
         showResults();
     }
 
@@ -934,6 +1813,16 @@ public class MainActivity extends Activity {
         actions.addView(retry, weight());
         actions.addView(fresh, weightLeft(8));
         c.addView(actions, top(12));
+        LinearLayout extra = row();
+        Button share = smallButton(t("share_result"));
+        share.setOnClickListener(v -> shareResult(r));
+        extra.addView(share, weight());
+        if (wrongIds(r).length() > 0) {
+            Button review = smallButton(t("res_review_errors"));
+            review.setOnClickListener(v -> startReview(jsonList(wrongIds(r))));
+            extra.addView(review, weightLeft(7));
+        }
+        c.addView(extra, top(7));
 
         LinearLayout stats1 = row();
         stats1.addView(statBox(String.valueOf(r.ok), t("res_filter_ok")), weight());
@@ -991,6 +1880,7 @@ public class MainActivity extends Activity {
                     b.setOnClickListener(v -> {
                         restoreScrollY = resultScroll == null ? -1 : resultScroll.getScrollY();
                         exam.self.put(q.id, scoreVal);
+                        syncErrors(score());
                         showResults();
                     });
                     btns.addView(b, weightLeft(i == 0 ? 0 : 5));
@@ -1035,6 +1925,22 @@ public class MainActivity extends Activity {
         }
     }
 
+    private void shareResult(Result r) {
+        if (exam == null || r == null) return;
+        int pct = (int) Math.round(r.total == 0 ? 0 : r.points / r.total * 100);
+        String date = new SimpleDateFormat("dd MMM yyyy", Locale.forLanguageTag(lang)).format(new Date());
+        String text = "Factronics TTO Lab\n"
+                + t("res_title") + ": " + pct + "%\n"
+                + modeLabel(exam.mode) + " · " + r.ok + "/" + r.total + " " + t("res_filter_ok") + "\n"
+                + date + "\n"
+                + t("legal_android");
+        Intent send = new Intent(Intent.ACTION_SEND);
+        send.setType("text/plain");
+        send.putExtra(Intent.EXTRA_SUBJECT, "Factronics TTO Lab · " + pct + "%");
+        send.putExtra(Intent.EXTRA_TEXT, text);
+        startActivity(Intent.createChooser(send, t("share_result")));
+    }
+
     private LinearLayout reviewItem(Row row) {
         LinearLayout card = card();
         LinearLayout top = row();
@@ -1061,7 +1967,7 @@ public class MainActivity extends Activity {
         }
         if (!row.q.explanation(lang).isEmpty()) {
             TextView ex = text(row.q.explanation(lang), 11, INK2, false);
-            ex.setBackground(round(0xFFF7FAFD, 8, LINE, 1));
+            ex.setBackground(round(SOFT, 8, LINE, 1));
             ex.setPadding(dp(9), dp(7), dp(9), dp(7));
             card.addView(ex, top(6));
         }
@@ -1125,6 +2031,22 @@ public class MainActivity extends Activity {
         h.addView(sub);
         LinearLayout spacer = new LinearLayout(this);
         h.addView(spacer, new LinearLayout.LayoutParams(0, 1, 1f));
+        Button theme = new Button(this);
+        theme.setText(dark ? "☀" : "◐");
+        theme.setTextSize(14);
+        theme.setAllCaps(false);
+        theme.setMinWidth(0); theme.setMinimumWidth(0);
+        theme.setMinHeight(0); theme.setMinimumHeight(0);
+        theme.setPadding(dp(7), dp(3), dp(7), dp(3));
+        theme.setStateListAnimator(null);
+        theme.setTextColor(WHITE);
+        theme.setBackground(round(0x22FFFFFF, 6, 0x44FFFFFF, 1));
+        theme.setContentDescription(t(dark ? "theme_light" : "theme_dark"));
+        LinearLayout.LayoutParams tlp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dp(28));
+        tlp.setMargins(0, 0, dp(5), 0);
+        theme.setLayoutParams(tlp);
+        theme.setOnClickListener(v -> toggleTheme());
+        h.addView(theme);
         String[] langs = {"es", "en", "pt"};
         for (String l : langs) {
             Button b = new Button(this);
@@ -1336,7 +2258,7 @@ public class MainActivity extends Activity {
             new AlertDialog.Builder(this)
                     .setTitle(t("exam_confirm_title"))
                     .setPositiveButton(t("exam_finish"), (d, w) -> requestFinish())
-                    .setNeutralButton(t("res_new"), (d, w) -> showSetup())
+                    .setNeutralButton(t("res_new"), (d, w) -> { discardSavedExam(); showSetup(); })
                     .setNegativeButton(t("exam_confirm_cancel"), null)
                     .show();
         } else {
@@ -1345,10 +2267,20 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (!prefs.contains("dark")) {
+            applyTheme();
+            refreshScreen();
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         saveConfig();
         saveSeen();
+        saveExamState();
     }
 
     @Override
