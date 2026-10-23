@@ -1,4 +1,4 @@
-/* Videojet TTO Lab — exam generator and runner (vanilla JS, offline). */
+/* Factronics TTO Lab - exam generator and runner (vanilla JS, offline). */
 (function () {
   "use strict";
 
@@ -125,7 +125,7 @@
     document.querySelectorAll("[data-lang]").forEach((b) => {
       b.classList.toggle("on", b.getAttribute("data-lang") === state.lang);
     });
-    document.title = T("gen_title") + " · Videojet TTO Lab";
+    document.title = T("gen_title") + " · Factronics TTO Lab";
   }
   function typeLabel(t) { return T(TYPE_LABEL[t] || t); }
   function modelName(id) { return (MODELS[id] && MODELS[id].name) || id; }
@@ -808,7 +808,7 @@
     if (!state.exam) return;
     const r = state.result || scoreExam();
     const text = [
-      "Videojet TTO Lab", T("res_title") + ": " + Math.round(r.percent) + "%",
+      "Factronics TTO Lab", T("res_title") + ": " + Math.round(r.percent) + "%",
       `${fmtNum(Math.round(r.points * 100) / 100)} / ${r.total} ${T("res_points")}`,
       `${T("bp_models")}: ${state.exam.models.join(" + ")}`,
       `${T("res_date")}: ${formatDate(state.exam.finishedAt || Date.now())}`
