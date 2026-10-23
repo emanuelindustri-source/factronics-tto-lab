@@ -23,10 +23,10 @@
     const pool = document.getElementById("poolStat");
     if (pool) pool.textContent = bank.questions.length || "328";
     document.title = state.lang === "en"
-      ? "Videojet TTO Lab · Technical assessment generator"
+      ? "Factronics TTO Lab · Technical assessment generator"
       : state.lang === "pt"
-        ? "Videojet TTO Lab · Gerador de avaliações técnicas"
-        : "Videojet TTO Lab · Generador de evaluaciones técnicas";
+        ? "Factronics TTO Lab · Gerador de avaliações técnicas"
+        : "Factronics TTO Lab · Generador de evaluaciones técnicas";
   }
 
   function modelCard(id, m) {
