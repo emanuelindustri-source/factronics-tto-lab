@@ -218,26 +218,34 @@ def upload_asset(owner: str, repo: str, release: dict) -> None:
     if not APK.exists():
         print("! No existe download/Factronics-TTO-Lab.apk; se omite el asset.")
         return
+    sha = APK.with_name(APK.name + ".sha256")
+    targets = [(APK, "application/vnd.android.package-archive")]
+    if sha.exists() and sha.read_text(encoding="utf-8").strip():
+        targets.append((sha, "text/plain"))
+
     assets_url = release.get("assets_url") or f"{API}/repos/{owner}/{repo}/releases/{release['id']}/assets"
     status, assets = request("GET", assets_url)
     if status == 200 and isinstance(assets, list):
+        names = {target.name for target, _ in targets}
         for asset in assets:
-            if asset.get("name") == APK.name:
+            if asset.get("name") in names:
                 request("DELETE", asset["url"])
-                print("  · asset anterior eliminado")
-    upload_url = (
-        f"{UPLOADS}/repos/{owner}/{repo}/releases/{release['id']}/assets"
-        f"?name={urllib.parse.quote(APK.name)}"
-    )
-    status, data = request(
-        "POST", upload_url, APK.read_bytes(),
-        content_type="application/vnd.android.package-archive", binary=True,
-    )
-    if status in (200, 201):
-        print(f"  ✓ {APK.name} ({APK.stat().st_size} B)")
-        print(f"    {data.get('browser_download_url')}")
-    else:
-        print(f"  ✗ asset: {status} {data}")
+                print(f"  · asset anterior eliminado: {asset.get('name')}")
+
+    for target, content_type in targets:
+        upload_url = (
+            f"{UPLOADS}/repos/{owner}/{repo}/releases/{release['id']}/assets"
+            f"?name={urllib.parse.quote(target.name)}"
+        )
+        status, data = request(
+            "POST", upload_url, target.read_bytes(),
+            content_type=content_type, binary=True,
+        )
+        if status in (200, 201):
+            print(f"  ✓ {target.name} ({target.stat().st_size} B)")
+            print(f"    {data.get('browser_download_url')}")
+        else:
+            print(f"  ✗ asset {target.name}: {status} {data}")
 
 
 def ensure_pages(owner: str, repo: str, branch: str) -> None:
