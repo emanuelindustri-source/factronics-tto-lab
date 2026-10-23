@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.videojet.tto.lab"
-    android:versionCode="1"
-    android:versionName="1.0.0">
+    package="com.factronics.tto.lab"
+    android:versionCode="2"
+    android:versionName="1.1.0">
 
     <uses-sdk android:minSdkVersion="24" android:targetSdkVersion="34" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Videojet TTO Lab"
+        android:label="Factronics TTO Lab"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
