@@ -75,7 +75,8 @@
     const base = {
       models: ["6210", "6230", "6320", "6330", "6420", "6530"],
       count: 20, minutes: 30, types: TYPE_ORDER.slice(),
-      shuffle: true, partial: true, instant: false, excludeSeen: true
+      shuffle: true, partial: true, instant: false, excludeSeen: true,
+      mode: "exam"
     };
     try {
       const raw = JSON.parse(localStorage.getItem("tto.config.v1") || "null");
@@ -84,6 +85,7 @@
         base.types = Array.isArray(raw.types) ? raw.types.filter((t) => TYPE_ORDER.includes(t)) : base.types;
         base.count = clamp(parseInt(raw.count, 10) || base.count, 5, 100);
         base.minutes = [0, 10, 20, 30, 45, 60, 90].includes(Number(raw.minutes)) ? Number(raw.minutes) : base.minutes;
+        if (["exam", "study", "review"].includes(raw.mode)) base.mode = raw.mode;
         ["shuffle", "partial", "instant", "excludeSeen"].forEach((k) => {
           if (typeof raw[k] === "boolean") base[k] = raw[k];
         });
@@ -129,6 +131,24 @@
   }
   function typeLabel(t) { return T(TYPE_LABEL[t] || t); }
   function modelName(id) { return (MODELS[id] && MODELS[id].name) || id; }
+  function modeLabel(mode) {
+    return T(mode === "study" ? "mode_study" : mode === "review" ? "mode_review" : "mode_exam");
+  }
+  function progress() { return window.TTOProgress; }
+  function poolFromIds(ids) {
+    const out = [];
+    const used = new Set();
+    (ids || []).forEach((id) => {
+      const q = byId.get(id);
+      if (!q) return;
+      const d = q.i18n && (q.i18n[state.lang] || q.i18n.es);
+      if (!d || !d.q) return;
+      if (used.has(q.id)) return;
+      used.add(q.id);
+      out.push(q);
+    });
+    return out;
+  }
 
   /* --------------------------------------------------------------- pool */
   function buildPool(typeFilter) {
@@ -234,9 +254,26 @@
       ds.innerHTML = vals.map((n) => `<option value="${n}" ${n === state.config.minutes ? "selected" : ""}>${n === 0 ? esc(T("no_limit")) : n + " " + esc(T("minutes"))}</option>`).join("");
     }
   }
+  function renderModePicks() {
+    const el = document.getElementById("modePicks");
+    if (!el) return;
+    const modes = [
+      ["exam", "mode_exam", "mode_exam_d"],
+      ["study", "mode_study", "mode_study_d"],
+      ["review", "mode_review", "mode_review_d"]
+    ];
+    el.innerHTML = modes.map(([id, title, desc]) => {
+      const on = state.config.mode === id;
+      return `<button type="button" class="mode-pick${on ? " on" : ""}" data-mode="${id}" aria-pressed="${on}">
+        <b>${esc(T(title))}</b>
+        <small>${esc(T(desc))}</small>
+      </button>`;
+    }).join("");
+  }
   function renderSetup() {
     state.screen = "setup";
     applyStatic();
+    renderModePicks();
     renderModelPicks();
     renderTypePicks();
     populateSelects();
@@ -256,10 +293,13 @@
       banner.style.display = "none";
     }
     updateSummary();
+    renderProgressPanel();
   }
   function updateSummary() {
     const pool = buildPool();
     const n = unseenCount(pool);
+    const isReview = state.config.mode === "review";
+    const due = progress() && isReview ? poolFromIds(progress().dueIds()) : [];
     const modelsEl = document.getElementById("sumModels");
     const countEl = document.getElementById("sumCount");
     const timeEl = document.getElementById("sumTime");
@@ -270,23 +310,25 @@
       modelsEl.textContent = state.config.models.length === 6 ? T("select_all") :
         state.config.models.map((m) => m).join(" · ");
     }
-    if (countEl) countEl.textContent = String(state.config.count);
-    if (timeEl) timeEl.textContent = state.config.minutes ? `${state.config.minutes} ${T("minutes")}` : T("no_limit");
+    if (countEl) countEl.textContent = isReview ? String(due.length) : String(state.config.count);
+    if (timeEl) timeEl.textContent = state.config.mode === "exam" && state.config.minutes ? `${state.config.minutes} ${T("minutes")}` : T("no_limit");
     if (typesEl) {
       const labels = state.config.types.map(typeLabel);
       typesEl.textContent = labels.length > 3 ? `${labels.length} · ${labels.slice(0, 2).join(", ")}…` : labels.join(", ");
     }
-    if (poolEl) poolEl.textContent = String(pool.length);
+    if (poolEl) poolEl.textContent = String(isReview ? due.length : pool.length);
     if (newEl) newEl.textContent = String(n);
     const btn = document.getElementById("startBtn");
     if (btn) {
-      btn.disabled = !state.config.models.length || !state.config.types.length || pool.length < 2;
+      btn.disabled = !state.config.models.length || !state.config.types.length || (isReview ? due.length === 0 : pool.length < 2);
+      btn.textContent = isReview ? T("review_start") : T("start");
     }
     const alert = document.getElementById("setupAlert");
     if (alert) {
       if (!state.config.models.length) alert.innerHTML = `<div class="alert">${esc(T("choose_model"))}</div>`;
       else if (!state.config.types.length) alert.innerHTML = `<div class="alert">${esc(T("choose_type"))}</div>`;
-      else if (pool.length < state.config.count) alert.innerHTML = `<div class="alert warn">${esc(T("not_enough"))} (${pool.length}/${state.config.count})</div>`;
+      else if (isReview && !due.length) alert.innerHTML = `<div class="alert warn">${esc(T("review_none"))}</div>`;
+      else if (!isReview && pool.length < state.config.count) alert.innerHTML = `<div class="alert warn">${esc(T("not_enough"))} (${pool.length}/${state.config.count})</div>`;
       else alert.innerHTML = "";
     }
   }
@@ -296,19 +338,27 @@
   }
 
   /* --------------------------------------------------------------- exam */
-  function newExam() {
-    const pool = buildPool();
-    if (!state.config.models.length) { setAlert(T("choose_model")); return; }
-    if (!state.config.types.length) { setAlert(T("choose_type")); return; }
-    if (pool.length < state.config.count) { setAlert(`${T("not_enough")} (${pool.length}/${state.config.count})`, "warn"); return; }
-    const picked = pickQuestions(pool, state.config.count);
-    if (picked.length < state.config.count) { setAlert(T("not_enough"), "warn"); return; }
+  function newExam(poolOverride, modeOverride) {
+    const mode = modeOverride || state.config.mode || "exam";
+    const isReview = mode === "review";
+    const pool = poolOverride || buildPool();
+    if (!isReview && !state.config.models.length) { setAlert(T("choose_model")); return; }
+    if (!isReview && !state.config.types.length) { setAlert(T("choose_type")); return; }
+    const wanted = isReview ? Math.min(pool.length, 50) : state.config.count;
+    if (isReview && !wanted) { setAlert(T("review_none"), "warn"); return; }
+    if (!isReview && pool.length < wanted) { setAlert(`${T("not_enough")} (${pool.length}/${wanted})`, "warn"); return; }
+    const picked = isReview ? shuffle(pool).slice(0, wanted) : pickQuestions(pool, wanted);
+    if (picked.length < wanted) { setAlert(T("not_enough"), "warn"); return; }
     const now = Date.now();
+    const reviewModels = Array.from(new Set(picked.reduce((a, q) => a.concat(q.models || []), [])));
+    const reviewTypes = Array.from(new Set(picked.map((q) => q.type)));
     state.exam = {
       id: "exam-" + now,
       startedAt: now,
-      endsAt: state.config.minutes ? now + state.config.minutes * 60000 : null,
-      minutes: state.config.minutes,
+      endsAt: mode === "exam" && state.config.minutes ? now + state.config.minutes * 60000 : null,
+      minutes: mode === "exam" ? state.config.minutes : 0,
+      mode: mode,
+      instant: mode === "study" || state.config.instant,
       questions: picked.map((q) => ({ qid: q.id, optOrder: optionOrder(q) })),
       answers: {},
       flags: {},
@@ -316,8 +366,9 @@
       checked: {},
       index: 0,
       submitted: false,
-      models: state.config.models.slice(),
-      types: state.config.types.slice()
+      models: isReview ? reviewModels : state.config.models.slice(),
+      types: isReview ? reviewTypes : state.config.types.slice(),
+      reviewIds: isReview ? picked.map((q) => q.id) : null
     };
     state.result = null;
     state.autoSubmitted = false;
@@ -325,6 +376,31 @@
     saveExam();
     showScreen("exam");
     startTimer();
+  }
+  function startReview(kind) {
+    const p = progress();
+    if (!p) { setAlert(T("review_none"), "warn"); return; }
+    const ids = kind === "errors" ? p.errorIds() : p.dueIds();
+    if (!ids.length) {
+      const msg = kind === "errors" ? T("review_errors_none") : T("review_none");
+      if (state.screen === "setup") setAlert(msg, "warn");
+      else showModal(T("review_errors"), msg, "OK", "", null);
+      return;
+    }
+    const pool = poolFromIds(ids);
+    if (!pool.length) {
+      if (state.screen === "setup") setAlert(T("review_none"), "warn");
+      else showModal(T("review_errors"), T("review_none"), "OK", "", null);
+      return;
+    }
+    newExam(pool, "review");
+  }
+  function retryExam() {
+    if (state.exam && state.exam.mode === "review" && state.exam.reviewIds && state.exam.reviewIds.length) {
+      newExam(poolFromIds(state.exam.reviewIds), "review");
+    } else {
+      newExam(null, state.exam ? state.exam.mode || state.config.mode : state.config.mode);
+    }
   }
   function showScreen(name) {
     state.screen = name;
@@ -370,7 +446,7 @@
     const total = state.exam.questions.length;
     document.getElementById("examTitle").textContent = T("gen_title");
     document.getElementById("examSub").textContent =
-      `${state.exam.models.join(" + ")} · ${total} ${T("bp_count").toLowerCase()} · ${state.exam.minutes ? state.exam.minutes + " " + T("minutes") : T("no_limit")}`;
+      `${modeLabel(state.exam.mode)} · ${state.exam.models.join(" + ")} · ${total} ${T("bp_count").toLowerCase()} · ${state.exam.minutes ? state.exam.minutes + " " + T("minutes") : T("no_limit")}`;
     document.getElementById("answeredMeta").textContent = `${answeredCount()}/${total}`;
     document.getElementById("typeMeta").textContent = `${state.exam.types.length} ${T("bp_types").toLowerCase()}`;
     document.querySelectorAll("[data-i18n]").forEach((el) => {
@@ -461,8 +537,11 @@
     } else {
       body = `<textarea class="inp" data-open="${esc(q.id)}" placeholder="${esc(T("exam_instructions_open"))}">${esc(ans || "")}</textarea>`;
     }
+    const instant = !!state.exam.instant;
+    const openType = q.type === "describe" || q.type === "errorfix";
+    const canFeedback = instant && !openType && isAnswered(q, ans);
     let feedback = "";
-    if (state.config.instant && state.exam.checked[q.id] && q.type !== "describe" && q.type !== "errorfix") {
+    if (canFeedback) {
       const g = gradeQuestion(q, ans, null);
       const st = g >= 0.999 ? "ok" : g > 0 ? "warn" : "bad";
       feedback = `<div class="q-feedback ${st}"><b>${g >= 0.999 ? T("exam_correct") : T("exam_incorrect")}</b>${correctText(q)}<div class="rev-exp">${esc((d.explanation || ""))}</div></div>`;
@@ -477,7 +556,7 @@
         <p class="q-text">${esc(d.q)}</p>
         <p class="q-instr">${esc(instructions(q))}</p>
         ${body}
-        ${state.config.instant && q.type !== "describe" && q.type !== "errorfix" ? `<div class="q-actions"><button class="btn sm" type="button" data-action="check">${esc(T("exam_check"))}</button></div>` : ""}
+        ${instant && !openType && !canFeedback ? `<div class="q-actions"><button class="btn sm" type="button" data-action="check">${esc(T("exam_check"))}</button></div>` : ""}
         ${feedback}
       </div>`;
   }
@@ -590,6 +669,7 @@
     localStorage.removeItem("tto.exam.v1");
     try { localStorage.setItem("tto.last.v1", JSON.stringify(state.exam)); } catch (e) { /* ignore */ }
     state.result = scoreExam();
+    if (progress()) progress().recordExam(state.exam, state.result);
     showScreen("results");
   }
 
@@ -620,7 +700,7 @@
     }
     document.getElementById("resHeadline").textContent =
       (passed ? T("res_pass") : T("res_fail")) + " · " + Math.round(percent) + " %";
-    let sub = `${state.exam.models.join(" + ")} · ${r.total} ${T("bp_count").toLowerCase()}`;
+    let sub = `${modeLabel(state.exam.mode)} · ${state.exam.models.join(" + ")} · ${r.total} ${T("bp_count").toLowerCase()}`;
     sub += " · " + T("res_threshold") + " " + PASS + " %";
     if (state.autoSubmitted) sub += " · " + T("exam_time_up");
     if (r.pending > 0) sub += " · " + T("res_provisional");
@@ -752,10 +832,11 @@
     const root = document.getElementById("modalRoot");
     root.innerHTML = `<div class="modal-backdrop" data-modal="backdrop"><div class="modal" role="dialog" aria-modal="true">
       <h2>${esc(title)}</h2><p>${esc(text)}</p>
-      <div class="modal-actions"><button class="btn" type="button" data-modal="cancel">${esc(cancel)}</button><button class="btn primary" type="button" data-modal="ok">${esc(ok)}</button></div>
+      <div class="modal-actions">${cancel ? `<button class="btn" type="button" data-modal="cancel">${esc(cancel)}</button>` : ""}<button class="btn primary" type="button" data-modal="ok">${esc(ok)}</button></div>
     </div></div>`;
     root.querySelector('[data-modal="ok"]').onclick = () => { closeModal(); onOk && onOk(); };
-    root.querySelector('[data-modal="cancel"]').onclick = closeModal;
+    const cancelBtn = root.querySelector('[data-modal="cancel"]');
+    if (cancelBtn) cancelBtn.onclick = closeModal;
     root.querySelector('[data-modal="backdrop"]').addEventListener("click", (e) => { if (e.target === e.currentTarget) closeModal(); });
     root.querySelector('[data-modal="ok"]').focus();
   }
@@ -828,10 +909,194 @@
     u.searchParams.set("count", state.config.count);
     u.searchParams.set("minutes", state.config.minutes);
     u.searchParams.set("types", state.config.types.join(","));
+    u.searchParams.set("mode", state.config.mode);
     history.replaceState(null, "", u.toString());
     const done = () => setAlert(T("share_done"), "ok");
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(u.toString()).then(done).catch(done);
     else done();
+  }
+
+  /* ------------------------------------------------------------- progress */
+  function notify(msg, cls) {
+    if (state.screen === "setup") setAlert(msg, cls || "warn");
+    else showModal(T("progress_title"), msg, "OK", "", null);
+  }
+  function renderProgressPanel() {
+    const p = progress();
+    if (!p) return;
+    const sel = document.getElementById("profileSel");
+    const names = p.profiles();
+    if (sel) {
+      sel.innerHTML = names.map((name) => `<option value="${esc(name)}" ${name === p.activeName() ? "selected" : ""}>${esc(name)}</option>`).join("");
+      sel.value = p.activeName();
+    }
+    const stats = p.stats();
+    const set = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = String(value); };
+    set("statAttempts", stats.attempts);
+    set("statAverage", `${Math.round(stats.average)}%`);
+    set("statBest", `${Math.round(stats.best)}%`);
+    set("statStreak", stats.streak);
+    set("statErrors", stats.errors);
+    set("statDue", stats.due);
+    const list = document.getElementById("historyList");
+    if (!list) return;
+    const attempts = p.attempts().slice(0, 6);
+    if (!attempts.length) {
+      list.innerHTML = `<p class="muted history-empty">${esc(T("history_empty"))}</p>`;
+      return;
+    }
+    list.innerHTML = attempts.map((a) => {
+      const pass = Number(a.percent) >= PASS;
+      const wrong = Array.isArray(a.wrongIds) ? a.wrongIds.length : 0;
+      return `<article class="history-item">
+        <div class="history-score ${pass ? "ok" : "bad"}"><b>${Math.round(Number(a.percent) || 0)}%</b><small>${pass ? T("res_pass") : T("res_fail")}</small></div>
+        <div class="history-main">
+          <b>${esc(formatDate(a.at))} · ${esc(modeLabel(a.mode))}</b>
+          <span>${esc((a.models || []).join(" + ") || "—")} · ${Number(a.total) || 0} ${esc(T("bp_count").toLowerCase())}</span>
+          <small>${esc(T("history_duration"))}: ${esc(formatClock(a.duration || 0))} · ${wrong} ${esc(T("history_wrong"))}</small>
+        </div>
+        <div class="history-action">${wrong
+          ? `<button class="btn sm" type="button" data-action="review-attempt" data-attempt="${esc(a.id)}">${esc(T("history_review"))}</button>`
+          : `<span class="tiny muted">${esc(T("history_no_wrong"))}</span>`}</div>
+      </article>`;
+    }).join("");
+  }
+  function downloadFile(name, content, type) {
+    const blob = new Blob([content], { type: type || "application/octet-stream" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }
+  function exportProgress() {
+    const p = progress();
+    if (!p) return;
+    downloadFile("Factronics-TTO-Lab-progreso.json", p.exportJSON(), "application/json;charset=utf-8");
+    notify(T("export_done"), "ok");
+  }
+  function importProgress() {
+    const input = document.getElementById("importFile");
+    if (input) input.click();
+  }
+
+  /* --------------------------------------------------------------- library */
+  function openLibrary() {
+    const root = document.getElementById("modalRoot");
+    const types = TYPE_ORDER.map((t) => `<option value="${t}">${esc(typeLabel(t))}</option>`).join("");
+    const models = MODEL_ORDER.map((m) => `<option value="${m}">${esc(modelName(m))}</option>`).join("");
+    root.innerHTML = `<div class="modal-backdrop" data-modal="backdrop"><div class="modal lib-modal" role="dialog" aria-modal="true" aria-labelledby="libTitle">
+      <div class="lib-head"><div><h2 id="libTitle">${esc(T("library_title"))}</h2><p>${esc(T("library_lead"))}</p></div><button class="icon-btn" type="button" data-modal="close" aria-label="${esc(T("library_close"))}">×</button></div>
+      <div class="lib-controls">
+        <label class="lib-search"><span class="sr-only">${esc(T("library_search"))}</span><input class="inp" id="libSearch" type="search" placeholder="${esc(T("library_search"))}" autocomplete="off"></label>
+        <label><span>${esc(T("library_type"))}</span><select class="inp" id="libType"><option value="">${esc(T("library_all"))}</option>${types}</select></label>
+        <label><span>${esc(T("library_model"))}</span><select class="inp" id="libModel"><option value="">${esc(T("library_all"))}</option>${models}</select></label>
+      </div>
+      <div class="lib-count" id="libCount"></div>
+      <div class="lib-results" id="libResults"></div>
+    </div></div>`;
+    const search = document.getElementById("libSearch");
+    const type = document.getElementById("libType");
+    const model = document.getElementById("libModel");
+    const list = document.getElementById("libResults");
+    const count = document.getElementById("libCount");
+    function renderList() {
+      const query = norm(search.value);
+      const t = type.value, m = model.value;
+      const seen = new Set();
+      const items = [];
+      ALL_QUESTIONS.forEach((q) => {
+        if (t && q.type !== t) return;
+        if (m && !(q.models || []).includes(m)) return;
+        const d = q.i18n && (q.i18n[state.lang] || q.i18n.es);
+        if (!d || !d.q) return;
+        const hay = norm([d.q, d.explanation || "", (q.models || []).join(" ")].join(" "));
+        if (query && !hay.includes(query)) return;
+        const key = norm(d.q);
+        if (seen.has(key)) return;
+        seen.add(key);
+        items.push({ q: q, d: d });
+      });
+      count.textContent = `${items.length} ${T("library_results")}`;
+      list.innerHTML = items.slice(0, 80).map(({ q, d }) => {
+        const answer = q.type === "describe" || q.type === "errorfix" ? (d.model || "") : correctText(q);
+        return `<article class="lib-item">
+          <div class="lib-meta"><span class="pill ok">${esc(typeLabel(q.type))}</span><span>${esc((q.models || []).join(" · "))}</span></div>
+          <p>${esc(d.q)}</p>
+          <details><summary>${esc(T("library_answer"))}</summary>
+            <div class="lib-answer"><b>${esc(answer || T("res_no_answer"))}</b>${d.explanation ? `<p><strong>${esc(T("library_explanation"))}:</strong> ${esc(d.explanation)}</p>` : ""}</div>
+          </details>
+        </article>`;
+      }).join("") || `<p class="muted">${esc(T("library_no_results"))}</p>`;
+    }
+    search.addEventListener("input", renderList);
+    type.addEventListener("change", renderList);
+    model.addEventListener("change", renderList);
+    const close = () => closeModal();
+    root.querySelector('[data-modal="close"]').onclick = close;
+    root.querySelector('[data-modal="backdrop"]').addEventListener("click", (e) => { if (e.target === e.currentTarget) close(); });
+    renderList();
+    search.focus();
+  }
+
+  /* ----------------------------------------------------------- certificate */
+  function openCertificate() {
+    if (!state.exam) return;
+    const r = state.result || scoreExam();
+    const percent = Math.round(r.percent);
+    const p = progress();
+    const name = p ? p.activeName() : "";
+    const passed = percent >= PASS;
+    const code = "F-TTO-" + (state.exam.finishedAt || Date.now()).toString(36).toUpperCase().slice(-6) + "-" + percent;
+    const logo = new URL("../assets/img/factronics-transparent.png", location.href).href;
+    const win = window.open("", "_blank");
+    if (!win) { notify(T("cert_blocked"), "warn"); return; }
+    const html = `<!DOCTYPE html><html lang="${esc(state.lang)}"><head><meta charset="utf-8"><title>${esc(T("cert_title"))} · Factronics TTO Lab</title>
+      <style>
+        @page{size:A4 landscape;margin:0}*{box-sizing:border-box}
+        body{margin:0;background:#e9f1f8;font-family:Segoe UI,Arial,sans-serif;color:#0a1b2c;padding:24px}
+        .cert{position:relative;max-width:1050px;min-height:650px;margin:0 auto;background:#fff;border:1px solid #d8e4ef;border-top:12px solid #0b5cab;padding:46px 58px;border-radius:8px;overflow:hidden}
+        .cert:after{content:"";position:absolute;right:-140px;bottom:-170px;width:430px;height:430px;border-radius:50%;background:radial-gradient(circle,#dff2fd 0,#dff2fd 46%,transparent 47%)}
+        .top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;position:relative;z-index:1}
+        .top img{max-width:230px;max-height:52px;object-fit:contain}
+        .brandright{text-align:right;font-size:11px;line-height:1.6;color:#647d93;text-transform:uppercase;letter-spacing:.10em}
+        .kicker{margin-top:42px;color:#0b5cab;font-weight:700;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+        h1{font-size:40px;line-height:1.08;margin:10px 0 8px;letter-spacing:-.03em}
+        .sub{color:#2f465c;font-size:15px;margin:0 0 28px}
+        .name{font-size:38px;color:#0b5cab;border-bottom:2px solid #bfe5f8;padding:0 0 10px;margin:0 0 14px;display:inline-block;min-width:55%}
+        .body{font-size:15px;line-height:1.6;color:#2f465c;max-width:720px}
+        .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 0;max-width:760px;position:relative;z-index:1}
+        .stat{background:#f3f9fd;border:1px solid #d8e4ef;border-radius:10px;padding:12px 14px}
+        .stat b{display:block;font-size:22px;color:#0a1b2c}.stat span{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#647d93}
+        .foot{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-top:46px;position:relative;z-index:1}
+        .code{font-family:Consolas,monospace;font-size:12px;color:#2f465c;background:#f3f9fd;border:1px dashed #bfd5e5;padding:8px 10px;border-radius:6px}
+        .legal{max-width:570px;font-size:10px;line-height:1.5;color:#647d93}
+        .print{margin:22px auto 0;display:block;background:#0b5cab;color:#fff;border:0;border-radius:10px;padding:12px 22px;font:inherit;font-weight:700;cursor:pointer}
+        @media print{body{background:#fff;padding:0}.cert{border-radius:0;max-width:none;min-height:96vh}.print{display:none}}
+      </style></head><body>
+      <section class="cert">
+        <div class="top"><img src="${esc(logo)}" alt="Factronics"><div class="brandright">Factronics TTO Lab<br>Videojet TTO training<br>Venezuela</div></div>
+        <div class="kicker">${esc(T("cert_subtitle"))}</div>
+        <h1>${esc(T("cert_title"))}</h1>
+        <p class="sub">${esc(passed ? T("res_pass") : T("cert_participation"))}</p>
+        <div class="body">${esc(T("cert_body"))}</div>
+        <div class="name">${esc(name)}</div>
+        <p class="body">${esc(state.exam.models.join(" + "))} · ${esc(modeLabel(state.exam.mode))}</p>
+        <div class="stats">
+          <div class="stat"><b>${percent}%</b><span>${esc(T("cert_score"))}</span></div>
+          <div class="stat"><b>${esc(formatDate(state.exam.finishedAt || Date.now()))}</b><span>${esc(T("cert_date"))}</span></div>
+          <div class="stat"><b>${r.total}</b><span>${esc(T("bp_count"))}</span></div>
+        </div>
+        <div class="foot"><div class="legal">${esc(T("cert_note"))}<br><br><b>${esc(T("cert_code"))}:</b> <span class="code">${esc(code)}</span></div><div class="brandright">Factronics C.A.<br>Khristyan Hidalgo</div></div>
+      </section>
+      <button class="print" onclick="window.print()">${esc(T("cert_print"))}</button>
+      </body></html>`;
+    win.document.open();
+    win.document.write(html);
+    win.document.close();
+    win.focus();
   }
 
   /* --------------------------------------------------------------- events */
@@ -869,7 +1134,19 @@
     if (e.target.closest("#themeBtn")) { setTheme(state.theme === "dark" ? "light" : "dark"); return; }
     const preset = e.target.closest("[data-preset]");
     if (preset) { applyPreset(preset.getAttribute("data-preset")); return; }
-    if (e.target.closest("#startBtn")) { newExam(); return; }
+    const modeBtn = e.target.closest("[data-mode]");
+    if (modeBtn) {
+      state.config.mode = modeBtn.getAttribute("data-mode");
+      saveConfig();
+      renderModePicks();
+      updateSummary();
+      return;
+    }
+    if (e.target.closest("#startBtn")) {
+      if (state.config.mode === "review") startReview("due");
+      else newExam();
+      return;
+    }
     if (e.target.closest("#shareBtn")) { shareBlueprint(); return; }
     const selfBtn = e.target.closest("[data-self]");
     if (selfBtn) {
@@ -877,6 +1154,7 @@
       const value = Number(selfBtn.getAttribute("data-score"));
       state.exam.self[id] = value;
       state.result = scoreExam();
+      if (progress()) progress().syncErrors(state.exam, state.result);
       renderResults();
       return;
     }
@@ -913,7 +1191,7 @@
       state.exam.checked[currentItem().qid] = true;
       renderQuestion();
     } else if (a === "retry") {
-      newExam();
+      retryExam();
     } else if (a === "new") {
       state.exam = null; state.result = null; localStorage.removeItem("tto.exam.v1"); showScreen("setup");
     } else if (a === "print") {
@@ -922,10 +1200,57 @@
       downloadCSV();
     } else if (a === "copy") {
       copySummary();
+    } else if (a === "review-due") {
+      startReview("due");
+    } else if (a === "review-errors") {
+      startReview("errors");
+    } else if (a === "library") {
+      openLibrary();
+    } else if (a === "export-progress") {
+      exportProgress();
+    } else if (a === "import-progress") {
+      importProgress();
+    } else if (a === "review-attempt") {
+      const attempt = progress() && progress().attempt(act.getAttribute("data-attempt"));
+      if (!attempt || !attempt.wrongIds || !attempt.wrongIds.length) { notify(T("history_no_wrong"), "ok"); return; }
+      newExam(poolFromIds(attempt.wrongIds), "review");
+    } else if (a === "cert") {
+      openCertificate();
+    } else if (a === "profile-new") {
+      const suggested = T("profile_prompt");
+      const name = window.prompt(suggested, "");
+      if (name == null) return;
+      const res = progress() && progress().createProfile(name);
+      if (res && !res.ok && res.exists) notify(T("profile_exists"), "warn");
+      else { renderSetup(); notify(T("profile_new"), "ok"); }
+    } else if (a === "profile-rename") {
+      const p = progress();
+      if (!p) return;
+      const oldName = p.activeName();
+      const name = window.prompt(T("profile_name"), oldName);
+      if (name == null || name.trim() === oldName) return;
+      const res = p.renameProfile(oldName, name);
+      if (res && !res.ok && res.exists) notify(T("profile_exists"), "warn");
+      else renderSetup();
     }
   });
 
   document.addEventListener("change", (e) => {
+    if (e.target.id === "importFile") {
+      const file = e.target.files && e.target.files[0];
+      e.target.value = "";
+      if (!file || !progress()) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (!window.confirm(T("import_confirm"))) return;
+        const res = progress().importJSON(String(reader.result || ""), false);
+        if (!res.ok) { notify(T("import_error"), "warn"); return; }
+        renderSetup();
+        notify(T("import_done"), "ok");
+      };
+      reader.readAsText(file, "utf-8");
+      return;
+    }
     const model = e.target.closest("[data-model]");
     if (model) {
       const id = model.getAttribute("data-model");
@@ -941,6 +1266,11 @@
       else state.config.types = state.config.types.filter((t) => t !== id);
       type.closest(".type-pick").classList.toggle("on", type.checked);
       saveConfig(); updateSummary(); return;
+    }
+    if (e.target.id === "profileSel") {
+      if (progress()) progress().setActive(e.target.value);
+      renderSetup();
+      return;
     }
     if (e.target.id === "countSel") {
       state.config.count = clamp(parseInt(e.target.value, 10) || 20, 5, 100);
@@ -999,12 +1329,20 @@
   });
 
   document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") { closeModal(); return; }
     if (!state.exam || state.screen !== "exam") return;
     const tag = (e.target.tagName || "").toLowerCase();
     if (tag === "input" || tag === "textarea" || tag === "select") return;
-    if (e.key === "ArrowLeft") { if (state.exam.index > 0) { state.exam.index--; renderExam(); } }
+    if (e.key === "ArrowLeft") { if (state.exam.index > 0) { state.exam.index--; saveExam(); renderExam(); } }
     if (e.key === "ArrowRight") {
       if (state.exam.index < state.exam.questions.length - 1) state.exam.index++;
+      saveExam();
+      renderExam();
+    }
+    if (e.key.toLowerCase() === "f") {
+      const id = currentItem().qid;
+      if (state.exam.flags[id]) delete state.exam.flags[id]; else state.exam.flags[id] = true;
+      saveExam();
       renderExam();
     }
   });
@@ -1031,6 +1369,7 @@
       const n = Number(p.get("minutes"));
       if ([0, 10, 20, 30, 45, 60, 90].includes(n)) { state.config.minutes = n; changed = true; }
     }
+    if (p.get("mode") && ["exam", "study", "review"].includes(p.get("mode"))) { state.config.mode = p.get("mode"); changed = true; }
     if (p.get("lang") && window.TTO_I18N[p.get("lang")]) { state.lang = p.get("lang"); changed = true; }
     if (changed) saveConfig();
   }
@@ -1039,8 +1378,5 @@
   setTheme(state.theme);
   applyStatic();
   renderSetup();
-  if (state.exam === null) {
-    const saved = loadSavedExam();
-    if (saved) state.exam = null; // wait for explicit resume
-  }
+  if (location.hash === "#library") setTimeout(openLibrary, 0);
 })();
