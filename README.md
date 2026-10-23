@@ -1,15 +1,17 @@
-# Videojet TTO Lab
+# Factronics TTO Lab
 
 Entrenamiento técnico para impresoras **Videojet TTO** (Thermal Transfer Overprint): generador de evaluaciones para navegador y aplicación Android nativa, en español, inglés y portugués.
 
-> Proyecto independiente de capacitación. No es un producto oficial ni está afiliado a Videojet Technologies. Consulta el aviso legal antes de usar el material.
+**Factronics TTO Lab** es un proyecto de **Factronics C.A. (Factronics Venezuela)**, distribuidor oficial de Videojet en Venezuela. Fue desarrollado por **Khristyan Hidalgo**, técnico de campo certificado de Factronics.
+
+> **Alcance y autoría:** este material pertenece a Factronics Venezuela y a Khristyan Hidalgo. **Videojet Technologies no solicitó, patrocinó ni autorizó este proyecto.** “Videojet” y “DataFlex” son marcas de Videojet Technologies y se usan aquí para identificar los equipos estudiados. Consulta [NOTICE.md](NOTICE.md) antes de reutilizar el contenido.
 
 ## Enlaces
 
-- **Sitio / landing:** https://emanuelindustri-source.github.io/videojet-tto-lab/
-- **Generador web:** https://emanuelindustri-source.github.io/videojet-tto-lab/generator/
-- **APK Android:** https://github.com/emanuelindustri-source/videojet-tto-lab/releases/latest/download/VideojetTTO-Lab.apk
-- **Código fuente:** https://github.com/emanuelindustri-source/videojet-tto-lab
+- **Sitio / landing:** https://emanuelindustri-source.github.io/factronics-tto-lab/
+- **Generador web:** https://emanuelindustri-source.github.io/factronics-tto-lab/generator/
+- **APK Android:** https://github.com/emanuelindustri-source/factronics-tto-lab/releases/latest/download/Factronics-TTO-Lab.apk
+- **Código fuente:** https://github.com/emanuelindustri-source/factronics-tto-lab
 
 ## Qué incluye
 
@@ -73,7 +75,7 @@ Características:
 
 ### Instalar el APK
 
-Descarga `VideojetTTO-Lab.apk` desde [Releases](https://github.com/emanuelindustri-source/videojet-tto-lab/releases/latest/download/VideojetTTO-Lab.apk) o desde `download/VideojetTTO-Lab.apk`.
+Descarga `Factronics-TTO-Lab.apk` desde [Releases](https://github.com/emanuelindustri-source/factronics-tto-lab/releases/latest/download/Factronics-TTO-Lab.apk) o desde `download/Factronics-TTO-Lab.apk`.
 
 Android puede pedir permiso para instalar aplicaciones de origen desconocido. El APK está firmado con una clave de entrenamiento autofirmada; no se distribuye por Play Store.
 
@@ -88,8 +90,8 @@ python android/build.py
 
 El script usa `aapt2`, `javac`, `d8`, `zipalign` y `apksigner` directamente; no necesita Gradle. Genera:
 
-- `android/build/VideojetTTO-Lab.apk`
-- `download/VideojetTTO-Lab.apk` (copia para el sitio)
+- `android/build/Factronics-TTO-Lab.apk`
+- `download/Factronics-TTO-Lab.apk` (copia para el sitio)
 
 Variables opcionales: `ANDROID_HOME` / `ANDROID_SDK_ROOT` y `JAVA_HOME`.
 
@@ -128,7 +130,7 @@ Los textos de interfaz viven en `assets/js/i18n.js`; `android/app/src/main/asset
 ├── data/                       Fuentes y banco legible
 ├── tools/build_bank.py         Generador del banco
 ├── android/                    App nativa + build.py
-└── download/VideojetTTO-Lab.apk
+└── download/Factronics-TTO-Lab.apk
 ```
 
 ## Ejecutar en local
@@ -157,6 +159,11 @@ También se puede abrir `index.html` directamente; el generador no necesita red.
 - Los datos de sesión se guardan localmente (navegador o `SharedPreferences`).
 - Para publicar cambios, usa `tools/publish_github.py` con un token en la variable de entorno `GITHUB_TOKEN`; nunca lo escribas en un archivo.
 
-## Licencia y aviso
+## Autoría, licencia y aviso
+
+- **Titularidad del proyecto:** Factronics C.A. (Factronics Venezuela) y Khristyan Hidalgo.
+- **Desarrollo y contenido técnico:** Khristyan Hidalgo, técnico de campo certificado de Factronics Venezuela.
+- **Relación comercial:** Factronics Venezuela es distribuidor oficial de Videojet en Venezuela. Videojet es la marca de los equipos.
+- **Autorización de Videojet:** Videojet Technologies no solicitó, patrocinó ni autorizó este proyecto ni su publicación.
 
 Código bajo licencia MIT. El contenido técnico, marcas y material de referencia pertenecen a sus respectivos titulares. Ver [NOTICE.md](NOTICE.md).
