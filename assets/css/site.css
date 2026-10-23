@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Videojet TTO Lab — shared design system
+   Factronics TTO Lab — shared design system
    ========================================================================== */
 :root {
   --bg: #f3f7fb;
@@ -93,6 +93,14 @@ button { cursor: pointer; }
 .logo img { height: 30px; width: auto; display: block; }
 .logo .logo-word { font-weight: 800; font-size: .98rem; letter-spacing: -.015em; white-space: nowrap; }
 .logo .logo-word span { color: var(--brand); }
+.brand-logo-dark { display: none !important; }
+[data-theme="dark"] .brand-logo-light { display: none !important; }
+[data-theme="dark"] .brand-logo-dark { display: block !important; }
+.brand-partner {
+  font-size: .6rem; line-height: 1.2; color: var(--ink-3); font-weight: 700;
+  text-transform: uppercase; letter-spacing: .09em; max-width: 108px;
+  padding-left: 12px; border-left: 1px solid var(--line); white-space: normal;
+}
 .nav-links { display: flex; align-items: center; gap: 4px; margin-left: auto; }
 .nav-links a {
   color: var(--ink-2); font-size: .86rem; font-weight: 600; padding: 8px 10px;
@@ -150,9 +158,17 @@ h2.section-title { font-size: clamp(1.7rem, 3vw, 2.55rem); line-height: 1.08; le
 /* ---------- landing hero ---------- */
 .hero { padding: 62px 0 52px; position: relative; overflow: hidden; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(340px, .9fr); gap: 56px; align-items: center; }
+.hero-eyebrow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.partner-pill {
+  display: inline-flex; align-items: center; padding: 4px 8px; border-radius: 999px;
+  background: var(--brand-soft); color: var(--brand); border: 1px solid color-mix(in srgb, var(--brand) 18%, var(--line));
+  font-size: .62rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap;
+}
 .hero-lead { margin-top: 22px; max-width: 640px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .hero-note { margin-top: 16px; font-size: .78rem; color: var(--ink-3); }
+.hero-credit { margin-top: 6px; font-size: .74rem; color: var(--ink-3); font-weight: 600; }
+.credit { margin-top: 7px; font-size: .76rem; color: var(--ink-3); font-weight: 600; }
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 38px; max-width: 610px; }
 .stat { padding: 13px 14px; border: 1px solid var(--line); border-radius: 13px; background: color-mix(in srgb, var(--surface) 80%, transparent); }
 .stat b { display: block; font-size: 1.35rem; letter-spacing: -.03em; line-height: 1; }
@@ -268,9 +284,10 @@ h2.section-title { font-size: clamp(1.7rem, 3vw, 2.55rem); line-height: 1.08; le
 /* ---------- footer ---------- */
 .site-footer { border-top: 1px solid var(--line); padding: 34px 0 42px; margin-top: 70px; }
 .footer-grid { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
-.footer-brand { display: flex; align-items: center; gap: 12px; }
-.footer-brand img { height: 26px; }
-.footer-brand p { margin: 0; font-size: .78rem; color: var(--ink-3); max-width: 460px; }
+.footer-brand { display: flex; align-items: flex-start; gap: 12px; }
+.footer-brand img { height: 30px; width: auto; margin-top: 3px; flex: none; }
+.footer-brand strong { display: block; font-size: .92rem; margin-bottom: 4px; }
+.footer-brand p { margin: 0; font-size: .78rem; color: var(--ink-3); max-width: 540px; }
 .footer-links { display: flex; gap: 16px; flex-wrap: wrap; font-size: .8rem; }
 .footer-note { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--line); font-size: .72rem; color: var(--ink-3); display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
 
@@ -496,6 +513,9 @@ textarea.inp { min-height: 150px; resize: vertical; line-height: 1.55; }
 }
 
 /* ---------- responsive ---------- */
+@media (max-width: 1180px) {
+  .brand-partner { display: none; }
+}
 @media (max-width: 1060px) {
   .hero-grid { grid-template-columns: 1fr; gap: 36px; }
   .exam-mock { max-width: 560px; }
