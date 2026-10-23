@@ -129,6 +129,8 @@ Los textos de interfaz viven en `assets/js/i18n.js`; `android/app/src/main/asset
 │   └── js/generator.js
 ├── data/                       Fuentes y banco legible
 ├── tools/build_bank.py         Generador del banco
+├── tools/make_assets.py        OG, favicon e iconos de la app
+├── tools/publish_github.py     Publicación por API
 ├── android/                    App nativa + build.py
 └── download/Factronics-TTO-Lab.apk
 ```
@@ -148,7 +150,7 @@ También se puede abrir `index.html` directamente; el generador no necesita red.
 
 - `python tools/build_bank.py` → 328 preguntas, 304 enunciados únicos.
 - Web: examen de 12 preguntas con respuestas correctas → 100 %.
-- Web: selección múltiple parcial → puntaje fraccionario (p. ej. 2,08/6).
+- Web: selección múltiple parcial → puntaje fraccionario (prueba: 4,08/10 = 41 %).
 - Android: instalación, configuración, examen, resultados y autoevaluación probados en emulador Pixel 7 / API 34.
 - APK verificado con `apksigner verify` (esquemas v2/v3).
 
