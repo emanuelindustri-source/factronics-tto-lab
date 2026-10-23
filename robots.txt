@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /download/
+
+Sitemap: https://emanuelindustri-source.github.io/factronics-tto-lab/sitemap.xml
