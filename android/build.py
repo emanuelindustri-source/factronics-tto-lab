@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the native Videojet TTO Lab APK with the Android SDK command-line tools.
+"""Build the native Factronics TTO Lab APK with the Android SDK command-line tools.
 
 No Gradle required. Tested with build-tools 34.0.0, platform android-34 and JDK 17.
 Run from the repository root:  python android/build.py
@@ -90,7 +90,7 @@ def main() -> None:
     if BUILD.exists():
         for name in ("gen", "classes", "dex"):
             shutil.rmtree(BUILD / name, ignore_errors=True)
-        for name in ("res.zip", "base.apk", "classes.jar", "aligned.apk", "VideojetTTO-Lab.apk"):
+        for name in ("res.zip", "base.apk", "classes.jar", "aligned.apk", "Factronics-TTO-Lab.apk"):
             try:
                 (BUILD / name).unlink()
             except FileNotFoundError:
@@ -148,11 +148,11 @@ def main() -> None:
             keytool, "-genkeypair", "-v", "-keystore", keystore,
             "-storepass", "android", "-keypass", "android",
             "-alias", "androiddebugkey",
-            "-dname", "CN=Videojet TTO Lab, OU=Training, O=Videojet, L=Training, ST=Training, C=US",
+            "-dname", "CN=Factronics TTO Lab, OU=Training, O=Factronics, L=Caracas, ST=Distrito Capital, C=VE",
             "-keyalg", "RSA", "-keysize", "2048", "-validity", "10000",
         ])
 
-    signed = BUILD / "VideojetTTO-Lab.apk"
+    signed = BUILD / "Factronics-TTO-Lab.apk"
     run([
         bt / "apksigner.bat", "sign",
         "--ks", keystore, "--ks-pass", "pass:android", "--key-pass", "pass:android",
@@ -160,13 +160,13 @@ def main() -> None:
     ])
     run([bt / "apksigner.bat", "verify", "--verbose", signed])
 
-    target = download / "VideojetTTO-Lab.apk"
+    target = download / "Factronics-TTO-Lab.apk"
     shutil.copy2(signed, target)
     size = target.stat().st_size / 1024
     print()
     print("APK:", target)
     print("Size: %.1f KB" % size)
-    print("Package: com.videojet.tto.lab · minSdk 24 · targetSdk 34")
+    print("Package: com.factronics.tto.lab · minSdk 24 · targetSdk 34")
 
 
 if __name__ == "__main__":
