@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Build the shared Videojet TTO Lab question bank.
+Build the shared Factronics TTO Lab question bank.
 
 Outputs:
   assets/js/bank.js                 -> window.TTO_BANK (web, works from file://)
