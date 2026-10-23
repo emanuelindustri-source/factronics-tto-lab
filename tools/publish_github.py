@@ -6,7 +6,7 @@ written to a file or printed.
 
 Example:
     $env:GITHUB_TOKEN = "github_pat_..."
-    python tools/publish_github.py --owner emanuelindustri-source --repo videojet-tto-lab
+    python tools/publish_github.py --owner emanuelindustri-source --repo factronics-tto-lab
 """
 from __future__ import annotations
 
@@ -27,8 +27,8 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 API = "https://api.github.com"
 UPLOADS = "https://uploads.github.com"
-RELEASE_TAG = "v1.0.0"
-APK = ROOT / "download" / "VideojetTTO-Lab.apk"
+RELEASE_TAG = "v1.1.0"
+APK = ROOT / "download" / "Factronics-TTO-Lab.apk"
 EXCLUDED = {
     ".git", ".idea", ".vscode", "__pycache__", ".venv", "node_modules",
     "android/build", "android/.gradle", ".pytest_cache",
@@ -48,7 +48,7 @@ def request(method: str, url: str, data=None, content_type="application/json", b
         "Authorization": "Bearer " + (token_value or token()),
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
-        "User-Agent": "videojet-tto-lab-publisher",
+        "User-Agent": "factronics-tto-lab-publisher",
     }
     if data is not None:
         if binary:
@@ -94,7 +94,7 @@ def files_to_publish() -> list[Path]:
             continue
         if path.suffix.lower() in EXCLUDED_SUFFIXES:
             continue
-        if rel.endswith(".apk") and rel != "download/VideojetTTO-Lab.apk":
+        if rel.endswith(".apk") and rel != "download/Factronics-TTO-Lab.apk":
             continue
         out.append(path)
     return out
@@ -111,7 +111,7 @@ def ensure_repo(owner: str, repo: str, branch: str) -> dict:
     print("Creando repositorio...")
     status, data = request("POST", f"{API}/user/repos", {
         "name": repo,
-        "description": "Generador de evaluaciones TTO + app Android nativa. Entrenamiento Videojet 6210/6230/6320/6330/6420/6530.",
+        "description": "Factronics TTO Lab: entrenamiento técnico Videojet 6210/6230 y DataFlex 6320/6330/6420/6530. Proyecto de Factronics Venezuela; Videojet no lo solicitó ni autorizó.",
         "homepage": f"https://{owner}.github.io/{repo}/",
         "private": False,
         "has_issues": True,
@@ -157,6 +157,26 @@ def upload_file(owner: str, repo: str, branch: str, path: Path, rel: str) -> Non
         print(f"  ✗ {rel}: {status} {data}")
 
 
+def delete_file(owner: str, repo: str, branch: str, rel: str) -> None:
+    url = f"{API}/repos/{owner}/{repo}/contents/{urllib.parse.quote(rel, safe='/')}"
+    status, current = request("GET", url + "?ref=" + urllib.parse.quote(branch))
+    if status == 404:
+        print(f"  · {rel}: ya no existe")
+        return
+    if status != 200 or not isinstance(current, dict):
+        print(f"  ✗ {rel}: GET {status}")
+        return
+    status, data = request("DELETE", url, {
+        "message": f"chore: remove legacy {rel}",
+        "sha": current["sha"],
+        "branch": branch,
+    })
+    if status in (200, 204):
+        print(f"  ✓ {rel}: eliminado")
+    else:
+        print(f"  ✗ {rel}: DELETE {status} {data}")
+
+
 def ensure_release(owner: str, repo: str, branch: str) -> dict:
     status, data = request("GET", f"{API}/repos/{owner}/{repo}/releases/tags/{RELEASE_TAG}")
     if status == 200 and isinstance(data, dict):
@@ -168,14 +188,17 @@ def ensure_release(owner: str, repo: str, branch: str) -> dict:
     print("Creando release...")
     status, data = request("POST", f"{API}/repos/{owner}/{repo}/releases", {
         "tag_name": RELEASE_TAG,
-        "target_commitish": "main",
-        "name": "Videojet TTO Lab 1.0.0",
+        "target_commitish": branch,
+        "name": "Factronics TTO Lab 1.1.0",
         "body": (
-            "Aplicación Android nativa y generador web de evaluaciones TTO.\n\n"
-            "- 6 modelos: 6210, 6230, 6320, 6330, 6420, 6530\n"
+            "Aplicación Android nativa y generador web de evaluaciones TTO de Factronics Venezuela.\n\n"
+            "- 6 modelos: Videojet 6210, 6230 y DataFlex 6320, 6330, 6420, 6530\n"
             "- 7 tipos de pregunta\n"
             "- Español, English, Português\n"
             "- Offline, sin WebView, sin permisos de red\n\n"
+            "Proyecto de Factronics Venezuela, distribuidor oficial de Videojet. "
+            "Desarrollado por Khristyan Hidalgo, técnico de campo certificado. "
+            "Videojet Technologies no solicitó, patrocinó ni autorizó este proyecto.\n\n"
             "APK firmado con clave de entrenamiento autofirmada."
         ),
         "draft": False,
@@ -189,7 +212,7 @@ def ensure_release(owner: str, repo: str, branch: str) -> dict:
 
 def upload_asset(owner: str, repo: str, release: dict) -> None:
     if not APK.exists():
-        print("! No existe download/VideojetTTO-Lab.apk; se omite el asset.")
+        print("! No existe download/Factronics-TTO-Lab.apk; se omite el asset.")
         return
     assets_url = release.get("assets_url") or f"{API}/repos/{owner}/{repo}/releases/{release['id']}/assets"
     status, assets = request("GET", assets_url)
@@ -231,10 +254,11 @@ def ensure_pages(owner: str, repo: str, branch: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--owner", default="emanuelindustri-source")
-    parser.add_argument("--repo", default="videojet-tto-lab")
+    parser.add_argument("--repo", default="factronics-tto-lab")
     parser.add_argument("--branch", default="main")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--only", action="append", default=[], metavar="PATH", help="Subir solo este archivo (repetible).")
+    parser.add_argument("--delete", action="append", default=[], metavar="PATH", help="Eliminar una ruta del repositorio (repetible).")
     parser.add_argument("--skip-pages", action="store_true")
     parser.add_argument("--skip-release", action="store_true")
     args = parser.parse_args()
@@ -261,6 +285,11 @@ def main() -> None:
         print(f"[{index}/{len(files)}] {rel}")
         upload_file(args.owner, args.repo, branch, path, rel)
 
+    if args.delete:
+        print("Eliminando rutas obsoletas...")
+        for rel in args.delete:
+            delete_file(args.owner, args.repo, branch, rel)
+
     if not args.skip_release:
         release = ensure_release(args.owner, args.repo, branch)
         upload_asset(args.owner, args.repo, release)
@@ -272,7 +301,7 @@ def main() -> None:
     print("Listo:")
     print(f"  Repo:   https://github.com/{args.owner}/{args.repo}")
     print(f"  Pages:  https://{args.owner}.github.io/{args.repo}/")
-    print(f"  APK:    https://github.com/{args.owner}/{args.repo}/releases/latest/download/VideojetTTO-Lab.apk")
+    print(f"  APK:    https://github.com/{args.owner}/{args.repo}/releases/latest/download/Factronics-TTO-Lab.apk")
     print("  Revoca o rota el token utilizado.")
 
 
