@@ -8,6 +8,10 @@
   <meta name="theme-color" content="#0b5cab">
   <link rel="canonical" href="https://emanuelindustri-source.github.io/factronics-tto-lab/generator/">
   <link rel="icon" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/icon-192.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <meta name="application-name" content="Factronics TTO Lab">
+  <meta name="robots" content="index,follow">
   <link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body class="app-page">
@@ -21,6 +25,7 @@
       <span class="brand-partner" data-i18n="brand_partner">Distribuidor oficial Videojet</span>
       <nav class="nav-links" aria-label="Principal">
         <a href="../index.html" data-i18n="nav_home">Inicio</a>
+        <a href="../index.html#demo" data-i18n="nav_demo">Demo</a>
         <a href="index.html" class="on" data-i18n="nav_generator">Generador</a>
         <a href="../index.html#models" data-i18n="nav_models">Equipos</a>
         <a href="../index.html#android" data-i18n="nav_android">Android</a>
@@ -58,6 +63,14 @@
             <button class="btn sm" data-action="discard-saved">Descartar y empezar de nuevo</button>
           </div>
         </div>
+
+        <section class="panel mode-panel">
+          <div class="panel-body">
+            <h2 data-i18n="mode_title">0 · Modo de sesión</h2>
+            <p class="hint" data-i18n="mode_help">Elige cómo quieres practicar. El modo cambia el cronómetro y la corrección.</p>
+            <div class="mode-picks" id="modePicks"></div>
+          </div>
+        </section>
 
         <div class="setup-grid">
           <div>
@@ -136,6 +149,45 @@
             </div>
           </aside>
         </div>
+
+        <section class="panel progress-panel" id="progressPanel">
+          <div class="panel-body">
+            <div class="progress-head">
+              <div>
+                <span class="kicker" data-i18n="progress_kicker">TU RECORRIDO</span>
+                <h2 data-i18n="progress_title">Mi progreso</h2>
+              </div>
+              <div class="profile-box">
+                <label for="profileSel" data-i18n="profile_label">Perfil</label>
+                <select id="profileSel" class="inp"></select>
+                <button class="btn sm" type="button" data-action="profile-new" data-i18n="profile_new">Nuevo</button>
+                <button class="btn sm icon" type="button" data-action="profile-rename" aria-label="Renombrar" title="Renombrar">✎</button>
+              </div>
+            </div>
+            <p class="hint" data-i18n="progress_lead">Historial, errores y repaso se guardan solo en este navegador. Cambia de perfil si compartes el equipo.</p>
+            <div class="progress-stats">
+              <div class="pstat"><b id="statAttempts">0</b><span data-i18n="stat_attempts">Intentos</span></div>
+              <div class="pstat"><b id="statAverage">0%</b><span data-i18n="stat_average">Promedio</span></div>
+              <div class="pstat"><b id="statBest">0%</b><span data-i18n="stat_best">Mejor</span></div>
+              <div class="pstat"><b id="statStreak">0</b><span data-i18n="stat_streak">Racha</span></div>
+              <div class="pstat"><b id="statErrors">0</b><span data-i18n="stat_errors">Errores</span></div>
+              <div class="pstat accent"><b id="statDue">0</b><span data-i18n="stat_due">Para repasar</span></div>
+            </div>
+            <div class="progress-actions">
+              <button class="btn sm primary" type="button" data-action="review-due"><span data-i18n="review_due">Repasar pendientes</span></button>
+              <button class="btn sm" type="button" data-action="review-errors"><span data-i18n="review_errors">Repasar errores</span></button>
+              <button class="btn sm" type="button" data-action="library"><span data-i18n="library_open">Abrir biblioteca</span></button>
+              <button class="btn sm" type="button" data-action="export-progress"><span data-i18n="export_progress">Exportar</span></button>
+              <button class="btn sm" type="button" data-action="import-progress"><span data-i18n="import_progress">Importar</span></button>
+            </div>
+            <div class="history-wrap">
+              <h3 data-i18n="history_title">Últimos intentos</h3>
+              <div id="historyList" class="history-list"></div>
+            </div>
+            <p class="tiny muted" data-i18n="review_limit">El repaso incluye solo preguntas de tu cuaderno y respeta los filtros activos.</p>
+            <input type="file" id="importFile" accept="application/json,.json" hidden>
+          </div>
+        </section>
       </section>
 
       <!-- ============================ EXAM ============================ -->
@@ -191,6 +243,8 @@
               <button class="btn" type="button" data-action="print" data-i18n="res_print">Imprimir / PDF</button>
               <button class="btn" type="button" data-action="csv" data-i18n="res_csv">Descargar CSV</button>
               <button class="btn" type="button" data-action="copy" data-i18n="res_copy">Copiar resumen</button>
+              <button class="btn" type="button" data-action="review-errors" data-i18n="res_review_errors">Repasar errores</button>
+              <button class="btn" type="button" data-action="cert" data-i18n="cert_btn">Constancia</button>
             </div>
             <div class="res-stats">
               <div class="res-stat"><b id="statCorrect">0</b><span data-i18n="res_filter_ok">Correctas</span></div>
@@ -241,6 +295,8 @@
 
   <script src="../assets/js/bank.js"></script>
   <script src="../assets/js/i18n.js"></script>
+  <script src="../assets/js/progress.js"></script>
+  <script src="../assets/js/pwa.js"></script>
   <script src="../assets/js/generator.js"></script>
 </body>
 </html>
