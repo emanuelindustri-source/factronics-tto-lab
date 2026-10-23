@@ -19,6 +19,10 @@ Entrenamiento técnico para impresoras **Videojet TTO** (Thermal Transfer Overpr
 |---|---|
 | Landing page estática (GitHub Pages) | Sí |
 | Generador de exámenes offline | Sí |
+| PWA instalable con service worker offline | Sí |
+| Progreso, historial, cuaderno de errores y repaso espaciado | Sí |
+| Biblioteca de preguntas con búsqueda y filtros | Sí |
+| Constancia de aprovechamiento imprimible | Sí |
 | Aplicación Android nativa (Java, sin WebView) | Sí |
 | APK firmado y descargable | Sí |
 | Español / English / Português | Sí |
@@ -57,21 +61,32 @@ El banco generado contiene **328 preguntas y variantes**; al filtrar por modelo 
 Características:
 
 - 100 % offline; no hay backend ni registro.
-- Guarda configuración, examen en curso y preguntas vistas en `localStorage`.
+- PWA instalable (`manifest.webmanifest` + `sw.js`): abre sin conexión desde el primer uso.
+- Modos **Examen**, **Estudio** (corrección inmediata) y **Repaso** (solo falladas o pendientes).
+- Guarda configuración, examen en curso, preguntas vistas y progreso en `localStorage` (`tto.progress.v2`).
+- Historial de intentos, promedio, mejor nota, racha, cuaderno de errores y repaso espaciado con vencimientos.
+- Biblioteca de preguntas con búsqueda por texto, tipo y modelo, más respuesta y explicación.
+- Constancia de aprovechamiento imprimible con código de verificación y aviso legal.
+- Exportar/importar progreso en JSON entre perfiles y dispositivos.
 - Cronómetro, mapa de preguntas, marcado para revisar y navegación.
-- Corrección inmediata opcional.
 - Resultados con desglose por tipo, autoevaluación de preguntas abiertas, CSV e impresión/PDF.
 - Enlace compartible con la configuración (`?models=6530&types=single,multi&count=20&minutes=30`).
-- Interfaz adaptable a móvil, modo oscuro y estilos de impresión.
+- Interfaz adaptable a móvil, tema claro/oscuro y estilos de impresión.
 
 ## Aplicación Android
 
 - Java nativo, sin AndroidX, sin WebView y sin dependencias externas.
 - Pantallas de configuración, examen y resultados construidas programáticamente.
+- Modos **Examen**, **Estudio** y **Repaso**, igual que la versión web.
+- Progreso local: historial, promedio, mejor nota, racha, cuaderno de errores y repaso espaciado.
+- Guardado automático y **reanudar sesión** tras cerrar o reiniciar la app.
+- Biblioteca de preguntas con búsqueda por texto, tipo y modelo.
+- Tema claro/oscuro con detección del tema del sistema y botón de cambio.
+- Compartir resultado, exportar progreso por hoja de compartir e importar un JSON con `ACTION_OPEN_DOCUMENT`.
 - Cronómetro, mapa de preguntas, navegación, marcado para revisar y autoevaluación.
 - Banco local en `assets/bank.json` y textos en `assets/ui.json`.
 - Funciona sin conexión.
-- `minSdk 24` (Android 7.0), `targetSdk 34`.
+- `minSdk 24` (Android 7.0), `targetSdk 34`, versión `1.2.0`.
 
 ### Instalar el APK
 
@@ -94,6 +109,17 @@ El script usa `aapt2`, `javac`, `d8`, `zipalign` y `apksigner` directamente; no 
 - `download/Factronics-TTO-Lab.apk` (copia para el sitio)
 
 Variables opcionales: `ANDROID_HOME` / `ANDROID_SDK_ROOT` y `JAVA_HOME`.
+
+## Novedades 1.2
+
+- **Modos de sesión:** examen con cronómetro, estudio con corrección inmediata y repaso de fallos/pendientes.
+- **Progreso local:** perfiles, historial de intentos, estadísticas, cuaderno de errores y repetición espaciada.
+- **Biblioteca técnica:** búsqueda de las 304 preguntas únicas por texto, tipo y modelo, con respuesta y explicación.
+- **Reanudar sesión:** el examen en curso se guarda solo y se retoma en web y Android.
+- **PWA offline:** manifest, service worker, iconos e instalación desde el navegador.
+- **Constancia de aprovechamiento:** documento imprimible con código de verificación y aviso legal.
+- **Importar/exportar:** el progreso viaja en JSON entre navegador y APK.
+- **APK 1.2.0:** paridad de modos, progreso, biblioteca, tema oscuro y compartir resultado.
 
 ## Banco de preguntas
 
