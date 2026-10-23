@@ -1,6 +1,8 @@
-# Android nativo
+# Android nativo · Factronics TTO Lab
 
 Aplicación Java sin AndroidX, sin WebView y sin Gradle. La interfaz se construye con vistas estándar de Android y el banco se lee de `assets/bank.json`.
+
+Proyecto de Factronics Venezuela, distribuidor oficial de Videojet. Desarrollado por Khristyan Hidalgo, técnico de campo certificado. Videojet Technologies no solicitó ni autorizó este proyecto.
 
 ## Requisitos
 
@@ -26,8 +28,8 @@ El script:
 
 Salida:
 
-- `android/build/VideojetTTO-Lab.apk`
-- `download/VideojetTTO-Lab.apk`
+- `android/build/Factronics-TTO-Lab.apk`
+- `download/Factronics-TTO-Lab.apk`
 
 La clave se genera en `android/build/debug.keystore` si no existe. Es una clave de entrenamiento, no una clave de producción. Si borras `android/build`, se generará una nueva y Android pedirá desinstalar la versión anterior antes de actualizar.
 
@@ -40,7 +42,7 @@ android/
 └── app/src/main/
     ├── assets/bank.json     Banco compartido
     ├── assets/ui.json       Textos ES/EN/PT
-    ├── assets/logo.png
+    ├── assets/logo.png      Marca Factronics
     ├── java/.../Bank.java
     ├── java/.../I18n.java
     ├── java/.../MainActivity.java
@@ -50,8 +52,8 @@ android/
 ## Probar en emulador
 
 ```powershell
-adb install -r download/VideojetTTO-Lab.apk
-adb shell am start -n com.videojet.tto.lab/.MainActivity
+adb install -r download/Factronics-TTO-Lab.apk
+adb shell am start -n com.factronics.tto.lab/.MainActivity
 ```
 
 Probado en `Pixel_7_API_34` (Android 14, x86_64).
