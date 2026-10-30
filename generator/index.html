@@ -6,6 +6,7 @@
   <title>Generador · Factronics TTO Lab</title>
   <meta name="description" content="Generador de evaluaciones TTO de Factronics Venezuela, distribuidor oficial de Videojet. Filtra por modelo, tiempo, cantidad y tipo de pregunta.">
   <meta name="theme-color" content="#0b5cab">
+  <meta name="color-scheme" content="light dark">
   <link rel="canonical" href="https://emanuelindustri-source.github.io/factronics-tto-lab/generator/">
   <link rel="icon" href="../assets/img/favicon.png">
   <link rel="apple-touch-icon" href="../assets/img/icon-192.png">
@@ -15,6 +16,7 @@
   <link rel="stylesheet" href="../assets/css/site.css">
 </head>
 <body class="app-page">
+  <a class="skip-link" href="#main" data-i18n="skip_link">Saltar al contenido</a>
   <header class="site-header">
     <div class="shell header-inner">
       <a class="logo" href="../index.html" aria-label="Factronics TTO Lab, distribuidor oficial Videojet">
@@ -23,7 +25,7 @@
         <span class="logo-word">TTO <span>Lab</span></span>
       </a>
       <span class="brand-partner" data-i18n="brand_partner">Distribuidor oficial Videojet</span>
-      <nav class="nav-links" aria-label="Principal">
+      <nav class="nav-links" aria-label="Principal" data-i18n-aria="nav_label">
         <a href="../index.html" data-i18n="nav_home">Inicio</a>
         <a href="../index.html#demo" data-i18n="nav_demo">Demo</a>
         <a href="index.html" class="on" data-i18n="nav_generator">Generador</a>
@@ -32,17 +34,17 @@
         <a href="https://github.com/emanuelindustri-source/factronics-tto-lab" target="_blank" rel="noopener" data-i18n="nav_github">GitHub</a>
       </nav>
       <div class="header-tools">
-        <div class="lang-switch" role="group" aria-label="Idioma">
-          <button type="button" data-lang="es">ES</button>
-          <button type="button" data-lang="en">EN</button>
-          <button type="button" data-lang="pt">PT</button>
+        <div class="lang-switch" role="group" aria-label="Idioma" data-i18n-aria="lang_label">
+          <button type="button" data-lang="es" aria-pressed="true">ES</button>
+          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+          <button type="button" data-lang="pt" aria-pressed="false">PT</button>
         </div>
         <button class="icon-btn" id="themeBtn" type="button" aria-label="Tema">◐</button>
       </div>
     </div>
   </header>
 
-  <main class="app-main">
+  <main class="app-main" id="main" tabindex="-1">
     <div class="shell">
       <!-- ============================ SETUP ============================ -->
       <section id="setupView">
@@ -56,11 +58,11 @@
           <a class="btn" href="../index.html" data-i18n="res_home">Inicio</a>
         </div>
 
-        <div id="resumeBanner" class="alert ok" style="display:none">
-          <strong id="resumeTitle">Sesión en curso</strong>
+        <div id="resumeBanner" class="alert ok" style="display:none" role="status">
+          <strong id="resumeTitle" data-i18n="resume_title">Sesión en curso</strong>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-            <button class="btn sm primary" data-action="resume">Continuar sesión</button>
-            <button class="btn sm" data-action="discard-saved">Descartar y empezar de nuevo</button>
+            <button class="btn sm primary" data-action="resume" data-i18n="resume_btn">Continuar sesión</button>
+            <button class="btn sm" data-action="discard-saved" data-i18n="discard_btn">Descartar y empezar de nuevo</button>
           </div>
         </div>
 
@@ -95,13 +97,21 @@
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
                   <div>
                     <h2 data-i18n="count_title">2 · Cantidad</h2>
-                    <p class="hint" data-i18n="count_help">Preguntas en la sesión.</p>
-                    <select id="countSel" class="inp" aria-label="Cantidad"></select>
+                    <p class="hint" data-i18n="count_help">Preguntas en la sesión (5 a 100).</p>
+                    <select id="countSel" class="inp" aria-label="Cantidad" data-i18n-aria="count_title"></select>
+                    <div class="custom-row" id="countCustomRow" hidden>
+                      <input id="countCustom" class="inp" type="number" min="5" max="100" step="1" inputmode="numeric" placeholder="5–100" aria-label="Cantidad personalizada" data-i18n-aria="count_title">
+                      <p class="tiny muted" data-i18n="custom_count_hint">5 a 100 preguntas</p>
+                    </div>
                   </div>
                   <div>
                     <h2 data-i18n="duration_title">3 · Duración</h2>
                     <p class="hint" data-i18n="duration_help">El cronómetro se detiene al llegar a cero.</p>
-                    <select id="durationSel" class="inp" aria-label="Duración"></select>
+                    <select id="durationSel" class="inp" aria-label="Duración" data-i18n-aria="duration_title"></select>
+                    <div class="custom-row" id="durationCustomRow" hidden>
+                      <input id="durationCustom" class="inp" type="number" min="0" max="180" step="5" inputmode="numeric" placeholder="0–180" aria-label="Duración personalizada" data-i18n-aria="duration_title">
+                      <p class="tiny muted" data-i18n="custom_duration_hint">0 a 180 min (0 = sin límite)</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -141,7 +151,7 @@
                   <span data-i18n="pool_label">Preguntas disponibles con esta configuración</span>
                   <div class="pool-new"><span id="poolNew">0</span> <span data-i18n="pool_new">sin ver aún</span></div>
                 </div>
-                <div id="setupAlert"></div>
+                <div id="setupAlert" aria-live="polite"></div>
                 <button class="btn primary lg block" type="button" id="startBtn" data-i18n="start">Generar y comenzar</button>
                 <button class="btn block" type="button" id="shareBtn" style="margin-top:8px" data-i18n="share_blueprint">Copiar enlace de esta configuración</button>
                 <p class="tiny muted" style="margin:12px 0 0" data-i18n="footer_gen">Los datos se guardan solo en este navegador.</p>
@@ -290,6 +300,7 @@
     <div class="shell footer-note" style="border:0;margin:0;padding:0">
       <span data-i18n="footer_disclaimer">Proyecto de Factronics Venezuela, distribuidor oficial de Videojet. Desarrollado por Khristyan Hidalgo, técnico de campo certificado. Videojet es marca de Videojet Technologies; este material no fue solicitado ni autorizado por Videojet.</span>
       <span data-i18n="footer_gen">Los datos se guardan solo en este navegador.</span>
+      <span>v1.3.0</span>
     </div>
   </footer>
 
