@@ -10,6 +10,7 @@
     demo: { rounds: [], answers: [], index: 0 }
   };
   if (!i18n[state.lang]) state.lang = "es";
+  if (state.theme !== "dark" && state.theme !== "light") state.theme = "light";
 
   function esc(v) {
     return String(v == null ? "" : v)
@@ -32,16 +33,45 @@
       const val = T(key, state.lang);
       if (val !== undefined) el.textContent = val;
     });
-    document.querySelectorAll("[data-lang]").forEach((b) => {
-      b.classList.toggle("on", b.getAttribute("data-lang") === state.lang);
+    document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-aria");
+      const val = T(key, state.lang);
+      if (val !== undefined) el.setAttribute("aria-label", val);
     });
+    document.querySelectorAll("[data-lang]").forEach((b) => {
+      const on = b.getAttribute("data-lang") === state.lang;
+      b.classList.toggle("on", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    const themeBtn = document.getElementById("themeBtn");
+    if (themeBtn) themeBtn.setAttribute("aria-label", T(state.theme === "dark" ? "theme_light" : "theme_dark", state.lang));
     const pool = document.getElementById("poolStat");
     if (pool) pool.textContent = bank.questions.length || "328";
+    updatePoolSummary();
     document.title = state.lang === "en"
       ? "Factronics TTO Lab · Technical assessment generator"
       : state.lang === "pt"
         ? "Factronics TTO Lab · Gerador de avaliações técnicas"
         : "Factronics TTO Lab · Generador de evaluaciones técnicas";
+  }
+
+  let poolSummaryCache = null;
+  function updatePoolSummary() {
+    const el = document.getElementById("poolSummary");
+    if (!el) return;
+    if (!bank.questions || !bank.questions.length) { el.textContent = ""; return; }
+    if (!poolSummaryCache) {
+      const seen = new Set();
+      bank.questions.forEach((q) => {
+        const d = (q.i18n && (q.i18n.es || q.i18n.en || q.i18n.pt)) || {};
+        const text = String(d.q || "").toLowerCase().replace(/\s+/g, " ").trim();
+        if (text) seen.add(text);
+      });
+      poolSummaryCache = { total: bank.questions.length, unique: seen.size };
+    }
+    el.textContent = T("pool_summary", state.lang)
+      .replace("{total}", String(poolSummaryCache.total))
+      .replace("{unique}", String(poolSummaryCache.unique));
   }
 
   function modelCard(id, m) {
@@ -71,7 +101,7 @@
     const el = document.getElementById("modelGrid");
     if (!el) return;
     const order = ["6210", "6230", "6320", "6330", "6420", "6530"];
-    el.innerHTML = order.map((id) => modelCard(id, bank.models[id])).filter(Boolean).join("");
+    el.innerHTML = order.map((id) => (bank.models[id] ? modelCard(id, bank.models[id]) : "")).join("");
   }
 
   function renderHero() {
@@ -108,14 +138,6 @@
       if (chosen.length < 3 && !seen.has(q.id)) { chosen.push(q); seen.add(q.id); }
     });
     return chosen;
-  }
-  function demoAnswered(item) {
-    return state.demo.answers[state.demo.index] !== undefined;
-  }
-  function demoCorrect(item) {
-    const selected = state.demo.answers[state.demo.index];
-    const d = item.i18n[state.lang] || item.i18n.es;
-    return !!selected && (d.answer || []).includes(selected);
   }
   function demoScore() {
     let n = 0;
@@ -181,7 +203,10 @@
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("tto.theme", theme);
     const btn = document.getElementById("themeBtn");
-    if (btn) btn.textContent = theme === "dark" ? "☀" : "◐";
+    if (btn) {
+      btn.textContent = theme === "dark" ? "☀" : "◐";
+      btn.setAttribute("aria-label", T(theme === "dark" ? "theme_light" : "theme_dark", state.lang));
+    }
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", theme === "dark" ? "#06111d" : "#0b5cab");
   }
