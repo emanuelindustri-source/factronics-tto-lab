@@ -29,9 +29,12 @@
     autoSubmitted: false
   };
   if (!window.TTO_I18N || !window.TTO_I18N[state.lang]) state.lang = "es";
+  if (state.theme !== "dark" && state.theme !== "light") state.theme = "light";
 
   let timerHandle = null;
   let saveTimer = null;
+  let customCountOpen = !COUNTS.includes(state.config.count);
+  let customDurationOpen = !DURATIONS.includes(state.config.minutes);
 
   /* ------------------------------------------------------------------ utils */
   function esc(v) {
@@ -107,6 +110,11 @@
       const e = JSON.parse(localStorage.getItem("tto.exam.v1") || "null");
       if (!e || !Array.isArray(e.questions) || !e.questions.length) return null;
       if (!e.questions.every((x) => byId.has(x.qid))) return null;
+      if (!e.answers || typeof e.answers !== "object") e.answers = {};
+      if (!e.flags || typeof e.flags !== "object") e.flags = {};
+      if (!e.self || typeof e.self !== "object") e.self = {};
+      if (!e.checked || typeof e.checked !== "object") e.checked = {};
+      if (typeof e.partial !== "boolean") e.partial = state.config.partial;
       return e;
     } catch (x) { return null; }
   }
@@ -124,9 +132,18 @@
       const v = T(k);
       if (v !== undefined) el.textContent = v;
     });
-    document.querySelectorAll("[data-lang]").forEach((b) => {
-      b.classList.toggle("on", b.getAttribute("data-lang") === state.lang);
+    document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+      const k = el.getAttribute("data-i18n-aria");
+      const v = T(k);
+      if (v !== undefined) el.setAttribute("aria-label", v);
     });
+    document.querySelectorAll("[data-lang]").forEach((b) => {
+      const on = b.getAttribute("data-lang") === state.lang;
+      b.classList.toggle("on", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    const themeBtn = document.getElementById("themeBtn");
+    if (themeBtn) themeBtn.setAttribute("aria-label", T(state.theme === "dark" ? "theme_light" : "theme_dark"));
     document.title = T("gen_title") + " · Factronics TTO Lab";
   }
   function typeLabel(t) { return T(TYPE_LABEL[t] || t); }
@@ -239,6 +256,20 @@
       el.textContent = `(${buildPool([t]).length})`;
     });
   }
+  function syncCustomRows() {
+    const cr = document.getElementById("countCustomRow");
+    const ci = document.getElementById("countCustom");
+    if (cr && ci) {
+      cr.hidden = !customCountOpen;
+      ci.value = String(state.config.count);
+    }
+    const dr = document.getElementById("durationCustomRow");
+    const di = document.getElementById("durationCustom");
+    if (dr && di) {
+      dr.hidden = !customDurationOpen;
+      di.value = String(state.config.minutes);
+    }
+  }
   function populateSelects() {
     const cs = document.getElementById("countSel");
     const ds = document.getElementById("durationSel");
@@ -246,13 +277,19 @@
       const vals = COUNTS.slice();
       if (!vals.includes(state.config.count)) vals.push(state.config.count);
       vals.sort((a, b) => a - b);
-      cs.innerHTML = vals.map((n) => `<option value="${n}" ${n === state.config.count ? "selected" : ""}>${n}</option>`).join("");
+      cs.innerHTML = vals.map((n) => `<option value="${n}" ${n === state.config.count ? "selected" : ""}>${n}</option>`).join("")
+        + `<option value="custom" ${customCountOpen ? "selected" : ""}>${esc(T("custom"))}</option>`;
+      if (customCountOpen) cs.value = "custom";
     }
     if (ds) {
       const vals = DURATIONS.slice();
       if (!vals.includes(state.config.minutes)) vals.push(state.config.minutes);
-      ds.innerHTML = vals.map((n) => `<option value="${n}" ${n === state.config.minutes ? "selected" : ""}>${n === 0 ? esc(T("no_limit")) : n + " " + esc(T("minutes"))}</option>`).join("");
+      vals.sort((a, b) => a - b);
+      ds.innerHTML = vals.map((n) => `<option value="${n}" ${n === state.config.minutes ? "selected" : ""}>${n === 0 ? esc(T("no_limit")) : n + " " + esc(T("minutes"))}</option>`).join("")
+        + `<option value="custom" ${customDurationOpen ? "selected" : ""}>${esc(T("custom"))}</option>`;
+      if (customDurationOpen) ds.value = "custom";
     }
+    syncCustomRows();
   }
   function renderModePicks() {
     const el = document.getElementById("modePicks");
@@ -283,15 +320,7 @@
     document.getElementById("optExclude").checked = state.config.excludeSeen;
     const saved = loadSavedExam();
     const banner = document.getElementById("resumeBanner");
-    const rt = document.getElementById("resumeTitle");
-    if (saved) {
-      banner.style.display = "block";
-      rt.textContent = T("resume_title");
-      banner.querySelectorAll("[data-action]")[0].textContent = T("resume_btn");
-      banner.querySelectorAll("[data-action]")[1].textContent = T("discard_btn");
-    } else {
-      banner.style.display = "none";
-    }
+    if (banner) banner.style.display = saved ? "block" : "none";
     updateSummary();
     renderProgressPanel();
   }
@@ -320,7 +349,8 @@
     if (newEl) newEl.textContent = String(n);
     const btn = document.getElementById("startBtn");
     if (btn) {
-      btn.disabled = !state.config.models.length || !state.config.types.length || (isReview ? due.length === 0 : pool.length < 2);
+      btn.disabled = !state.config.models.length || !state.config.types.length
+        || (isReview ? due.length === 0 : pool.length < state.config.count);
       btn.textContent = isReview ? T("review_start") : T("start");
     }
     const alert = document.getElementById("setupAlert");
@@ -364,6 +394,7 @@
       flags: {},
       self: {},
       checked: {},
+      partial: !!state.config.partial,
       index: 0,
       submitted: false,
       models: isReview ? reviewModels : state.config.models.slice(),
@@ -539,12 +570,13 @@
     }
     const instant = !!state.exam.instant;
     const openType = q.type === "describe" || q.type === "errorfix";
-    const canFeedback = instant && !openType && isAnswered(q, ans);
+    const checked = !!(state.exam.checked && state.exam.checked[q.id]);
+    const canFeedback = instant && !openType && isAnswered(q, ans) && checked;
     let feedback = "";
     if (canFeedback) {
       const g = gradeQuestion(q, ans, null);
       const st = g >= 0.999 ? "ok" : g > 0 ? "warn" : "bad";
-      feedback = `<div class="q-feedback ${st}"><b>${g >= 0.999 ? T("exam_correct") : T("exam_incorrect")}</b>${correctText(q)}<div class="rev-exp">${esc((d.explanation || ""))}</div></div>`;
+      feedback = `<div class="q-feedback ${st}" role="status"><b>${g >= 0.999 ? T("exam_correct") : T("exam_incorrect")}</b>${correctText(q)}<div class="rev-exp">${esc((d.explanation || ""))}</div></div>`;
     }
     card.innerHTML = `
       <div class="q-head">
@@ -556,7 +588,7 @@
         <p class="q-text">${esc(d.q)}</p>
         <p class="q-instr">${esc(instructions(q))}</p>
         ${body}
-        ${instant && !openType && !canFeedback ? `<div class="q-actions"><button class="btn sm" type="button" data-action="check">${esc(T("exam_check"))}</button></div>` : ""}
+        ${instant && !openType ? `<div class="q-actions"><button class="btn sm" type="button" data-action="check" ${isAnswered(q, ans) ? "" : "disabled"}>${esc(T("exam_check"))}</button></div>` : ""}
         ${feedback}
       </div>`;
   }
@@ -598,7 +630,8 @@
       const wrong = selected.filter((x) => !correct.includes(x)).length;
       if (!hits) return 0;
       if (hits === correct.length && wrong === 0) return 1;
-      if (!state.config.partial) return 0;
+      const usePartial = state.exam && typeof state.exam.partial === "boolean" ? state.exam.partial : state.config.partial;
+      if (!usePartial) return 0;
       return Math.max(0, (hits - wrong) / correct.length);
     }
     if (q.type === "fill" || q.type === "calc") {
@@ -769,7 +802,10 @@
     }
     if (q.type === "fill" || q.type === "calc") {
       const vals = Array.isArray(ans) ? ans : [];
-      return (d.fields || []).map((f, i) => `${f.label}: ${vals[i] || T("res_no_answer")}${f.unit ? " " + f.unit : ""}`).join(" · ");
+      return (d.fields || []).map((f, i) => {
+        const value = String(vals[i] == null ? "" : vals[i]).trim();
+        return `${f.label}: ${value !== "" ? vals[i] : T("res_no_answer")}${f.unit ? " " + f.unit : ""}`;
+      }).join(" · ");
     }
     return ans || T("res_no_answer");
   }
@@ -894,7 +930,7 @@
       `${T("bp_models")}: ${state.exam.models.join(" + ")}`,
       `${T("res_date")}: ${formatDate(state.exam.finishedAt || Date.now())}`
     ].join("\n");
-    const done = () => setAlert(T("res_copied"), "ok");
+    const done = () => notify(T("res_copied"), "ok");
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(done).catch(done);
     } else {
@@ -910,6 +946,7 @@
     u.searchParams.set("minutes", state.config.minutes);
     u.searchParams.set("types", state.config.types.join(","));
     u.searchParams.set("mode", state.config.mode);
+    u.searchParams.set("lang", state.lang);
     history.replaceState(null, "", u.toString());
     const done = () => setAlert(T("share_done"), "ok");
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(u.toString()).then(done).catch(done);
@@ -919,7 +956,7 @@
   /* ------------------------------------------------------------- progress */
   function notify(msg, cls) {
     if (state.screen === "setup") setAlert(msg, cls || "warn");
-    else showModal(T("progress_title"), msg, "OK", "", null);
+    else showModal(T("notice_title"), msg, "OK", "", null);
   }
   function renderProgressPanel() {
     const p = progress();
@@ -994,7 +1031,7 @@
         <label><span>${esc(T("library_type"))}</span><select class="inp" id="libType"><option value="">${esc(T("library_all"))}</option>${types}</select></label>
         <label><span>${esc(T("library_model"))}</span><select class="inp" id="libModel"><option value="">${esc(T("library_all"))}</option>${models}</select></label>
       </div>
-      <div class="lib-count" id="libCount"></div>
+      <div class="lib-count" id="libCount" aria-live="polite"></div>
       <div class="lib-results" id="libResults"></div>
     </div></div>`;
     const search = document.getElementById("libSearch");
@@ -1002,7 +1039,10 @@
     const model = document.getElementById("libModel");
     const list = document.getElementById("libResults");
     const count = document.getElementById("libCount");
-    function renderList() {
+    const PAGE = 60;
+    let shown = PAGE;
+    function renderList(reset) {
+      if (reset) shown = PAGE;
       const query = norm(search.value);
       const t = type.value, m = model.value;
       const seen = new Set();
@@ -1012,15 +1052,17 @@
         if (m && !(q.models || []).includes(m)) return;
         const d = q.i18n && (q.i18n[state.lang] || q.i18n.es);
         if (!d || !d.q) return;
-        const hay = norm([d.q, d.explanation || "", (q.models || []).join(" ")].join(" "));
+        const optionText = (d.options || []).map((o) => o.text).join(" ");
+        const hay = norm([d.q, d.explanation || "", d.model || "", optionText, (q.models || []).join(" ")].join(" "));
         if (query && !hay.includes(query)) return;
         const key = norm(d.q);
         if (seen.has(key)) return;
         seen.add(key);
         items.push({ q: q, d: d });
       });
-      count.textContent = `${items.length} ${T("library_results")}`;
-      list.innerHTML = items.slice(0, 80).map(({ q, d }) => {
+      count.textContent = `${items.length} ${T("library_results")}`
+        + (items.length > shown ? ` · ${shown}/${items.length}` : "");
+      const cards = items.slice(0, shown).map(({ q, d }) => {
         const answer = q.type === "describe" || q.type === "errorfix" ? (d.model || "") : correctText(q);
         return `<article class="lib-item">
           <div class="lib-meta"><span class="pill ok">${esc(typeLabel(q.type))}</span><span>${esc((q.models || []).join(" · "))}</span></div>
@@ -1029,15 +1071,22 @@
             <div class="lib-answer"><b>${esc(answer || T("res_no_answer"))}</b>${d.explanation ? `<p><strong>${esc(T("library_explanation"))}:</strong> ${esc(d.explanation)}</p>` : ""}</div>
           </details>
         </article>`;
-      }).join("") || `<p class="muted">${esc(T("library_no_results"))}</p>`;
+      }).join("");
+      const more = items.length > shown
+        ? `<div class="lib-more"><button class="btn" type="button" data-lib-more>${esc(T("library_more_count").replace("{n}", String(items.length - shown)))}</button></div>`
+        : "";
+      list.innerHTML = (cards + more) || `<p class="muted">${esc(T("library_no_results"))}</p>`;
     }
-    search.addEventListener("input", renderList);
-    type.addEventListener("change", renderList);
-    model.addEventListener("change", renderList);
+    search.addEventListener("input", () => renderList(true));
+    type.addEventListener("change", () => renderList(true));
+    model.addEventListener("change", () => renderList(true));
+    list.addEventListener("click", (e) => {
+      if (e.target.closest("[data-lib-more]")) { shown += PAGE; renderList(false); }
+    });
     const close = () => closeModal();
     root.querySelector('[data-modal="close"]').onclick = close;
     root.querySelector('[data-modal="backdrop"]').addEventListener("click", (e) => { if (e.target === e.currentTarget) close(); });
-    renderList();
+    renderList(true);
     search.focus();
   }
 
@@ -1049,7 +1098,7 @@
     const p = progress();
     const name = p ? p.activeName() : "";
     const passed = percent >= PASS;
-    const code = "F-TTO-" + (state.exam.finishedAt || Date.now()).toString(36).toUpperCase().slice(-6) + "-" + percent;
+    const code = "REF-" + (state.exam.finishedAt || Date.now()).toString(36).toUpperCase().slice(-6) + "-" + percent;
     const logo = new URL("../assets/img/factronics-transparent.png", location.href).href;
     const win = window.open("", "_blank");
     if (!win) { notify(T("cert_blocked"), "warn"); return; }
@@ -1114,6 +1163,7 @@
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("tto.theme", theme);
     document.getElementById("themeBtn").textContent = theme === "dark" ? "☀" : "◐";
+    document.getElementById("themeBtn").setAttribute("aria-label", T(theme === "dark" ? "theme_light" : "theme_dark"));
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", theme === "dark" ? "#06111d" : "#0b5cab");
   }
@@ -1189,6 +1239,7 @@
       saveExam(); renderExam();
     } else if (a === "check") {
       state.exam.checked[currentItem().qid] = true;
+      saveExam();
       renderQuestion();
     } else if (a === "retry") {
       retryExam();
@@ -1273,11 +1324,39 @@
       return;
     }
     if (e.target.id === "countSel") {
+      if (e.target.value === "custom") {
+        customCountOpen = true;
+        syncCustomRows();
+        const input = document.getElementById("countCustom");
+        if (input) { input.focus(); input.select(); }
+        return;
+      }
+      customCountOpen = false;
       state.config.count = clamp(parseInt(e.target.value, 10) || 20, 5, 100);
-      saveConfig(); updateSummary(); return;
+      saveConfig(); syncCustomRows(); updateSummary(); return;
     }
     if (e.target.id === "durationSel") {
-      state.config.minutes = Number(e.target.value) || 0;
+      if (e.target.value === "custom") {
+        customDurationOpen = true;
+        syncCustomRows();
+        const input = document.getElementById("durationCustom");
+        if (input) { input.focus(); input.select(); }
+        return;
+      }
+      customDurationOpen = false;
+      state.config.minutes = clamp(Number(e.target.value) || 0, 0, 180);
+      saveConfig(); syncCustomRows(); updateSummary(); return;
+    }
+    if (e.target.id === "countCustom") {
+      const n = clamp(parseInt(e.target.value, 10) || state.config.count, 5, 100);
+      state.config.count = n;
+      e.target.value = String(n);
+      saveConfig(); updateSummary(); return;
+    }
+    if (e.target.id === "durationCustom") {
+      const n = clamp(parseInt(e.target.value, 10) || 0, 0, 180);
+      state.config.minutes = n;
+      e.target.value = String(n);
       saveConfig(); updateSummary(); return;
     }
     if (["optShuffle", "optPartial", "optInstant", "optExclude"].includes(e.target.id)) {
@@ -1307,6 +1386,16 @@
   });
 
   document.addEventListener("input", (e) => {
+    if (e.target.id === "countCustom") {
+      const n = parseInt(e.target.value, 10);
+      if (n >= 5 && n <= 100) { state.config.count = n; saveConfig(); updateSummary(); }
+      return;
+    }
+    if (e.target.id === "durationCustom") {
+      const n = parseInt(e.target.value, 10);
+      if (!isNaN(n) && n >= 0 && n <= 180) { state.config.minutes = n; saveConfig(); updateSummary(); }
+      return;
+    }
     if (!state.exam) return;
     const field = e.target.closest("[data-field]");
     if (field) {
@@ -1315,9 +1404,16 @@
       const arr = Array.isArray(state.exam.answers[qid]) ? state.exam.answers[qid].slice() : [];
       arr[i] = field.value;
       state.exam.answers[qid] = arr;
+      const wasChecked = !!state.exam.checked[qid];
       state.exam.checked[qid] = false;
       saveExam();
       updateChrome();
+      const checkBtn = document.querySelector('#qCard [data-action="check"]');
+      if (checkBtn) checkBtn.disabled = !isAnswered(byId.get(qid), state.exam.answers[qid]);
+      if (wasChecked) {
+        const fb = document.querySelector('#qCard .q-feedback');
+        if (fb) fb.remove();
+      }
       return;
     }
     const open = e.target.closest("[data-open]");
@@ -1347,7 +1443,13 @@
     }
   });
 
-  window.addEventListener("beforeunload", () => { if (state.exam && !state.exam.submitted) saveExam(); });
+  window.addEventListener("beforeunload", persistExamNow);
+  window.addEventListener("pagehide", persistExamNow);
+  function persistExamNow() {
+    if (!state.exam || state.exam.submitted) return;
+    clearTimeout(saveTimer);
+    try { localStorage.setItem("tto.exam.v1", JSON.stringify(state.exam)); } catch (e) { /* storage can be full */ }
+  }
 
   /* ----------------------------------------------------------------- init */
   function parseParams() {
@@ -1365,13 +1467,19 @@
       const n = parseInt(p.get("count"), 10);
       if (n >= 5 && n <= 100) { state.config.count = n; changed = true; }
     }
-    if (p.get("minutes")) {
+    if (p.has("minutes")) {
       const n = Number(p.get("minutes"));
-      if ([0, 10, 20, 30, 45, 60, 90].includes(n)) { state.config.minutes = n; changed = true; }
+      if (Number.isFinite(n) && n >= 0 && n <= 180) { state.config.minutes = n; changed = true; }
     }
     if (p.get("mode") && ["exam", "study", "review"].includes(p.get("mode"))) { state.config.mode = p.get("mode"); changed = true; }
-    if (p.get("lang") && window.TTO_I18N[p.get("lang")]) { state.lang = p.get("lang"); changed = true; }
+    if (p.get("lang") && window.TTO_I18N[p.get("lang")]) {
+      state.lang = p.get("lang");
+      localStorage.setItem("tto.lang", state.lang);
+      changed = true;
+    }
     if (changed) saveConfig();
+    customCountOpen = !COUNTS.includes(state.config.count);
+    customDurationOpen = !DURATIONS.includes(state.config.minutes);
   }
 
   parseParams();
