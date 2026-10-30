@@ -62,11 +62,12 @@ Características:
 
 - 100 % offline; no hay backend ni registro.
 - PWA instalable (`manifest.webmanifest` + `sw.js`): abre sin conexión desde el primer uso.
-- Modos **Examen**, **Estudio** (corrección inmediata) y **Repaso** (solo falladas o pendientes).
+- Modos **Examen**, **Estudio** (corrección al pulsar Comprobar) y **Repaso** (solo falladas o pendientes).
+- Cantidad personalizada de 5 a 100 preguntas y duración de 0 a 180 minutos, además de los valores rápidos.
 - Guarda configuración, examen en curso, preguntas vistas y progreso en `localStorage` (`tto.progress.v2`).
 - Historial de intentos, promedio, mejor nota, racha, cuaderno de errores y repaso espaciado con vencimientos.
-- Biblioteca de preguntas con búsqueda por texto, tipo y modelo, más respuesta y explicación.
-- Constancia de aprovechamiento imprimible con código de verificación y aviso legal.
+- Biblioteca de preguntas con búsqueda por texto, opciones, tipo y modelo, con paginación completa.
+- Constancia de aprovechamiento imprimible con código de referencia y aviso legal.
 - Exportar/importar progreso en JSON entre perfiles y dispositivos.
 - Cronómetro, mapa de preguntas, marcado para revisar y navegación.
 - Resultados con desglose por tipo, autoevaluación de preguntas abiertas, CSV e impresión/PDF.
@@ -78,15 +79,18 @@ Características:
 - Java nativo, sin AndroidX, sin WebView y sin dependencias externas.
 - Pantallas de configuración, examen y resultados construidas programáticamente.
 - Modos **Examen**, **Estudio** y **Repaso**, igual que la versión web.
+- Estudio con botón **Comprobar** en selección múltiple, completar y cálculo.
 - Progreso local: historial, promedio, mejor nota, racha, cuaderno de errores y repaso espaciado.
-- Guardado automático y **reanudar sesión** tras cerrar o reiniciar la app.
-- Biblioteca de preguntas con búsqueda por texto, tipo y modelo.
+- Guardado automático y **reanudar sesión** tras cerrar o reiniciar la app; durante el examen se puede **guardar y salir**.
+- Biblioteca de preguntas con búsqueda por texto, tipo y modelo, y **Mostrar más**.
+- Cantidad y duración personalizadas, además de los valores rápidos.
 - Tema claro/oscuro con detección del tema del sistema y botón de cambio.
+- Icono adaptativo para Android 8+.
 - Compartir resultado, exportar progreso por hoja de compartir e importar un JSON con `ACTION_OPEN_DOCUMENT`.
 - Cronómetro, mapa de preguntas, navegación, marcado para revisar y autoevaluación.
 - Banco local en `assets/bank.json` y textos en `assets/ui.json`.
 - Funciona sin conexión.
-- `minSdk 24` (Android 7.0), `targetSdk 34`, versión `1.2.0`.
+- `minSdk 24` (Android 7.0), `targetSdk 34`, versión `1.3.0`.
 
 ### Instalar el APK
 
@@ -110,16 +114,18 @@ El script usa `aapt2`, `javac`, `d8`, `zipalign` y `apksigner` directamente; no 
 
 Variables opcionales: `ANDROID_HOME` / `ANDROID_SDK_ROOT` y `JAVA_HOME`.
 
-## Novedades 1.2
+## Novedades 1.3
 
-- **Modos de sesión:** examen con cronómetro, estudio con corrección inmediata y repaso de fallos/pendientes.
-- **Progreso local:** perfiles, historial de intentos, estadísticas, cuaderno de errores y repetición espaciada.
-- **Biblioteca técnica:** búsqueda de las 304 preguntas únicas por texto, tipo y modelo, con respuesta y explicación.
-- **Reanudar sesión:** el examen en curso se guarda solo y se retoma en web y Android.
-- **PWA offline:** manifest, service worker, iconos e instalación desde el navegador.
-- **Constancia de aprovechamiento:** documento imprimible con código de verificación y aviso legal.
-- **Importar/exportar:** el progreso viaja en JSON entre navegador y APK.
-- **APK 1.2.0:** paridad de modos, progreso, biblioteca, tema oscuro y compartir resultado.
+- **Estudio con comprobación explícita:** en selección múltiple, completar y cálculo la respuesta se revela solo al pulsar **Comprobar**; ya no se escapa al primer clic.
+- **Sesiones a medida:** cantidad de 5 a 100 preguntas y duración de 0 a 180 minutos.
+- **Biblioteca completa:** búsqueda en opciones y respuestas, con **Mostrar más** para recorrer los 304 enunciados.
+- **Crédito parcial fijo:** la configuración de crédito parcial se guarda al iniciar el examen y no cambia la nota después.
+- **APK 1.3.0:** icono adaptativo, guardar y salir del examen, Atrás desde resultados vuelve a configuración, versión visible y cantidad/duración personalizadas.
+- **Accesibilidad:** enlace para saltar al contenido, foco visible y etiquetas ARIA traducidas.
+- **Verificación automática:** `python tools/verify.py` comprueba banco, i18n, enlaces, versiones, service worker y hash del APK.
+- **Histórico:** notas por versión en `docs/notas/` y `CHANGELOG.md`.
+
+La base de 1.2 (modos, progreso, errores, repaso espaciado, PWA, constancia e import/export) se mantiene.
 
 ## Banco de preguntas
 
@@ -139,7 +145,7 @@ Salidas:
 - `data/bank-preview.json` para inspección.
 - `android/app/src/main/assets/bank.json` para Android.
 
-Los textos de interfaz viven en `assets/js/i18n.js`; `android/app/src/main/assets/ui.json` se exporta desde ese mismo diccionario para mantener paridad.
+Los textos de interfaz viven en `assets/js/i18n.js`; `android/app/src/main/assets/ui.json` se exporta con `node tools/export_ui.js` para mantener paridad.
 
 ## Estructura
 
@@ -154,11 +160,16 @@ Los textos de interfaz viven en `assets/js/i18n.js`; `android/app/src/main/asset
 │   ├── js/landing.js
 │   └── js/generator.js
 ├── data/                       Fuentes y banco legible
+├── docs/notas/                 Histórico de versiones (no se borra)
 ├── tools/build_bank.py         Generador del banco
+├── tools/export_ui.js          Exporta i18n.js → ui.json
+├── tools/verify.py             Verificación automática
 ├── tools/make_assets.py        OG, favicon e iconos de la app
 ├── tools/publish_github.py     Publicación por API
 ├── android/                    App nativa + build.py
-└── download/Factronics-TTO-Lab.apk
+├── download/Factronics-TTO-Lab.apk
+├── VERSION                     Versión única (1.3.0)
+└── CHANGELOG.md
 ```
 
 ## Ejecutar en local
@@ -174,18 +185,28 @@ También se puede abrir `index.html` directamente; el generador no necesita red.
 
 ## Verificación rápida
 
-- `python tools/build_bank.py` → 328 preguntas, 304 enunciados únicos.
-- Web: examen de 12 preguntas con respuestas correctas → 100 %.
-- Web: selección múltiple parcial → puntaje fraccionario (prueba: 4,08/10 = 41 %).
-- Android: instalación, configuración, examen, resultados y autoevaluación probados en emulador Pixel 7 / API 34.
-- APK verificado con `apksigner verify` (esquemas v2/v3).
+```powershell
+python tools/verify.py
+```
+
+Comprueba, sin dependencias externas:
+
+- 328 preguntas, 304 enunciados únicos y paridad entre web y Android.
+- Textos ES/EN/PT completos y claves `data-i18n` usadas en el HTML.
+- Enlaces y recursos locales, iconos del manifiesto y lista del service worker.
+- Coherencia de versión entre `VERSION`, `sw.js`, `AndroidManifest.xml` y release.
+- SHA-256 del APK contra `download/Factronics-TTO-Lab.apk.sha256`.
+- Ausencia de tokens o credenciales evidentes en el árbol publicado.
+
+Las pruebas funcionales y de navegador se registran en [QA.md](QA.md) y en
+[docs/notas/](docs/notas/).
 
 ## Seguridad y privacidad
 
 - No hay tokens, credenciales ni telemetría en el repositorio.
 - El APK no solicita permisos de red.
 - Los datos de sesión se guardan localmente (navegador o `SharedPreferences`).
-- Para publicar cambios, usa `tools/publish_github.py` con un token en la variable de entorno `GITHUB_TOKEN`; nunca lo escribas en un archivo.
+- Para publicar cambios, usa `tools/publish_github.py` con un token en la variable de entorno `GITHUB_TOKEN`; nunca lo escribas en un archivo ni lo compartas en el chat. Rota el token después de publicar.
 
 ## Autoría, licencia y aviso
 
