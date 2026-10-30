@@ -7,7 +7,10 @@ Run from the repository root:  python android/build.py
 from __future__ import annotations
 
 import glob
+import hashlib
+import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -64,6 +67,45 @@ def latest_build_tools(sdk: Path) -> Path:
     return sorted(candidates, key=key)[-1]
 
 
+def android_platform(sdk: Path) -> Path:
+    base = sdk / "platforms"
+    preferred = base / "android-34" / "android.jar"
+    if preferred.exists():
+        return preferred
+    candidates = [p / "android.jar" for p in base.iterdir() if p.is_dir() and (p / "android.jar").exists()]
+    if not candidates:
+        fail("No Android platform installed (platforms/android-34/android.jar missing).")
+    def api(p: Path) -> int:
+        digits = "".join(ch for ch in p.parent.name if ch.isdigit())
+        return int(digits) if digits else 0
+    return sorted(candidates, key=api)[-1]
+
+
+def tool(build_tools: Path, name: str) -> Path:
+    candidates = [build_tools / name]
+    if os.name == "nt":
+        candidates.insert(0, build_tools / (name + ".bat"))
+        candidates.insert(1, build_tools / (name + ".exe"))
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return candidates[0]
+
+
+def validate_assets() -> None:
+    for name in ("bank.json", "ui.json"):
+        path = ASSETS / name
+        try:
+            json.loads(path.read_text(encoding="utf-8"))
+        except Exception as exc:
+            fail(f"{name} is not valid JSON: {exc}")
+    version = (REPO / "VERSION").read_text(encoding="utf-8").strip()
+    manifest = MANIFEST.read_text(encoding="utf-8")
+    match = re.search(r'android:versionName="([^"]+)"', manifest)
+    if not match or match.group(1) != version:
+        fail(f"AndroidManifest versionName does not match VERSION ({version}).")
+
+
 def run(args: list[str]) -> None:
     printable = " ".join(str(a) for a in args)
     print("> " + printable)
@@ -77,13 +119,19 @@ def main() -> None:
     sdk = find_sdk()
     jdk = find_jdk()
     bt = latest_build_tools(sdk)
-    platform = sdk / "platforms" / "android-34" / "android.jar"
+    platform = android_platform(sdk)
     if not platform.exists():
-        fail("android-34 platform not installed.")
+        fail("Android platform not installed.")
     android_jar = str(platform)
     javac = str(jdk / "bin" / "javac.exe")
     keytool = str(jdk / "bin" / "keytool.exe")
     jar = str(jdk / "bin" / "jar.exe")
+    aapt2 = tool(bt, "aapt2")
+    d8 = tool(bt, "d8")
+    zipalign = tool(bt, "zipalign")
+    apksigner = tool(bt, "apksigner")
+
+    validate_assets()
 
     # Best-effort cleanup. Windows search/antivirus can briefly lock generated
     # folders; rebuilding into them is still safe because every tool overwrites.
@@ -105,12 +153,13 @@ def main() -> None:
     print("SDK:", sdk)
     print("Build tools:", bt)
     print("JDK:", jdk)
+    print("Platform:", platform.parent.name)
 
     res_zip = BUILD / "res.zip"
     base_apk = BUILD / "base.apk"
-    run([bt / "aapt2.exe", "compile", "--dir", RES, "-o", res_zip])
+    run([aapt2, "compile", "--dir", RES, "-o", res_zip])
     run([
-        bt / "aapt2.exe", "link", "-o", base_apk,
+        aapt2, "link", "-o", base_apk,
         "-I", android_jar,
         "--manifest", MANIFEST,
         "-R", res_zip,
@@ -131,7 +180,7 @@ def main() -> None:
     classes_jar = BUILD / "classes.jar"
     run([jar, "cf", classes_jar, "-C", BUILD / "classes", "."])
     run([
-        bt / "d8.bat", "--lib", android_jar, "--min-api", "24",
+        d8, "--lib", android_jar, "--min-api", "24",
         "--output", BUILD / "dex", classes_jar,
     ])
 
@@ -140,32 +189,41 @@ def main() -> None:
         zf.write(BUILD / "dex" / "classes.dex", "classes.dex")
 
     aligned = BUILD / "aligned.apk"
-    run([bt / "zipalign.exe", "-f", "-p", "4", base_apk, aligned])
+    run([zipalign, "-f", "-p", "4", base_apk, aligned])
 
-    keystore = BUILD / "debug.keystore"
+    env_keystore = os.environ.get("TTO_KEYSTORE", "").strip()
+    keystore = Path(env_keystore) if env_keystore else BUILD / "debug.keystore"
+    if env_keystore and not keystore.exists():
+        fail("TTO_KEYSTORE was set but the file does not exist.")
+    storepass = os.environ.get("TTO_KEYSTORE_PASS", "android")
+    keyalias = os.environ.get("TTO_KEY_ALIAS", "androiddebugkey")
+    keypass = os.environ.get("TTO_KEY_PASS", storepass)
     if not keystore.exists():
         run([
             keytool, "-genkeypair", "-v", "-keystore", keystore,
-            "-storepass", "android", "-keypass", "android",
-            "-alias", "androiddebugkey",
+            "-storepass", storepass, "-keypass", keypass,
+            "-alias", keyalias,
             "-dname", "CN=Factronics TTO Lab, OU=Training, O=Factronics, L=Caracas, ST=Distrito Capital, C=VE",
             "-keyalg", "RSA", "-keysize", "2048", "-validity", "10000",
         ])
 
     signed = BUILD / "Factronics-TTO-Lab.apk"
     run([
-        bt / "apksigner.bat", "sign",
-        "--ks", keystore, "--ks-pass", "pass:android", "--key-pass", "pass:android",
+        apksigner, "sign",
+        "--ks", keystore, "--ks-pass", "pass:" + storepass, "--key-pass", "pass:" + keypass,
         "--out", signed, aligned,
     ])
-    run([bt / "apksigner.bat", "verify", "--verbose", signed])
+    run([apksigner, "verify", "--verbose", signed])
 
     target = download / "Factronics-TTO-Lab.apk"
     shutil.copy2(signed, target)
+    digest = hashlib.sha256(target.read_bytes()).hexdigest()
+    (download / "Factronics-TTO-Lab.apk.sha256").write_text(digest + "\n", encoding="utf-8")
     size = target.stat().st_size / 1024
     print()
     print("APK:", target)
     print("Size: %.1f KB" % size)
+    print("SHA-256:", digest)
     print("Package: com.factronics.tto.lab · minSdk 24 · targetSdk 34")
 
 
