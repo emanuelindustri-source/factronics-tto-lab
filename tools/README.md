@@ -26,6 +26,25 @@ python tools/make_assets.py
 
 Requiere Pillow. También crea las variantes blanca y transparente del logo conservando el canal alfa original.
 
+## `export_ui.js`
+
+Exporta el diccionario de `assets/js/i18n.js` a `android/app/src/main/assets/ui.json` y comprueba que los tres idiomas tengan las mismas claves.
+
+```powershell
+node tools/export_ui.js
+node tools/export_ui.js --check   # solo verifica, no escribe
+```
+
+## `verify.py`
+
+Verificación automática del repositorio: banco, i18n, enlaces, iconos, service worker, versiones, SHA-256 del APK y posibles secretos.
+
+```powershell
+python tools/verify.py
+```
+
+Sin dependencias externas. Si Node.js está disponible también ejecuta `export_ui.js --check`.
+
 ## `publish_github.py`
 
 Publica el contenido en GitHub mediante la API REST, sin Git ni GitHub CLI. Requiere un token con permisos de repositorio:
