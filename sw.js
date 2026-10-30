@@ -1,7 +1,7 @@
-/* Factronics TTO Lab service worker (rev 1.2.0).
+/* Factronics TTO Lab service worker (rev 1.3.0).
    Cache-first for static assets, network-first for page navigations. The
    question bank and the whole app shell are stored so the PWA opens offline. */
-const VERSION = "1.2.0";
+const VERSION = "1.3.0";
 const CACHE = "factronics-tto-" + VERSION;
 
 const CORE = [
