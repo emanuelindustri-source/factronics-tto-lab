@@ -121,12 +121,14 @@ public class MainActivity extends Activity {
     private Button flagButton;
     private ScrollView resultScroll;
     private int restoreScrollY = -1;
+    private LinearLayout feedbackHost;
     private final List<Button> paletteButtons = new ArrayList<>();
 
     private static class Exam {
         List<Question> qs = new ArrayList<>();
         Map<String, Object> answers = new HashMap<>();
         Set<String> flags = new HashSet<>();
+        Set<String> checked = new HashSet<>();
         Map<String, Double> self = new HashMap<>();
         Map<String, String> errorSnapshot = new HashMap<>();
         int index = 0;
@@ -255,8 +257,7 @@ public class MainActivity extends Activity {
             Collections.addAll(selTypes, TYPE_ORDER);
         }
         count = Math.max(5, Math.min(100, prefs.getInt("count", 20)));
-        minutes = prefs.getInt("minutes", 30);
-        if (!contains(DURATIONS, minutes)) minutes = 30;
+        minutes = Math.max(0, Math.min(180, prefs.getInt("minutes", 30)));
         partial = prefs.getBoolean("partial", true);
         unseen = prefs.getBoolean("unseen", true);
         mode = prefs.getString("mode", "exam");
@@ -677,6 +678,9 @@ public class MainActivity extends Activity {
             JSONArray flags = new JSONArray();
             for (String f : exam.flags) flags.put(f);
             o.put("flags", flags);
+            JSONArray checked = new JSONArray();
+            for (String c : exam.checked) checked.put(c);
+            o.put("checked", checked);
             JSONObject self = new JSONObject();
             for (Map.Entry<String, Double> e : exam.self.entrySet()) self.put(e.getKey(), e.getValue());
             o.put("self", self);
@@ -738,6 +742,8 @@ public class MainActivity extends Activity {
             }
             JSONArray flags = o.optJSONArray("flags");
             if (flags != null) for (int i = 0; i < flags.length(); i++) e.flags.add(flags.optString(i));
+            JSONArray checked = o.optJSONArray("checked");
+            if (checked != null) for (int i = 0; i < checked.length(); i++) e.checked.add(checked.optString(i));
             JSONObject self = o.optJSONObject("self");
             if (self != null) for (Iterator<String> it = self.keys(); it.hasNext(); ) {
                 String id = it.next(); e.self.put(id, self.optDouble(id));
@@ -792,6 +798,12 @@ public class MainActivity extends Activity {
         TextView legal = text(t("legal_android"), 10, MUT, false);
         legal.setPadding(0, dp(10), 0, 0);
         bottom.addView(legal);
+        try {
+            String version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            TextView versionView = text(t("version_label") + " " + version, 10, MUT, false);
+            versionView.setPadding(0, dp(6), 0, 0);
+            bottom.addView(versionView);
+        } catch (Exception ignored) { /* version is cosmetic */ }
         c.addView(bottom);
         sv.addView(c);
         root.addView(sv, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f));
@@ -997,6 +1009,7 @@ public class MainActivity extends Activity {
         box.addView(sv, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(420)));
 
         final Runnable[] render = new Runnable[1];
+        final int[] limit = {40};
         render[0] = () -> {
             results.removeAllViews();
             String needle = norm(search.getText().toString());
@@ -1009,16 +1022,19 @@ public class MainActivity extends Activity {
             for (Question q : Bank.QUESTIONS) {
                 if (!type.isEmpty() && !type.equals(q.type)) continue;
                 if (!model.isEmpty() && !q.models.contains(model)) continue;
-                String hay = norm(q.text(lang) + " " + correctText(q) + " " + q.d(lang).optString("explanation", ""));
+                StringBuilder optionText = new StringBuilder();
+                for (Bank.Option o : q.options(lang)) optionText.append(' ').append(o.text);
+                String hay = norm(q.text(lang) + " " + correctText(q) + " " + optionText + " " + q.d(lang).optString("explanation", ""));
                 if (!needle.isEmpty() && !hay.contains(needle)) continue;
                 if (used.add(norm(q.text(lang)))) matches.add(q);
             }
-            count.setText(matches.size() + " " + t("library_results"));
+            count.setText(matches.size() + " " + t("library_results")
+                    + (matches.size() > limit[0] ? " · " + limit[0] + "/" + matches.size() : ""));
             if (matches.isEmpty()) {
                 results.addView(text(t("library_no_results"), 12, MUT, false), top(8));
                 return;
             }
-            for (int i = 0; i < Math.min(40, matches.size()); i++) {
+            for (int i = 0; i < Math.min(limit[0], matches.size()); i++) {
                 Question q = matches.get(i);
                 LinearLayout item = col();
                 item.setBackground(round(SOFT, 10, LINE, 1));
@@ -1029,14 +1045,19 @@ public class MainActivity extends Activity {
                 if (!ex.isEmpty()) item.addView(text(ex, 11, INK2, false), top(3));
                 results.addView(item, top(6));
             }
+            if (matches.size() > limit[0]) {
+                Button more = smallButton(t("library_more_count").replace("{n}", String.valueOf(matches.size() - limit[0])));
+                more.setOnClickListener(v -> { limit[0] += 40; render[0].run(); });
+                results.addView(more, top(8));
+            }
         };
         search.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int a, int b, int c) {}
             public void onTextChanged(CharSequence s, int a, int b, int c) {}
-            public void afterTextChanged(Editable s) { render[0].run(); }
+            public void afterTextChanged(Editable s) { limit[0] = 40; render[0].run(); }
         });
-        typeSp.setOnItemSelectedListener(new SimpleItemSelected(position -> render[0].run()));
-        modelSp.setOnItemSelectedListener(new SimpleItemSelected(position -> render[0].run()));
+        typeSp.setOnItemSelectedListener(new SimpleItemSelected(position -> { limit[0] = 40; render[0].run(); }));
+        modelSp.setOnItemSelectedListener(new SimpleItemSelected(position -> { limit[0] = 40; render[0].run(); }));
         render[0].run();
 
         new AlertDialog.Builder(this)
@@ -1226,6 +1247,13 @@ public class MainActivity extends Activity {
             updatePoolLabel();
         }));
         a.addView(cs, top(8));
+        Button customCount = smallButton(t("custom"));
+        customCount.setOnClickListener(v -> showNumberDialog(t("count_title"), count, 5, 100, n -> {
+            count = n;
+            saveConfig();
+            showSetup();
+        }));
+        a.addView(customCount, top(6));
         LinearLayout b = col();
         b.addView(text(t("duration_title"), 16, INK, true));
         b.addView(text(t("duration_help"), 12, MUT, false), top(2));
@@ -1246,6 +1274,13 @@ public class MainActivity extends Activity {
             saveConfig();
         }));
         b.addView(ds, top(8));
+        Button customDuration = smallButton(t("custom"));
+        customDuration.setOnClickListener(v -> showNumberDialog(t("duration_title"), minutes, 0, 180, n -> {
+            minutes = n;
+            saveConfig();
+            showSetup();
+        }));
+        b.addView(customDuration, top(6));
         r.addView(a, weight());
         r.addView(b, weightLeft(14));
         card.addView(r);
@@ -1449,7 +1484,10 @@ public class MainActivity extends Activity {
         LinearLayout chips = row();
         chips.addView(chip(typeLabel(q.type), SOFT, BRAND));
         for (String m : q.models) chips.addView(chip(m, SOFT, MUT), left(5));
-        qCard.addView(chips);
+        HorizontalScrollView chipScroll = new HorizontalScrollView(this);
+        chipScroll.setHorizontalScrollBarEnabled(false);
+        chipScroll.addView(chips);
+        qCard.addView(chipScroll);
         TextView qt = text(d.optString("q", ""), 18, INK, true);
         qt.setLineSpacing(dp(3), 1f);
         qCard.addView(qt, top(12));
@@ -1477,9 +1515,10 @@ public class MainActivity extends Activity {
             group.setOnCheckedChangeListener((g, checkedId) -> {
                 String id = ids.get(checkedId);
                 if (id != null) exam.answers.put(q.id, id);
+                exam.checked.remove(q.id);
                 saveExamState();
                 updateChrome();
-                if (exam.instant) renderQuestion();
+                updateFeedback(q);
             });
             qCard.addView(group, top(8));
         } else if ("multi".equals(q.type)) {
@@ -1496,9 +1535,10 @@ public class MainActivity extends Activity {
                     Set<String> set = exam.answers.get(q.id) instanceof Set ? castSet(exam.answers.get(q.id)) : new HashSet<>();
                     if (on) set.add(o.id); else set.remove(o.id);
                     exam.answers.put(q.id, set);
+                    exam.checked.remove(q.id);
                     saveExamState();
                     updateChrome();
-                    if (exam.instant) renderQuestion();
+                    updateFeedback(q);
                 });
                 qCard.addView(cb);
             }
@@ -1527,8 +1567,10 @@ public class MainActivity extends Activity {
                         while (list.size() <= idx) list.add("");
                         list.set(idx, s.toString());
                         exam.answers.put(q.id, list);
+                        exam.checked.remove(q.id);
                         saveExamState();
                         updateChrome();
+                        updateFeedback(q);
                     }
                 });
                 line.addView(et, weight());
@@ -1552,16 +1594,35 @@ public class MainActivity extends Activity {
                 public void onTextChanged(CharSequence s, int a, int b, int c) {}
                 public void afterTextChanged(Editable s) {
                     exam.answers.put(q.id, s.toString());
+                    exam.checked.remove(q.id);
                     saveExamState();
                     updateChrome();
                 }
             });
             qCard.addView(et, top(10));
         }
-        if (exam.instant) {
-            Object latest = exam.answers.get(q.id);
-            if (isAnswered(q, latest)) qCard.addView(instantFeedback(q, latest), top(10));
+        feedbackHost = col();
+        qCard.addView(feedbackHost);
+        updateFeedback(q);
+    }
+
+    private void updateFeedback(Question q) {
+        if (feedbackHost == null || exam == null) return;
+        feedbackHost.removeAllViews();
+        if (!exam.instant || q.isOpen()) return;
+        Object latest = exam.answers.get(q.id);
+        if (!isAnswered(q, latest)) return;
+        if (exam.checked.contains(q.id)) {
+            feedbackHost.addView(instantFeedback(q, latest), top(10));
+            return;
         }
+        Button check = smallButton(t("exam_check"));
+        check.setOnClickListener(v -> {
+            exam.checked.add(q.id);
+            saveExamState();
+            updateFeedback(q);
+        });
+        feedbackHost.addView(check, top(10));
     }
 
     private LinearLayout instantFeedback(Question q, Object ans) {
@@ -2209,6 +2270,28 @@ public class MainActivity extends Activity {
 
     private void toast(String s) { Toast.makeText(this, s, Toast.LENGTH_SHORT).show(); }
 
+    private void showNumberDialog(String title, int current, int min, int max, java.util.function.IntConsumer onOk) {
+        EditText input = new EditText(this);
+        input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+        input.setText(String.valueOf(current));
+        input.setSelectAllOnFocus(true);
+        int pad = dp(16);
+        input.setPadding(pad, dp(8), pad, dp(8));
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setView(input)
+                .setPositiveButton("OK", (d, w) -> {
+                    try {
+                        int n = Integer.parseInt(input.getText().toString().trim());
+                        onOk.accept(Math.max(min, Math.min(max, n)));
+                    } catch (Exception e) {
+                        toast(t("import_error"));
+                    }
+                })
+                .setNegativeButton(t("cancel"), null)
+                .show();
+    }
+
     private static boolean contains(String[] arr, String v) {
         for (String x : arr) if (x.equals(v)) return true;
         return false;
@@ -2257,10 +2340,17 @@ public class MainActivity extends Activity {
         if (screen == Screen.EXAM && exam != null && !exam.submitted) {
             new AlertDialog.Builder(this)
                     .setTitle(t("exam_confirm_title"))
-                    .setPositiveButton(t("exam_finish"), (d, w) -> requestFinish())
-                    .setNeutralButton(t("res_new"), (d, w) -> { discardSavedExam(); showSetup(); })
+                    .setMessage(t("exam_confirm_text"))
+                    .setPositiveButton(t("exam_finish"), (d, w) -> finishExam(false))
+                    .setNeutralButton(t("exam_save_exit"), (d, w) -> {
+                        saveExamState();
+                        showSetup();
+                        toast(t("exam_saved"));
+                    })
                     .setNegativeButton(t("exam_confirm_cancel"), null)
                     .show();
+        } else if (screen == Screen.RESULTS) {
+            showSetup();
         } else {
             super.onBackPressed();
         }
