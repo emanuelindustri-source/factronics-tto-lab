@@ -4,10 +4,12 @@ Aplicación Java sin AndroidX, sin WebView y sin Gradle. La interfaz se construy
 
 Proyecto de Factronics Venezuela, distribuidor oficial de Videojet. Desarrollado por Khristyan Hidalgo, técnico de campo certificado. Videojet Technologies no solicitó ni autorizó este proyecto.
 
+Versión actual: **1.3.0** (`versionCode 4`).
+
 ## Requisitos
 
 - JDK 17 (`JAVA_HOME`).
-- Android SDK con `platforms/android-34` y `build-tools/34.0.0`.
+- Android SDK con `platforms/android-34` y `build-tools` (probado con 34.0.0 y 36.0.0).
 - `ANDROID_HOME` o `ANDROID_SDK_ROOT`.
 
 ## Compilar
@@ -24,14 +26,25 @@ El script:
 4. Convierte a DEX con `d8`.
 5. Añade `classes.dex` al APK.
 6. Alinea con `zipalign`.
-7. Firma con `apksigner` y verifica.
+7. Firma con `apksigner`, verifica y escribe el SHA-256.
 
 Salida:
 
 - `android/build/Factronics-TTO-Lab.apk`
 - `download/Factronics-TTO-Lab.apk`
+- `download/Factronics-TTO-Lab.apk.sha256`
 
 La clave se genera en `android/build/debug.keystore` si no existe. Es una clave de entrenamiento, no una clave de producción. Si borras `android/build`, se generará una nueva y Android pedirá desinstalar la versión anterior antes de actualizar.
+
+Para reutilizar una clave existente:
+
+```powershell
+$env:TTO_KEYSTORE = "C:\ruta\factronics.jks"
+$env:TTO_KEYSTORE_PASS = "..."
+$env:TTO_KEY_ALIAS = "..."
+$env:TTO_KEY_PASS = "..."
+python android/build.py
+```
 
 ## Estructura
 
