@@ -1,8 +1,82 @@
 # Verificación funcional
 
-Fecha: 2026-10-23 · Entorno: Windows 11, Python 3.13, JDK 17, Android SDK 34, emulador Pixel 7 API 34.
+## v1.3.0 · 2026-10-30
 
-## Banco
+Entorno: Windows 11, Python 3.13, Node.js 24, JDK 17, Android SDK 34/36,
+emulador Pixel 7 API 34, navegador Chromium integrado.
+
+### Automática
+
+| Comprobación | Resultado |
+|---|---|
+| `python tools/verify.py` | **OK**, 6.861 comprobaciones |
+| Banco | 328 preguntas · 304 enunciados únicos |
+| Paridad web/Android | `bank.js` = `bank.json` |
+| i18n | 358 claves × ES/EN/PT, sin faltantes |
+| `ui.json` vs `i18n.js` | Idénticos (`node tools/export_ui.js --check`) |
+| Enlaces, iconos, service worker | Todos los recursos existen |
+| Versiones | `VERSION`, `sw.js`, AndroidManifest y release en 1.3.0 |
+| APK | 157,5 KB · `versionCode 4` · SHA-256 `f953d4d571ff25fc8e2a2cdc8d757bbf66da444e3046658a7efc9a08356970f5` |
+| Secretos evidentes | Ninguno en el árbol publicado |
+
+### Web
+
+- Landing: 6 tarjetas, resumen “328 variantes · 304 enunciados únicos”, enlace SHA-256, guía de instalación PWA y sin errores de consola. Lighthouse: accesibilidad 100, buenas prácticas 100, SEO 100.
+- Generador: Lighthouse accesibilidad 100, buenas prácticas 100, SEO 100.
+- ES/EN/PT: textos, `aria-label`, `aria-pressed` y resumen del banco cambian
+  correctamente; el tema claro/oscuro actualiza su etiqueta accesible.
+- Generador: cantidad personalizada 37 y duración 45 guardadas en
+  `tto.config.v1`; el resumen y el enlace compartido las reflejan
+  (`count=37&minutes=45&lang=es`).
+- Estudio + selección múltiple: tras el primer clic **no** aparece feedback;
+  aparece el botón **Comprobar** habilitado. Al pulsarlo se muestra el
+  resultado y la explicación; al cambiar una opción el feedback desaparece.
+- Estudio + cálculo: el botón empieza deshabilitado, se habilita al escribir,
+  no revela nada antes de **Comprobar** y el feedback se retira al editar.
+- Biblioteca: 304 resultados, 60 visibles, “Mostrar más (244)” → 120 visibles.
+- Constancia: código `REF-…`, rótulo “Código de referencia” y aviso de que no
+  se verifica en línea.
+- Copiar resumen: modal de confirmación visible en resultados.
+- Enlace directo `?minutes=0` interpretado como “Sin límite”.
+- Guardado: `beforeunload`/`pagehide` escriben el examen de forma síncrona.
+
+### Android
+
+- APK `com.factronics.tto.lab` **1.3.0** (`versionCode 4`), minSdk 24,
+  targetSdk 34, 157,5 KB.
+- `apksigner verify`: esquemas **v2 y v3** correctos.
+- Instalación limpia en emulador Pixel 7 / API 34. La actualización desde 1.2.0
+  requiere desinstalar por cambio de clave de entrenamiento.
+- Icono adaptativo presente en `mipmap-anydpi-v26`.
+- Configuración: cantidad personalizada 37 aplicada; diálogo con
+  **Cancelar/OK**; versión visible al pie.
+- Estudio + selección múltiple: responder una opción no revela la respuesta;
+  **Comprobar** muestra “Parcial”, respuesta correcta y explicación.
+- Chips de modelo en desplazamiento horizontal; ya no se comprimen en vertical
+  con fuente grande.
+- Biblioteca: 304 resultados y **Mostrar más (264)**; al ampliar se cargan más.
+- Atrás durante el examen: **Finalizar**, **Seguir respondiendo** o
+  **Guardar y salir**. Guardar y salir muestra la tarjeta de sesión en curso;
+  **Continuar sesión** restaura la pregunta, la respuesta y el feedback.
+- Atrás desde resultados vuelve a la configuración, no cierra la app.
+- Cambio ES/EN/PT y tema oscuro/claro conservan el estado.
+
+### Limitaciones conocidas
+
+- Material de estudio: verificar siempre contra documentación oficial y
+  firmware/P-N del equipo.
+- La clave del APK es de entrenamiento (autofirmada), no de producción.
+- La constancia es un documento de práctica; el código es una referencia local.
+- El APK no incluye todavía constancia PDF ni exportación CSV nativa.
+- Los diálogos de Android usan tema claro aunque la app esté en oscuro.
+
+---
+
+## Histórico · v1.2.0 · 2026-10-23
+
+Entorno: Windows 11, Python 3.13, JDK 17, Android SDK 34, emulador Pixel 7 API 34.
+
+### Banco
 
 | Comprobación | Resultado |
 |---|---|
@@ -13,7 +87,7 @@ Fecha: 2026-10-23 · Entorno: Windows 11, Python 3.13, JDK 17, Android SDK 34, e
 | Idiomas por pregunta | ES / EN / PT |
 | Respuestas y rúbricas | Presentes y validadas por el generador |
 
-## Web
+### Web
 
 - Landing: 6 tarjetas de modelo, cambio ES/EN/PT, tema claro/oscuro, logo Factronics claro/oscuro, metadatos OG, FAQ, PWA y sin errores de consola.
 - Generador: parámetros por URL (`models`, `types`, `count`, `minutes`, `lang`).
@@ -21,34 +95,29 @@ Fecha: 2026-10-23 · Entorno: Windows 11, Python 3.13, JDK 17, Android SDK 34, e
 - Examen de 5 preguntas grabado en progreso: 20 %, historial, promedio y cuaderno de errores visibles en el panel.
 - Preguntas abiertas: autoevaluación “Completa” × 3 → **100 %**, pendientes 0.
 - Selección múltiple parcial: 10 preguntas, una opción correcta por pregunta → **4,08/10 = 41 %** (crédito parcial activo).
-- Modos: Estudio con corrección inmediata (opción incorrecta → feedback con respuesta y explicación) y Repaso que genera una sesión con las falladas guardadas.
+- Modos: Estudio con corrección inmediata y Repaso que genera una sesión con las falladas guardadas.
 - Biblioteca: 304 resultados, búsqueda “encoder” → 31 coincidencias y filtro por tipo; respuesta y explicación visibles.
-- Constancia: se abre en pestaña nueva con nombre, puntaje, fecha, código de verificación y aviso legal de no certificación Videojet.
-- PWA: `service worker` registrado, caché `factronics-tto-1.2.0` con 19 recursos (incluye banco, generador e iconos). Con el servidor local detenido, landing y generador abrieron desde la caché y conservaron su contenido.
-- Lighthouse en landing: mejor práctica 100, SEO 100, accesibilidad 100 (contraste de texto secundario corregido a `#556b7e`).
+- Constancia: se abre en pestaña nueva con nombre, puntaje, fecha, código y aviso legal.
+- PWA: service worker registrado, caché `factronics-tto-1.2.0` con 19 recursos.
+- Lighthouse en landing: mejor práctica 100, SEO 100, accesibilidad 100.
 - Cambio de idioma durante el examen y en resultados conserva respuestas y puntaje.
-- Banco: 328 registros, 304 enunciados únicos; el pool filtra duplicados por modelo/tipo.
 - APK servido desde `download/Factronics-TTO-Lab.apk`: HTTP 200 y SHA-256 verificado.
 
-## Android
+### Android
 
 - APK: `com.factronics.tto.lab` 1.2.0 (versionCode 3), minSdk 24, targetSdk 34, 137 KB.
 - Firma verificada con `apksigner`: esquemas **v2 y v3**.
 - Instalación limpia y actualización sobre la misma clave: correctas.
-- Modos: Estudio mostró corrección inmediata con respuesta y explicación; Repaso abrió 15 preguntas desde el cuaderno de errores.
-- Progreso: tras dos sesiones, panel con 2 intentos, promedio 0 %, 15 errores, racha 1 e historial con “Repasar fallos”.
-- Reanudar: app cerrada con examen en curso → tarjeta “Sesión en curso”; “Continuar” restauró la pregunta 1 de 15 con estado guardado.
+- Modos: Estudio mostró corrección inmediata; Repaso abrió 15 preguntas desde el cuaderno de errores.
+- Progreso: 2 intentos, promedio 0 %, 15 errores, racha 1 e historial con “Repasar fallos”.
+- Reanudar: app cerrada con examen en curso → tarjeta “Sesión en curso”; “Continuar” restauró la pregunta 1 de 15.
 - Biblioteca: 304 resultados; búsqueda “encoder” → 31 resultados con respuesta y explicación.
-- Tema claro/oscuro: botón en cabecera cambia el tema y persiste; se probó en oscuro con contraste legible.
-- Cambio ES/EN/PT en la app: correcto; “progreso” usa “dispositivo” (no “navegador”) y las nuevas cadenas de biblioteca/progreso están traducidas.
-- Autoevaluación abierta: actualiza el puntaje en sitio y sincroniza el cuaderno de errores.
-- “Anterior” se desactiva en la primera pregunta; Fin muestra confirmación si hay preguntas en blanco.
-- Exportar abre la hoja de compartir; importar usa `ACTION_OPEN_DOCUMENT` y combina perfiles, intentos y errores.
-- SHA-256 del APK final: `915dab2905cfb0ca444400ba0e2c633facb772e9a7589b20ccfee32a634cf474`.
+- Tema claro/oscuro, ES/EN/PT y autoevaluación abierta: correctos.
+- Exportar/importar: hoja de compartir y `ACTION_OPEN_DOCUMENT`.
+- SHA-256 del APK 1.2.0: `915dab2905cfb0ca444400ba0e2c633facb772e9a7589b20ccfee32a634cf474`.
 - Sin permisos de red; funciona offline.
-- Identidad de la app: Factronics TTO Lab; cabecera con logo Factronics + marca Videojet y aviso de distribuidor.
 
-## Limitaciones conocidas
+### Limitaciones conocidas (1.2.0)
 
 - Es material de estudio: verificar siempre contra documentación oficial y firmware/P-N del equipo.
 - La clave del APK es de entrenamiento (autofirmada), no de producción.
