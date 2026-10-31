@@ -1362,7 +1362,17 @@
       update_check: "Buscar actualizaciones",
       update_none: "Ya tienes la ?ltima versi?n.",
       update_error: "No se pudo comprobar la actualizaci?n. Revisa tu conexi?n.",
-      update_available: "Nueva versi?n disponible"
+      update_available: "Nueva versi?n disponible",
+      new_kicker: "NOVEDADES 1.5",
+      new_title: "M?s preguntas, fuentes revisadas y avisos de actualizaci?n.",
+      new_1_t: "22 preguntas nuevas",
+      new_1_d: "Ribbons y soportes OEM/universales, con datos extra?dos de la documentaci?n t?cnica.",
+      new_2_t: "350 preguntas",
+      new_2_d: "326 enunciados ?nicos; el pool y la biblioteca se actualizan solos.",
+      new_3_t: "Aviso de actualizaci?n",
+      new_3_d: "Web y Android avisan cuando hay una versi?n nueva publicada en el repositorio.",
+      new_4_t: "Todo lo de 1.4",
+      new_4_d: "Identificaci?n, informe PDF, env?o por correo, part?culas y animaciones."
     },
     en: {
       update_title: "Update available",
@@ -1372,7 +1382,17 @@
       update_check: "Check for updates",
       update_none: "You already have the latest version.",
       update_error: "Could not check for updates. Check your connection.",
-      update_available: "New version available"
+      update_available: "New version available",
+      new_kicker: "WHAT IS NEW IN 1.5",
+      new_title: "More questions, reviewed sources and update notices.",
+      new_1_t: "22 new questions",
+      new_1_d: "Ribbons and OEM/universal brackets, with data taken from the technical documentation.",
+      new_2_t: "350 questions",
+      new_2_d: "326 unique statements; the pool and library update automatically.",
+      new_3_t: "Update notice",
+      new_3_d: "Web and Android notify you when a new version is published in the repository.",
+      new_4_t: "Everything from 1.4",
+      new_4_d: "Identification, PDF report, email sending, particles and animations."
     },
     pt: {
       update_title: "Atualiza??o dispon?vel",
