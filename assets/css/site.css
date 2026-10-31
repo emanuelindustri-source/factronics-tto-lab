@@ -88,6 +88,16 @@ button { cursor: pointer; }
 :where(a, button, summary, input, select, textarea, [tabindex]):focus-visible {
   outline: 3px solid var(--cyan); outline-offset: 2px;
 }
+.particle-canvas {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; opacity: .55;
+}
+main, .site-footer { position: relative; z-index: 1; }
+.motion-ready .reveal {
+  opacity: 0; transform: translateY(18px);
+  transition: opacity .55s ease var(--reveal-delay, 0ms), transform .55s cubic-bezier(.2,.72,.2,1) var(--reveal-delay, 0ms);
+}
+.motion-ready .reveal.in { opacity: 1; transform: none; }
 
 /* ---------- header ---------- */
 .site-header {
@@ -319,6 +329,14 @@ h2.section-title { font-size: clamp(1.7rem, 3vw, 2.55rem); line-height: 1.08; le
 .panel + .panel { margin-top: 14px; }
 .panel h2 { margin: 0 0 3px; font-size: 1.02rem; letter-spacing: -.015em; }
 .panel .hint { margin: 0 0 16px; color: var(--ink-3); font-size: .8rem; }
+.student-panel .panel-body { padding-bottom: 18px; }
+.student-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.student-status { flex: 0 0 auto; font-size: .68rem; font-weight: 700; color: var(--ok); background: var(--ok-soft); border: 1px solid color-mix(in srgb, var(--ok) 25%, var(--line)); border-radius: 999px; padding: 4px 9px; }
+.student-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.student-grid label { display: grid; gap: 5px; font-size: .76rem; font-weight: 700; color: var(--ink-2); }
+.student-grid .wide { grid-column: 1 / -1; }
+.student-grid .inp { width: 100%; }
+.res-student { margin: 6px 0 0; font-size: .84rem; color: var(--ink-3); font-weight: 650; }
 .field-label { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 7px; }
 .field-label label { font-size: .78rem; font-weight: 700; color: var(--ink-2); }
 .custom-row { margin-top: 8px; }
@@ -688,6 +706,7 @@ details.faq p { margin: 10px 0 0; color: var(--ink-2); font-size: .8rem; line-he
 }
 @media (max-width: 760px) {
   .mode-picks, .new-grid, .faq-grid { grid-template-columns: 1fr; }
+  .student-grid { grid-template-columns: 1fr; }
   .progress-head { flex-direction: column; align-items: stretch; }
   .profile-box select { flex: 1; max-width: none; }
   .progress-stats { grid-template-columns: repeat(2, 1fr); }
@@ -697,4 +716,45 @@ details.faq p { margin: 10px 0 0; color: var(--ink-2); font-size: .8rem; line-he
   .lib-modal { max-height: 92vh; }
   .lib-head, .lib-controls, .lib-count, .lib-results { padding-left: 15px; padding-right: 15px; }
   .demo-card { padding: 18px; }
+}
+
+
+/* ---------- v1.4: motion, particles and report ---------- */
+@keyframes floatMock {
+  0%, 100% { transform: rotate(1.2deg) translateY(0); }
+  50% { transform: rotate(1.2deg) translateY(-8px); }
+}
+@keyframes floatPhone {
+  0%, 100% { transform: rotate(-2deg) translateY(0); }
+  50% { transform: rotate(-2deg) translateY(-7px); }
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: .55; transform: scale(1); }
+  50% { opacity: .9; transform: scale(1.04); }
+}
+.exam-mock { animation: floatMock 7s ease-in-out infinite; }
+.phone { animation: floatPhone 8s ease-in-out infinite; }
+.hero::after {
+  content: ""; position: absolute; right: -160px; top: 60px; width: 420px; height: 420px;
+  border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(circle, rgba(0,163,224,.22), transparent 68%);
+  animation: glowPulse 9s ease-in-out infinite;
+}
+.btn.primary { position: relative; overflow: hidden; }
+.btn.primary::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.22) 45%, transparent 65%);
+  transform: translateX(-120%); transition: transform .65s ease;
+}
+.btn.primary:hover::after { transform: translateX(120%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .particle-canvas { display: none; }
+  .motion-ready .reveal { opacity: 1; transform: none; transition: none; }
+  .exam-mock, .phone, .hero::after { animation: none; }
+  .btn.primary::after { display: none; }
+}
+@media print {
+  .particle-canvas, .hero::after { display: none !important; }
+  .motion-ready .reveal { opacity: 1 !important; transform: none !important; }
 }
