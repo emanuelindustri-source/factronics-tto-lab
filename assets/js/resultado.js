@@ -71,6 +71,8 @@
       return `<div class="bd-row"><span>${esc(typeLabel(type))}</span><div class="bd-bar"><i style="width:${pct}%"></i></div><b>${pct}%</b></div>`;
     }).join("");
     const models = (d.m || []).map((m) => `<span class="chip">${esc(m)}</span>`).join("");
+    const verify = state.valid && window.TTOResult && window.TTOResult.verifyUrl ? window.TTOResult.verifyUrl(d) : "";
+    const verifyQr = verify && window.TTOResult.qrDataUrl ? window.TTOResult.qrDataUrl(verify, 220) : "";
     const integrity = state.valid
       ? `<span class="pill ok">✓ ${esc(T("qr_integrity_ok"))}</span>`
       : `<span class="pill bad">! ${esc(T("qr_integrity_bad"))}</span>`;
@@ -94,8 +96,10 @@
           <div class="breakdown">${breakdown || `<p class="muted">—</p>`}</div>
           <h2>${esc(T("report_models"))}</h2>
           <div class="chips">${models || `<span class="muted">—</span>`}</div>
+          ${verify ? `<div class="result-verify"><img src="${verifyQr}" width="124" height="124" alt="QR"><div><b>${esc(T("cert_doc_verify"))}</b><span>${esc(verify)}</span><code>${esc(d.c || "")}</code></div></div>` : ""}
           <div class="result-actions no-print">
-            <button class="btn primary" type="button" id="printResult">${esc(T("result_print"))}</button>
+            ${verify ? `<a class="btn primary" href="${esc(verify)}">${esc(T("verify_open"))}</a>` : ""}
+            <button class="btn" type="button" id="printResult">${esc(T("result_print"))}</button>
             <a class="btn" href="../generator/">${esc(T("result_open_generator"))}</a>
           </div>
         </div>
