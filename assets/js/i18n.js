@@ -59,7 +59,7 @@
       feature_2_t: "Siete tipos de pregunta",
       feature_2_d: "Selección simple, múltiple, completar, descripción de componentes, corrección de fallas, cálculos y significado de errores.",
       feature_3_t: "Preguntas nuevas",
-      feature_3_d: "Banco de 328 preguntas y 100 cálculos con valores técnicos. El motor prioriza las que aún no has visto.",
+      feature_3_d: "Banco de 350 preguntas y 100 cálculos con valores técnicos. El motor prioriza las que aún no has visto.",
       feature_4_t: "Tiempo y cantidad",
       feature_4_d: "De 10 a 50 preguntas y de 10 a 90 minutos, o sin límite para práctica.",
       feature_5_t: "Tres idiomas",
@@ -310,7 +310,7 @@
       feature_2_t: "Seven question types",
       feature_2_d: "Single choice, multiple choice, fill-in, component description, fault correction, calculations and error meaning.",
       feature_3_t: "Fresh questions",
-      feature_3_d: "A 328-question bank and 100 calculations with technical values. The engine prioritises what you have not seen.",
+      feature_3_d: "A 350-question bank and 100 calculations with technical values. The engine prioritises what you have not seen.",
       feature_4_t: "Time and length",
       feature_4_d: "From 10 to 50 questions and 10 to 90 minutes, or no limit for practice.",
       feature_5_t: "Three languages",
@@ -557,7 +557,7 @@
       feature_2_t: "Sete tipos de pergunta",
       feature_2_d: "Escolha simples, múltipla, completar, descrição de componentes, correção de falhas, cálculos e significado de erros.",
       feature_3_t: "Perguntas novas",
-      feature_3_d: "Banco de 328 perguntas e 100 cálculos com valores técnicos. O motor prioriza o que você ainda não viu.",
+      feature_3_d: "Banco de 350 perguntas e 100 cálculos com valores técnicos. O motor prioriza o que você ainda não viu.",
       feature_4_t: "Tempo e quantidade",
       feature_4_d: "De 10 a 50 perguntas e de 10 a 90 minutos, ou sem limite para prática.",
       feature_5_t: "Três idiomas",
@@ -763,7 +763,7 @@
       demo_next: "Siguiente pregunta",
       demo_restart: "Repetir demo",
       demo_done: "Demo completada",
-      demo_done_lead: "Acertaste {score} de {total}. El generador completo tiene 304 preguntas únicas, siete tipos y repaso espaciado.",
+      demo_done_lead: "Acertaste {score} de {total}. El generador completo tiene 326 preguntas únicas, siete tipos y repaso espaciado.",
       demo_full: "Abrir generador completo",
       install_btn: "Instalar web app",
       install_hint: "Se instala desde el navegador y funciona sin conexión.",
@@ -775,7 +775,7 @@
       new_2_t: "Sesiones a tu medida",
       new_2_d: "Cantidad de 5 a 100 preguntas y duración de 0 a 180 minutos, además de los valores rápidos de siempre.",
       new_3_t: "Biblioteca completa",
-      new_3_d: "Búsqueda en opciones y respuestas, y paginación para recorrer los 304 enunciados sin quedarte en los primeros 80.",
+      new_3_d: "Búsqueda en opciones y respuestas, y paginación para recorrer los 326 enunciados sin quedarte en los primeros 80.",
       new_4_t: "APK 1.3",
       new_4_d: "Icono adaptativo, opción de guardar y salir del examen, y Atrás desde resultados vuelve a la configuración.",
       faq_kicker: "PREGUNTAS FRECUENTES",
@@ -890,7 +890,7 @@
       demo_next: "Next question",
       demo_restart: "Restart demo",
       demo_done: "Demo complete",
-      demo_done_lead: "You got {score} of {total}. The full generator has 304 unique questions, seven types and spaced review.",
+      demo_done_lead: "You got {score} of {total}. The full generator has 326 unique questions, seven types and spaced review.",
       demo_full: "Open the full generator",
       install_btn: "Install web app",
       install_hint: "Install it from the browser and use it offline.",
@@ -902,7 +902,7 @@
       new_2_t: "Sessions your way",
       new_2_d: "From 5 to 100 questions and from 0 to 180 minutes, in addition to the usual quick presets.",
       new_3_t: "The full library",
-      new_3_d: "Search options and answers, and page through all 304 statements instead of stopping at the first 80.",
+      new_3_d: "Search options and answers, and page through all 326 statements instead of stopping at the first 80.",
       new_4_t: "APK 1.3",
       new_4_d: "Adaptive icon, save-and-exit during an exam, and Back from results returns to setup.",
       faq_kicker: "FREQUENTLY ASKED QUESTIONS",
@@ -1029,7 +1029,7 @@
       new_2_t: "Sessões do seu jeito",
       new_2_d: "De 5 a 100 perguntas e de 0 a 180 minutos, além dos valores rápidos de sempre.",
       new_3_t: "Biblioteca completa",
-      new_3_d: "Busca em opções e respostas, e paginação para percorrer os 304 enunciados sem parar nos primeiros 80.",
+      new_3_d: "Busca em opções e respostas, e paginação para percorrer os 326 enunciados sem parar nos primeiros 80.",
       new_4_t: "APK 1.3",
       new_4_d: "Ícone adaptativo, opção de salvar e sair da prova, e Voltar dos resultados retorna à configuração.",
       faq_kicker: "PERGUNTAS FREQUENTES",
@@ -1349,6 +1349,45 @@
   Object.keys(V14).forEach((lang) => {
     if (!T[lang]) T[lang] = {};
     Object.keys(V14[lang]).forEach((key) => { T[lang][key] = V14[lang][key]; });
+  });
+
+
+  /* v1.5: update notices */
+  const V15 = {
+    es: {
+      update_title: "Actualizaci?n disponible",
+      update_body: "Hay una versi?n m?s reciente con mejoras y correcciones. Desc?rgala e inst?lala sobre la actual.",
+      update_download: "Descargar",
+      update_later: "M?s tarde",
+      update_check: "Buscar actualizaciones",
+      update_none: "Ya tienes la ?ltima versi?n.",
+      update_error: "No se pudo comprobar la actualizaci?n. Revisa tu conexi?n.",
+      update_available: "Nueva versi?n disponible"
+    },
+    en: {
+      update_title: "Update available",
+      update_body: "A newer version with improvements and fixes is available. Download it and install it over the current one.",
+      update_download: "Download",
+      update_later: "Later",
+      update_check: "Check for updates",
+      update_none: "You already have the latest version.",
+      update_error: "Could not check for updates. Check your connection.",
+      update_available: "New version available"
+    },
+    pt: {
+      update_title: "Atualiza??o dispon?vel",
+      update_body: "H? uma vers?o mais recente com melhorias e corre??es. Baixe e instale sobre a atual.",
+      update_download: "Baixar",
+      update_later: "Mais tarde",
+      update_check: "Verificar atualiza??es",
+      update_none: "Voc? j? tem a vers?o mais recente.",
+      update_error: "N?o foi poss?vel verificar a atualiza??o. Verifique sua conex?o.",
+      update_available: "Nova vers?o dispon?vel"
+    }
+  };
+  Object.keys(V15).forEach((lang) => {
+    if (!T[lang]) T[lang] = {};
+    Object.keys(V15[lang]).forEach((key) => { T[lang][key] = V15[lang][key]; });
   });
 
   window.TTO_I18N = T;
