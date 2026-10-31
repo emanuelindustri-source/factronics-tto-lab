@@ -1,5 +1,59 @@
 # Verificación funcional
 
+## v1.4.0 · 2026-10-30
+
+Entorno: Windows 11, Python 3.13, Node.js 24, JDK 17, Android SDK 34/36,
+emulador Pixel 7 API 34, navegador Chromium integrado.
+
+### Automática
+
+| Comprobación | Resultado |
+|---|---|
+| `python tools/verify.py` | **OK**, 6.864 comprobaciones |
+| Banco | 328 preguntas · 304 enunciados únicos |
+| i18n | 408 claves × ES/EN/PT, sin faltantes |
+| `ui.json` vs `i18n.js` | Idénticos (`node tools/export_ui.js --check`) |
+| Enlaces, iconos, service worker | Todos los recursos existen |
+| Versiones | `VERSION`, `sw.js`, AndroidManifest y release en 1.4.0 |
+| APK | 169,5 KB · `versionCode 5` · SHA-256 `410f2464f18b597cc7752589e5fb92f2d2cb27af451c83a4265bd7e9f2044b1f` |
+| Secretos evidentes | Ninguno en el árbol publicado |
+
+### Web
+
+- Identificación: nombre, apellido y correo obligatorios; sin datos o con correo
+  inválido no inicia el examen.
+- Los datos aparecen en resultados, constancia e informe.
+- Informe A4 generado en pestaña nueva con logo, puntaje, desglose, equipos y
+  detalle de preguntas; botón **Descargar PDF** y enlace de correo con los dos
+  destinatarios precargados.
+- Partículas, revelado al hacer scroll y contadores; sin errores de consola.
+- `prefers-reduced-motion` desactiva partículas y animaciones.
+- Lighthouse: accesibilidad 100, buenas prácticas 100, SEO 100.
+
+### Android
+
+- APK `com.factronics.tto.lab` **1.4.0** (`versionCode 5`), minSdk 24,
+  targetSdk 34, 169,5 KB.
+- `apksigner verify`: esquemas **v2 y v3** correctos; sin permiso de red.
+- Identificación: campos nombre/apellido/correo, persistencia y validación.
+- Informe PDF generado en caché, 2 páginas, compartido mediante el proveedor
+  `ReportProvider`; la hoja de compartir muestra el archivo PDF.
+- El PDF incluye logo, participante, correo, puntaje, métricas, desglose y
+  detalle de preguntas; se corrigió el solapamiento de la columna de respuesta.
+- Botón **Enviar informe por correo** con destinatarios precargados.
+- Transiciones suaves entre configuración, examen y resultados.
+- Instalación limpia y actualización sobre la misma clave de entrenamiento.
+
+### Limitaciones conocidas
+
+- El envío se completa desde la app de correo del participante; no hay envío
+  silencioso sin backend.
+- La constancia web se guarda como PDF desde el diálogo de impresión.
+- La clave del APK es de entrenamiento, no de producción.
+- Los diálogos Android siguen usando tema claro aunque la app esté en oscuro.
+
+---
+
 ## v1.3.0 · 2026-10-30
 
 Entorno: Windows 11, Python 3.13, Node.js 24, JDK 17, Android SDK 34/36,
