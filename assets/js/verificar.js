@@ -190,6 +190,7 @@
         code: d.c || "",
         models: (d.m || []).join(" + "),
         mode: (d.y || []).map(typeLabel).join(" · "),
+        modeLabel: T("bp_types"),
         duration: "—",
         verifyUrl: verifyUrl(),
         checksum: d.h || "",
