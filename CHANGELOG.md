@@ -3,6 +3,24 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 El histórico detallado, con auditoría y pruebas, vive en `docs/notas/`.
 
+## [1.6.0] — 2026-10-30
+
+### Añadido
+
+- Resultado con **QR escaneable** al finalizar examen o estudio.
+- **Tarjeta PNG** con nombre, correo, puntaje, fecha, equipos, código y QR.
+- Página `resultado/` que lee el QR y muestra el resultado con verificación de checksum.
+- QR también incluido en el **informe PDF** de Android y en el informe web.
+- Compartición de PDF y PNG con la hoja del sistema; sin envío de correo ni servidores.
+- `version.json` 1.6.0 y aviso de actualización para 1.5.0.
+
+### Cambiado
+
+- Se retiraron los botones de envío por correo; el flujo ahora es QR/PDF/PNG.
+- Versión web/PWA/Android a `1.6.0`; `versionCode` 7.
+- Service Worker `factronics-tto-1.6.0`.
+- APK 1.6.0 con QR nativo y tarjeta PNG.
+
 ## [1.5.0] — 2026-10-30
 
 ### Añadido
@@ -85,6 +103,7 @@ El histórico detallado, con auditoría y pruebas, vive en `docs/notas/`.
 - Reanudar sesión, PWA offline, constancia imprimible e import/export JSON.
 - APK nativa 1.2.0 (`versionCode` 3) con tema oscuro y compartir resultado.
 
+[1.6.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.6.0
 [1.5.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.5.0
 [1.4.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.4.0
 [1.3.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/compare/v1.2.0...v1.3.0
