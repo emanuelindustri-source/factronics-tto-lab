@@ -276,7 +276,7 @@
       [d.t("cert_doc_date", "Fecha"), d.date],
       [d.t("cert_doc_code", "Código"), d.code],
       [d.t("cert_doc_models", "Equipos"), d.models],
-      [d.t("cert_doc_mode", "Modalidad"), d.mode],
+      [d.modeLabel || d.t("cert_doc_mode", "Modalidad"), d.mode],
       [d.t("cert_doc_duration", "Duración"), d.duration],
       [d.t("cert_doc_total", "Preguntas"), String(d.total)]
     ];
