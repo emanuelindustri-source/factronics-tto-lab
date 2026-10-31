@@ -25,7 +25,7 @@ Entrenamiento técnico para impresoras **Videojet TTO** (Thermal Transfer Overpr
 | Constancia de aprovechamiento imprimible | Sí |
 | Identificación del participante (nombre, apellido, correo) | Sí |
 | Informe A4 con logo, puntaje, desglose y detalle | Sí |
-| Envío del informe por correo con destinatarios precargados | Sí |
+| Resultado con QR escaneable + tarjeta PNG | S? |
 | Partículas y animaciones modernas (con movimiento reducido) | Sí |
 | Aplicación Android nativa (Java, sin WebView) | Sí |
 | APK firmado y descargable | Sí |
@@ -74,7 +74,7 @@ Características:
 - Constancia de aprovechamiento imprimible con código de referencia y aviso legal.
 - **Identificación del participante:** nombre, apellido y correo obligatorios antes de iniciar.
 - **Informe para el jefe:** documento A4 con logo, puntaje, desglose por tipo y detalle de preguntas.
-- **Envío por correo:** abre la app de correo con los destinatarios precargados; en Android adjunta el PDF.
+- **Resultado QR:** genera una tarjeta PNG y un QR que abre el resultado en el navegador, con nombre, correo, puntaje y desglose.
 - **Partículas y animaciones:** movimiento suave, contadores y revelado al hacer scroll, con respeto a `prefers-reduced-motion`.
 - Exportar/importar progreso en JSON entre perfiles y dispositivos.
 - Cronómetro, mapa de preguntas, marcado para revisar y navegación.
@@ -93,14 +93,14 @@ Características:
 - Guardado automático y **reanudar sesión** tras cerrar o reiniciar la app; durante el examen se puede **guardar y salir**.
 - Biblioteca de preguntas con búsqueda por texto, tipo y modelo, y **Mostrar más**.
 - Cantidad y duración personalizadas, además de los valores rápidos.
-- **Informe PDF A4** con logo, puntaje, desglose y detalle; se comparte con los destinatarios precargados y el PDF adjunto.
+- **Informe PDF A4** con logo, puntaje, desglose, detalle y QR; se comparte con la hoja del sistema. Tambi?n genera una tarjeta PNG con QR.
 - Tema claro/oscuro con detección del tema del sistema y botón de cambio.
 - Icono adaptativo para Android 8+.
 - Compartir resultado, exportar progreso por hoja de compartir e importar un JSON con `ACTION_OPEN_DOCUMENT`.
 - Cronómetro, mapa de preguntas, navegación, marcado para revisar y autoevaluación.
 - Banco local en `assets/bank.json` y textos en `assets/ui.json`.
 - Funciona sin conexión.
-- `minSdk 24` (Android 7.0), `targetSdk 34`, versión `1.5.0`.
+- `minSdk 24` (Android 7.0), `targetSdk 34`, versión `1.6.0`.
 
 ### Instalar el APK
 
@@ -124,18 +124,20 @@ El script usa `aapt2`, `javac`, `d8`, `zipalign` y `apksigner` directamente; no 
 
 Variables opcionales: `ANDROID_HOME` / `ANDROID_SDK_ROOT` y `JAVA_HOME`.
 
-## Novedades 1.5
+## Novedades 1.6
 
-- **22 preguntas nuevas** sobre ribbons (tipos, estructura, almacenamiento, P/N) y soportes OEM/universales (P/N 386659, 386660, 216368, 215965, 403250, SAR03044/45/46).
-- **Banco ampliado:** 350 preguntas y 326 enunciados únicos; el pool y la biblioteca se actualizan solos.
-- **Aviso de actualización web:** `version.json` se consulta al cargar y cada 15 minutos; si hay una versión más reciente aparece un aviso con “Actualizar”.
-- **Aviso de actualización Android:** comprobación cada 12 horas y botón “Buscar actualizaciones”; muestra las novedades y abre la descarga.
-- **Privacidad:** la APK solo usa INTERNET para leer `version.json`; no envía datos ni telemetría.
-- **Documentación:** ficha 1.5.0 y fuentes revisadas en `docs/versiones/` y `docs/notas/`.
+- **Resultado con QR:** al terminar el examen o el estudio se genera una tarjeta PNG y un QR que abre el resultado en el navegador.
+- **Datos en el QR:** nombre, apellido, correo, puntaje, fecha, equipos y desglose por tipo.
+- **Página de resultado:** `resultado/` muestra el informe escaneado y comprueba el checksum para detectar alteraciones accidentales.
+- **Informe PDF con QR:** el PDF para el jefe incluye el mismo QR y el código de referencia.
+- **Compartir sin correo:** el PDF y la tarjeta PNG se comparten con la hoja del sistema (WhatsApp, Drive, archivos, etc.). No se envían datos a servidores.
+- **Banco de 350 preguntas / 326 enunciados únicos**, con las 22 preguntas de ribbons y soportes de 1.5.
+- **Avisos de actualización** web y Android mediante `version.json`.
+- **Documentación:** ficha 1.6.0 y histórico en `docs/versiones/` y `docs/notas/`.
 
-La base de 1.4 (identificación, informe PDF, envío por correo, partículas y animaciones) se mantiene.
+La base de 1.4 y 1.5 (identificación, informe PDF, partículas, animaciones y preguntas de fuentes) se mantiene.
 
-> **Envío automático:** el proyecto es estático y no guarda credenciales. El correo se abre con todo preparado y el PDF adjunto en Android; el participante pulsa Enviar. Un envío totalmente automático requiere un backend o servicio de correo, documentado en `docs/notas/PENDIENTES.md`.
+> **Verificación:** el QR usa un checksum FNV-1a para detectar cambios accidentales; no es una firma criptográfica. Para una validación formal haría falta un backend o una firma con clave privada.
 
 ## Banco de preguntas
 
