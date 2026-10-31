@@ -1,0 +1,10 @@
+{
+  "version": "1.5.0",
+  "versionCode": 6,
+  "released": "2026-10-30",
+  "title": "Factronics TTO Lab 1.5.0",
+  "notes": "Nuevas preguntas de ribbons y soportes, identificación del participante, informe PDF y avisos de actualización.",
+  "apk": "https://github.com/emanuelindustri-source/factronics-tto-lab/releases/latest/download/Factronics-TTO-Lab.apk",
+  "release": "https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.5.0",
+  "web": "https://emanuelindustri-source.github.io/factronics-tto-lab/"
+}
