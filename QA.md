@@ -16,7 +16,7 @@ emulador Pixel 7 API 34, navegador Chromium integrado.
 | `ui.json` vs `i18n.js` | Idénticos |
 | `version.json` | Versión y `versionCode` coinciden con web/Android |
 | Enlaces, iconos, service worker | Todos los recursos existen |
-| APK | 177,5 KB · `versionCode 6` · SHA-256 `7902d17be8393a4d8a8eed55222095d4ec2f0cf45e8406bfbd0089ccc0d6e3a5` |
+| APK | 177,5 KB · `versionCode 6` · SHA-256 `74ec0217ceb62fefbd0032f74f2797c8d3483e1933fc1a7efad23bef8dcbf228` |
 | Secretos evidentes | Ninguno |
 
 ### Web
