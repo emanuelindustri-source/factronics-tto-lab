@@ -881,12 +881,15 @@ def main():
     bank.extend(build_calcs())
     bank.extend(build_errmap())
     bank.extend(extra_statics())
+    source_extra_path = ROOT / "data" / "source-extra.json"
+    if source_extra_path.exists():
+        bank.extend(json.loads(source_extra_path.read_text(encoding="utf-8")).get("questions", []))
 
     validate(bank)
 
     payload = {
-        "version": "2026.10.22",
-        "generated": "2026-10-22",
+        "version": "2026.10.30",
+        "generated": "2026-10-30",
         "models": MODELS,
         "questions": bank,
     }
