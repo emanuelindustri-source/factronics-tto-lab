@@ -9,7 +9,8 @@ la evidencia de lo que se entregó, cómo se probó y qué quedó pendiente.
 | 1.3.0 | 2026-10-30 | [v1.3.0.md](v1.3.0.md) | Histórica |
 | 1.4.0 | 2026-10-30 | [v1.4.0.md](v1.4.0.md) | Histórica |
 | 1.5.0 | 2026-10-30 | [v1.5.0.md](v1.5.0.md) | Histórica |
-| 1.6.0 | 2026-10-30 | [v1.6.0.md](v1.6.0.md) | Actual |
+| 1.6.0 | 2026-10-30 | [v1.6.0.md](v1.6.0.md) | Histórica |
+| 1.7.0 | 2026-10-31 | [v1.7.0.md](v1.7.0.md) | Actual |
 
 Detalle técnico y auditoría: `docs/notas/`.
 Cambios resumidos: `CHANGELOG.md`.
