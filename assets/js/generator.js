@@ -137,6 +137,16 @@
       const v = T(k);
       if (v !== undefined) el.setAttribute("aria-label", v);
     });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+      const k = el.getAttribute("data-i18n-placeholder");
+      const v = T(k);
+      if (v !== undefined) el.setAttribute("placeholder", v);
+    });
+    document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+      const k = el.getAttribute("data-i18n-title");
+      const v = T(k);
+      if (v !== undefined) el.setAttribute("title", v);
+    });
     document.querySelectorAll("[data-lang]").forEach((b) => {
       const on = b.getAttribute("data-lang") === state.lang;
       b.classList.toggle("on", on);
@@ -152,6 +162,67 @@
     return T(mode === "study" ? "mode_study" : mode === "review" ? "mode_review" : "mode_exam");
   }
   function progress() { return window.TTOProgress; }
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  function currentIdentity() {
+    const p = progress();
+    if (p && p.identity) return p.identity();
+    return { name: "", firstName: "", lastName: "", email: "", fullName: "" };
+  }
+  function studentInput(id) { return document.getElementById(id); }
+  function setStudentAlert(message, cls) {
+    const el = document.getElementById("studentAlert");
+    if (el) el.innerHTML = message ? `<div class="alert ${cls || "warn"}">${esc(message)}</div>` : "";
+  }
+  function fillStudentForm() {
+    const id = currentIdentity();
+    let first = id.firstName || "";
+    let last = id.lastName || "";
+    if (!first && !last && id.name && id.name !== (progress() && progress().DEFAULT_PROFILE)) {
+      const parts = id.name.split(/\s+/);
+      first = parts.shift() || "";
+      last = parts.join(" ");
+    }
+    const f = studentInput("studentFirst");
+    const l = studentInput("studentLast");
+    const e = studentInput("studentEmail");
+    if (f) f.value = first;
+    if (l) l.value = last;
+    if (e) e.value = id.email || "";
+  }
+  function ensureStudent() {
+    const f = studentInput("studentFirst");
+    const l = studentInput("studentLast");
+    const e = studentInput("studentEmail");
+    const firstName = f ? f.value.trim() : "";
+    const lastName = l ? l.value.trim() : "";
+    const email = e ? e.value.trim() : "";
+    if (!firstName || !lastName) {
+      setStudentAlert(T("student_required"));
+      (firstName ? l : f)?.focus();
+      return null;
+    }
+    if (!EMAIL_RE.test(email)) {
+      setStudentAlert(T("student_email_invalid"));
+      e?.focus();
+      return null;
+    }
+    const p = progress();
+    if (!p) { setStudentAlert(T("student_required")); return null; }
+    const identity = p.saveIdentity({ firstName: firstName, lastName: lastName, email: email });
+    setStudentAlert("");
+    renderProgressPanel();
+    return identity;
+  }
+  function saveStudentDraft() {
+    const f = studentInput("studentFirst");
+    const l = studentInput("studentLast");
+    const e = studentInput("studentEmail");
+    const p = progress();
+    if (!p || !f || !l || !e) return;
+    if (!f.value.trim() && !l.value.trim() && !e.value.trim()) return;
+    p.saveIdentity({ firstName: f.value, lastName: l.value, email: e.value });
+    renderProgressPanel();
+  }
   function poolFromIds(ids) {
     const out = [];
     const used = new Set();
@@ -310,6 +381,7 @@
   function renderSetup() {
     state.screen = "setup";
     applyStatic();
+    fillStudentForm();
     renderModePicks();
     renderModelPicks();
     renderTypePicks();
@@ -369,6 +441,8 @@
 
   /* --------------------------------------------------------------- exam */
   function newExam(poolOverride, modeOverride) {
+    const student = ensureStudent();
+    if (!student) return;
     const mode = modeOverride || state.config.mode || "exam";
     const isReview = mode === "review";
     const pool = poolOverride || buildPool();
@@ -694,6 +768,7 @@
     stopTimer();
     state.exam.submitted = true;
     state.exam.finishedAt = Date.now();
+    state.exam.student = currentIdentity();
     state.autoSubmitted = !!auto;
     state.exam.questions.forEach((it) => {
       seen[it.qid] = (seen[it.qid] || 0) + 1;
@@ -738,6 +813,9 @@
     if (state.autoSubmitted) sub += " · " + T("exam_time_up");
     if (r.pending > 0) sub += " · " + T("res_provisional");
     document.getElementById("resSubline").textContent = sub;
+    const student = currentIdentity();
+    const studentEl = document.getElementById("resStudent");
+    if (studentEl) studentEl.textContent = [student.fullName, student.email].filter(Boolean).join(" · ");
     const counts = r.rows.reduce((a, row) => {
       if (row.status === "ok") a.ok++;
       else if (row.status === "blank") a.blank++;
@@ -903,12 +981,13 @@
   function downloadCSV() {
     if (!state.exam) return;
     const r = state.result || scoreExam();
-    const head = ["#", "type", "models", "question", "your_answer", "correct_answer", "score", "status"];
+    const student = currentIdentity();
+    const head = ["#", "student", "email", "type", "models", "question", "your_answer", "correct_answer", "score", "status"];
     const lines = [head];
     r.rows.forEach((row) => {
       const q = row.q, d = row.d;
       lines.push([
-        row.idx + 1, q.type, q.models.join("|"), d.q,
+        row.idx + 1, student.fullName, student.email, q.type, q.models.join("|"), d.q,
         answerText(q, row.ans), correctText(q),
         row.grade === null ? "" : Math.round(row.grade * 100) / 100, row.status
       ]);
@@ -924,8 +1003,11 @@
   function copySummary() {
     if (!state.exam) return;
     const r = state.result || scoreExam();
+    const student = currentIdentity();
     const text = [
-      "Factronics TTO Lab", T("res_title") + ": " + Math.round(r.percent) + "%",
+      "Factronics TTO Lab",
+      `${student.fullName} · ${student.email}`,
+      T("res_title") + ": " + Math.round(r.percent) + "%",
       `${fmtNum(Math.round(r.points * 100) / 100)} / ${r.total} ${T("res_points")}`,
       `${T("bp_models")}: ${state.exam.models.join(" + ")}`,
       `${T("res_date")}: ${formatDate(state.exam.finishedAt || Date.now())}`
@@ -1090,13 +1172,166 @@
     search.focus();
   }
 
+  /* --------------------------------------------------------------- report */
+  const REPORT_TO = "khristyan.hidalgo@factronics.com.ve,emanuel.industri@gmail.com";
+  function reportCode() {
+    const stamp = (state.exam && (state.exam.finishedAt || state.exam.startedAt)) || Date.now();
+    const r = state.result || scoreExam();
+    return "REF-" + stamp.toString(36).toUpperCase().slice(-6) + "-" + Math.round(r.percent);
+  }
+  function reportData() {
+    const r = state.result || scoreExam();
+    const student = (state.exam && state.exam.student) || currentIdentity();
+    const percent = Math.round(r.percent);
+    const passed = percent >= PASS;
+    const duration = state.exam ? formatClock(Math.max(0, Math.round(((state.exam.finishedAt || Date.now()) - (state.exam.startedAt || Date.now())) / 1000))) : "00:00";
+    const code = reportCode();
+    const counts = r.rows.reduce((a, row) => {
+      if (row.status === "ok") a.ok++;
+      else if (row.status === "blank") a.blank++;
+      else if (row.status === "pending") a.pending++;
+      else a.bad++;
+      return a;
+    }, { ok: 0, bad: 0, blank: 0, pending: 0 });
+    return { r, student, percent, passed, duration, code, counts };
+  }
+  function reportMailto(data) {
+    const d = data || reportData();
+    const subject = T("report_email_subject")
+      .replace("{name}", d.student.fullName || d.student.name || "")
+      .replace("{score}", String(d.percent));
+    const body = T("report_email_body")
+      .replace("{name}", d.student.fullName || d.student.name || "")
+      .replace("{email}", d.student.email || "")
+      .replace("{score}", String(d.percent))
+      .replace("{models}", (state.exam ? state.exam.models : []).join(" + "))
+      .replace("{date}", formatDate(state.exam && (state.exam.finishedAt || state.exam.startedAt) || Date.now()))
+      .replace("{code}", d.code);
+    return "mailto:" + REPORT_TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body + "\n\n" + T("report_attach_note"));
+  }
+  function openEmail() {
+    if (!state.exam) { notify(T("report_no_data"), "warn"); return; }
+    const data = reportData();
+    window.location.href = reportMailto(data);
+    notify(T("report_sent"), "ok");
+  }
+  function reportStatusLabel(status) {
+    if (status === "ok") return T("res_correct_answer");
+    if (status === "blank") return T("res_no_answer");
+    if (status === "pending") return T("res_pending");
+    if (status === "half") return T("res_partial");
+    return T("res_wrong");
+  }
+  function openReport() {
+    if (!state.exam) { notify(T("report_no_data"), "warn"); return; }
+    const { r, student, percent, passed, duration, code, counts } = reportData();
+    const win = window.open("", "_blank");
+    if (!win) { notify(T("cert_blocked"), "warn"); return; }
+    const logo = new URL("../assets/img/factronics-transparent.png", location.href).href;
+    const date = formatDate(state.exam.finishedAt || Date.now());
+    const mode = modeLabel(state.exam.mode);
+    const models = state.exam.models.join(" + ");
+    const breakdown = TYPE_ORDER.filter((t) => r.byType[t]).map((t) => {
+      const x = r.byType[t];
+      const pct = x.total ? Math.round((x.points / x.total) * 100) : 0;
+      return `<div class="bd"><span>${esc(typeLabel(t))}</span><div class="bar"><i style="width:${pct}%"></i></div><b>${pct}%</b></div>`;
+    }).join("");
+    const detail = r.rows.map((row, i) => {
+      const badge = row.status === "ok" ? "ok" : row.status === "pending" || row.status === "half" ? "warn" : "bad";
+      const q = row.q, d = row.d;
+      return `<tr>
+        <td class="num">${i + 1}</td>
+        <td>${esc(typeLabel(q.type))}</td>
+        <td class="q">${esc(d.q)}</td>
+        <td>${esc(answerText(q, row.ans))}</td>
+        <td>${q.type === "describe" || q.type === "errorfix" ? "—" : esc(correctText(q))}</td>
+        <td><span class="badge ${badge}">${esc(reportStatusLabel(row.status))}</span></td>
+        <td class="num">${row.grade == null ? "—" : fmtNum(Math.round(row.grade * 100) / 100)}</td>
+      </tr>`;
+    }).join("");
+    const html = `<!DOCTYPE html><html lang="${esc(state.lang)}"><head><meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>${esc(T("report_title"))} · ${esc(student.fullName || student.name)}</title>
+      <style>
+        :root{--brand:#0b5cab;--cyan:#00a3e0;--ink:#0a1b2c;--ink2:#2f465c;--mut:#647d93;--line:#d8e4ef;--ok:#0b7a58;--bad:#b3261e;--warn:#a35a00;--soft:#f3f8fd}
+        *{box-sizing:border-box}body{margin:0;background:#eaf2fa;color:var(--ink);font-family:"Segoe UI",Arial,sans-serif;line-height:1.45;padding:22px}
+        .sheet{max-width:210mm;margin:0 auto;background:#fff;border:1px solid #d8e4ef;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px -30px rgba(6,40,70,.45)}
+        .top{background:linear-gradient(120deg,#072a49,#0b5cab 60%,#00a3e0);color:#fff;padding:22px 26px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+        .brand{display:flex;align-items:center;gap:14px}.brand img{height:38px;background:#fff;border-radius:8px;padding:5px 8px;object-fit:contain}
+        .brand b{display:block;font-size:17px;letter-spacing:-.02em}.brand span{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#bfe5f8}
+        .top-right{text-align:right;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#bfe5f8}.top-right b{display:block;font-size:12px;color:#fff;letter-spacing:0}
+        .body{padding:24px 26px 20px}
+        .student{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line);padding-bottom:16px}
+        .student h2{margin:0;font-size:22px;letter-spacing:-.03em}.student p{margin:3px 0 0;color:var(--mut);font-size:12px}
+        .meta{text-align:right;font-size:11px;color:var(--mut)}.meta b{display:block;color:var(--ink);font-size:12px}
+        .score{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:center;margin:20px 0 0}
+        .dial{width:132px;height:132px;border-radius:50%;background:conic-gradient(${passed ? "#0b7a58" : "#b3261e"} ${percent}%,#e4eef7 0);display:grid;place-items:center;position:relative}
+        .dial:before{content:"";position:absolute;inset:10px;background:#fff;border-radius:50%}.dial b{position:relative;font-size:30px;letter-spacing:-.05em}
+        .score-info h3{margin:0;font-size:22px;letter-spacing:-.03em}.score-info p{margin:5px 0 0;color:var(--ink2);font-size:12px}
+        .pill{display:inline-block;margin-top:8px;padding:5px 10px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:${passed ? "#e3f6ee" : "#fdeceb"};color:${passed ? "#0b7a58" : "#b3261e"}}
+        .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:18px}
+        .stat{background:var(--soft);border:1px solid var(--line);border-radius:9px;padding:9px 10px}.stat b{display:block;font-size:18px}.stat span{display:block;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:700;margin-top:2px}
+        h4{margin:24px 0 8px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand)}
+        .bd{display:grid;grid-template-columns:170px 1fr 46px;gap:10px;align-items:center;font-size:10px;margin:6px 0}.bar{height:7px;background:#e4eef7;border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--cyan));border-radius:6px}.bd b{text-align:right;font-family:Consolas,monospace;font-size:9px}
+        .chips{display:flex;gap:5px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:var(--soft);color:var(--ink2);border-radius:999px;padding:3px 8px;font-size:9px;font-weight:700}
+        table{width:100%;border-collapse:collapse;font-size:8.5px;margin-top:6px}th{background:#eef5fb;color:var(--ink2);text-align:left;font-size:8px;letter-spacing:.05em;text-transform:uppercase;padding:6px 5px;border-bottom:1px solid var(--line)}td{padding:5px;border-bottom:1px solid #edf3f8;vertical-align:top}.q{min-width:120px}.num{text-align:center;font-family:Consolas,monospace;color:var(--mut)}
+        .badge{display:inline-block;padding:2px 5px;border-radius:4px;font-size:7.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}.badge.ok{background:#e3f6ee;color:#0b7a58}.badge.bad{background:#fdeceb;color:#b3261e}.badge.warn{background:#fff2dc;color:#a35a00}
+        .foot{display:flex;justify-content:space-between;gap:20px;margin-top:22px;padding-top:12px;border-top:1px solid var(--line);font-size:8.5px;color:var(--mut)}
+        .sign{text-align:center;min-width:180px}.sign i{display:block;border-top:1px solid #8fa9c0;margin-bottom:5px}
+        .actions{max-width:210mm;margin:0 auto 14px;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+        .actions a,.actions button{border:0;border-radius:8px;padding:10px 14px;font:inherit;font-weight:700;font-size:11px;cursor:pointer;text-decoration:none}
+        .actions .primary{background:#0b5cab;color:#fff}.actions .ghost{background:#fff;color:#0b5cab;border:1px solid #c2d3e3}
+        .actions .hint{font-size:10px;color:#647d93;align-self:center;margin-left:4px}
+        @media print{body{background:#fff;padding:0}.actions{display:none}.sheet{box-shadow:none;border:0;border-radius:0;max-width:none}.top{-webkit-print-color-adjust:exact;print-color-adjust:exact}.badge,.bar i,.dial{-webkit-print-color-adjust:exact;print-color-adjust:exact}.foot{page-break-inside:avoid}tr{page-break-inside:avoid}}
+      </style></head><body>
+      <div class="actions no-print">
+        <button class="primary" onclick="window.print()">${esc(T("report_download"))}</button>
+        <a class="ghost" href="${esc(reportMailto({ r, student, percent, passed, duration, code }))}">${esc(T("report_send"))}</a>
+        <span class="hint">${esc(T("report_attach_note"))}</span>
+      </div>
+      <section class="sheet">
+        <header class="top">
+          <div class="brand"><img src="${esc(logo)}" alt="Factronics"><div><b>Factronics TTO Lab</b><span>${esc(T("report_subtitle"))}</span></div></div>
+          <div class="top-right"><b>${esc(T("report_title"))}</b>${esc(code)}<br>${esc(date)}</div>
+        </header>
+        <div class="body">
+          <div class="student">
+            <div><h2>${esc(student.fullName || student.name)}</h2><p>${esc(student.email || "—")}</p><p>${esc(T("report_student"))}</p></div>
+            <div class="meta"><b>${esc(mode)}</b>${esc(models)}<br>${esc(T("report_duration"))}: ${esc(duration)}</div>
+          </div>
+          <div class="score">
+            <div class="dial"><b>${percent}%</b></div>
+            <div class="score-info"><h3>${esc(passed ? T("res_pass") : T("res_fail"))}</h3><p>${esc(T("report_score"))}: ${fmtNum(Math.round(r.points * 100) / 100)} / ${r.total} ${esc(T("res_points"))}</p><span class="pill">${esc(r.pending > 0 ? T("res_pending") : passed ? T("res_pass") : T("res_fail"))}</span></div>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>${counts.ok}</b><span>${esc(T("res_filter_ok"))}</span></div>
+            <div class="stat"><b>${counts.bad}</b><span>${esc(T("res_filter_bad"))}</span></div>
+            <div class="stat"><b>${counts.blank}</b><span>${esc(T("res_filter_blank"))}</span></div>
+            <div class="stat"><b>${counts.pending}</b><span>${esc(T("res_pending"))}</span></div>
+            <div class="stat"><b>${r.total}</b><span>${esc(T("report_total"))}</span></div>
+          </div>
+          <h4>${esc(T("report_breakdown"))}</h4>${breakdown}
+          <h4>${esc(T("report_models"))}</h4><div class="chips">${state.exam.models.map((m) => `<span class="chip">${esc(m)}</span>`).join("")}</div>
+          <h4>${esc(T("report_details"))}</h4>
+          <table><thead><tr><th>#</th><th>${esc(T("report_type"))}</th><th>${esc(T("report_question"))}</th><th>${esc(T("report_answer"))}</th><th>${esc(T("report_correct"))}</th><th>${esc(T("report_status"))}</th><th>${esc(T("report_points"))}</th></tr></thead><tbody>${detail}</tbody></table>
+          <div class="foot"><div>${esc(T("report_footer"))}<br><b>${esc(T("report_code"))}:</b> ${esc(code)}</div><div class="sign"><i></i>${esc(T("report_signature"))}</div></div>
+        </div>
+      </section></body></html>`;
+    win.document.open();
+    win.document.write(html);
+    win.document.close();
+    win.focus();
+  }
+
   /* ----------------------------------------------------------- certificate */
   function openCertificate() {
     if (!state.exam) return;
     const r = state.result || scoreExam();
     const percent = Math.round(r.percent);
     const p = progress();
-    const name = p ? p.activeName() : "";
+    const identity = p && p.identity ? p.identity() : { fullName: "", email: "" };
+    const name = identity.fullName || "";
+    const email = identity.email || "";
     const passed = percent >= PASS;
     const code = "REF-" + (state.exam.finishedAt || Date.now()).toString(36).toUpperCase().slice(-6) + "-" + percent;
     const logo = new URL("../assets/img/factronics-transparent.png", location.href).href;
@@ -1132,6 +1367,7 @@
         <p class="sub">${esc(passed ? T("res_pass") : T("cert_participation"))}</p>
         <div class="body">${esc(T("cert_body"))}</div>
         <div class="name">${esc(name)}</div>
+        <p class="body">${esc(email)}</p>
         <p class="body">${esc(state.exam.models.join(" + "))} · ${esc(modeLabel(state.exam.mode))}</p>
         <div class="stats">
           <div class="stat"><b>${percent}%</b><span>${esc(T("cert_score"))}</span></div>
@@ -1245,8 +1481,12 @@
       retryExam();
     } else if (a === "new") {
       state.exam = null; state.result = null; localStorage.removeItem("tto.exam.v1"); showScreen("setup");
+    } else if (a === "report") {
+      openReport();
+    } else if (a === "email") {
+      openEmail();
     } else if (a === "print") {
-      window.print();
+      openReport();
     } else if (a === "csv") {
       downloadCSV();
     } else if (a === "copy") {
@@ -1287,6 +1527,11 @@
   });
 
   document.addEventListener("change", (e) => {
+    if (["studentFirst", "studentLast", "studentEmail"].includes(e.target.id)) {
+      setStudentAlert("");
+      saveStudentDraft();
+      return;
+    }
     if (e.target.id === "importFile") {
       const file = e.target.files && e.target.files[0];
       e.target.value = "";
@@ -1386,6 +1631,10 @@
   });
 
   document.addEventListener("input", (e) => {
+    if (["studentFirst", "studentLast", "studentEmail"].includes(e.target.id)) {
+      setStudentAlert("");
+      return;
+    }
     if (e.target.id === "countCustom") {
       const n = parseInt(e.target.value, 10);
       if (n >= 5 && n <= 100) { state.config.count = n; saveConfig(); updateSummary(); }
