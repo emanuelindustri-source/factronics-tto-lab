@@ -833,9 +833,9 @@ details.faq p { margin: 10px 0 0; color: var(--ink-2); font-size: .8rem; line-he
 .doc-ico.csv { background: #5b6b7a; }
 .doc-copy b { display: block; font-size: .8rem; letter-spacing: -.01em; }
 .doc-copy small { display: block; color: var(--ink-3); font-size: .66rem; line-height: 1.35; margin-top: 1px; }
-.res-verify { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 14px; align-items: center; margin-top: 14px; padding: 14px; border: 1px dashed color-mix(in srgb, var(--brand) 35%, var(--line)); border-radius: 14px; background: color-mix(in srgb, var(--brand) 5%, var(--surface-2)); }
+.res-verify { display: grid; grid-template-columns: 176px minmax(0, 1fr); gap: 14px; align-items: center; margin-top: 14px; padding: 14px; border: 1px dashed color-mix(in srgb, var(--brand) 35%, var(--line)); border-radius: 14px; background: color-mix(in srgb, var(--brand) 5%, var(--surface-2)); }
 .res-verify[hidden] { display: none; }
-.res-verify-qr img { display: block; width: 132px; height: 132px; border: 1px solid var(--line); border-radius: 10px; background: #fff; padding: 4px; }
+.res-verify-qr img { display: block; width: 168px; height: 168px; border: 1px solid var(--line); border-radius: 10px; background: #fff; padding: 4px; }
 .res-verify-kicker { font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); font-weight: 800; }
 .res-code { display: block; font-family: Consolas, "Courier New", monospace; font-size: 1.02rem; letter-spacing: .04em; margin: 2px 0 5px; color: var(--ink); }
 .res-verify-copy p { margin: 0 0 9px; font-size: .74rem; color: var(--ink-3); line-height: 1.45; }
@@ -849,7 +849,7 @@ details.faq p { margin: 10px 0 0; color: var(--ink-2); font-size: .8rem; line-he
 @media (max-width: 640px) {
   .res-docs { grid-template-columns: 1fr; }
   .res-verify { grid-template-columns: 1fr; justify-items: start; }
-  .res-verify-qr img { width: 112px; height: 112px; }
+  .res-verify-qr img { width: 150px; height: 150px; }
   .verify-cta .panel { flex-direction: column; align-items: flex-start; }
 }
 
@@ -888,7 +888,7 @@ details.faq p { margin: 10px 0 0; color: var(--ink-2); font-size: .8rem; line-he
 .verify-fact span { display: block; font-size: .62rem; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); font-weight: 800; }
 .verify-fact b { display: block; font-size: .8rem; margin-top: 2px; overflow-wrap: anywhere; }
 .verify-qr { display: flex; align-items: center; gap: 16px; margin-top: 20px; padding: 14px; border: 1px dashed color-mix(in srgb, var(--brand) 35%, var(--line)); border-radius: 14px; background: color-mix(in srgb, var(--brand) 4%, var(--surface-2)); }
-.verify-qr img { display: block; width: 150px; height: 150px; background: #fff; border-radius: 9px; padding: 4px; border: 1px solid var(--line); flex: 0 0 auto; }
+.verify-qr img { display: block; width: 220px; height: 220px; background: #fff; border-radius: 9px; padding: 4px; border: 1px solid var(--line); flex: 0 0 auto; }
 .verify-qr b { display: block; font-size: .86rem; }
 .verify-qr span { display: block; font-size: .66rem; color: var(--ink-3); word-break: break-all; max-width: 560px; margin-top: 2px; }
 .verify-qr code { display: inline-block; margin-top: 7px; font-family: Consolas, monospace; font-size: .78rem; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 3px 7px; }
