@@ -834,6 +834,7 @@
     renderBreakdown(r);
     renderSelf();
     renderReview();
+    renderResultVerify(r);
   }
   function renderBreakdown(r) {
     const el = document.getElementById("breakdown");
@@ -1228,100 +1229,103 @@
     if (status === "half") return T("res_partial");
     return T("res_wrong");
   }
-  function downloadQrCard() {
-    if (!state.exam) { notify(T("report_no_data"), "warn"); return; }
-    if (!window.TTOResult) { notify(T("qr_invalid"), "warn"); return; }
-    const { r, student, percent, passed, code } = reportData();
+  async function documentData() {
+    const { r, student, percent, passed, duration, code } = reportData();
     const payload = reportPayload(r, student, code);
-    if (!payload) { notify(T("qr_invalid"), "warn"); return; }
-    const resultUrl = window.TTOResult.resultUrl(payload);
-    const qrSrc = window.TTOResult.qrDataUrl(resultUrl, 420);
-    if (!qrSrc) { notify(T("qr_invalid"), "warn"); return; }
-    const canvas = document.createElement("canvas");
-    canvas.width = 1080;
-    canvas.height = 1350;
-    const ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#f3f7fb";
-    ctx.fillRect(0, 0, 1080, 1350);
-    const gradient = ctx.createLinearGradient(0, 0, 1080, 0);
-    gradient.addColorStop(0, "#072a49");
-    gradient.addColorStop(0.6, "#0b5cab");
-    gradient.addColorStop(1, "#00a3e0");
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 1080, 280);
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "800 38px Segoe UI, Arial, sans-serif";
-    ctx.fillText("FACTRONICS TTO LAB", 60, 105);
-    ctx.font = "600 22px Segoe UI, Arial, sans-serif";
-    ctx.fillStyle = "#c8e8fa";
-    ctx.fillText(T("report_subtitle"), 60, 142);
-    ctx.font = "800 44px Segoe UI, Arial, sans-serif";
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText(T("qr_title"), 60, 220);
-    ctx.fillStyle = "#ffffff";
-    ctx.beginPath();
-    ctx.roundRect(40, 240, 1000, 1040, 24);
-    ctx.fill();
-    ctx.fillStyle = "#0a1b2c";
-    ctx.font = "800 56px Segoe UI, Arial, sans-serif";
-    ctx.fillText(student.fullName || student.name || "—", 90, 340);
-    ctx.fillStyle = "#556b7e";
-    ctx.font = "400 26px Segoe UI, Arial, sans-serif";
-    ctx.fillText(student.email || "—", 90, 392);
-    ctx.fillStyle = passed ? "#0b7a58" : "#b3261e";
-    ctx.font = "800 120px Segoe UI, Arial, sans-serif";
-    ctx.fillText(percent + "%", 86, 545);
-    ctx.fillStyle = "#0a1b2c";
-    ctx.font = "800 34px Segoe UI, Arial, sans-serif";
-    ctx.fillText(passed ? T("res_pass") : T("res_fail"), 92, 610);
-    ctx.fillStyle = "#556b7e";
-    ctx.font = "400 24px Segoe UI, Arial, sans-serif";
-    ctx.fillText(`${fmtNum(Math.round(r.points * 100) / 100)} / ${r.total} ${T("res_points")}`, 92, 654);
-    ctx.fillText(`${T("report_date")}: ${formatDate(state.exam.finishedAt || Date.now())}`, 92, 704);
-    ctx.fillText(`${T("report_models")}: ${(state.exam.models || []).join(" + ")}`, 92, 744);
-    ctx.fillText(`${T("report_code")}: ${code}`, 92, 784);
-    const qr = new Image();
-    qr.onload = () => {
-      ctx.drawImage(qr, 620, 380, 330, 330);
-      ctx.fillStyle = "#0a1b2c";
-      ctx.font = "700 22px Segoe UI, Arial, sans-serif";
-      ctx.fillText(T("qr_scan"), 620, 750);
-      ctx.fillStyle = "#556b7e";
-      ctx.font = "400 15px Segoe UI, Arial, sans-serif";
-      ctx.fillText(truncate(resultUrl.replace(/^https?:\/\//, ""), 50), 620, 780);
-      ctx.strokeStyle = "#d8e4ef";
-      ctx.beginPath();
-      ctx.moveTo(90, 840);
-      ctx.lineTo(990, 840);
-      ctx.stroke();
-      ctx.fillStyle = "#0b7a58";
-      ctx.font = "800 24px Segoe UI, Arial, sans-serif";
-      ctx.fillText(T("qr_integrity_ok"), 90, 890);
-      ctx.fillStyle = "#556b7e";
-      ctx.font = "400 20px Segoe UI, Arial, sans-serif";
-      ctx.fillText(T("report_footer"), 90, 1200, 900);
-      canvas.toBlob((blob) => {
-        if (!blob) { notify(T("qr_invalid"), "warn"); return; }
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "Factronics-TTO-Lab-QR-" + (student.fullName || "resultado").replace(/[^a-zA-Z0-9]+/g, "-") + ".png";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 2000);
-        notify(T("qr_download"), "ok");
-      }, "image/png");
+    const verifyUrl = payload && window.TTOResult ? window.TTOResult.verifyUrl(payload) : "";
+    let fingerprint = "";
+    if (payload && window.TTOResult && window.TTOResult.fingerprint) {
+      try { fingerprint = await window.TTOResult.fingerprint(payload); } catch (e) { fingerprint = ""; }
+    }
+    return {
+      name: student.fullName || student.name || "",
+      email: student.email || "",
+      score: percent,
+      points: fmtNum(Math.round(r.points * 100) / 100),
+      total: r.total,
+      passed: passed,
+      date: formatDate(state.exam.finishedAt || Date.now()),
+      code: code,
+      models: (state.exam.models || []).join(" + "),
+      mode: modeLabel(state.exam.mode),
+      duration: duration,
+      verifyUrl: verifyUrl,
+      checksum: payload ? payload.h : "",
+      fingerprint: fingerprint,
+      lang: state.lang,
+      logoUrl: new URL("../assets/img/factronics-transparent.png", location.href).href,
+      appVersion: (document.querySelector('meta[name="app-version"]') || {}).content || ""
     };
-    qr.onerror = () => notify(T("qr_invalid"), "warn");
-    qr.src = qrSrc;
   }
+
+  async function downloadCertificate(kind) {
+    if (!state.exam) { notify(T("report_no_data"), "warn"); return; }
+    if (!window.TTOCert || !window.TTOResult) { notify(T("qr_invalid"), "warn"); return; }
+    try {
+      const data = await documentData();
+      if (!data.verifyUrl) { notify(T("qr_invalid"), "warn"); return; }
+      const canvas = await window.TTOCert.render(kind === "cert" ? "cert" : "card", data);
+      const ok = await window.TTOCert.download(canvas, window.TTOCert.filename(data, kind));
+      notify(ok ? (kind === "cert" ? T("cert_png_done") : T("qr_download")) : T("qr_invalid"), ok ? "ok" : "warn");
+    } catch (e) {
+      notify(T("qr_invalid"), "warn");
+    }
+  }
+
+  function downloadQrCard() {
+    downloadCertificate("card");
+  }
+
+  function resultVerifyUrl() {
+    if (!state.exam) return "";
+    const r = state.result || scoreExam();
+    const student = state.exam.student || currentIdentity();
+    const payload = reportPayload(r, student, reportCode());
+    return payload && window.TTOResult ? window.TTOResult.verifyUrl(payload) : "";
+  }
+
+  function renderResultVerify(r) {
+    const panel = document.getElementById("resVerify");
+    if (!panel || !state.exam || !window.TTOResult) return;
+    const payload = reportPayload(r, state.exam.student || currentIdentity(), reportCode());
+    const url = payload ? window.TTOResult.verifyUrl(payload) : "";
+    const qr = url ? window.TTOResult.qrDataUrl(url, 260) : "";
+    const img = document.getElementById("resQr");
+    if (img && qr) img.src = qr;
+    const code = document.getElementById("resCode");
+    if (code) code.textContent = reportCode();
+    panel.hidden = !(url && qr);
+  }
+
+  function openVerification() {
+    const url = resultVerifyUrl();
+    if (url) window.open(url, "_blank", "noopener");
+  }
+
+  function copyVerifyLink() {
+    const url = resultVerifyUrl();
+    if (!url) return;
+    const done = () => notify(T("verify_copied"), "ok");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done).catch(done);
+    } else {
+      const ta = document.createElement("textarea");
+      ta.value = url;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch (e) { /* ignore */ }
+      ta.remove();
+      done();
+    }
+  }
+
   function openReport() {
     if (!state.exam) { notify(T("report_no_data"), "warn"); return; }
     const { r, student, percent, passed, duration, code, counts, breakdown } = reportData();
     const payload = reportPayload(r, student, code);
-    const resultUrl = payload && window.TTOResult ? window.TTOResult.resultUrl(payload) : "";
-    const qrSrc = resultUrl && window.TTOResult ? window.TTOResult.qrDataUrl(resultUrl, 220) : "";
+    const verifyUrl = payload && window.TTOResult ? window.TTOResult.verifyUrl(payload) : "";
+    const qrSrc = verifyUrl && window.TTOResult ? window.TTOResult.qrDataUrl(verifyUrl, 240) : "";
+    const codeQr = verifyUrl && window.TTOResult ? window.TTOResult.qrDataUrl(verifyUrl, 120) : "";
     const win = window.open("", "_blank");
     if (!win) { notify(T("cert_blocked"), "warn"); return; }
     const logo = new URL("../assets/img/factronics-transparent.png", location.href).href;
@@ -1376,6 +1380,7 @@
         .qr-box{display:flex;align-items:center;gap:14px;margin:18px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--soft);break-inside:avoid}
         .qr-box img{border-radius:4px;background:#fff}.qr-box b{display:block;font-size:10px}.qr-box span{display:block;font-size:7px;color:var(--mut);word-break:break-all;max-width:360px}
         .foot{display:flex;justify-content:space-between;gap:20px;margin-top:22px;padding-top:12px;border-top:1px solid var(--line);font-size:8.5px;color:var(--mut)}
+        .code-foot{display:flex;align-items:center;gap:10px}.code-qr{background:#fff;border:1px solid var(--line);border-radius:4px;padding:2px}
         .sign{text-align:center;min-width:180px}.sign i{display:block;border-top:1px solid #8fa9c0;margin-bottom:5px}
         .actions{max-width:210mm;margin:0 auto 14px;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
         .actions a,.actions button{border:0;border-radius:8px;padding:10px 14px;font:inherit;font-weight:700;font-size:11px;cursor:pointer;text-decoration:none}
@@ -1385,7 +1390,7 @@
       </style></head><body>
       <div class="actions no-print">
         <button class="primary" onclick="window.print()">${esc(T("report_download"))}</button>
-        ${resultUrl ? `<a class="ghost" href="${esc(resultUrl)}" target="_blank" rel="noopener">${esc(T("qr_card"))}</a>` : ""}
+        ${verifyUrl ? `<a class="ghost" href="${esc(verifyUrl)}" target="_blank" rel="noopener">${esc(T("verify_open"))}</a>` : ""}
         <span class="hint">${esc(T("qr_scan"))}</span>
       </div>
       <section class="sheet">
@@ -1409,12 +1414,12 @@
             <div class="stat"><b>${counts.pending}</b><span>${esc(T("res_pending"))}</span></div>
             <div class="stat"><b>${r.total}</b><span>${esc(T("report_total"))}</span></div>
           </div>
-          ${qrSrc ? `<div class="qr-box"><img src="${qrSrc}" width="150" height="150" alt="QR"><div><b>${esc(T("qr_scan"))}</b><span>${esc(resultUrl)}</span></div></div>` : ""}
+          ${qrSrc ? `<div class="qr-box"><img src="${qrSrc}" width="150" height="150" alt="QR"><div><b>${esc(T("qr_scan"))}</b><span>${esc(verifyUrl)}</span></div></div>` : ""}
           <h4>${esc(T("report_breakdown"))}</h4>${breakdownHtml}
           <h4>${esc(T("report_models"))}</h4><div class="chips">${state.exam.models.map((m) => `<span class="chip">${esc(m)}</span>`).join("")}</div>
           <h4>${esc(T("report_details"))}</h4>
           <table><thead><tr><th>#</th><th>${esc(T("report_type"))}</th><th>${esc(T("report_question"))}</th><th>${esc(T("report_answer"))}</th><th>${esc(T("report_correct"))}</th><th>${esc(T("report_status"))}</th><th>${esc(T("report_points"))}</th></tr></thead><tbody>${detail}</tbody></table>
-          <div class="foot"><div>${esc(T("report_footer"))}<br><b>${esc(T("report_code"))}:</b> ${esc(code)}</div><div class="sign"><i></i>${esc(T("report_signature"))}</div></div>
+          <div class="foot"><div class="code-foot">${codeQr ? `<img class="code-qr" src="${codeQr}" width="62" height="62" alt="QR">` : ""}<div>${esc(T("report_footer"))}<br><b>${esc(T("report_code"))}:</b> ${esc(code)}</div></div><div class="sign"><i></i>${esc(T("report_signature"))}</div></div>
         </div>
       </section></body></html>`;
     win.document.open();
@@ -1426,21 +1431,19 @@
   /* ----------------------------------------------------------- certificate */
   function openCertificate() {
     if (!state.exam) return;
-    const r = state.result || scoreExam();
-    const percent = Math.round(r.percent);
-    const p = progress();
-    const identity = p && p.identity ? p.identity() : { fullName: "", email: "" };
-    const name = identity.fullName || "";
-    const email = identity.email || "";
-    const passed = percent >= PASS;
-    const code = "REF-" + (state.exam.finishedAt || Date.now()).toString(36).toUpperCase().slice(-6) + "-" + percent;
+    const { r, student, percent, passed, code } = reportData();
+    const name = student.fullName || student.name || "";
+    const email = student.email || "";
+    const payload = reportPayload(r, student, code);
+    const verifyUrl = payload && window.TTOResult ? window.TTOResult.verifyUrl(payload) : "";
+    const qrSrc = verifyUrl && window.TTOResult ? window.TTOResult.qrDataUrl(verifyUrl, 220) : "";
     const logo = new URL("../assets/img/factronics-transparent.png", location.href).href;
     const win = window.open("", "_blank");
     if (!win) { notify(T("cert_blocked"), "warn"); return; }
     const html = `<!DOCTYPE html><html lang="${esc(state.lang)}"><head><meta charset="utf-8"><title>${esc(T("cert_title"))} · Factronics TTO Lab</title>
       <style>
         @page{size:A4 landscape;margin:0}*{box-sizing:border-box}
-        body{margin:0;background:#e9f1f8;font-family:Segoe UI,Arial,sans-serif;color:#0a1b2c;padding:24px}
+        body{margin:0;background:#e9f1f8;font-family:"Segoe UI",Arial,sans-serif;color:#0a1b2c;padding:24px}
         .cert{position:relative;max-width:1050px;min-height:650px;margin:0 auto;background:#fff;border:1px solid #d8e4ef;border-top:12px solid #0b5cab;padding:46px 58px;border-radius:8px;overflow:hidden}
         .cert:after{content:"";position:absolute;right:-140px;bottom:-170px;width:430px;height:430px;border-radius:50%;background:radial-gradient(circle,#dff2fd 0,#dff2fd 46%,transparent 47%)}
         .top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;position:relative;z-index:1}
@@ -1454,9 +1457,11 @@
         .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 0;max-width:760px;position:relative;z-index:1}
         .stat{background:#f3f9fd;border:1px solid #d8e4ef;border-radius:10px;padding:12px 14px}
         .stat b{display:block;font-size:22px;color:#0a1b2c}.stat span{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#647d93}
-        .foot{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-top:46px;position:relative;z-index:1}
+        .foot{display:flex;justify-content:space-between;gap:26px;align-items:flex-end;margin-top:40px;position:relative;z-index:1}
         .code{font-family:Consolas,monospace;font-size:12px;color:#2f465c;background:#f3f9fd;border:1px dashed #bfd5e5;padding:8px 10px;border-radius:6px}
-        .legal{max-width:570px;font-size:10px;line-height:1.5;color:#647d93}
+        .legal{max-width:480px;font-size:10px;line-height:1.5;color:#647d93}
+        .qrblock{text-align:center;font-size:9px;line-height:1.45;color:#647d93;max-width:150px}
+        .qrblock img{display:block;margin:0 auto 6px;width:118px;height:118px;background:#fff;border:1px solid #d8e4ef;border-radius:6px;padding:4px}
         .print{margin:22px auto 0;display:block;background:#0b5cab;color:#fff;border:0;border-radius:10px;padding:12px 22px;font:inherit;font-weight:700;cursor:pointer}
         @media print{body{background:#fff;padding:0}.cert{border-radius:0;max-width:none;min-height:96vh}.print{display:none}}
       </style></head><body>
@@ -1474,7 +1479,11 @@
           <div class="stat"><b>${esc(formatDate(state.exam.finishedAt || Date.now()))}</b><span>${esc(T("cert_date"))}</span></div>
           <div class="stat"><b>${r.total}</b><span>${esc(T("bp_count"))}</span></div>
         </div>
-        <div class="foot"><div class="legal">${esc(T("cert_note"))}<br><br><b>${esc(T("cert_code"))}:</b> <span class="code">${esc(code)}</span></div><div class="brandright">Factronics C.A.<br>Khristyan Hidalgo</div></div>
+        <div class="foot">
+          <div class="legal">${esc(T("cert_note"))}<br><br><b>${esc(T("cert_code"))}:</b> <span class="code">${esc(code)}</span></div>
+          ${qrSrc ? `<div class="qrblock"><img src="${qrSrc}" alt="QR"><b>${esc(T("cert_doc_verify"))}</b><br>${esc(T("cert_doc_scan"))}</div>` : ""}
+          <div class="brandright">Factronics C.A.<br>Khristyan Hidalgo</div>
+        </div>
       </section>
       <button class="print" onclick="window.print()">${esc(T("cert_print"))}</button>
       </body></html>`;
@@ -1585,6 +1594,12 @@
       openReport();
     } else if (a === "qrcard") {
       downloadQrCard();
+    } else if (a === "cert-png") {
+      downloadCertificate("cert");
+    } else if (a === "verify-open") {
+      openVerification();
+    } else if (a === "verify-copy") {
+      copyVerifyLink();
     } else if (a === "print") {
       openReport();
     } else if (a === "csv") {
