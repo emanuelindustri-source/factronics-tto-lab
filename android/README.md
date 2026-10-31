@@ -4,7 +4,7 @@ Aplicación Java sin AndroidX, sin WebView y sin Gradle. La interfaz se construy
 
 Proyecto de Factronics Venezuela, distribuidor oficial de Videojet. Desarrollado por Khristyan Hidalgo, técnico de campo certificado. Videojet Technologies no solicitó ni autorizó este proyecto.
 
-Versión actual: **1.3.0** (`versionCode 4`).
+Versión actual: **1.4.0** (`versionCode 5`).
 
 ## Requisitos
 
@@ -27,6 +27,12 @@ El script:
 5. Añade `classes.dex` al APK.
 6. Alinea con `zipalign`.
 7. Firma con `apksigner`, verifica y escribe el SHA-256.
+
+Además:
+- Valida `bank.json` y `ui.json` antes de compilar.
+- Comprueba que `AndroidManifest` coincida con `VERSION`.
+- Genera un **informe PDF A4** en la app y lo comparte con los destinatarios
+  precargados mediante el proveedor `ReportProvider`.
 
 Salida:
 
