@@ -108,14 +108,15 @@ self.addEventListener("fetch", (event) => {
 
   event.respondWith((async () => {
     const cache = await caches.open(CACHE);
-    const hit = await cache.match(request, { ignoreSearch: true });
-    if (hit) return hit;
+    const exact = await cache.match(request);
+    if (exact) return exact;
     try {
       const response = await fetch(request);
       if (response && response.ok) cache.put(request, response.clone()).catch(() => {});
       return response;
     } catch (e) {
-      return new Response("", { status: 504 });
+      const fallback = await cache.match(request, { ignoreSearch: true });
+      return fallback || new Response("", { status: 504 });
     }
   })());
 });
