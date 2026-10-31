@@ -27,7 +27,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 API = "https://api.github.com"
 UPLOADS = "https://uploads.github.com"
-RELEASE_TAG = "v1.6.0"
+RELEASE_TAG = "v1.7.0"
 APK = ROOT / "download" / "Factronics-TTO-Lab.apk"
 EXCLUDED = {
     ".git", ".idea", ".vscode", "__pycache__", ".venv", "node_modules",
@@ -189,22 +189,23 @@ def ensure_release(owner: str, repo: str, branch: str) -> dict:
     status, data = request("POST", f"{API}/repos/{owner}/{repo}/releases", {
         "tag_name": RELEASE_TAG,
         "target_commitish": branch,
-        "name": "Factronics TTO Lab 1.6.0",
+        "name": "Factronics TTO Lab 1.7.0",
         "body": (
             "Aplicación Android nativa y generador web de evaluaciones TTO de Factronics Venezuela.\n\n"
             "- Identificación del participante: nombre, apellido y correo\n"
             "- Resultado con QR escaneable, tarjeta PNG y visor web del resultado\n"
             "- Informe A4 con logo, puntaje, desglose, detalle de preguntas y QR\n"
-            "- Compartir PDF/PNG con la hoja del sistema; sin envío por correo\n"
+            "- Certificado QR verificable y página pública de verificación\n"
+            "- Compartir PDF/PNG/CSV con la hoja del sistema; sin envío por correo\n"
             "- Partículas, animaciones modernas y soporte de movimiento reducido\n"
             "- 6 modelos: Videojet 6210, 6230 y DataFlex 6320, 6330, 6420, 6530\n"
-            "- 7 tipos de pregunta, modos examen/estudio/repaso\n"
+            "- 356 preguntas / 332 enunciados únicos; 7 tipos y modos examen/estudio/repaso\n"
             "- Progreso, historial, cuaderno de errores y repetición espaciada\n"
             "- Biblioteca con búsqueda y paginación completa\n"
             "- Español, English, Português; offline y sin WebView\n\n"
             "Proyecto de Factronics Venezuela, distribuidor oficial de Videojet. "
             "Desarrollado por Khristyan Hidalgo, técnico de campo certificado. "
-            "Videojet Technologies no solicitó, patrocinó ni autorizó este proyecto.\n\n"
+            "Videojet es marca de Videojet Technologies. Material de entrenamiento de Factronics C.A.\n\n"
             "APK firmado con clave de entrenamiento autofirmada. Si actualizas desde "
             "1.3.0 o 1.2.0 y Android rechaza la instalación por el cambio de clave, "
             "exporta el progreso, desinstala la versión anterior e instala de nuevo."
