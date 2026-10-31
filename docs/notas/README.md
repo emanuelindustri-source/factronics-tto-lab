@@ -46,4 +46,5 @@ Reglas:
 
 - Sitio: https://emanuelindustri-source.github.io/factronics-tto-lab/
 - Generador: https://emanuelindustri-source.github.io/factronics-tto-lab/generator/
+- Verificación: https://emanuelindustri-source.github.io/factronics-tto-lab/verificar/
 - APK: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/latest/download/Factronics-TTO-Lab.apk
