@@ -53,7 +53,7 @@ Entrenamiento técnico para impresoras **Videojet TTO** (Thermal Transfer Overpr
 6. Significado de errores / primera acción.
 7. Corrección de fallas (caso abierto, con rúbrica).
 
-El banco generado contiene **328 preguntas y variantes**; al filtrar por modelo y tipo se eliminan duplicados de enunciado, por lo que el pool visible para “todos los modelos” es de **304 enunciados únicos**. Cada sesión prioriza preguntas no vistas y equilibra los tipos seleccionados.
+El banco generado contiene **350 preguntas y variantes**; al filtrar por modelo y tipo se eliminan duplicados de enunciado, por lo que el pool visible para “todos los modelos” es de **326 enunciados únicos**. Cada sesión prioriza preguntas no vistas y equilibra los tipos seleccionados.
 
 ## Generador web
 
@@ -100,7 +100,7 @@ Características:
 - Cronómetro, mapa de preguntas, navegación, marcado para revisar y autoevaluación.
 - Banco local en `assets/bank.json` y textos en `assets/ui.json`.
 - Funciona sin conexión.
-- `minSdk 24` (Android 7.0), `targetSdk 34`, versión `1.4.0`.
+- `minSdk 24` (Android 7.0), `targetSdk 34`, versión `1.5.0`.
 
 ### Instalar el APK
 
@@ -124,16 +124,16 @@ El script usa `aapt2`, `javac`, `d8`, `zipalign` y `apksigner` directamente; no 
 
 Variables opcionales: `ANDROID_HOME` / `ANDROID_SDK_ROOT` y `JAVA_HOME`.
 
-## Novedades 1.4
+## Novedades 1.5
 
-- **Identificación del participante:** nombre, apellido y correo obligatorios antes de iniciar; aparecen en resultados, constancia e informe.
-- **Informe A4 de calidad:** logo, puntaje, resultado, desglose por tipo, equipos, detalle de preguntas y código de referencia. En web se guarda como PDF desde el diálogo de impresión; en Android se genera un PDF real.
-- **Envío por correo:** el botón abre la app de correo con `khristyan.hidalgo@factronics.com.ve` y `emanuel.industri@gmail.com` precargados; en Android el PDF va adjunto.
-- **Partículas y animaciones:** canvas de partículas, revelado al hacer scroll, contadores y transiciones suaves; se desactivan con `prefers-reduced-motion`.
-- **APK 1.4.0:** identificación, informe PDF, transiciones de pantalla, icono adaptativo y todo lo de 1.3.
-- **Progreso enriquecido:** la identidad viaja en el JSON de exportación/importación de web y Android.
+- **22 preguntas nuevas** sobre ribbons (tipos, estructura, almacenamiento, P/N) y soportes OEM/universales (P/N 386659, 386660, 216368, 215965, 403250, SAR03044/45/46).
+- **Banco ampliado:** 350 preguntas y 326 enunciados únicos; el pool y la biblioteca se actualizan solos.
+- **Aviso de actualización web:** `version.json` se consulta al cargar y cada 15 minutos; si hay una versión más reciente aparece un aviso con “Actualizar”.
+- **Aviso de actualización Android:** comprobación cada 12 horas y botón “Buscar actualizaciones”; muestra las novedades y abre la descarga.
+- **Privacidad:** la APK solo usa INTERNET para leer `version.json`; no envía datos ni telemetría.
+- **Documentación:** ficha 1.5.0 y fuentes revisadas en `docs/versiones/` y `docs/notas/`.
 
-La base de 1.3 (comprobación explícita, cantidad/duración personalizadas, biblioteca paginada, accesibilidad y verificación automática) se mantiene.
+La base de 1.4 (identificación, informe PDF, envío por correo, partículas y animaciones) se mantiene.
 
 > **Envío automático:** el proyecto es estático y no guarda credenciales. El correo se abre con todo preparado y el PDF adjunto en Android; el participante pulsa Enviar. Un envío totalmente automático requiere un backend o servicio de correo, documentado en `docs/notas/PENDIENTES.md`.
 
@@ -203,7 +203,7 @@ python tools/verify.py
 
 Comprueba, sin dependencias externas:
 
-- 328 preguntas, 304 enunciados únicos y paridad entre web y Android.
+- 350 preguntas, 326 enunciados únicos y paridad entre web y Android.
 - Textos ES/EN/PT completos y claves `data-i18n` usadas en el HTML.
 - Enlaces y recursos locales, iconos del manifiesto y lista del service worker.
 - Coherencia de versión entre `VERSION`, `sw.js`, `AndroidManifest.xml` y release.
@@ -216,7 +216,7 @@ Las pruebas funcionales y de navegador se registran en [QA.md](QA.md) y en
 ## Seguridad y privacidad
 
 - No hay tokens, credenciales ni telemetría en el repositorio.
-- El APK no solicita permisos de red.
+- El APK solo usa INTERNET para consultar `version.json`; no env?a datos ni telemetr?a.
 - Los datos de sesión se guardan localmente (navegador o `SharedPreferences`).
 - Para publicar cambios, usa `tools/publish_github.py` con un token en la variable de entorno `GITHUB_TOKEN`; nunca lo escribas en un archivo ni lo compartas en el chat. Rota el token después de publicar.
 
