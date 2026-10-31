@@ -27,7 +27,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 API = "https://api.github.com"
 UPLOADS = "https://uploads.github.com"
-RELEASE_TAG = "v1.5.0"
+RELEASE_TAG = "v1.6.0"
 APK = ROOT / "download" / "Factronics-TTO-Lab.apk"
 EXCLUDED = {
     ".git", ".idea", ".vscode", "__pycache__", ".venv", "node_modules",
@@ -189,12 +189,13 @@ def ensure_release(owner: str, repo: str, branch: str) -> dict:
     status, data = request("POST", f"{API}/repos/{owner}/{repo}/releases", {
         "tag_name": RELEASE_TAG,
         "target_commitish": branch,
-        "name": "Factronics TTO Lab 1.5.0",
+        "name": "Factronics TTO Lab 1.6.0",
         "body": (
             "Aplicación Android nativa y generador web de evaluaciones TTO de Factronics Venezuela.\n\n"
             "- Identificación del participante: nombre, apellido y correo\n"
-            "- Informe A4 con logo, puntaje, desglose y detalle de preguntas\n"
-            "- Envío por correo con destinatarios precargados y PDF adjunto en Android\n"
+            "- Resultado con QR escaneable, tarjeta PNG y visor web del resultado\n"
+            "- Informe A4 con logo, puntaje, desglose, detalle de preguntas y QR\n"
+            "- Compartir PDF/PNG con la hoja del sistema; sin envío por correo\n"
             "- Partículas, animaciones modernas y soporte de movimiento reducido\n"
             "- 6 modelos: Videojet 6210, 6230 y DataFlex 6320, 6330, 6420, 6530\n"
             "- 7 tipos de pregunta, modos examen/estudio/repaso\n"
