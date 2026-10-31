@@ -1,5 +1,48 @@
 # Verificación funcional
 
+## v1.6.0 · 2026-10-30
+
+Entorno: Windows 11, Python 3.13, Node.js 24, JDK 17, Android SDK 34/36,
+emulador Pixel 7 API 34, navegador Chromium integrado.
+
+### Automática
+
+| Comprobación | Resultado |
+|---|---|
+| `python tools/verify.py` | **OK**, 7.427 comprobaciones |
+| Banco | 350 preguntas · 326 enunciados únicos |
+| i18n | 432 claves × ES/EN/PT |
+| QR | URL de resultado generada y abierta en el visor |
+| APK | 189,5 KB · `versionCode 7` · SHA-256 `d3388d928b1104904806af97f419489cb6bc491e57139adedaa083b42dd864d0` |
+
+### Web
+
+- Al finalizar: botones **Informe PDF** y **Tarjeta QR**.
+- La tarjeta PNG se descarga con nombre, correo, puntaje, fecha, equipos, código y QR.
+- El QR abre `resultado/?d=…`; el visor muestra el resultado y “Datos consistentes”.
+- Si se altera un dato del payload, el checksum no coincide.
+- El informe impreso/PDF incluye el QR y el código de referencia.
+- Sin botones de correo; sin errores de consola.
+- Se conservan partículas, animaciones y actualización 1.6.0.
+
+### Android
+
+- APK `com.factronics.tto.lab` **1.6.0** (`versionCode 7`), 189,5 KB.
+- Genera y comparte el **PDF con QR**.
+- Genera y comparte la **tarjeta PNG con QR**; la hoja de compartir muestra el archivo.
+- El QR usa el mismo payload/checksum que la web.
+- Botones **Informe PDF** y **Tarjeta QR**; sin envío de correo.
+- `apksigner` verifica v2/v3.
+
+### Limitaciones conocidas
+
+- El checksum del QR detecta cambios accidentales, no es una firma criptográfica.
+- Para autenticidad formal haría falta un backend o firma con clave privada.
+- Android no instala actualizaciones en silencio; abre la descarga.
+- La clave del APK es de entrenamiento.
+
+---
+
 ## v1.5.0 · 2026-10-30
 
 Entorno: Windows 11, Python 3.13, Node.js 24, JDK 17, Android SDK 34/36,
