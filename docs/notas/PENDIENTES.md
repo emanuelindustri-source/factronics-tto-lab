@@ -12,32 +12,30 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
 - [ ] **Revisión técnica externa** del banco por un segundo técnico certificado:
       contrastar P/N, tensiones, firmware y procedimientos contra documentación
       oficial vigente.
+- [ ] **Probar el envío real del informe** desde Gmail/Outlook en un teléfono
+      físico con la APK 1.4.0 y confirmar que llega a los dos destinatarios con
+      el PDF adjunto.
 - [ ] **Firma de producción** si el APK se distribuirá de forma masiva: crear
       keystore propia, custodiar contraseñas y documentar el proceso. La clave
       actual es de entrenamiento.
-- [ ] **Aviso de actualización 1.2.0 → 1.3.0:** la firma cambió; verificar en un
-      dispositivo real el flujo desinstalar/instalar/importar progreso.
 
 ## P2 · Funciones incompletas
 
-- [ ] **Constancia PDF nativa en Android** (hoy solo se comparte texto) y
-      exportación CSV nativa. Requiere `PdfDocument` + proveedor de archivos o
-      `MediaStore`.
-- [ ] **Verificación real del código de constancia:** endpoint o algoritmo
-      comprobable; hoy es solo una referencia local.
-- [ ] **Importar progreso con opción reemplazar/combinar** en web y Android
-      (la clave `import_replace` ya existe, pero no se usa).
-- [ ] **Tema oscuro real en diálogos Android:** hoy los `AlertDialog` y spinners
-      usan tema claro aunque la app esté en oscuro.
+- [ ] **Envío 100 % automático:** hoy se abre la app de correo con todo listo y
+      el PDF adjunto en Android. Para enviar sin intervención hace falta un
+      backend/Worker o un servicio tipo FormSubmit/EmailJS con activación. No
+      se hardcodearon credenciales.
+- [ ] **PDF descargable directo en web:** hoy se usa el diálogo de impresión
+      («Guardar como PDF»). Evaluar generar el PDF con una librería local.
+- [ ] **Constancia PDF nativa en Android** además del informe de evaluación.
+- [ ] **Exportación CSV nativa en Android** (la web ya la tiene).
+- [ ] **Importar progreso con opción reemplazar/combinar** en web y Android.
+- [ ] **Tema oscuro real en diálogos Android.**
 - [ ] **Orientación/tablet:** la actividad está fija en vertical; evaluar
       landscape y tablets con reflow.
-- [ ] **Trampa de foco y restauración** en los modales web (biblioteca, avisos).
-- [ ] **Cache offline del APK** en la PWA o aviso claro de que la descarga
-      requiere red.
 - [ ] **Historial completo de intentos** (la web muestra 6 y Android 4; permitir
       "ver todos" y borrar un intento).
-- [ ] **Preguntas con imágenes/diagramas** de componentes y errores; hoy todo es
-      texto.
+- [ ] **Preguntas con imágenes/diagramas** de componentes y errores.
 
 ## P3 · Calidad y mantenimiento
 
