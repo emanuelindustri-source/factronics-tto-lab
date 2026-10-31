@@ -1410,6 +1410,69 @@
     Object.keys(V15[lang]).forEach((key) => { T[lang][key] = V15[lang][key]; });
   });
 
+
+  /* v1.6: QR result card and viewer */
+  const V16 = {
+    es: {
+      qr_card: "Tarjeta QR",
+      qr_title: "Tarjeta de resultado con QR",
+      qr_scan: "Escanea para ver el resultado",
+      qr_download: "Descargar tarjeta PNG",
+      qr_integrity_ok: "Datos consistentes",
+      qr_integrity_bad: "El c?digo no coincide: los datos pueden haber sido alterados.",
+      qr_invalid: "El c?digo QR no contiene un resultado v?lido.",
+      qr_no_data: "Falta el c?digo del resultado.",
+      qr_share: "Compartir tarjeta",
+      result_viewer: "Resultado TTO",
+      result_viewer_lead: "Resultado escaneado desde el c?digo QR.",
+      result_verified: "Resultado verificado",
+      result_print: "Imprimir / PDF",
+      result_open_generator: "Abrir generador",
+      result_invalid: "No se pudo leer el resultado.",
+      result_missing: "Este enlace no incluye datos de resultado."
+    },
+    en: {
+      qr_card: "QR card",
+      qr_title: "Result card with QR",
+      qr_scan: "Scan to view the result",
+      qr_download: "Download PNG card",
+      qr_integrity_ok: "Data consistent",
+      qr_integrity_bad: "Checksum mismatch: the data may have been altered.",
+      qr_invalid: "The QR code does not contain a valid result.",
+      qr_no_data: "The result code is missing.",
+      qr_share: "Share card",
+      result_viewer: "TTO result",
+      result_viewer_lead: "Result scanned from the QR code.",
+      result_verified: "Verified result",
+      result_print: "Print / PDF",
+      result_open_generator: "Open generator",
+      result_invalid: "The result could not be read.",
+      result_missing: "This link does not include result data."
+    },
+    pt: {
+      qr_card: "Cart?o QR",
+      qr_title: "Cart?o de resultado com QR",
+      qr_scan: "Escaneie para ver o resultado",
+      qr_download: "Baixar cart?o PNG",
+      qr_integrity_ok: "Dados consistentes",
+      qr_integrity_bad: "O c?digo n?o coincide: os dados podem ter sido alterados.",
+      qr_invalid: "O c?digo QR n?o cont?m um resultado v?lido.",
+      qr_no_data: "Falta o c?digo do resultado.",
+      qr_share: "Compartilhar cart?o",
+      result_viewer: "Resultado TTO",
+      result_viewer_lead: "Resultado escaneado a partir do c?digo QR.",
+      result_verified: "Resultado verificado",
+      result_print: "Imprimir / PDF",
+      result_open_generator: "Abrir gerador",
+      result_invalid: "N?o foi poss?vel ler o resultado.",
+      result_missing: "Este link n?o inclui dados do resultado."
+    }
+  };
+  Object.keys(V16).forEach((lang) => {
+    if (!T[lang]) T[lang] = {};
+    Object.keys(V16[lang]).forEach((key) => { T[lang][key] = V16[lang][key]; });
+  });
+
   window.TTO_I18N = T;
   window.ttoT = function (key, lang) {
     lang = lang || (window.TTO_STATE && window.TTO_STATE.lang) || "es";
