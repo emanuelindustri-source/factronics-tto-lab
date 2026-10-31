@@ -19,6 +19,11 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
       y confirmando el banner web y el diálogo Android en un dispositivo real.
 - [ ] **Revisar las 22 preguntas nuevas** de ribbons y soportes con un segundo
       técnico; los P/N y tensiones deben contrastarse con la revisión vigente.
+- [ ] **Revisar la confidencialidad de las fuentes de ribbon:** los PDFs de
+      entrenamiento revisados están marcados “Company Confidential”. Las 22
+      preguntas nuevas son paráfrasis de datos técnicos, pero antes de mantenerlas
+      en un repositorio público conviene confirmar que el acuerdo con Videojet
+      permite publicar ese contenido.
 - [ ] **Firma de producción** si el APK se distribuirá de forma masiva: crear
       keystore propia, custodiar contraseñas y documentar el proceso. La clave
       actual es de entrenamiento.
