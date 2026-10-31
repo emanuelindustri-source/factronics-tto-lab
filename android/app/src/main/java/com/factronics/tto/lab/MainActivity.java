@@ -188,6 +188,7 @@ public class MainActivity extends Activity {
         loadConfig();
         loadProgress();
         showSetup();
+        maybeCheckUpdates(false);
     }
 
     private void applyTheme() {
@@ -297,6 +298,52 @@ public class MainActivity extends Activity {
                 .putBoolean("unseen", unseen)
                 .putString("mode", mode)
                 .apply();
+    }
+
+    private static final long UPDATE_CHECK_MS = 12L * 60L * 60L * 1000L;
+    private boolean updateChecking = false;
+
+    private void maybeCheckUpdates(boolean force) {
+        if (updateChecking) return;
+        long last = prefs.getLong("lastUpdateCheck", 0L);
+        if (!force && System.currentTimeMillis() - last < UPDATE_CHECK_MS) return;
+        updateChecking = true;
+        prefs.edit().putLong("lastUpdateCheck", System.currentTimeMillis()).apply();
+        UpdateChecker.check(this, info -> {
+            updateChecking = false;
+            if (info == null) {
+                if (force) toast(t("update_error"));
+                return;
+            }
+            int currentCode = 0;
+            try {
+                currentCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+            } catch (Exception ignored) {}
+            if (info.code > currentCode) {
+                String prompted = prefs.getString("updatePrompted", "");
+                if (force || !info.version.equals(prompted)) {
+                    prefs.edit().putString("updatePrompted", info.version).apply();
+                    String message = (info.notes.isEmpty() ? "" : info.notes + "\n\n") + t("update_body");
+                    new AlertDialog.Builder(this)
+                            .setTitle(t("update_title") + " " + info.version)
+                            .setMessage(message)
+                            .setPositiveButton(t("update_download"), (d, w) -> openUrl(info.apk))
+                            .setNegativeButton(t("update_later"), null)
+                            .show();
+                }
+            } else if (force) {
+                toast(t("update_none"));
+            }
+        });
+    }
+
+    private void openUrl(String url) {
+        if (url == null || url.isEmpty()) { toast(t("update_error")); return; }
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        } catch (Exception e) {
+            toast(t("update_error"));
+        }
     }
 
     private void saveStudentPrefs() {
@@ -884,6 +931,9 @@ public class MainActivity extends Activity {
             versionView.setPadding(0, dp(6), 0, 0);
             bottom.addView(versionView);
         } catch (Exception ignored) { /* version is cosmetic */ }
+        Button update = smallButton(t("update_check"));
+        update.setOnClickListener(v -> maybeCheckUpdates(true));
+        bottom.addView(update, top(6));
         c.addView(bottom);
         sv.addView(c);
         root.addView(sv, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f));
