@@ -12,28 +12,22 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
 - [ ] **Revisión técnica externa** del banco por un segundo técnico certificado:
       contrastar P/N, tensiones, firmware y procedimientos contra documentación
       oficial vigente.
-- [ ] **Probar el envío real del informe** desde Gmail/Outlook en un teléfono
-      físico con la APK 1.5.0 y confirmar que llega a los dos destinatarios con
-      el PDF adjunto.
+- [ ] **Probar el QR con cámara real** en Android/iPhone y varios lectores;
+      confirmar que el visor abre en móvil y que el checksum coincide.
 - [ ] **Probar el aviso de actualización** publicando una versión mayor temporal
       y confirmando el banner web y el diálogo Android en un dispositivo real.
 - [ ] **Revisar las 22 preguntas nuevas** de ribbons y soportes con un segundo
       técnico; los P/N y tensiones deben contrastarse con la revisión vigente.
-- [ ] **Revisar la confidencialidad de las fuentes de ribbon:** los PDFs de
-      entrenamiento revisados están marcados “Company Confidential”. Las 22
-      preguntas nuevas son paráfrasis de datos técnicos, pero antes de mantenerlas
-      en un repositorio público conviene confirmar que el acuerdo con Videojet
-      permite publicar ese contenido.
+- [x] **Permiso de Videojet:** el usuario confirmó el 2026-10-30 que cuenta con
+      permiso para usar el material de las fuentes revisadas.
+- [ ] **Firma criptográfica del resultado** si se necesita autenticidad formal;
+      hoy el QR usa checksum para detectar alteraciones accidentales.
 - [ ] **Firma de producción** si el APK se distribuirá de forma masiva: crear
       keystore propia, custodiar contraseñas y documentar el proceso. La clave
       actual es de entrenamiento.
 
 ## P2 · Funciones incompletas
 
-- [ ] **Envío 100 % automático:** hoy se abre la app de correo con todo listo y
-      el PDF adjunto en Android. Para enviar sin intervención hace falta un
-      backend/Worker o un servicio tipo FormSubmit/EmailJS con activación. No
-      se hardcodearon credenciales.
 - [ ] **PDF descargable directo en web:** hoy se usa el diálogo de impresión
       («Guardar como PDF»). Evaluar generar el PDF con una librería local.
 - [ ] **Constancia PDF nativa en Android** además del informe de evaluación.
@@ -45,13 +39,14 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
 - [ ] **Historial completo de intentos** (la web muestra 6 y Android 4; permitir
       "ver todos" y borrar un intento).
 - [ ] **Preguntas con imágenes/diagramas** de componentes y errores.
+- [ ] **Más preguntas de CLARiSUITE/CLARiTY** y casos de diagnóstico.
 
 ## P3 · Calidad y mantenimiento
 
 - [ ] **CI en GitHub Actions:** ejecutar `tools/verify.py` y `node tools/export_ui.js --check`
       en cada push; publicar Pages solo si pasa.
 - [ ] **Pruebas E2E automatizadas** (Playwright) para landing, examen multi,
-      cálculo, biblioteca, idioma y PWA.
+      cálculo, biblioteca, QR, idioma y PWA.
 - [ ] **Pruebas unitarias del motor** extrayendo `gradeQuestion`,
       `matchField`, `pickQuestions` y `buildPool` a un módulo testeable.
 - [ ] **Auditoría de accesibilidad** con lector de pantalla real (TalkBack /
@@ -62,15 +57,16 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
       no solo recarga silenciosa.
 - [ ] **SEO:** `hreflang` si se separan versiones por idioma; revisar Rich
       Results de FAQ/SoftwareApplication.
-- [ ] **Rendimiento:** medir Lighthouse móvil y tamaño del banco; evaluar carga
-      diferida de `bank.js` (465 KB) en la landing.
+- [ ] **Rendimiento:** medir Lighthouse móvil y tamaño del banco (497 KB);
+      evaluar carga diferida en la landing.
 - [ ] **Licencia y marca:** revisar `NOTICE.md` antes de cualquier uso comercial
       o distribución fuera de Factronics.
-- [ ] **Documentación:** añadir capturas actualizadas de landing, generador y
+- [ ] **Documentación:** añadir capturas actualizadas de landing, generador, QR y
       APK; mantener `QA.md` al día.
 
 ## Ideas descartadas por ahora
 
 - Backend/cuentas: el valor del proyecto es offline y sin registro.
-- Migrar a React Native/Flutter: la app Java nativa funciona y pesa ~158 KB.
+- Envío de resultados por correo: se sustituyó por QR/PDF/PNG local.
+- Migrar a React Native/Flutter: la app Java nativa funciona y pesa ~190 KB.
 - Reemplazar el banco por una API: rompería el uso sin conexión.
