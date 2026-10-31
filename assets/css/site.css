@@ -758,3 +758,28 @@ details.faq p { margin: 10px 0 0; color: var(--ink-2); font-size: .8rem; line-he
   .particle-canvas, .hero::after { display: none !important; }
   .motion-ready .reveal { opacity: 1 !important; transform: none !important; }
 }
+
+
+/* ---------- v1.5: update notice ---------- */
+.update-banner {
+  position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
+  z-index: 120; width: min(760px, calc(100% - 24px));
+  display: flex; align-items: center; gap: 16px; justify-content: space-between;
+  background: var(--surface); color: var(--ink); border: 1px solid var(--line-2);
+  border-left: 4px solid var(--brand); border-radius: 14px;
+  box-shadow: 0 24px 60px -20px rgba(4, 30, 55, .55); padding: 12px 14px;
+  animation: updateIn .35s ease both;
+}
+.update-copy { min-width: 0; display: grid; gap: 2px; }
+.update-copy b { font-size: .88rem; }
+.update-copy span { font-size: .74rem; color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.update-actions { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; }
+.update-actions .icon-btn { width: 32px; height: 32px; font-size: 1.1rem; }
+.update-actions .btn.light { background: var(--surface-2); border-color: var(--line); color: var(--ink-2); }
+@keyframes updateIn { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@media (max-width: 640px) {
+  .update-banner { flex-direction: column; align-items: stretch; gap: 10px; }
+  .update-copy span { white-space: normal; }
+  .update-actions { justify-content: flex-end; }
+}
+@media (prefers-reduced-motion: reduce) { .update-banner { animation: none; } }
