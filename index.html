@@ -27,11 +27,11 @@
   <link rel="apple-touch-icon" href="assets/img/icon-192.png">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="application-name" content="Factronics TTO Lab">
-  <meta name="app-version" content="1.6.0">
+  <meta name="app-version" content="1.7.0">
   <meta name="app-version-url" content="version.json">
   <meta name="robots" content="index,follow">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/site.css?v=17">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -85,6 +85,7 @@
         <a href="index.html" data-i18n="nav_home">Inicio</a>
         <a href="#demo" data-i18n="nav_demo">Demo</a>
         <a href="generator/" data-i18n="nav_generator">Generador</a>
+        <a href="verificar/" data-i18n="nav_verify">Verificar</a>
         <a href="#models" data-i18n="nav_models">Equipos</a>
         <a href="#types" data-i18n="nav_types">Tipos</a>
         <a href="#android" data-i18n="nav_android">Android</a>
@@ -122,7 +123,7 @@
             <div class="stat"><b>6</b><span data-i18n="stat_models">modelos</span></div>
             <div class="stat"><b>7</b><span data-i18n="stat_types">tipos de pregunta</span></div>
             <div class="stat"><b>3</b><span data-i18n="stat_langs">idiomas</span></div>
-            <div class="stat"><b id="poolStat">350</b><span data-i18n="stat_pool">preguntas y variantes</span></div>
+            <div class="stat"><b id="poolStat">356</b><span data-i18n="stat_pool">preguntas y variantes</span></div>
           </div>
           <p class="hero-verify" id="poolSummary"></p>
         </div>
@@ -158,6 +159,19 @@
       </div>
     </section>
 
+    <section class="section verify-cta" aria-labelledby="verifyCtaTitle">
+      <div class="shell">
+        <div class="panel">
+          <div>
+            <span class="kicker" data-i18n="home_verify_kicker">CERTIFICADOS</span>
+            <h2 id="verifyCtaTitle" data-i18n="home_verify_title">¿Recibiste un resultado? Verifícalo.</h2>
+            <p data-i18n="home_verify_text">Escanea el QR del certificado o pega el enlace para comprobar que el contenido es íntegro.</p>
+          </div>
+          <a class="btn primary" href="verificar/" data-i18n="home_verify_cta">Verificar resultado</a>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="models">
       <div class="shell">
         <div class="section-head">
@@ -179,7 +193,7 @@
         <div class="feature-grid">
           <article class="feature"><div class="ficon">◈</div><h3 data-i18n="feature_1_t">Selección por modelo</h3><p data-i18n="feature_1_d">Un examen solo de 6530, uno combinado 6210 + 6420, o toda la familia. Sin preguntas fuera de contexto.</p></article>
           <article class="feature"><div class="ficon">▤</div><h3 data-i18n="feature_2_t">Siete tipos de pregunta</h3><p data-i18n="feature_2_d">Selección simple, múltiple, completar, descripción de componentes, corrección de fallas, cálculos y significado de errores.</p></article>
-          <article class="feature"><div class="ficon">↻</div><h3 data-i18n="feature_3_t">Preguntas nuevas</h3><p data-i18n="feature_3_d">Banco de 350 preguntas y 100 cálculos con valores técnicos. El motor prioriza las que aún no has visto.</p></article>
+          <article class="feature"><div class="ficon">↻</div><h3 data-i18n="feature_3_t">Preguntas nuevas</h3><p data-i18n="feature_3_d">Banco de 356 preguntas y 100 cálculos con valores técnicos. El motor prioriza las que aún no has visto.</p></article>
           <article class="feature"><div class="ficon">⏱</div><h3 data-i18n="feature_4_t">Tiempo y cantidad</h3><p data-i18n="feature_4_d">De 5 a 100 preguntas y de 0 a 180 minutos, o sin límite.</p></article>
           <article class="feature"><div class="ficon">◎</div><h3 data-i18n="feature_5_t">Tres idiomas</h3><p data-i18n="feature_5_d">Interfaz, preguntas, opciones y explicaciones en español, inglés y portugués.</p></article>
           <article class="feature"><div class="ficon">▦</div><h3 data-i18n="feature_6_t">Informe y solucionario</h3><p data-i18n="feature_6_d">Puntaje, desglose por tipo, revisión con explicación, autoevaluación de preguntas abiertas, CSV e impresión.</p></article>
@@ -189,7 +203,7 @@
           <h2 data-i18n="new_title">M?s preguntas, fuentes revisadas y avisos de actualizaci?n.</h2>
           <div class="new-grid">
             <article class="new-card"><div class="ficon">?</div><h3 data-i18n="new_1_t">22 preguntas nuevas</h3><p data-i18n="new_1_d">Ribbons y soportes OEM/universales, con datos extra?dos de la documentaci?n t?cnica.</p></article>
-            <article class="new-card"><div class="ficon">?</div><h3 data-i18n="new_2_t">350 preguntas</h3><p data-i18n="new_2_d">326 enunciados ?nicos; el pool y la biblioteca se actualizan solos.</p></article>
+            <article class="new-card"><div class="ficon">?</div><h3 data-i18n="new_2_t">356 preguntas</h3><p data-i18n="new_2_d">332 enunciados ?nicos; el pool y la biblioteca se actualizan solos.</p></article>
             <article class="new-card"><div class="ficon">?</div><h3 data-i18n="new_3_t">Aviso de actualizaci?n</h3><p data-i18n="new_3_d">Web y Android avisan cuando hay una versi?n nueva publicada en el repositorio.</p></article>
             <article class="new-card"><div class="ficon">?</div><h3 data-i18n="new_4_t">Todo lo de 1.4</h3><p data-i18n="new_4_d">Identificaci?n, informe PDF, env?o por correo, part?culas y animaciones.</p></article>
           </div>
@@ -301,11 +315,12 @@
           <img class="brand-logo-dark" src="assets/img/factronics-white.png" alt="" aria-hidden="true">
           <div>
             <strong>Factronics TTO Lab</strong>
-            <p data-i18n="footer_disclaimer">Proyecto de Factronics Venezuela, distribuidor oficial de Videojet. Desarrollado por Khristyan Hidalgo, técnico de campo certificado. Videojet es marca de Videojet Technologies; este material no fue solicitado ni autorizado por Videojet.</p>
+            <p data-i18n="footer_disclaimer">Proyecto de Factronics Venezuela, distribuidor oficial de Videojet. Desarrollado por Khristyan Hidalgo, técnico de campo certificado. Videojet es marca de Videojet Technologies. Material de entrenamiento de Factronics C.A.</p>
           </div>
         </div>
         <div class="footer-links">
           <a href="generator/" data-i18n="nav_generator">Generador</a>
+          <a href="verificar/" data-i18n="nav_verify">Verificar</a>
           <a href="#models" data-i18n="nav_models">Equipos</a>
           <a href="#android" data-i18n="nav_android">Android</a>
           <a href="https://github.com/emanuelindustri-source/factronics-tto-lab" target="_blank" rel="noopener">GitHub</a>
@@ -313,16 +328,16 @@
       </div>
       <div class="footer-note">
         <span data-i18n="footer_built">Hecho con HTML, CSS, JavaScript y Java nativo.</span>
-        <span>© <span id="year">2026</span> · Factronics C.A. / Khristyan Hidalgo · v1.6.0</span>
+        <span>© <span id="year">2026</span> · Factronics C.A. / Khristyan Hidalgo · v1.7.0</span>
       </div>
     </div>
   </footer>
 
-  <script src="assets/js/bank.js"></script>
-  <script src="assets/js/i18n.js"></script>
-  <script src="assets/js/pwa.js"></script>
-  <script src="assets/js/motion.js"></script>
-  <script src="assets/js/update.js"></script>
-  <script src="assets/js/landing.js"></script>
+  <script src="assets/js/bank.js?v=17"></script>
+  <script src="assets/js/i18n.js?v=17"></script>
+  <script src="assets/js/pwa.js?v=17"></script>
+  <script src="assets/js/motion.js?v=17"></script>
+  <script src="assets/js/update.js?v=17"></script>
+  <script src="assets/js/landing.js?v=17"></script>
 </body>
 </html>
