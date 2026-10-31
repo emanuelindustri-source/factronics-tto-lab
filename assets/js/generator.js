@@ -1289,7 +1289,7 @@
     if (!panel || !state.exam || !window.TTOResult) return;
     const payload = reportPayload(r, state.exam.student || currentIdentity(), reportCode());
     const url = payload ? window.TTOResult.verifyUrl(payload) : "";
-    const qr = url ? window.TTOResult.qrDataUrl(url, 260) : "";
+    const qr = url ? window.TTOResult.qrDataUrl(url, 320) : "";
     const img = document.getElementById("resQr");
     if (img && qr) img.src = qr;
     const code = document.getElementById("resCode");
@@ -1324,7 +1324,7 @@
     const { r, student, percent, passed, duration, code, counts, breakdown } = reportData();
     const payload = reportPayload(r, student, code);
     const verifyUrl = payload && window.TTOResult ? window.TTOResult.verifyUrl(payload) : "";
-    const qrSrc = verifyUrl && window.TTOResult ? window.TTOResult.qrDataUrl(verifyUrl, 240) : "";
+    const qrSrc = verifyUrl && window.TTOResult ? window.TTOResult.qrDataUrl(verifyUrl, 320) : "";
     const codeQr = verifyUrl && window.TTOResult ? window.TTOResult.qrDataUrl(verifyUrl, 120) : "";
     const win = window.open("", "_blank");
     if (!win) { notify(T("cert_blocked"), "warn"); return; }
@@ -1414,7 +1414,7 @@
             <div class="stat"><b>${counts.pending}</b><span>${esc(T("res_pending"))}</span></div>
             <div class="stat"><b>${r.total}</b><span>${esc(T("report_total"))}</span></div>
           </div>
-          ${qrSrc ? `<div class="qr-box"><img src="${qrSrc}" width="150" height="150" alt="QR"><div><b>${esc(T("qr_scan"))}</b><span>${esc(verifyUrl)}</span></div></div>` : ""}
+          ${qrSrc ? `<div class="qr-box"><img src="${qrSrc}" width="220" height="220" alt="QR"><div><b>${esc(T("qr_scan"))}</b><span>${esc(verifyUrl)}</span></div></div>` : ""}
           <h4>${esc(T("report_breakdown"))}</h4>${breakdownHtml}
           <h4>${esc(T("report_models"))}</h4><div class="chips">${state.exam.models.map((m) => `<span class="chip">${esc(m)}</span>`).join("")}</div>
           <h4>${esc(T("report_details"))}</h4>
