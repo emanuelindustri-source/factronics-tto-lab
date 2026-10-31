@@ -1,5 +1,56 @@
 # Verificación funcional
 
+## v1.5.0 · 2026-10-30
+
+Entorno: Windows 11, Python 3.13, Node.js 24, JDK 17, Android SDK 34/36,
+emulador Pixel 7 API 34, navegador Chromium integrado.
+
+### Automática
+
+| Comprobación | Resultado |
+|---|---|
+| `python tools/verify.py` | **OK**, 7.412 comprobaciones |
+| Banco | 350 preguntas · 326 enunciados únicos |
+| Preguntas nuevas | 22 de ribbons y soportes, todas en ES/EN/PT |
+| i18n | 416 claves × ES/EN/PT, sin faltantes |
+| `ui.json` vs `i18n.js` | Idénticos |
+| `version.json` | Versión y `versionCode` coinciden con web/Android |
+| Enlaces, iconos, service worker | Todos los recursos existen |
+| APK | 177,5 KB · `versionCode 6` · SHA-256 `7902d17be8393a4d8a8eed55222095d4ec2f0cf45e8406bfbd0089ccc0d6e3a5` |
+| Secretos evidentes | Ninguno |
+
+### Web
+
+- Nuevo aviso de actualización: al publicar `version.json` con una versión
+  superior, aparece un banner con “Actualizar”. Probado subiendo temporalmente
+  `1.5.1`; el banner se mostró con el enlace de novedades.
+- El aviso se consulta al cargar, cada 15 minutos y al volver a la pestaña;
+  se puede cerrar por sesión.
+- Landing y generador sin errores de consola.
+- El pool y la biblioteca muestran 350/326 y las 22 preguntas nuevas.
+- `version.json` no se sirve desde la caché del service worker: se consulta a la
+  red y se usa la copia cacheada solo si no hay conexión.
+
+### Android
+
+- APK `com.factronics.tto.lab` **1.5.0** (`versionCode 6`), 177,5 KB.
+- Barra de identificación, informe PDF y envío por correo se mantienen.
+- Botón **Buscar actualizaciones** visible al pie.
+- Consulta `version.json` cada 12 horas y muestra un diálogo con las novedades y
+  el enlace de descarga cuando `versionCode` es mayor.
+- Solo usa `INTERNET` para leer `version.json`; no envía datos.
+- Instalación y arranque sin errores; `apksigner` verifica v2/v3.
+
+### Limitaciones conocidas
+
+- El aviso de actualización no instala solo el APK: abre la descarga; el usuario
+  confirma la instalación (Android exige esa confirmación).
+- El envío de correo se completa desde la app de correo del participante.
+- La constancia web se guarda como PDF desde el diálogo de impresión.
+- La clave del APK es de entrenamiento, no de producción.
+
+---
+
 ## v1.4.0 · 2026-10-30
 
 Entorno: Windows 11, Python 3.13, Node.js 24, JDK 17, Android SDK 34/36,
