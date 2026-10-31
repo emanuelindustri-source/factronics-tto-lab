@@ -32,7 +32,7 @@
 - Histórico de versiones en `docs/versiones/` y `docs/notas/`.
 - Verificación automática con `python tools/verify.py` → OK, 7.669 comprobaciones.
 - APK 1.7.0, `versionCode 8`, 193,5 KB, SHA-256
-  `68e025a5f0b66ac62d50776b301d02d8cf3df99511fb2ea12328e18315fda79a`.
+  `429c66da60bdeff5cb328e6da1ee8f1ffa48bf072aa3d9696bb98a89ecf9a8ce`.
 
 ## Lo que se está trabajando / siguiente
 
