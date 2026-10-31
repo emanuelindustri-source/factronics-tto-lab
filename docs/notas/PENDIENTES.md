@@ -13,8 +13,12 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
       contrastar P/N, tensiones, firmware y procedimientos contra documentación
       oficial vigente.
 - [ ] **Probar el envío real del informe** desde Gmail/Outlook en un teléfono
-      físico con la APK 1.4.0 y confirmar que llega a los dos destinatarios con
+      físico con la APK 1.5.0 y confirmar que llega a los dos destinatarios con
       el PDF adjunto.
+- [ ] **Probar el aviso de actualización** publicando una versión mayor temporal
+      y confirmando el banner web y el diálogo Android en un dispositivo real.
+- [ ] **Revisar las 22 preguntas nuevas** de ribbons y soportes con un segundo
+      técnico; los P/N y tensiones deben contrastarse con la revisión vigente.
 - [ ] **Firma de producción** si el APK se distribuirá de forma masiva: crear
       keystore propia, custodiar contraseñas y documentar el proceso. La clave
       actual es de entrenamiento.
