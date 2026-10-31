@@ -1,10 +1,10 @@
 {
-  "version": "1.6.0",
-  "versionCode": 7,
-  "released": "2026-10-30",
-  "title": "Factronics TTO Lab 1.6.0",
-  "notes": "Resultado con QR escaneable, tarjeta PNG, informe PDF y avisos de actualización.",
+  "version": "1.7.0",
+  "versionCode": 8,
+  "released": "2026-10-31",
+  "title": "Factronics TTO Lab 1.7.0",
+  "notes": "Certificado QR verificable, página de verificación, tarjeta y certificado PNG, CSV en Android y panel de resultados renovado.",
   "apk": "https://github.com/emanuelindustri-source/factronics-tto-lab/releases/latest/download/Factronics-TTO-Lab.apk",
-  "release": "https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.6.0",
+  "release": "https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.7.0",
   "web": "https://emanuelindustri-source.github.io/factronics-tto-lab/"
 }
