@@ -1,0 +1,2045 @@
+{
+  "source": "TTO ribbon training + OEM/universal bracket guides",
+  "questions": [
+    {
+      "id": "R-01",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 1,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué tipo de ribbon es de propósito general, apto para todo el rango de velocidades y con buena resistencia al frotado?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Wax/Resin"
+            },
+            {
+              "id": "b",
+              "text": "Resin"
+            },
+            {
+              "id": "c",
+              "text": "Wax puro"
+            },
+            {
+              "id": "d",
+              "text": "Hot melt"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "El Wax/Resin es la familia de propósito general: cubre todo el rango de velocidades, tiene buena resistencia al frotado y al calor, y ofrece la mayor variedad de colores."
+        },
+        "en": {
+          "q": "Which ribbon type is general purpose, suitable for the full speed range and with good smudge resistance?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Wax/Resin"
+            },
+            {
+              "id": "b",
+              "text": "Resin"
+            },
+            {
+              "id": "c",
+              "text": "Pure wax"
+            },
+            {
+              "id": "d",
+              "text": "Hot melt"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "Wax/Resin is the general-purpose family: it covers the full speed range, has good smudge and heat resistance, and offers the widest colour range."
+        },
+        "pt": {
+          "q": "Qual tipo de ribbon é de uso geral, adequado para toda a faixa de velocidades e com boa resistência ao atrito?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Wax/Resin"
+            },
+            {
+              "id": "b",
+              "text": "Resin"
+            },
+            {
+              "id": "c",
+              "text": "Cera pura"
+            },
+            {
+              "id": "d",
+              "text": "Hot melt"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "O Wax/Resin é a família de uso geral: cobre toda a faixa de velocidades, tem boa resistência ao atrito e ao calor e oferece a maior variedade de cores."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "types"
+      ]
+    },
+    {
+      "id": "R-02",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué tipo de ribbon ofrece excelente resistencia química y al frotado, pero está limitado a aplicaciones de baja velocidad?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Wax/Resin"
+            },
+            {
+              "id": "b",
+              "text": "Resin"
+            },
+            {
+              "id": "c",
+              "text": "Wax puro"
+            },
+            {
+              "id": "d",
+              "text": "Ribbon térmico de cera"
+            }
+          ],
+          "answer": [
+            "b"
+          ],
+          "explanation": "Los ribbons Resin (Premium, Chemical Resistance, Wash Resistance) dan la mejor resistencia química y al frotado, pero se usan en aplicaciones de baja velocidad."
+        },
+        "en": {
+          "q": "Which ribbon type offers excellent chemical and smudge resistance but is limited to low-speed applications?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Wax/Resin"
+            },
+            {
+              "id": "b",
+              "text": "Resin"
+            },
+            {
+              "id": "c",
+              "text": "Pure wax"
+            },
+            {
+              "id": "d",
+              "text": "Thermal wax ribbon"
+            }
+          ],
+          "answer": [
+            "b"
+          ],
+          "explanation": "Resin ribbons (Premium, Chemical Resistance, Wash Resistance) give the best chemical and smudge resistance, but are used in low-speed applications."
+        },
+        "pt": {
+          "q": "Qual tipo de ribbon oferece excelente resistência química e ao atrito, mas é limitado a aplicações de baixa velocidade?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Wax/Resin"
+            },
+            {
+              "id": "b",
+              "text": "Resin"
+            },
+            {
+              "id": "c",
+              "text": "Cera pura"
+            },
+            {
+              "id": "d",
+              "text": "Ribbon térmico de cera"
+            }
+          ],
+          "answer": [
+            "b"
+          ],
+          "explanation": "Os ribbons Resin (Premium, Chemical Resistance, Wash Resistance) dão a melhor resistência química e ao atrito, mas são usados em aplicações de baixa velocidade."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "types"
+      ]
+    },
+    {
+      "id": "R-03",
+      "type": "fill",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "Completa las condiciones recomendadas de almacenamiento del ribbon: temperatura de ___ °C a ___ °C y humedad relativa de ___ % a ___ %.",
+          "fields": [
+            {
+              "label": "Temperatura mínima (°C)",
+              "unit": "°C",
+              "answers": [
+                5
+              ],
+              "tolerance": 0
+            },
+            {
+              "label": "Temperatura máxima (°C)",
+              "unit": "°C",
+              "answers": [
+                35
+              ],
+              "tolerance": 0
+            },
+            {
+              "label": "Humedad mínima (%)",
+              "unit": "%",
+              "answers": [
+                20
+              ],
+              "tolerance": 0
+            },
+            {
+              "label": "Humedad máxima (%)",
+              "unit": "%",
+              "answers": [
+                80
+              ],
+              "tolerance": 0
+            }
+          ],
+          "explanation": "La formación recomienda almacenar el ribbon entre 5 °C y 35 °C, con humedad relativa entre 20 % y 80 %."
+        },
+        "en": {
+          "q": "Complete the recommended ribbon storage conditions: temperature from ___ °C to ___ °C and relative humidity from ___ % to ___ %.",
+          "fields": [
+            {
+              "label": "Minimum temperature (°C)",
+              "unit": "°C",
+              "answers": [
+                5
+              ],
+              "tolerance": 0
+            },
+            {
+              "label": "Maximum temperature (°C)",
+              "unit": "°C",
+              "answers": [
+                35
+              ],
+              "tolerance": 0
+            },
+            {
+              "label": "Minimum humidity (%)",
+              "unit": "%",
+              "answers": [
+                20
+              ],
+              "tolerance": 0
+            },
+            {
+              "label": "Maximum humidity (%)",
+              "unit": "%",
+              "answers": [
+                80
+              ],
+              "tolerance": 0
+            }
+          ],
+          "explanation": "The training recommends storing ribbon between 5 °C and 35 °C, with relative humidity between 20 % and 80 %."
+        },
+        "pt": {
+          "q": "Complete as condições recomendadas de armazenamento do ribbon: temperatura de ___ °C a ___ °C e umidade relativa de ___ % a ___ %.",
+          "fields": [
+            {
+              "label": "Temperatura mínima (°C)",
+              "unit": "°C",
+              "answers": [
+                5
+              ],
+              "tolerance": 0
+            },
+            {
+              "label": "Temperatura máxima (°C)",
+              "unit": "°C",
+              "answers": [
+                35
+              ],
+              "tolerance": 0
+            },
+            {
+              "label": "Umidade mínima (%)",
+              "unit": "%",
+              "answers": [
+                20
+              ],
+              "tolerance": 0
+            },
+            {
+              "label": "Umidade máxima (%)",
+              "unit": "%",
+              "answers": [
+                80
+              ],
+              "tolerance": 0
+            }
+          ],
+          "explanation": "O treinamento recomenda armazenar o ribbon entre 5 °C e 35 °C, com umidade relativa entre 20 % e 80 %."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "storage"
+      ]
+    },
+    {
+      "id": "R-04",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué defecto del ribbon empeora con el frío y suele ser reversible?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Telescopado y descamado"
+            },
+            {
+              "id": "b",
+              "text": "Blocking irreversible"
+            },
+            {
+              "id": "c",
+              "text": "Cambio de color permanente"
+            },
+            {
+              "id": "d",
+              "text": "Pérdida de la capa backcoat"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "El frío empeora el telescopado y el descamado; el efecto es reversible. El calor alto empeora el blocking, que sí es irreversible."
+        },
+        "en": {
+          "q": "Which ribbon defect gets worse in cold conditions and is usually reversible?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Telescoping and flaking"
+            },
+            {
+              "id": "b",
+              "text": "Irreversible blocking"
+            },
+            {
+              "id": "c",
+              "text": "Permanent colour change"
+            },
+            {
+              "id": "d",
+              "text": "Loss of the backcoat layer"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "Cold worsens telescoping and flaking; the effect is reversible. High heat worsens blocking, which is irreversible."
+        },
+        "pt": {
+          "q": "Qual defeito do ribbon piora com o frio e geralmente é reversível?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Telescopagem e descamação"
+            },
+            {
+              "id": "b",
+              "text": "Blocking irreversível"
+            },
+            {
+              "id": "c",
+              "text": "Mudança de cor permanente"
+            },
+            {
+              "id": "d",
+              "text": "Perda da camada backcoat"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "O frio piora a telescopagem e a descamação; o efeito é reversível. O calor alto piora o blocking, que é irreversível."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "storage"
+      ]
+    },
+    {
+      "id": "R-05",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué consecuencia tiene almacenar el ribbon a temperaturas superiores a las recomendadas?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Blocking irreversible"
+            },
+            {
+              "id": "b",
+              "text": "Telescopado reversible"
+            },
+            {
+              "id": "c",
+              "text": "Mejora la transferencia de tinta"
+            },
+            {
+              "id": "d",
+              "text": "Se elimina la capa backcoat"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "Las temperaturas altas empeoran el blocking y el efecto es irreversible; el frío, en cambio, produce telescopado/descamado reversible."
+        },
+        "en": {
+          "q": "What happens when ribbon is stored above the recommended temperature?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Irreversible blocking"
+            },
+            {
+              "id": "b",
+              "text": "Reversible telescoping"
+            },
+            {
+              "id": "c",
+              "text": "It improves ink transfer"
+            },
+            {
+              "id": "d",
+              "text": "The backcoat layer is removed"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "High temperatures worsen blocking and the effect is irreversible; cold produces reversible telescoping/flaking."
+        },
+        "pt": {
+          "q": "O que acontece quando o ribbon é armazenado acima da temperatura recomendada?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Blocking irreversível"
+            },
+            {
+              "id": "b",
+              "text": "Telescopagem reversível"
+            },
+            {
+              "id": "c",
+              "text": "Melhora a transferência de tinta"
+            },
+            {
+              "id": "d",
+              "text": "A camada backcoat é removida"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "Temperaturas altas pioram o blocking e o efeito é irreversível; o frio produz telescopagem/descamação reversível."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "storage"
+      ]
+    },
+    {
+      "id": "R-06",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 1,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Cuál es la velocidad máxima de impresión que puede alcanzar la tecnología TTO según la formación de ribbons?",
+          "options": [
+            {
+              "id": "a",
+              "text": "500 mm/s"
+            },
+            {
+              "id": "b",
+              "text": "750 mm/s"
+            },
+            {
+              "id": "c",
+              "text": "1000 mm/s"
+            },
+            {
+              "id": "d",
+              "text": "1200 mm/s"
+            }
+          ],
+          "answer": [
+            "c"
+          ],
+          "explanation": "La formación indica capacidad de alta velocidad de hasta 1000 mm/s para la tecnología TTO."
+        },
+        "en": {
+          "q": "What is the maximum print speed TTO technology can reach according to the ribbon training?",
+          "options": [
+            {
+              "id": "a",
+              "text": "500 mm/s"
+            },
+            {
+              "id": "b",
+              "text": "750 mm/s"
+            },
+            {
+              "id": "c",
+              "text": "1000 mm/s"
+            },
+            {
+              "id": "d",
+              "text": "1200 mm/s"
+            }
+          ],
+          "answer": [
+            "c"
+          ],
+          "explanation": "The training states high-speed capability of up to 1000 mm/s for TTO technology."
+        },
+        "pt": {
+          "q": "Qual é a velocidade máxima de impressão que a tecnologia TTO pode alcançar segundo o treinamento de ribbons?",
+          "options": [
+            {
+              "id": "a",
+              "text": "500 mm/s"
+            },
+            {
+              "id": "b",
+              "text": "750 mm/s"
+            },
+            {
+              "id": "c",
+              "text": "1000 mm/s"
+            },
+            {
+              "id": "d",
+              "text": "1200 mm/s"
+            }
+          ],
+          "answer": [
+            "c"
+          ],
+          "explanation": "O treinamento indica capacidade de alta velocidade de até 1000 mm/s para a tecnologia TTO."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "speed"
+      ]
+    },
+    {
+      "id": "R-07",
+      "type": "multi",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Cuáles son limitaciones propias de la tecnología TTO?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Coincidencia exacta de colores"
+            },
+            {
+              "id": "b",
+              "text": "Imprimir solo sobre sustratos delgados y flexibles"
+            },
+            {
+              "id": "c",
+              "text": "Imprimir sobre vidrio rígido de gran espesor"
+            },
+            {
+              "id": "d",
+              "text": "No necesitar ribbon"
+            }
+          ],
+          "answer": [
+            "a",
+            "b"
+          ],
+          "explanation": "Las limitaciones citadas son la coincidencia exacta de colores y trabajar solo sobre sustratos delgados y flexibles; el TTO sí usa ribbon."
+        },
+        "en": {
+          "q": "Which are limitations of TTO technology?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Exact colour matching"
+            },
+            {
+              "id": "b",
+              "text": "Printing only on thin, flexible substrates"
+            },
+            {
+              "id": "c",
+              "text": "Printing on thick rigid glass"
+            },
+            {
+              "id": "d",
+              "text": "Not needing ribbon"
+            }
+          ],
+          "answer": [
+            "a",
+            "b"
+          ],
+          "explanation": "The stated limitations are exact colour matching and working only on thin, flexible substrates; TTO does use ribbon."
+        },
+        "pt": {
+          "q": "Quais são limitações próprias da tecnologia TTO?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Correspondência exata de cores"
+            },
+            {
+              "id": "b",
+              "text": "Impressão apenas em substratos finos e flexíveis"
+            },
+            {
+              "id": "c",
+              "text": "Impressão em vidro rígido de grande espessura"
+            },
+            {
+              "id": "d",
+              "text": "Não precisar de ribbon"
+            }
+          ],
+          "answer": [
+            "a",
+            "b"
+          ],
+          "explanation": "As limitações citadas são a correspondência exata de cores e trabalhar apenas em substratos finos e flexíveis; o TTO usa ribbon."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "technology"
+      ]
+    },
+    {
+      "id": "R-08",
+      "type": "fill",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 1,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "En la estructura de número de parte del ribbon, ¿qué prefijo identifica la familia TTO?",
+          "fields": [
+            {
+              "label": "Prefijo",
+              "unit": "",
+              "answers": [
+                "15-",
+                "15"
+              ],
+              "tolerance": 0
+            }
+          ],
+          "explanation": "El prefijo 15- identifica TTO; 14- identifica LPA y 99- se reserva para calidades, plazos o MOQ específicos."
+        },
+        "en": {
+          "q": "In the ribbon part-number structure, which prefix identifies the TTO family?",
+          "fields": [
+            {
+              "label": "Prefix",
+              "unit": "",
+              "answers": [
+                "15-",
+                "15"
+              ],
+              "tolerance": 0
+            }
+          ],
+          "explanation": "The 15- prefix identifies TTO; 14- identifies LPA and 99- is reserved for specific quality, lead time or MOQ."
+        },
+        "pt": {
+          "q": "Na estrutura de número de peça do ribbon, qual prefixo identifica a família TTO?",
+          "fields": [
+            {
+              "label": "Prefixo",
+              "unit": "",
+              "answers": [
+                "15-",
+                "15"
+              ],
+              "tolerance": 0
+            }
+          ],
+          "explanation": "O prefixo 15- identifica TTO; 14- identifica LPA e 99- é reservado para qualidade, prazo ou MOQ específicos."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "part-number"
+      ]
+    },
+    {
+      "id": "R-09",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 1,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "En el número de parte 15-S55KQ10-1000, ¿qué significa la letra S?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Standard"
+            },
+            {
+              "id": "b",
+              "text": "Super Standard"
+            },
+            {
+              "id": "c",
+              "text": "Ultra Grade"
+            },
+            {
+              "id": "d",
+              "text": "Premium"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "En la gama TTO: S = Standard, P = Super Standard, U = Ultra Grade, R = Premium, X = Hot Fill, C = Chemical Resistance, Y = Wash Resistance, Z = Rough Texture y B = Basic."
+        },
+        "en": {
+          "q": "In part number 15-S55KQ10-1000, what does the letter S mean?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Standard"
+            },
+            {
+              "id": "b",
+              "text": "Super Standard"
+            },
+            {
+              "id": "c",
+              "text": "Ultra Grade"
+            },
+            {
+              "id": "d",
+              "text": "Premium"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "In the TTO range: S = Standard, P = Super Standard, U = Ultra Grade, R = Premium, X = Hot Fill, C = Chemical Resistance, Y = Wash Resistance, Z = Rough Texture and B = Basic."
+        },
+        "pt": {
+          "q": "No número de peça 15-S55KQ10-1000, o que significa a letra S?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Standard"
+            },
+            {
+              "id": "b",
+              "text": "Super Standard"
+            },
+            {
+              "id": "c",
+              "text": "Ultra Grade"
+            },
+            {
+              "id": "d",
+              "text": "Premium"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "Na linha TTO: S = Standard, P = Super Standard, U = Ultra Grade, R = Premium, X = Hot Fill, C = Chemical Resistance, Y = Wash Resistance, Z = Rough Texture e B = Basic."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "part-number"
+      ]
+    },
+    {
+      "id": "R-10",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 1,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "En el número de parte 15-S55KQ10-1000, ¿qué indica Q10?",
+          "options": [
+            {
+              "id": "a",
+              "text": "5 rollos por caja"
+            },
+            {
+              "id": "b",
+              "text": "10 rollos por caja"
+            },
+            {
+              "id": "c",
+              "text": "25 rollos por caja"
+            },
+            {
+              "id": "d",
+              "text": "100 rollos por caja"
+            }
+          ],
+          "answer": [
+            "b"
+          ],
+          "explanation": "Q5 = 5 rollos, Q10 = 10 rollos y Q25 = 25 rollos por caja."
+        },
+        "en": {
+          "q": "In part number 15-S55KQ10-1000, what does Q10 indicate?",
+          "options": [
+            {
+              "id": "a",
+              "text": "5 rolls per case"
+            },
+            {
+              "id": "b",
+              "text": "10 rolls per case"
+            },
+            {
+              "id": "c",
+              "text": "25 rolls per case"
+            },
+            {
+              "id": "d",
+              "text": "100 rolls per case"
+            }
+          ],
+          "answer": [
+            "b"
+          ],
+          "explanation": "Q5 = 5 rolls, Q10 = 10 rolls and Q25 = 25 rolls per case."
+        },
+        "pt": {
+          "q": "No número de peça 15-S55KQ10-1000, o que indica Q10?",
+          "options": [
+            {
+              "id": "a",
+              "text": "5 rolos por caixa"
+            },
+            {
+              "id": "b",
+              "text": "10 rolos por caixa"
+            },
+            {
+              "id": "c",
+              "text": "25 rolos por caixa"
+            },
+            {
+              "id": "d",
+              "text": "100 rolos por caixa"
+            }
+          ],
+          "answer": [
+            "b"
+          ],
+          "explanation": "Q5 = 5 rolos, Q10 = 10 rolos e Q25 = 25 rolos por caixa."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "part-number"
+      ]
+    },
+    {
+      "id": "R-11",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 1,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "En el número de parte 15-S55KQ10-1000, ¿qué representa el sufijo -1000?",
+          "options": [
+            {
+              "id": "a",
+              "text": "100 m de longitud"
+            },
+            {
+              "id": "b",
+              "text": "600 m de longitud"
+            },
+            {
+              "id": "c",
+              "text": "1000 m de longitud"
+            },
+            {
+              "id": "d",
+              "text": "1200 m de longitud"
+            }
+          ],
+          "answer": [
+            "c"
+          ],
+          "explanation": "El sufijo indica la longitud del ribbon en metros; -1000 corresponde a 1000 m."
+        },
+        "en": {
+          "q": "In part number 15-S55KQ10-1000, what does the -1000 suffix represent?",
+          "options": [
+            {
+              "id": "a",
+              "text": "100 m length"
+            },
+            {
+              "id": "b",
+              "text": "600 m length"
+            },
+            {
+              "id": "c",
+              "text": "1000 m length"
+            },
+            {
+              "id": "d",
+              "text": "1200 m length"
+            }
+          ],
+          "answer": [
+            "c"
+          ],
+          "explanation": "The suffix is the ribbon length in metres; -1000 means 1000 m."
+        },
+        "pt": {
+          "q": "No número de peça 15-S55KQ10-1000, o que representa o sufixo -1000?",
+          "options": [
+            {
+              "id": "a",
+              "text": "100 m de comprimento"
+            },
+            {
+              "id": "b",
+              "text": "600 m de comprimento"
+            },
+            {
+              "id": "c",
+              "text": "1000 m de comprimento"
+            },
+            {
+              "id": "d",
+              "text": "1200 m de comprimento"
+            }
+          ],
+          "answer": [
+            "c"
+          ],
+          "explanation": "O sufixo indica o comprimento do ribbon em metros; -1000 corresponde a 1000 m."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "part-number"
+      ]
+    },
+    {
+      "id": "R-12",
+      "type": "fill",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Cómo se llama la capa protectora que recubre el lado posterior de la película del ribbon?",
+          "fields": [
+            {
+              "label": "Capa",
+              "unit": "",
+              "answers": [
+                "backcoat",
+                "back coat",
+                "backcoating",
+                "back-coating"
+              ],
+              "tolerance": 0
+            }
+          ],
+          "explanation": "El backcoat protege el lado posterior de la película PET y ayuda a soportar el calor y la fricción del cabezal."
+        },
+        "en": {
+          "q": "What is the protective layer on the back side of the ribbon film called?",
+          "fields": [
+            {
+              "label": "Layer",
+              "unit": "",
+              "answers": [
+                "backcoat",
+                "back coat",
+                "backcoating",
+                "back-coating"
+              ],
+              "tolerance": 0
+            }
+          ],
+          "explanation": "The backcoat protects the back of the PET film and helps it withstand printhead heat and friction."
+        },
+        "pt": {
+          "q": "Como se chama a camada protetora no lado posterior do filme do ribbon?",
+          "fields": [
+            {
+              "label": "Camada",
+              "unit": "",
+              "answers": [
+                "backcoat",
+                "back coat",
+                "backcoating",
+                "back-coating"
+              ],
+              "tolerance": 0
+            }
+          ],
+          "explanation": "O backcoat protege o lado posterior do filme PET e ajuda a suportar o calor e o atrito do cabeçote."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "structure"
+      ]
+    },
+    {
+      "id": "R-13",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 1,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿De qué material es la película base de un ribbon de transferencia térmica?",
+          "options": [
+            {
+              "id": "a",
+              "text": "PET (poliéster)"
+            },
+            {
+              "id": "b",
+              "text": "PVC"
+            },
+            {
+              "id": "c",
+              "text": "Papel"
+            },
+            {
+              "id": "d",
+              "text": "Aluminio"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "La formación describe el ribbon como una película PET con tinta termofusible, backcoat y capas de imprimación/liberación."
+        },
+        "en": {
+          "q": "What material is the base film of a thermal transfer ribbon made of?",
+          "options": [
+            {
+              "id": "a",
+              "text": "PET (polyester)"
+            },
+            {
+              "id": "b",
+              "text": "PVC"
+            },
+            {
+              "id": "c",
+              "text": "Paper"
+            },
+            {
+              "id": "d",
+              "text": "Aluminium"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "The training describes the ribbon as a PET film with hot-melt ink, backcoat and primer/release layers."
+        },
+        "pt": {
+          "q": "De que material é feito o filme base de um ribbon de transferência térmica?",
+          "options": [
+            {
+              "id": "a",
+              "text": "PET (poliéster)"
+            },
+            {
+              "id": "b",
+              "text": "PVC"
+            },
+            {
+              "id": "c",
+              "text": "Papel"
+            },
+            {
+              "id": "d",
+              "text": "Alumínio"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "O treinamento descreve o ribbon como um filme PET com tinta termofusível, backcoat e camadas de imprimação/liberação."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "structure"
+      ]
+    },
+    {
+      "id": "R-14",
+      "type": "describe",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 3,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "Describe la estructura de un ribbon de transferencia térmica y las condiciones recomendadas de almacenamiento.",
+          "model": "Estructura: película base de PET; capa backcoat en el reverso; capa de imprimación/liberación; capa superior de tinta termofusible.\nAlmacenamiento: entre 5 °C y 35 °C, con humedad relativa entre 20 % y 80 %.\nEl frío puede producir telescopado/descamado reversible; el calor alto puede producir blocking irreversible.",
+          "rubric": [
+            {
+              "es": "Menciona la película PET y la tinta termofusible.",
+              "en": "Mentions the PET film and hot-melt ink.",
+              "pt": "Menciona o filme PET e a tinta termofusível."
+            },
+            {
+              "es": "Incluye el backcoat y la capa de imprimación/liberación.",
+              "en": "Includes backcoat and primer/release layer.",
+              "pt": "Inclui backcoat e camada de imprimação/liberação."
+            },
+            {
+              "es": "Indica 5–35 °C y 20–80 % de humedad.",
+              "en": "States 5–35 °C and 20–80 % humidity.",
+              "pt": "Indica 5–35 °C e 20–80 % de umidade."
+            },
+            {
+              "es": "Distingue telescopado reversible de blocking irreversible.",
+              "en": "Distinguishes reversible telescoping from irreversible blocking.",
+              "pt": "Distingue telescopagem reversível de blocking irreversível."
+            }
+          ]
+        },
+        "en": {
+          "q": "Describe the structure of a thermal transfer ribbon and the recommended storage conditions.",
+          "model": "Structure: PET base film; backcoat on the reverse; primer/release layer; top layer of hot-melt ink.\nStorage: between 5 °C and 35 °C, with relative humidity between 20 % and 80 %.\nCold can cause reversible telescoping/flaking; high heat can cause irreversible blocking.",
+          "rubric": [
+            {
+              "es": "Menciona la película PET y la tinta termofusible.",
+              "en": "Mentions the PET film and hot-melt ink.",
+              "pt": "Menciona o filme PET e a tinta termofusível."
+            },
+            {
+              "es": "Incluye el backcoat y la capa de imprimación/liberación.",
+              "en": "Includes backcoat and primer/release layer.",
+              "pt": "Inclui backcoat e camada de imprimação/liberação."
+            },
+            {
+              "es": "Indica 5–35 °C y 20–80 % de humedad.",
+              "en": "States 5–35 °C and 20–80 % humidity.",
+              "pt": "Indica 5–35 °C e 20–80 % de umidade."
+            },
+            {
+              "es": "Distingue telescopado reversible de blocking irreversible.",
+              "en": "Distinguishes reversible telescoping from irreversible blocking.",
+              "pt": "Distingue telescopagem reversível de blocking irreversível."
+            }
+          ]
+        },
+        "pt": {
+          "q": "Descreva a estrutura de um ribbon de transferência térmica e as condições recomendadas de armazenamento.",
+          "model": "Estrutura: filme base de PET; backcoat no verso; camada de imprimação/liberação; camada superior de tinta termofusível.\nArmazenamento: entre 5 °C e 35 °C, com umidade relativa entre 20 % e 80 %.\nO frio pode causar telescopagem/descamação reversível; o calor alto pode causar blocking irreversível.",
+          "rubric": [
+            {
+              "es": "Menciona la película PET y la tinta termofusible.",
+              "en": "Mentions the PET film and hot-melt ink.",
+              "pt": "Menciona o filme PET e a tinta termofusível."
+            },
+            {
+              "es": "Incluye el backcoat y la capa de imprimación/liberación.",
+              "en": "Includes backcoat and primer/release layer.",
+              "pt": "Inclui backcoat e camada de imprimação/liberação."
+            },
+            {
+              "es": "Indica 5–35 °C y 20–80 % de humedad.",
+              "en": "States 5–35 °C and 20–80 % humidity.",
+              "pt": "Indica 5–35 °C e 20–80 % de umidade."
+            },
+            {
+              "es": "Distingue telescopado reversible de blocking irreversible.",
+              "en": "Distinguishes reversible telescoping from irreversible blocking.",
+              "pt": "Distingue telescopagem reversível de blocking irreversível."
+            }
+          ]
+        }
+      },
+      "tags": [
+        "ribbon",
+        "structure",
+        "storage"
+      ]
+    },
+    {
+      "id": "B-01",
+      "type": "single",
+      "models": [
+        "6320",
+        "6420",
+        "6330",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Cuál es el número de parte de la placa lateral del soporte universal TTO?",
+          "options": [
+            {
+              "id": "a",
+              "text": "386659"
+            },
+            {
+              "id": "b",
+              "text": "386660"
+            },
+            {
+              "id": "c",
+              "text": "216368"
+            },
+            {
+              "id": "d",
+              "text": "215965"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "La guía del soporte universal identifica la placa lateral del soporte con P/N 386659 y la placa lateral de la unidad de registro con P/N 386660."
+        },
+        "en": {
+          "q": "What is the part number of the TTO universal bracket side plate?",
+          "options": [
+            {
+              "id": "a",
+              "text": "386659"
+            },
+            {
+              "id": "b",
+              "text": "386660"
+            },
+            {
+              "id": "c",
+              "text": "216368"
+            },
+            {
+              "id": "d",
+              "text": "215965"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "The universal bracket guide identifies the bracket side plate as P/N 386659 and the registration unit side plate as P/N 386660."
+        },
+        "pt": {
+          "q": "Qual é o número de peça da placa lateral do suporte universal TTO?",
+          "options": [
+            {
+              "id": "a",
+              "text": "386659"
+            },
+            {
+              "id": "b",
+              "text": "386660"
+            },
+            {
+              "id": "c",
+              "text": "216368"
+            },
+            {
+              "id": "d",
+              "text": "215965"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "O guia do suporte universal identifica a placa lateral do suporte como P/N 386659 e a placa lateral da unidade de registro como P/N 386660."
+        }
+      },
+      "tags": [
+        "brackets",
+        "part-number"
+      ]
+    },
+    {
+      "id": "B-02",
+      "type": "single",
+      "models": [
+        "6320",
+        "6420",
+        "6330",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Cuál es el número de parte de la placa lateral de la unidad de registro del soporte universal?",
+          "options": [
+            {
+              "id": "a",
+              "text": "386659"
+            },
+            {
+              "id": "b",
+              "text": "386660"
+            },
+            {
+              "id": "c",
+              "text": "216368"
+            },
+            {
+              "id": "d",
+              "text": "403250"
+            }
+          ],
+          "answer": [
+            "b"
+          ],
+          "explanation": "El documento del soporte universal asigna P/N 386660 a la placa lateral de la unidad de registro."
+        },
+        "en": {
+          "q": "What is the part number of the registration unit side plate for the universal bracket?",
+          "options": [
+            {
+              "id": "a",
+              "text": "386659"
+            },
+            {
+              "id": "b",
+              "text": "386660"
+            },
+            {
+              "id": "c",
+              "text": "216368"
+            },
+            {
+              "id": "d",
+              "text": "403250"
+            }
+          ],
+          "answer": [
+            "b"
+          ],
+          "explanation": "The universal bracket document assigns P/N 386660 to the registration unit side plate."
+        },
+        "pt": {
+          "q": "Qual é o número de peça da placa lateral da unidade de registro do suporte universal?",
+          "options": [
+            {
+              "id": "a",
+              "text": "386659"
+            },
+            {
+              "id": "b",
+              "text": "386660"
+            },
+            {
+              "id": "c",
+              "text": "216368"
+            },
+            {
+              "id": "d",
+              "text": "403250"
+            }
+          ],
+          "answer": [
+            "b"
+          ],
+          "explanation": "O documento do suporte universal atribui P/N 386660 à placa lateral da unidade de registro."
+        }
+      },
+      "tags": [
+        "brackets",
+        "part-number"
+      ]
+    },
+    {
+      "id": "B-03",
+      "type": "single",
+      "models": [
+        "6320",
+        "6420",
+        "6230",
+        "6330",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué número de parte corresponde a las placas laterales del conjunto de soporte universal?",
+          "options": [
+            {
+              "id": "a",
+              "text": "216368"
+            },
+            {
+              "id": "b",
+              "text": "386659"
+            },
+            {
+              "id": "c",
+              "text": "215965"
+            },
+            {
+              "id": "d",
+              "text": "403250"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "La lista de materiales del soporte universal usa 216368 para las placas laterales del conjunto; 215965 es la almohadilla de impresión."
+        },
+        "en": {
+          "q": "Which part number corresponds to the universal bracket assembly side plates?",
+          "options": [
+            {
+              "id": "a",
+              "text": "216368"
+            },
+            {
+              "id": "b",
+              "text": "386659"
+            },
+            {
+              "id": "c",
+              "text": "215965"
+            },
+            {
+              "id": "d",
+              "text": "403250"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "The universal bracket bill of materials uses 216368 for the assembly side plates; 215965 is the print pad."
+        },
+        "pt": {
+          "q": "Qual número de peça corresponde às placas laterais do conjunto de suporte universal?",
+          "options": [
+            {
+              "id": "a",
+              "text": "216368"
+            },
+            {
+              "id": "b",
+              "text": "386659"
+            },
+            {
+              "id": "c",
+              "text": "215965"
+            },
+            {
+              "id": "d",
+              "text": "403250"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "A lista de materiais do suporte universal usa 216368 para as placas laterais do conjunto; 215965 é a almofada de impressão."
+        }
+      },
+      "tags": [
+        "brackets",
+        "part-number"
+      ]
+    },
+    {
+      "id": "B-04",
+      "type": "single",
+      "models": [
+        "6320",
+        "6420",
+        "6230",
+        "6330",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Cuál es el número de parte de la almohadilla de impresión (print pad) del soporte universal?",
+          "options": [
+            {
+              "id": "a",
+              "text": "215965"
+            },
+            {
+              "id": "b",
+              "text": "216368"
+            },
+            {
+              "id": "c",
+              "text": "386659"
+            },
+            {
+              "id": "d",
+              "text": "403267"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "La guía indica 215965 para la almohadilla de impresión; se vende en paquetes de 10 unidades."
+        },
+        "en": {
+          "q": "What is the part number of the universal bracket print pad?",
+          "options": [
+            {
+              "id": "a",
+              "text": "215965"
+            },
+            {
+              "id": "b",
+              "text": "216368"
+            },
+            {
+              "id": "c",
+              "text": "386659"
+            },
+            {
+              "id": "d",
+              "text": "403267"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "The guide lists 215965 for the print pad; it is supplied in packs of 10."
+        },
+        "pt": {
+          "q": "Qual é o número de peça da almofada de impressão (print pad) do suporte universal?",
+          "options": [
+            {
+              "id": "a",
+              "text": "215965"
+            },
+            {
+              "id": "b",
+              "text": "216368"
+            },
+            {
+              "id": "c",
+              "text": "386659"
+            },
+            {
+              "id": "d",
+              "text": "403267"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "O guia indica 215965 para a almofada de impressão; é fornecida em pacotes de 10 unidades."
+        }
+      },
+      "tags": [
+        "brackets",
+        "part-number"
+      ]
+    },
+    {
+      "id": "B-05",
+      "type": "single",
+      "models": [
+        "6210"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué número de parte identifica el soporte universal para la Videojet 6210?",
+          "options": [
+            {
+              "id": "a",
+              "text": "403250"
+            },
+            {
+              "id": "b",
+              "text": "403267"
+            },
+            {
+              "id": "c",
+              "text": "216368"
+            },
+            {
+              "id": "d",
+              "text": "386660"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "La lista de bracketry 6210/6220 indica 403250 Universal VJ6210 Bracket Assy; 403267 es el Registration Bracket."
+        },
+        "en": {
+          "q": "Which part number identifies the universal bracket for the Videojet 6210?",
+          "options": [
+            {
+              "id": "a",
+              "text": "403250"
+            },
+            {
+              "id": "b",
+              "text": "403267"
+            },
+            {
+              "id": "c",
+              "text": "216368"
+            },
+            {
+              "id": "d",
+              "text": "386660"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "The 6210/6220 bracketry list shows 403250 Universal VJ6210 Bracket Assy; 403267 is the Registration Bracket."
+        },
+        "pt": {
+          "q": "Qual número de peça identifica o suporte universal para a Videojet 6210?",
+          "options": [
+            {
+              "id": "a",
+              "text": "403250"
+            },
+            {
+              "id": "b",
+              "text": "403267"
+            },
+            {
+              "id": "c",
+              "text": "216368"
+            },
+            {
+              "id": "d",
+              "text": "386660"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "A lista de bracketry 6210/6220 indica 403250 Universal VJ6210 Bracket Assy; 403267 é o Registration Bracket."
+        }
+      },
+      "tags": [
+        "brackets",
+        "6210"
+      ]
+    },
+    {
+      "id": "B-06",
+      "type": "multi",
+      "models": [
+        "6320",
+        "6420"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "Para la familia DataFlex 6320/6420, ¿qué números SAR corresponden al soporte de instalación intermitente y al continuo?",
+          "options": [
+            {
+              "id": "a",
+              "text": "SAR03044 — intermitente"
+            },
+            {
+              "id": "b",
+              "text": "SAR03045 — continuo"
+            },
+            {
+              "id": "c",
+              "text": "SAR03046 — intermitente"
+            },
+            {
+              "id": "d",
+              "text": "SAR03047 — continuo"
+            }
+          ],
+          "answer": [
+            "a",
+            "b"
+          ],
+          "explanation": "SAR03044 es el soporte de instalación para aplicación intermitente y SAR03045 el de aplicación continua; SAR03046 es el kit de rodillo de registro y SAR03047 el rodillo de impresión cortado a medida."
+        },
+        "en": {
+          "q": "For the DataFlex 6320/6420 family, which SAR numbers correspond to the intermittent and continuous installation brackets?",
+          "options": [
+            {
+              "id": "a",
+              "text": "SAR03044 — intermittent"
+            },
+            {
+              "id": "b",
+              "text": "SAR03045 — continuous"
+            },
+            {
+              "id": "c",
+              "text": "SAR03046 — intermittent"
+            },
+            {
+              "id": "d",
+              "text": "SAR03047 — continuous"
+            }
+          ],
+          "answer": [
+            "a",
+            "b"
+          ],
+          "explanation": "SAR03044 is the intermittent application installation bracket and SAR03045 the continuous one; SAR03046 is the registration roller kit and SAR03047 the cut-to-size print roller."
+        },
+        "pt": {
+          "q": "Para a família DataFlex 6320/6420, quais números SAR correspondem ao suporte de instalação intermitente e ao contínuo?",
+          "options": [
+            {
+              "id": "a",
+              "text": "SAR03044 — intermitente"
+            },
+            {
+              "id": "b",
+              "text": "SAR03045 — contínuo"
+            },
+            {
+              "id": "c",
+              "text": "SAR03046 — intermitente"
+            },
+            {
+              "id": "d",
+              "text": "SAR03047 — contínuo"
+            }
+          ],
+          "answer": [
+            "a",
+            "b"
+          ],
+          "explanation": "SAR03044 é o suporte de instalação para aplicação intermitente e SAR03045 o de aplicação contínua; SAR03046 é o kit de rolo de registro e SAR03047 o rolo de impressão cortado sob medida."
+        }
+      },
+      "tags": [
+        "brackets",
+        "6320",
+        "6420"
+      ]
+    },
+    {
+      "id": "B-07",
+      "type": "fill",
+      "models": [
+        "6320",
+        "6420"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué número de parte tiene el kit de rodillo de registro para DataFlex 6320/6420?",
+          "fields": [
+            {
+              "label": "Kit",
+              "unit": "",
+              "answers": [
+                "SAR03046"
+              ],
+              "tolerance": 0
+            }
+          ],
+          "explanation": "La lista SAR para 6320/6420 indica SAR03046 Registration Roller Kit, que puede ser necesario con longitudes de bolsa variables."
+        },
+        "en": {
+          "q": "What is the part number of the registration roller kit for DataFlex 6320/6420?",
+          "fields": [
+            {
+              "label": "Kit",
+              "unit": "",
+              "answers": [
+                "SAR03046"
+              ],
+              "tolerance": 0
+            }
+          ],
+          "explanation": "The 6320/6420 SAR list shows SAR03046 Registration Roller Kit, which may be required with varying bag lengths."
+        },
+        "pt": {
+          "q": "Qual é o número de peça do kit de rolo de registro para DataFlex 6320/6420?",
+          "fields": [
+            {
+              "label": "Kit",
+              "unit": "",
+              "answers": [
+                "SAR03046"
+              ],
+              "tolerance": 0
+            }
+          ],
+          "explanation": "A lista SAR para 6320/6420 indica SAR03046 Registration Roller Kit, que pode ser necessário com comprimentos de bolsa variáveis."
+        }
+      },
+      "tags": [
+        "brackets",
+        "6320",
+        "6420"
+      ]
+    },
+    {
+      "id": "B-08",
+      "type": "multi",
+      "models": [
+        "6320",
+        "6420",
+        "6230",
+        "6330",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Cuáles de estos elementos forman parte del conjunto de soporte universal TTO?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Placas laterales"
+            },
+            {
+              "id": "b",
+              "text": "Tubos de soporte"
+            },
+            {
+              "id": "c",
+              "text": "Rodillos de desvío"
+            },
+            {
+              "id": "d",
+              "text": "Cabezal de impresión"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "El conjunto incluye placas laterales, tubos de soporte, rodillos de desvío, tapas, rodamientos, ejes y placa de montaje; el cabezal es un componente de la impresora, no del soporte."
+        },
+        "en": {
+          "q": "Which of these elements are part of the TTO universal bracket assembly?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Side plates"
+            },
+            {
+              "id": "b",
+              "text": "Support tubes"
+            },
+            {
+              "id": "c",
+              "text": "Diversion rollers"
+            },
+            {
+              "id": "d",
+              "text": "Printhead"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "The assembly includes side plates, support tubes, diversion rollers, caps, bearings, axles and mounting platen; the printhead is a printer component, not part of the bracket."
+        },
+        "pt": {
+          "q": "Quais destes elementos fazem parte do conjunto de suporte universal TTO?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Placas laterais"
+            },
+            {
+              "id": "b",
+              "text": "Tubos de suporte"
+            },
+            {
+              "id": "c",
+              "text": "Rolos de desvio"
+            },
+            {
+              "id": "d",
+              "text": "Cabeçote de impressão"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "O conjunto inclui placas laterais, tubos de suporte, rolos de desvio, tampas, rolamentos, eixos e placa de montagem; o cabeçote é um componente da impressora, não do suporte."
+        }
+      },
+      "tags": [
+        "brackets",
+        "components"
+      ]
+    }
+  ]
+}
