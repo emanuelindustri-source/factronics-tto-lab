@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -47,6 +48,8 @@ import android.widget.Toast;
 
 import com.factronics.tto.lab.Bank.Question;
 
+import io.nayuki.qrcodegen.QrCode;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -56,6 +59,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.TimeZone;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -1001,7 +1005,6 @@ public class MainActivity extends Activity {
             public void afterTextChanged(Editable s) { studentEmail = s.toString().trim(); saveStudentPrefs(); }
         });
         card.addView(email, top(5));
-        card.addView(text(t("report_recipients") + ": khristyan.hidalgo@factronics.com.ve · emanuel.industri@gmail.com", 9, MUT, false), top(8));
         return card;
     }
 
@@ -2045,9 +2048,14 @@ public class MainActivity extends Activity {
         }
         c.addView(scoreCard);
 
-        Button report = button(t("report_send"), true);
+        LinearLayout reportActions = row();
+        Button report = button(t("report_pdf"), true);
         report.setOnClickListener(v -> shareReportPdf(r));
-        c.addView(report, top(12));
+        Button qrCard = button(t("qr_card"), false);
+        qrCard.setOnClickListener(v -> shareQrCard(r));
+        reportActions.addView(report, weight());
+        reportActions.addView(qrCard, weightLeft(8));
+        c.addView(reportActions, top(12));
 
         LinearLayout actions = row();
         Button retry = button(t("res_retry"), true);
@@ -2256,16 +2264,6 @@ public class MainActivity extends Activity {
         return join(models, " + ");
     }
 
-    private String reportBody(Result r, int pct) {
-        String name = studentName();
-        return t("report_email_body")
-                .replace("{name}", name.isEmpty() ? "—" : name)
-                .replace("{email}", studentEmail.isEmpty() ? "—" : studentEmail)
-                .replace("{score}", String.valueOf(pct))
-                .replace("{models}", exam == null ? "" : examModels())
-                .replace("{date}", new SimpleDateFormat("dd MMM yyyy", Locale.forLanguageTag(lang)).format(new Date()))
-                .replace("{code}", reportCode(r));
-    }
 
     private File createReportPdf(Result r) {
         if (exam == null || r == null) return null;
@@ -2340,6 +2338,11 @@ public class MainActivity extends Activity {
                 y += 17;
             }
 
+            Bitmap qr = makeQrBitmap(resultUrl(r, reportCode(r)), 120);
+            if (qr != null) {
+                c.drawBitmap(qr, 430, 586, null);
+                pdfText(c, t("qr_scan"), 430, 722, 6.5f, 0xFF647D93, false);
+            }
             pdfText(c, t("report_footer"), 32, 786, 7, 0xFF647D93, false);
             pdfText(c, t("report_code") + ": " + reportCode(r), 32, 800, 7.5f, 0xFF2F465C, true);
             pdfLine(c, 400, 804, 563, 804, 0xFF8FA9C0, 0.8f);
@@ -2400,6 +2403,202 @@ public class MainActivity extends Activity {
         return clean.length() <= max ? clean : clean.substring(0, Math.max(1, max - 1)) + "…";
     }
 
+    private Bitmap makeQrBitmap(String text, int sizePx) {
+        try {
+            QrCode qr = QrCode.encodeText(text, QrCode.Ecc.MEDIUM);
+            int quiet = 4;
+            int modules = qr.size + quiet * 2;
+            int scale = Math.max(1, sizePx / modules);
+            int side = modules * scale;
+            Bitmap bitmap = Bitmap.createBitmap(side, side, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            canvas.drawColor(WHITE);
+            Paint paint = new Paint();
+            paint.setColor(0xFF0A1B2C);
+            for (int y = 0; y < qr.size; y++) {
+                for (int x = 0; x < qr.size; x++) {
+                    if (qr.getModule(x, y)) {
+                        canvas.drawRect((x + quiet) * scale, (y + quiet) * scale,
+                                (x + quiet + 1) * scale, (y + quiet + 1) * scale, paint);
+                    }
+                }
+            }
+            return bitmap;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private static String fnv(String text) {
+        int h = 0x811c9dc5;
+        byte[] bytes = text.getBytes(StandardCharsets.UTF_8);
+        for (byte b : bytes) {
+            h ^= b & 0xFF;
+            h *= 0x01000193;
+        }
+        String hex = Long.toHexString(h & 0xFFFFFFFFL);
+        while (hex.length() < 8) hex = "0" + hex;
+        return hex;
+    }
+
+    private static String jsonNumber(double value) {
+        double rounded = Math.round(value * 100.0) / 100.0;
+        if (rounded == Math.rint(rounded)) return String.valueOf((long) rounded);
+        return String.valueOf(rounded);
+    }
+
+    private String resultCanonical(Result r, String code) {
+        String date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US) {{
+            setTimeZone(TimeZone.getTimeZone("UTC"));
+        }}.format(new Date(exam.finishedAt > 0 ? exam.finishedAt : System.currentTimeMillis()));
+        StringBuilder b = new StringBuilder();
+        b.append("{\"v\":1,\"n\":").append(JSONObject.quote(studentName()));
+        b.append(",\"e\":").append(JSONObject.quote(studentEmail));
+        b.append(",\"s\":").append(Math.round(r.total == 0 ? 0 : r.points / r.total * 100));
+        b.append(",\"p\":").append(jsonNumber(r.points));
+        b.append(",\"t\":").append(r.total);
+        b.append(",\"d\":").append(JSONObject.quote(date));
+        b.append(",\"m\":[");
+        for (int i = 0; i < examModelsList().size(); i++) {
+            if (i > 0) b.append(',');
+            b.append(JSONObject.quote(examModelsList().get(i)));
+        }
+        b.append("],\"y\":[");
+        for (int i = 0; i < exam.qs.size(); i++) {
+            // unique types in encounter order
+            String type = exam.qs.get(i).type;
+            boolean seen = false;
+            for (int j = 0; j < i; j++) if (exam.qs.get(j).type.equals(type)) { seen = true; break; }
+            if (seen) continue;
+            if (b.charAt(b.length() - 1) != '[') b.append(',');
+            b.append(JSONObject.quote(type));
+        }
+        b.append("],\"c\":").append(JSONObject.quote(code));
+        b.append(",\"b\":{");
+        boolean first = true;
+        for (String type : TYPE_ORDER) {
+            double[] values = r.byType.get(type);
+            if (values == null || values[0] == 0) continue;
+            if (!first) b.append(',');
+            first = false;
+            b.append(JSONObject.quote(type)).append(':').append(Math.round(values[1] / values[0] * 100));
+        }
+        b.append("},\"l\":").append(JSONObject.quote(lang)).append('}');
+        return b.toString();
+    }
+
+    private List<String> examModelsList() {
+        List<String> out = new ArrayList<>();
+        if (exam == null) return out;
+        for (Question q : exam.qs) for (String m : q.models) if (!out.contains(m)) out.add(m);
+        return out;
+    }
+
+    private String resultUrl(Result r, String code) {
+        String canonical = resultCanonical(r, code);
+        String hash = fnv(canonical);
+        String payload = canonical.substring(0, canonical.length() - 1) + ",\"h\":\"" + hash + "\"}";
+        String encoded = Base64.encodeToString(payload.getBytes(StandardCharsets.UTF_8),
+                Base64.URL_SAFE | Base64.NO_WRAP | Base64.NO_PADDING);
+        return "https://emanuelindustri-source.github.io/factronics-tto-lab/resultado/?d=" + encoded;
+    }
+
+    private Bitmap createQrCard(Result r, String code, String url) {
+        int w = 1080, h = 1350;
+        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bitmap);
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        p.setShader(new LinearGradient(0, 0, w, 0, 0xFF072A49, 0xFF00A3E0, Shader.TileMode.CLAMP));
+        c.drawRect(0, 0, w, 280, p);
+        p.setShader(null);
+        p.setColor(WHITE);
+        p.setTextSize(38);
+        p.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        c.drawText("FACTRONICS TTO LAB", 60, 105, p);
+        p.setTextSize(22);
+        p.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+        p.setColor(0xFFC8E8FA);
+        c.drawText(t("report_subtitle"), 60, 142, p);
+        p.setTextSize(44);
+        p.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        p.setColor(WHITE);
+        c.drawText(t("qr_title"), 60, 220, p);
+        p.setColor(WHITE);
+        c.drawRoundRect(new RectF(40, 240, 1040, 1280), 24, 24, p);
+        p.setColor(0xFF0A1B2C);
+        p.setTextSize(56);
+        p.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        c.drawText(studentName().isEmpty() ? "—" : studentName(), 90, 340, p);
+        p.setColor(0xFF556B7E);
+        p.setTextSize(26);
+        p.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+        c.drawText(studentEmail.isEmpty() ? "—" : studentEmail, 90, 392, p);
+        int pct = r.total == 0 ? 0 : (int) Math.round(r.points / r.total * 100);
+        p.setColor(pct >= 70 ? 0xFF0B7A58 : 0xFFB3261E);
+        p.setTextSize(120);
+        p.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        c.drawText(pct + "%", 86, 545, p);
+        p.setColor(0xFF0A1B2C);
+        p.setTextSize(34);
+        c.drawText(pct >= 70 ? t("res_pass") : t("res_fail"), 92, 610, p);
+        p.setColor(0xFF556B7E);
+        p.setTextSize(24);
+        p.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+        c.drawText(fmt(r.points) + " / " + r.total + " " + t("res_points"), 92, 654, p);
+        c.drawText(t("report_date") + ": " + formatDate(exam.finishedAt > 0 ? exam.finishedAt : System.currentTimeMillis()), 92, 704, p);
+        c.drawText(t("report_models") + ": " + join(examModelsList(), " + "), 92, 744, p);
+        c.drawText(t("report_code") + ": " + code, 92, 784, p);
+        Bitmap qr = makeQrBitmap(url, 330);
+        if (qr != null) {
+            c.drawBitmap(qr, 620, 380, null);
+        }
+        p.setColor(0xFF0A1B2C);
+        p.setTextSize(22);
+        p.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        c.drawText(t("qr_scan"), 620, 750, p);
+        p.setColor(0xFF0B7A58);
+        p.setTextSize(24);
+        c.drawText(t("qr_integrity_ok"), 90, 890, p);
+        p.setColor(0xFF556B7E);
+        p.setTextSize(20);
+        p.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+        pdfWrapped(c, t("report_footer"), 90, 1200, 900, 20, 0xFF556B7E, false, 26, 2);
+        return bitmap;
+    }
+
+    private File savePng(Bitmap bitmap, String prefix) {
+        try {
+            File file = new File(getCacheDir(), prefix + "-" + System.currentTimeMillis() + ".png");
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.close();
+            return file;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private void shareQrCard(Result r) {
+        if (exam == null || r == null) { toast(t("report_no_data")); return; }
+        int pct = r.total == 0 ? 0 : (int) Math.round(r.points / r.total * 100);
+        String code = reportCode(r);
+        String url = resultUrl(r, code);
+        Bitmap bitmap = createQrCard(r, code, url);
+        File file = savePng(bitmap, "Factronics-TTO-Lab-QR");
+        if (file == null) { toast(t("qr_invalid")); return; }
+        Uri uri = ReportProvider.uriFor(this, file);
+        Intent send = new Intent(Intent.ACTION_SEND);
+        send.setType("image/png");
+        send.putExtra(Intent.EXTRA_SUBJECT, "Factronics TTO Lab · " + pct + "%");
+        send.putExtra(Intent.EXTRA_STREAM, uri);
+        send.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        try {
+            startActivity(Intent.createChooser(send, t("qr_share")));
+        } catch (Exception e) {
+            toast(t("qr_invalid"));
+        }
+    }
+
     private void shareReportPdf(Result r) {
         if (exam == null || r == null) { toast(t("report_no_data")); return; }
         File pdf = createReportPdf(r);
@@ -2408,17 +2607,14 @@ public class MainActivity extends Activity {
         int pct = r.total == 0 ? 0 : (int) Math.round(r.points / r.total * 100);
         Intent send = new Intent(Intent.ACTION_SEND);
         send.setType("application/pdf");
-        send.putExtra(Intent.EXTRA_EMAIL, new String[]{"khristyan.hidalgo@factronics.com.ve", "emanuel.industri@gmail.com"});
-        send.putExtra(Intent.EXTRA_SUBJECT, t("report_email_subject")
-                .replace("{name}", studentName())
-                .replace("{score}", String.valueOf(pct)));
-        send.putExtra(Intent.EXTRA_TEXT, reportBody(r, pct));
+        send.putExtra(Intent.EXTRA_SUBJECT, "Factronics TTO Lab ? " + pct + "%");
+        send.putExtra(Intent.EXTRA_TEXT, t("report_pdf") + " ? " + t("qr_scan"));
         send.putExtra(Intent.EXTRA_STREAM, uri);
         send.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         try {
-            startActivity(Intent.createChooser(send, t("report_send")));
+            startActivity(Intent.createChooser(send, t("report_pdf")));
         } catch (Exception e) {
-            toast(t("report_no_email"));
+            toast(t("import_error"));
         }
     }
 
