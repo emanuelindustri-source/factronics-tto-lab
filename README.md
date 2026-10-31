@@ -23,6 +23,10 @@ Entrenamiento técnico para impresoras **Videojet TTO** (Thermal Transfer Overpr
 | Progreso, historial, cuaderno de errores y repaso espaciado | Sí |
 | Biblioteca de preguntas con búsqueda y filtros | Sí |
 | Constancia de aprovechamiento imprimible | Sí |
+| Identificación del participante (nombre, apellido, correo) | Sí |
+| Informe A4 con logo, puntaje, desglose y detalle | Sí |
+| Envío del informe por correo con destinatarios precargados | Sí |
+| Partículas y animaciones modernas (con movimiento reducido) | Sí |
 | Aplicación Android nativa (Java, sin WebView) | Sí |
 | APK firmado y descargable | Sí |
 | Español / English / Português | Sí |
@@ -68,6 +72,10 @@ Características:
 - Historial de intentos, promedio, mejor nota, racha, cuaderno de errores y repaso espaciado con vencimientos.
 - Biblioteca de preguntas con búsqueda por texto, opciones, tipo y modelo, con paginación completa.
 - Constancia de aprovechamiento imprimible con código de referencia y aviso legal.
+- **Identificación del participante:** nombre, apellido y correo obligatorios antes de iniciar.
+- **Informe para el jefe:** documento A4 con logo, puntaje, desglose por tipo y detalle de preguntas.
+- **Envío por correo:** abre la app de correo con los destinatarios precargados; en Android adjunta el PDF.
+- **Partículas y animaciones:** movimiento suave, contadores y revelado al hacer scroll, con respeto a `prefers-reduced-motion`.
 - Exportar/importar progreso en JSON entre perfiles y dispositivos.
 - Cronómetro, mapa de preguntas, marcado para revisar y navegación.
 - Resultados con desglose por tipo, autoevaluación de preguntas abiertas, CSV e impresión/PDF.
@@ -78,19 +86,21 @@ Características:
 
 - Java nativo, sin AndroidX, sin WebView y sin dependencias externas.
 - Pantallas de configuración, examen y resultados construidas programáticamente.
+- Identificación obligatoria: nombre, apellido y correo.
 - Modos **Examen**, **Estudio** y **Repaso**, igual que la versión web.
 - Estudio con botón **Comprobar** en selección múltiple, completar y cálculo.
 - Progreso local: historial, promedio, mejor nota, racha, cuaderno de errores y repaso espaciado.
 - Guardado automático y **reanudar sesión** tras cerrar o reiniciar la app; durante el examen se puede **guardar y salir**.
 - Biblioteca de preguntas con búsqueda por texto, tipo y modelo, y **Mostrar más**.
 - Cantidad y duración personalizadas, además de los valores rápidos.
+- **Informe PDF A4** con logo, puntaje, desglose y detalle; se comparte con los destinatarios precargados y el PDF adjunto.
 - Tema claro/oscuro con detección del tema del sistema y botón de cambio.
 - Icono adaptativo para Android 8+.
 - Compartir resultado, exportar progreso por hoja de compartir e importar un JSON con `ACTION_OPEN_DOCUMENT`.
 - Cronómetro, mapa de preguntas, navegación, marcado para revisar y autoevaluación.
 - Banco local en `assets/bank.json` y textos en `assets/ui.json`.
 - Funciona sin conexión.
-- `minSdk 24` (Android 7.0), `targetSdk 34`, versión `1.3.0`.
+- `minSdk 24` (Android 7.0), `targetSdk 34`, versión `1.4.0`.
 
 ### Instalar el APK
 
@@ -114,18 +124,18 @@ El script usa `aapt2`, `javac`, `d8`, `zipalign` y `apksigner` directamente; no 
 
 Variables opcionales: `ANDROID_HOME` / `ANDROID_SDK_ROOT` y `JAVA_HOME`.
 
-## Novedades 1.3
+## Novedades 1.4
 
-- **Estudio con comprobación explícita:** en selección múltiple, completar y cálculo la respuesta se revela solo al pulsar **Comprobar**; ya no se escapa al primer clic.
-- **Sesiones a medida:** cantidad de 5 a 100 preguntas y duración de 0 a 180 minutos.
-- **Biblioteca completa:** búsqueda en opciones y respuestas, con **Mostrar más** para recorrer los 304 enunciados.
-- **Crédito parcial fijo:** la configuración de crédito parcial se guarda al iniciar el examen y no cambia la nota después.
-- **APK 1.3.0:** icono adaptativo, guardar y salir del examen, Atrás desde resultados vuelve a configuración, versión visible y cantidad/duración personalizadas.
-- **Accesibilidad:** enlace para saltar al contenido, foco visible y etiquetas ARIA traducidas.
-- **Verificación automática:** `python tools/verify.py` comprueba banco, i18n, enlaces, versiones, service worker y hash del APK.
-- **Histórico:** notas por versión en `docs/notas/` y `CHANGELOG.md`.
+- **Identificación del participante:** nombre, apellido y correo obligatorios antes de iniciar; aparecen en resultados, constancia e informe.
+- **Informe A4 de calidad:** logo, puntaje, resultado, desglose por tipo, equipos, detalle de preguntas y código de referencia. En web se guarda como PDF desde el diálogo de impresión; en Android se genera un PDF real.
+- **Envío por correo:** el botón abre la app de correo con `khristyan.hidalgo@factronics.com.ve` y `emanuel.industri@gmail.com` precargados; en Android el PDF va adjunto.
+- **Partículas y animaciones:** canvas de partículas, revelado al hacer scroll, contadores y transiciones suaves; se desactivan con `prefers-reduced-motion`.
+- **APK 1.4.0:** identificación, informe PDF, transiciones de pantalla, icono adaptativo y todo lo de 1.3.
+- **Progreso enriquecido:** la identidad viaja en el JSON de exportación/importación de web y Android.
 
-La base de 1.2 (modos, progreso, errores, repaso espaciado, PWA, constancia e import/export) se mantiene.
+La base de 1.3 (comprobación explícita, cantidad/duración personalizadas, biblioteca paginada, accesibilidad y verificación automática) se mantiene.
+
+> **Envío automático:** el proyecto es estático y no guarda credenciales. El correo se abre con todo preparado y el PDF adjunto en Android; el participante pulsa Enviar. Un envío totalmente automático requiere un backend o servicio de correo, documentado en `docs/notas/PENDIENTES.md`.
 
 ## Banco de preguntas
 
@@ -158,9 +168,11 @@ Los textos de interfaz viven en `assets/js/i18n.js`; `android/app/src/main/asset
 │   ├── js/bank.js              Banco generado
 │   ├── js/i18n.js              ES / EN / PT
 │   ├── js/landing.js
+│   ├── js/motion.js             Partículas y animaciones
 │   └── js/generator.js
 ├── data/                       Fuentes y banco legible
 ├── docs/notas/                 Histórico de versiones (no se borra)
+├── docs/versiones/             Ficha legible de cada versión
 ├── tools/build_bank.py         Generador del banco
 ├── tools/export_ui.js          Exporta i18n.js → ui.json
 ├── tools/verify.py             Verificación automática
