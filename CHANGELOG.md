@@ -3,6 +3,26 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 El histórico detallado, con auditoría y pruebas, vive en `docs/notas/`.
 
+## [1.7.0] — 2026-10-31
+
+### Añadido
+
+- Página pública `verificar/` con certificado, sello FNV-1a, huella SHA-256 y
+  descarga de PNG.
+- **Certificado PNG A4** y tarjeta 1080×1350 con sello, firma y QR.
+- **Código de referencia con QR** en pantalla, informe PDF y tarjeta.
+- Panel de resultados con tarjetas para PDF, tarjeta, certificado y CSV.
+- **CSV en Android** y apertura de la verificación desde la app.
+- Seis preguntas de troubleshooting de ribbon; banco 356/332.
+- Enlaces “Verificar” en la landing y en `resultado/`.
+
+### Cambiado
+
+- El QR nuevo apunta a `verificar/`; `resultado/` se mantiene para QR antiguos.
+- Versión web/PWA/Android a `1.7.0`; `versionCode` 8.
+- Service Worker `factronics-tto-1.7.0`.
+- Textos de privacidad y del pie actualizados; sin envío por correo.
+
 ## [1.6.0] — 2026-10-30
 
 ### Añadido
@@ -103,6 +123,7 @@ El histórico detallado, con auditoría y pruebas, vive en `docs/notas/`.
 - Reanudar sesión, PWA offline, constancia imprimible e import/export JSON.
 - APK nativa 1.2.0 (`versionCode` 3) con tema oscuro y compartir resultado.
 
+[1.7.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.7.0
 [1.6.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.6.0
 [1.5.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.5.0
 [1.4.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.4.0
