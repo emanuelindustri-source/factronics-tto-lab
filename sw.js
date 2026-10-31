@@ -1,7 +1,7 @@
-/* Factronics TTO Lab service worker (rev 1.4.0).
+/* Factronics TTO Lab service worker (rev 1.5.0).
    Cache-first for static assets, network-first for page navigations. The
    question bank and the whole app shell are stored so the PWA opens offline. */
-const VERSION = "1.4.0";
+const VERSION = "1.5.0";
 const CACHE = "factronics-tto-" + VERSION;
 
 const CORE = [
@@ -17,6 +17,8 @@ const CORE = [
   "assets/js/pwa.js",
   "assets/js/landing.js",
   "assets/js/motion.js",
+  "assets/js/update.js",
+  "version.json",
   "assets/js/generator.js",
   "assets/img/factronics-transparent.png",
   "assets/img/factronics-white.png",
@@ -56,6 +58,22 @@ self.addEventListener("fetch", (event) => {
   let url;
   try { url = new URL(request.url); } catch (e) { return; }
   if (url.origin !== self.location.origin) return;
+
+  if (url.pathname.endsWith("/version.json")) {
+    event.respondWith((async () => {
+      try {
+        const fresh = await fetch(request, { cache: "no-store" });
+        if (fresh && fresh.ok) {
+          const cache = await caches.open(CACHE);
+          cache.put(request, fresh.clone()).catch(() => {});
+          return fresh;
+        }
+      } catch (e) { /* offline: use cached version */ }
+      const cache = await caches.open(CACHE);
+      return (await cache.match(request)) || (await cache.match("version.json")) || new Response("{}", { status: 200, headers: { "Content-Type": "application/json" } });
+    })());
+    return;
+  }
 
   if (request.mode === "navigate") {
     event.respondWith((async () => {
