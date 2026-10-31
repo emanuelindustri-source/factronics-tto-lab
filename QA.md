@@ -30,7 +30,7 @@ emulador Pixel 7 API 34, navegador Chromium integrado.
 
 ### Android
 
-- APK `com.factronics.tto.lab` **1.7.0** (`versionCode 8`), _pendiente_.
+- APK `com.factronics.tto.lab` **1.7.0** (`versionCode 8`), 193,5 KB.
 - Panel de verificación con QR, código y botón **Abrir verificación**.
 - Comparte **PDF**, **tarjeta PNG** y **CSV** con la hoja del sistema.
 - La tarjeta incluye sello “VERIFICADO” y checksum.
