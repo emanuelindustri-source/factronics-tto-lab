@@ -213,6 +213,20 @@ Comprueba, sin dependencias externas:
 Las pruebas funcionales y de navegador se registran en [QA.md](QA.md) y en
 [docs/notas/](docs/notas/).
 
+## Publicar una versión nueva
+
+1. Actualiza `VERSION`, `version.json` (`version` y `versionCode`), `sw.js`,
+   `AndroidManifest.xml`, los pies de página y `CHANGELOG.md`.
+2. Ejecuta `python tools/build_bank.py` si cambió el banco.
+3. Ejecuta `node tools/export_ui.js` y `python android/build.py`.
+4. Ejecuta `python tools/verify.py` y corrige cualquier error.
+5. Publica con `python tools/publish_github.py` usando `GITHUB_TOKEN`.
+6. Comprueba el release y que GitHub Pages sirva la versión nueva.
+
+El aviso de actualización web y Android se dispara cuando `version.json` tiene
+una versión/`versionCode` mayor que la instalada. Si no actualizas ese archivo,
+la app no sabrá que hay una versión nueva.
+
 ## Seguridad y privacidad
 
 - No hay tokens, credenciales ni telemetría en el repositorio.
