@@ -1,5 +1,5 @@
 {
-  "source": "TTO ribbon training + OEM/universal bracket guides",
+  "source": "TTO ribbon training + OEM/universal bracket guides + ribbon troubleshooting guide",
   "questions": [
     {
       "id": "R-01",
@@ -2039,6 +2039,594 @@
       "tags": [
         "brackets",
         "components"
+      ]
+    },
+    {
+      "id": "R-15",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué es el flaking o descamado de un ribbon?",
+          "options": [
+            {
+              "id": "a",
+              "text": "La tinta se desprende en partículas finas al manipular el ribbon"
+            },
+            {
+              "id": "b",
+              "text": "El ribbon se pega al cabezal y bloquea el avance"
+            },
+            {
+              "id": "c",
+              "text": "La película PET se estira y cambia de longitud"
+            },
+            {
+              "id": "d",
+              "text": "El núcleo queda desalineado respecto a la película"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "El flaking es la pérdida de tinta en partículas finas al manipular el ribbon. El frío lo favorece; volver a las condiciones normales de almacenamiento puede resolverlo. También puede originarse en un defecto de recubrimiento."
+        },
+        "en": {
+          "q": "What is ribbon flaking?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Ink detaches in fine particles when the ribbon is handled"
+            },
+            {
+              "id": "b",
+              "text": "The ribbon sticks to the printhead and stops advancing"
+            },
+            {
+              "id": "c",
+              "text": "The PET film stretches and changes length"
+            },
+            {
+              "id": "d",
+              "text": "The core becomes misaligned with the film"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "Flaking is ink loss in fine particles when the ribbon is handled. Cold conditions favour it; returning the ribbon to normal storage conditions can solve it. A coating defect can also be the cause."
+        },
+        "pt": {
+          "q": "O que é o flaking ou descamação de um ribbon?",
+          "options": [
+            {
+              "id": "a",
+              "text": "A tinta se desprende em partículas finas ao manipular o ribbon"
+            },
+            {
+              "id": "b",
+              "text": "O ribbon gruda no cabeçote e bloqueia o avanço"
+            },
+            {
+              "id": "c",
+              "text": "O filme PET estica e muda de comprimento"
+            },
+            {
+              "id": "d",
+              "text": "O núcleo fica desalinhado em relação ao filme"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "O flaking é a perda de tinta em partículas finas ao manipular o ribbon. O frio favorece; voltar às condições normais de armazenamento pode resolver. Também pode ter origem em um defeito de revestimento."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "troubleshooting"
+      ]
+    },
+    {
+      "id": "R-16",
+      "type": "multi",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 3,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "Ante una impresión incompleta o parcial, ¿qué conviene revisar?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Los puntos del cabezal de impresión"
+            },
+            {
+              "id": "b",
+              "text": "Polvo en el receptor o dentro de la impresora"
+            },
+            {
+              "id": "c",
+              "text": "Energía excesiva que pueda crear arrugas"
+            },
+            {
+              "id": "d",
+              "text": "El color de la caja del ribbon"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "La guía de troubleshooting indica revisar los puntos del cabezal, el polvo en el receptor o en la impresora y la energía excesiva, que puede crear arrugas. También pueden influir defectos de recubrimiento o de corte."
+        },
+        "en": {
+          "q": "For missing or partial printout, what should be checked?",
+          "options": [
+            {
+              "id": "a",
+              "text": "The printhead dots"
+            },
+            {
+              "id": "b",
+              "text": "Dust on the receptor or inside the printer"
+            },
+            {
+              "id": "c",
+              "text": "Excessive energy that may create wrinkles"
+            },
+            {
+              "id": "d",
+              "text": "The colour of the ribbon box"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "The troubleshooting guide says to check the printhead dots, dust on the receptor or inside the printer, and excessive energy, which can create wrinkles. Coating or slitting defects may also be involved."
+        },
+        "pt": {
+          "q": "Diante de uma impressão incompleta ou parcial, o que convém verificar?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Os pontos do cabeçote de impressão"
+            },
+            {
+              "id": "b",
+              "text": "Poeira no receptor ou dentro da impressora"
+            },
+            {
+              "id": "c",
+              "text": "Energia excessiva que possa criar rugas"
+            },
+            {
+              "id": "d",
+              "text": "A cor da caixa do ribbon"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "O guia de troubleshooting indica verificar os pontos do cabeçote, a poeira no receptor ou na impressora e a energia excessiva, que pode criar rugas. Defeitos de revestimento ou corte também podem influir."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "troubleshooting"
+      ]
+    },
+    {
+      "id": "R-17",
+      "type": "multi",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 3,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué causas pueden producir arrugas o pliegues en el ribbon?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Desalineación del rodillo guía y del rodillo de despegue"
+            },
+            {
+              "id": "b",
+              "text": "Exceso de calor"
+            },
+            {
+              "id": "c",
+              "text": "Defectos de corte o de recubrimiento del ribbon"
+            },
+            {
+              "id": "d",
+              "text": "Usar un núcleo de mayor diámetro"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "Las arrugas pueden venir de la desalineación de los rodillos guía y de despegue, del exceso de calor o de defectos de corte/recubrimiento. Si el calor no se puede ajustar, puede hacer falta otro grado de ribbon."
+        },
+        "en": {
+          "q": "What can cause wrinkles or creases in the ribbon?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Misalignment of the guide roller and peel roller"
+            },
+            {
+              "id": "b",
+              "text": "Excessive heat"
+            },
+            {
+              "id": "c",
+              "text": "Ribbon slitting or coating defects"
+            },
+            {
+              "id": "d",
+              "text": "Using a larger core diameter"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "Wrinkles can come from misalignment of the guide and peel rollers, excessive heat, or slitting/coating defects. If heat cannot be adjusted, another ribbon grade may be needed."
+        },
+        "pt": {
+          "q": "O que pode causar rugas ou dobras no ribbon?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Desalinhamento do rolo guia e do rolo de descolamento"
+            },
+            {
+              "id": "b",
+              "text": "Excesso de calor"
+            },
+            {
+              "id": "c",
+              "text": "Defeitos de corte ou revestimento do ribbon"
+            },
+            {
+              "id": "d",
+              "text": "Usar um núcleo de maior diâmetro"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "As rugas podem vir do desalinhamento dos rolos guia e de descolamento, do excesso de calor ou de defeitos de corte/revestimento. Se o calor não puder ser ajustado, pode ser necessário outro grau de ribbon."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "troubleshooting"
+      ]
+    },
+    {
+      "id": "R-18",
+      "type": "multi",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 3,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "Si la película del ribbon se rompe durante la impresión, ¿qué conviene revisar?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Que el software esté actualizado"
+            },
+            {
+              "id": "b",
+              "text": "Que no se usen objetos afilados al abrir la caja o el ribbon"
+            },
+            {
+              "id": "c",
+              "text": "Los datos de calor y velocidad que puedan afectar"
+            },
+            {
+              "id": "d",
+              "text": "El número de colores disponibles"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "La guía recomienda comprobar la versión de software, evitar objetos afilados que dañen el borde del ribbon y recopilar datos de calor y velocidad para el análisis."
+        },
+        "en": {
+          "q": "If the ribbon film breaks during printing, what should be checked?",
+          "options": [
+            {
+              "id": "a",
+              "text": "That the software is up to date"
+            },
+            {
+              "id": "b",
+              "text": "That no sharp objects are used to open the box or ribbon"
+            },
+            {
+              "id": "c",
+              "text": "Heat and speed data that may affect the issue"
+            },
+            {
+              "id": "d",
+              "text": "The number of available colours"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "The guide recommends checking the software version, avoiding sharp objects that damage the ribbon edge, and collecting heat and speed data for analysis."
+        },
+        "pt": {
+          "q": "Se o filme do ribbon romper durante a impressão, o que convém verificar?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Que o software esteja atualizado"
+            },
+            {
+              "id": "b",
+              "text": "Que não se usem objetos afiados ao abrir a caixa ou o ribbon"
+            },
+            {
+              "id": "c",
+              "text": "Os dados de calor e velocidade que possam afetar"
+            },
+            {
+              "id": "d",
+              "text": "O número de cores disponíveis"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "O guia recomenda verificar a versão do software, evitar objetos afiados que danifiquem a borda do ribbon e coletar dados de calor e velocidade para análise."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "troubleshooting"
+      ]
+    },
+    {
+      "id": "R-19",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "Cuando se acumula depósito en el cabezal de impresión, ¿qué medida es clave?",
+          "options": [
+            {
+              "id": "a",
+              "text": "El mantenimiento regular y ajustar tensiones, presión y ángulo del cabezal"
+            },
+            {
+              "id": "b",
+              "text": "Aumentar la velocidad al máximo"
+            },
+            {
+              "id": "c",
+              "text": "Cambiar el color del ribbon"
+            },
+            {
+              "id": "d",
+              "text": "Desactivar la capa backcoat"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "El mantenimiento regular es clave; los ajustes de tensión, presión y ángulo del cabezal ayudan. También puede venir de un ribbon defectuoso, por lo que conviene conservar muestras para analizar."
+        },
+        "en": {
+          "q": "When deposit builds up on the printhead, what is a key measure?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Regular maintenance and adjusting tension, pressure and head angle"
+            },
+            {
+              "id": "b",
+              "text": "Increasing speed to maximum"
+            },
+            {
+              "id": "c",
+              "text": "Changing the ribbon colour"
+            },
+            {
+              "id": "d",
+              "text": "Disabling the backcoat layer"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "Regular maintenance is key; tension, pressure and head-angle adjustments help. A defective ribbon can also be the cause, so keep samples for analysis."
+        },
+        "pt": {
+          "q": "Quando se acumula depósito no cabeçote de impressão, qual medida é fundamental?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Manutenção regular e ajuste de tensão, pressão e ângulo do cabeçote"
+            },
+            {
+              "id": "b",
+              "text": "Aumentar a velocidade ao máximo"
+            },
+            {
+              "id": "c",
+              "text": "Mudar a cor do ribbon"
+            },
+            {
+              "id": "d",
+              "text": "Desativar a camada backcoat"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "A manutenção regular é fundamental; ajustes de tensão, pressão e ângulo do cabeçote ajudam. Também pode vir de um ribbon defeituoso, por isso convém guardar amostras para análise."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "troubleshooting"
+      ]
+    },
+    {
+      "id": "R-20",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 3,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "Si el cabezal toca la capa de tinta en lugar del backcoat, ¿qué se revisa primero?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Que el número de parte sea compatible con la impresora"
+            },
+            {
+              "id": "b",
+              "text": "Subir la temperatura al máximo"
+            },
+            {
+              "id": "c",
+              "text": "Cortar el ribbon para girarlo"
+            },
+            {
+              "id": "d",
+              "text": "Cambiar el núcleo por uno más grande"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "La guía de configuración incorrecta indica revisar que el P/N sea compatible con la impresora según la estructura del número de parte. Si no lo es, el ribbon puede estar defectuoso y conviene recopilar datos."
+        },
+        "en": {
+          "q": "If the printhead touches the ink layer instead of the backcoat, what should be checked first?",
+          "options": [
+            {
+              "id": "a",
+              "text": "That the part number is compatible with the printer"
+            },
+            {
+              "id": "b",
+              "text": "Raising the temperature to maximum"
+            },
+            {
+              "id": "c",
+              "text": "Cutting the ribbon to turn it over"
+            },
+            {
+              "id": "d",
+              "text": "Changing to a larger core"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "The wrong-configuration guide says to check that the P/N is compatible with the printer using the part-number structure. If it is compatible, the ribbon may be defective and data should be collected."
+        },
+        "pt": {
+          "q": "Se o cabeçote toca a camada de tinta em vez do backcoat, o que se verifica primeiro?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Que o número de peça seja compatível com a impressora"
+            },
+            {
+              "id": "b",
+              "text": "Aumentar a temperatura ao máximo"
+            },
+            {
+              "id": "c",
+              "text": "Cortar o ribbon para virá-lo"
+            },
+            {
+              "id": "d",
+              "text": "Trocar o núcleo por um maior"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "O guia de configuração incorreta indica verificar se o P/N é compatível com a impressora pela estrutura do número de peça. Se for compatível, o ribbon pode estar defeituoso e convém coletar dados."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "troubleshooting"
       ]
     }
   ]
