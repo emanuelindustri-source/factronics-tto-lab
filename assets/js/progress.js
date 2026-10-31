@@ -11,8 +11,16 @@
 
   function clone(v) { return JSON.parse(JSON.stringify(v)); }
 
-  function freshProfile(name) {
-    return { name: name, createdAt: Date.now(), attempts: [], errors: {} };
+  function freshProfile(name, firstName, lastName, email) {
+    return {
+      name: name,
+      firstName: firstName || "",
+      lastName: lastName || "",
+      email: email || "",
+      createdAt: Date.now(),
+      attempts: [],
+      errors: {}
+    };
   }
 
   function freshData() {
@@ -28,6 +36,9 @@
         const p = raw.profiles[name] || {};
         data.profiles[name] = {
           name: name,
+          firstName: String(p.firstName || ""),
+          lastName: String(p.lastName || ""),
+          email: String(p.email || ""),
           createdAt: Number(p.createdAt) || Date.now(),
           attempts: Array.isArray(p.attempts) ? p.attempts.filter((a) => a && a.id) : [],
           errors: p.errors && typeof p.errors === "object" ? p.errors : {}
@@ -51,6 +62,43 @@
   function profile(name) { return data.profiles[profileName(name)]; }
   function cleanName(name) {
     return String(name == null ? "" : name).replace(/\s+/g, " ").trim().slice(0, 40) || DEFAULT_PROFILE;
+  }
+  function cleanText(value, max) {
+    return String(value == null ? "" : value).replace(/\s+/g, " ").trim().slice(0, max || 40);
+  }
+  function cleanEmail(value) {
+    return String(value == null ? "" : value).replace(/\s+/g, "").trim().slice(0, 120);
+  }
+  function identity(name) {
+    const p = profile(name);
+    const first = String(p.firstName || "").trim();
+    const last = String(p.lastName || "").trim();
+    return {
+      name: p.name,
+      firstName: first,
+      lastName: last,
+      email: String(p.email || "").trim(),
+      fullName: (first + " " + last).trim() || p.name
+    };
+  }
+  function saveIdentity(fields) {
+    const p = profile();
+    const first = cleanText(fields && fields.firstName, 40);
+    const last = cleanText(fields && fields.lastName, 40);
+    const email = cleanEmail(fields && fields.email);
+    p.firstName = first;
+    p.lastName = last;
+    p.email = email;
+    const full = (first + " " + last).trim();
+    if (full && full !== p.name && !data.profiles[full]) {
+      const old = p.name;
+      delete data.profiles[old];
+      p.name = full;
+      data.profiles[full] = p;
+      data.active = full;
+    }
+    persist();
+    return identity(data.active);
   }
   function activeName() { return profileName(data.active); }
   function profiles() {
@@ -265,6 +313,9 @@
         const p = incoming.profiles[name] || {};
         next.profiles[name] = {
           name: name,
+          firstName: String(p.firstName || ""),
+          lastName: String(p.lastName || ""),
+          email: String(p.email || ""),
           createdAt: Number(p.createdAt) || Date.now(),
           attempts: Array.isArray(p.attempts) ? p.attempts : [],
           errors: p.errors && typeof p.errors === "object" ? p.errors : {}
@@ -279,11 +330,17 @@
         if (!current) {
           data.profiles[name] = {
             name: name,
+            firstName: String(raw.firstName || ""),
+            lastName: String(raw.lastName || ""),
+            email: String(raw.email || ""),
             createdAt: Number(raw.createdAt) || Date.now(),
             attempts: Array.isArray(raw.attempts) ? raw.attempts : [],
             errors: raw.errors && typeof raw.errors === "object" ? raw.errors : {}
           };
         } else {
+          if (!current.firstName && raw.firstName) current.firstName = String(raw.firstName);
+          if (!current.lastName && raw.lastName) current.lastName = String(raw.lastName);
+          if (!current.email && raw.email) current.email = String(raw.email);
           current.attempts = mergeAttempts(current.attempts, raw.attempts);
           current.errors = mergeErrors(current.errors, raw.errors);
         }
@@ -301,6 +358,8 @@
     activeName: activeName,
     profiles: profiles,
     profile: profile,
+    identity: identity,
+    saveIdentity: saveIdentity,
     setActive: setActive,
     createProfile: createProfile,
     renameProfile: renameProfile,
