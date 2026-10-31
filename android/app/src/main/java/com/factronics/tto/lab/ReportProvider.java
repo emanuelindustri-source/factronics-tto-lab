@@ -57,7 +57,9 @@ public class ReportProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        return "application/pdf";
+        File file = fileFor(uri);
+        String name = file == null ? "" : file.getName().toLowerCase();
+        return name.endsWith(".png") ? "image/png" : "application/pdf";
     }
 
     @Override
