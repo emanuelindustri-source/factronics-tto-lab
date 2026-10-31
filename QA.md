@@ -9,7 +9,7 @@ emulador Pixel 7 API 34, navegador Chromium integrado.
 
 | Comprobación | Resultado |
 |---|---|
-| `python tools/verify.py` | _pendiente de la compilación final_ |
+| `python tools/verify.py` | **OK**, 7.669 comprobaciones |
 | Banco | 356 preguntas · 332 enunciados únicos |
 | i18n | 494 claves × ES/EN/PT |
 | Certificado web | PNG 1240×1754 descargado y revisado |
