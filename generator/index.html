@@ -17,6 +17,7 @@
 </head>
 <body class="app-page">
   <a class="skip-link" href="#main" data-i18n="skip_link">Saltar al contenido</a>
+  <canvas class="particle-canvas" id="particleCanvas" aria-hidden="true"></canvas>
   <header class="site-header">
     <div class="shell header-inner">
       <a class="logo" href="../index.html" aria-label="Factronics TTO Lab, distribuidor oficial Videojet">
@@ -65,6 +66,24 @@
             <button class="btn sm" data-action="discard-saved" data-i18n="discard_btn">Descartar y empezar de nuevo</button>
           </div>
         </div>
+
+        <section class="panel student-panel" id="studentPanel">
+          <div class="panel-body">
+            <div class="student-head">
+              <div>
+                <h2 data-i18n="student_title">Identificación del participante</h2>
+                <p class="hint" data-i18n="student_help">Estos datos aparecen en el informe y en la constancia. El correo se usa para enviar el resultado.</p>
+              </div>
+              <span class="student-status" id="studentStatus" hidden data-i18n="student_saved">Datos del participante guardados.</span>
+            </div>
+            <div class="student-grid">
+              <label><span data-i18n="student_first">Nombre</span><input id="studentFirst" class="inp" type="text" autocomplete="given-name" maxlength="40" required></label>
+              <label><span data-i18n="student_last">Apellido</span><input id="studentLast" class="inp" type="text" autocomplete="family-name" maxlength="40" required></label>
+              <label class="wide"><span data-i18n="student_email">Correo electrónico</span><input id="studentEmail" class="inp" type="email" autocomplete="email" maxlength="120" placeholder="nombre@empresa.com" data-i18n-placeholder="student_email_hint" required></label>
+            </div>
+            <div id="studentAlert" aria-live="polite"></div>
+          </div>
+        </section>
 
         <section class="panel mode-panel">
           <div class="panel-body">
@@ -247,8 +266,11 @@
           <div class="panel res-overview">
             <h2 id="resHeadline">Evaluación completada</h2>
             <p id="resSubline"></p>
+            <p class="res-student" id="resStudent"></p>
             <div class="res-actions">
-              <button class="btn primary" type="button" data-action="retry" data-i18n="res_retry">Repetir</button>
+              <button class="btn primary" type="button" data-action="report" data-i18n="report_open">Informe para el jefe</button>
+              <button class="btn" type="button" data-action="email" data-i18n="report_send">Enviar informe por correo</button>
+              <button class="btn" type="button" data-action="retry" data-i18n="res_retry">Repetir</button>
               <button class="btn" type="button" data-action="new" data-i18n="res_new">Nuevo examen</button>
               <button class="btn" type="button" data-action="print" data-i18n="res_print">Imprimir / PDF</button>
               <button class="btn" type="button" data-action="csv" data-i18n="res_csv">Descargar CSV</button>
@@ -300,7 +322,7 @@
     <div class="shell footer-note" style="border:0;margin:0;padding:0">
       <span data-i18n="footer_disclaimer">Proyecto de Factronics Venezuela, distribuidor oficial de Videojet. Desarrollado por Khristyan Hidalgo, técnico de campo certificado. Videojet es marca de Videojet Technologies; este material no fue solicitado ni autorizado por Videojet.</span>
       <span data-i18n="footer_gen">Los datos se guardan solo en este navegador.</span>
-      <span>v1.3.0</span>
+      <span>v1.4.0</span>
     </div>
   </footer>
 
@@ -308,6 +330,7 @@
   <script src="../assets/js/i18n.js"></script>
   <script src="../assets/js/progress.js"></script>
   <script src="../assets/js/pwa.js"></script>
+  <script src="../assets/js/motion.js"></script>
   <script src="../assets/js/generator.js"></script>
 </body>
 </html>
