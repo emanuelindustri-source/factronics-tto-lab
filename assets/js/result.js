@@ -5,6 +5,7 @@
 
   const VERSION = 1;
   const RESULT_BASE = (document.querySelector('meta[name="result-base"]') || {}).content || "resultado/";
+  const VERIFY_BASE = (document.querySelector('meta[name="verify-base"]') || {}).content || "verificar/";
 
   function utf8Bytes(text) {
     return new TextEncoder().encode(String(text || ""));
@@ -87,9 +88,25 @@
     return String(payload.h || "").toLowerCase() === expected;
   }
   function resultUrl(payload) {
-    const url = new URL(RESULT_BASE, location.href);
+    return urlFor(RESULT_BASE, payload);
+  }
+  function verifyUrl(payload) {
+    return urlFor(VERIFY_BASE, payload);
+  }
+  function urlFor(base, payload) {
+    const url = new URL(base, location.href);
     url.searchParams.set("d", encode(payload));
     return url.href;
+  }
+  async function fingerprint(payload) {
+    try {
+      if (!window.crypto || !window.crypto.subtle) return "";
+      const data = utf8Bytes(canonical(payload));
+      const digest = await window.crypto.subtle.digest("SHA-256", data);
+      return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
+    } catch (e) {
+      return "";
+    }
   }
   function qrDataUrl(text, size) {
     if (typeof qrcode !== "function") return "";
@@ -125,7 +142,10 @@
     decode: decode,
     verify: verify,
     sign: sign,
+    canonical: canonical,
     resultUrl: resultUrl,
+    verifyUrl: verifyUrl,
+    fingerprint: fingerprint,
     qrDataUrl: qrDataUrl,
     qrImage: qrImage,
     checksum: checksum
