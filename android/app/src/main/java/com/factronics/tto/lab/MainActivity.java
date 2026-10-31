@@ -58,6 +58,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.TimeZone;
 import java.text.Normalizer;
@@ -2048,6 +2049,25 @@ public class MainActivity extends Activity {
         }
         c.addView(scoreCard);
 
+        LinearLayout verifyCard = row();
+        verifyCard.setBackground(round(0xFFF3F8FD, 14, 0xFFD8E4EF, 1));
+        verifyCard.setPadding(dp(12), dp(12), dp(12), dp(12));
+        ImageView qrView = new ImageView(this);
+        Bitmap qrBitmap = makeQrBitmap(verificationUrl(r, reportCode(r)), 260);
+        if (qrBitmap != null) qrView.setImageBitmap(qrBitmap);
+        qrView.setBackgroundColor(WHITE);
+        verifyCard.addView(qrView, new LinearLayout.LayoutParams(dp(104), dp(104)));
+        LinearLayout verifyCopy = col();
+        verifyCopy.setPadding(dp(10), 0, 0, 0);
+        verifyCopy.addView(text(t("verify_code_label"), 9, 0xFF647D93, true));
+        verifyCopy.addView(text(reportCode(r), 15, 0xFF0A1B2C, true));
+        verifyCopy.addView(text(t("android_qr_help"), 9, 0xFF647D93, false), top(2));
+        Button openVerify = smallButton(t("android_verify"));
+        openVerify.setOnClickListener(v -> openVerification(r));
+        verifyCopy.addView(openVerify, top(6));
+        verifyCard.addView(verifyCopy, weight());
+        c.addView(verifyCard, top(12));
+
         LinearLayout reportActions = row();
         Button report = button(t("report_pdf"), true);
         report.setOnClickListener(v -> shareReportPdf(r));
@@ -2057,6 +2077,15 @@ public class MainActivity extends Activity {
         reportActions.addView(qrCard, weightLeft(8));
         c.addView(reportActions, top(12));
 
+        LinearLayout csvRow = row();
+        Button csv = smallButton(t("android_csv"));
+        csv.setOnClickListener(v -> shareCsv(r));
+        Button shareCard = smallButton(t("share_result"));
+        shareCard.setOnClickListener(v -> shareResult(r));
+        csvRow.addView(csv, weight());
+        csvRow.addView(shareCard, weightLeft(8));
+        c.addView(csvRow, top(8));
+
         LinearLayout actions = row();
         Button retry = button(t("res_retry"), true);
         retry.setOnClickListener(v -> startExam());
@@ -2065,16 +2094,11 @@ public class MainActivity extends Activity {
         actions.addView(retry, weight());
         actions.addView(fresh, weightLeft(8));
         c.addView(actions, top(12));
-        LinearLayout extra = row();
-        Button share = smallButton(t("share_result"));
-        share.setOnClickListener(v -> shareResult(r));
-        extra.addView(share, weight());
         if (wrongIds(r).length() > 0) {
             Button review = smallButton(t("res_review_errors"));
             review.setOnClickListener(v -> startReview(jsonList(wrongIds(r))));
-            extra.addView(review, weightLeft(7));
+            c.addView(review, top(7));
         }
-        c.addView(extra, top(7));
 
         LinearLayout stats1 = row();
         stats1.addView(statBox(String.valueOf(r.ok), t("res_filter_ok")), weight());
@@ -2338,10 +2362,11 @@ public class MainActivity extends Activity {
                 y += 17;
             }
 
-            Bitmap qr = makeQrBitmap(resultUrl(r, reportCode(r)), 120);
+            Bitmap qr = makeQrBitmap(verificationUrl(r, reportCode(r)), 120);
             if (qr != null) {
                 c.drawBitmap(qr, 430, 586, null);
                 pdfText(c, t("qr_scan"), 430, 722, 6.5f, 0xFF647D93, false);
+                pdfText(c, t("verify_code_label") + ": " + reportCode(r), 430, 734, 6.5f, 0xFF2F465C, true);
             }
             pdfText(c, t("report_footer"), 32, 786, 7, 0xFF647D93, false);
             pdfText(c, t("report_code") + ": " + reportCode(r), 32, 800, 7.5f, 0xFF2F465C, true);
@@ -2494,13 +2519,22 @@ public class MainActivity extends Activity {
         return out;
     }
 
-    private String resultUrl(Result r, String code) {
+    private String verificationUrl(Result r, String code) {
         String canonical = resultCanonical(r, code);
         String hash = fnv(canonical);
         String payload = canonical.substring(0, canonical.length() - 1) + ",\"h\":\"" + hash + "\"}";
         String encoded = Base64.encodeToString(payload.getBytes(StandardCharsets.UTF_8),
                 Base64.URL_SAFE | Base64.NO_WRAP | Base64.NO_PADDING);
-        return "https://emanuelindustri-source.github.io/factronics-tto-lab/resultado/?d=" + encoded;
+        return "https://emanuelindustri-source.github.io/factronics-tto-lab/verificar/?d=" + encoded;
+    }
+
+    private void openVerification(Result r) {
+        try {
+            Intent view = new Intent(Intent.ACTION_VIEW, Uri.parse(verificationUrl(r, reportCode(r))));
+            startActivity(view);
+        } catch (Exception e) {
+            toast(t("qr_invalid"));
+        }
     }
 
     private Bitmap createQrCard(Result r, String code, String url) {
@@ -2556,9 +2590,35 @@ public class MainActivity extends Activity {
         p.setTextSize(22);
         p.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         c.drawText(t("qr_scan"), 620, 750, p);
+        p.setColor(0xFF556B7E);
+        p.setTextSize(18);
+        p.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+        c.drawText(t("verify_code_label") + ": " + code, 620, 782, p);
         p.setColor(0xFF0B7A58);
         p.setTextSize(24);
+        p.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         c.drawText(t("qr_integrity_ok"), 90, 890, p);
+        p.setColor(0xFF647D93);
+        p.setTextSize(16);
+        p.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
+        c.drawText("FNV-1a " + fnv(resultCanonical(r, code)), 90, 920, p);
+        Paint seal = new Paint(Paint.ANTI_ALIAS_FLAG);
+        seal.setStyle(Paint.Style.STROKE);
+        seal.setStrokeWidth(4);
+        seal.setColor(0xFF0B7A58);
+        c.drawCircle(930, 930, 72, seal);
+        seal.setStrokeWidth(1.5f);
+        c.drawCircle(930, 930, 62, seal);
+        seal.setStyle(Paint.Style.STROKE);
+        seal.setStrokeWidth(6);
+        c.drawLine(905, 930, 922, 948, seal);
+        c.drawLine(922, 948, 957, 910, seal);
+        p.setColor(0xFF0B7A58);
+        p.setTextAlign(Paint.Align.CENTER);
+        p.setTextSize(16);
+        p.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        c.drawText(t("cert_doc_seal"), 930, 985, p);
+        p.setTextAlign(Paint.Align.LEFT);
         p.setColor(0xFF556B7E);
         p.setTextSize(20);
         p.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
@@ -2582,7 +2642,7 @@ public class MainActivity extends Activity {
         if (exam == null || r == null) { toast(t("report_no_data")); return; }
         int pct = r.total == 0 ? 0 : (int) Math.round(r.points / r.total * 100);
         String code = reportCode(r);
-        String url = resultUrl(r, code);
+        String url = verificationUrl(r, code);
         Bitmap bitmap = createQrCard(r, code, url);
         File file = savePng(bitmap, "Factronics-TTO-Lab-QR");
         if (file == null) { toast(t("qr_invalid")); return; }
@@ -2596,6 +2656,62 @@ public class MainActivity extends Activity {
             startActivity(Intent.createChooser(send, t("qr_share")));
         } catch (Exception e) {
             toast(t("qr_invalid"));
+        }
+    }
+
+    private String csvCell(String value) {
+        return "\"" + String.valueOf(value == null ? "" : value).replace("\"", "\"\"") + "\"";
+    }
+
+    private File createCsv(Result r) {
+        StringBuilder b = new StringBuilder();
+        b.append('\uFEFF');
+        b.append(csvCell("#")).append(',')
+                .append(csvCell("student")).append(',')
+                .append(csvCell("email")).append(',')
+                .append(csvCell("type")).append(',')
+                .append(csvCell("models")).append(',')
+                .append(csvCell("question")).append(',')
+                .append(csvCell("your_answer")).append(',')
+                .append(csvCell("correct_answer")).append(',')
+                .append(csvCell("score")).append(',')
+                .append(csvCell("status")).append("\r\n");
+        int index = 1;
+        for (Row row : r.rows) {
+            b.append(csvCell(String.valueOf(index++))).append(',')
+                    .append(csvCell(studentName())).append(',')
+                    .append(csvCell(studentEmail)).append(',')
+                    .append(csvCell(row.q.type)).append(',')
+                    .append(csvCell(join(row.q.models, "|"))).append(',')
+                    .append(csvCell(row.q.text(lang))).append(',')
+                    .append(csvCell(answerText(row.q, row.answer))).append(',')
+                    .append(csvCell(correctText(row.q))).append(',')
+                    .append(csvCell(row.grade == null ? "" : fmt(row.grade))).append(',')
+                    .append(csvCell(row.status)).append("\r\n");
+        }
+        File file = new File(getCacheDir(), "Factronics-TTO-Lab-Resultados-" + System.currentTimeMillis() + ".csv");
+        try (OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
+            out.write(b.toString());
+            return file;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private void shareCsv(Result r) {
+        if (exam == null || r == null) { toast(t("report_no_data")); return; }
+        File file = createCsv(r);
+        if (file == null) { toast(t("import_error")); return; }
+        Uri uri = ReportProvider.uriFor(this, file);
+        Intent send = new Intent(Intent.ACTION_SEND);
+        send.setType("text/csv");
+        send.putExtra(Intent.EXTRA_SUBJECT, "Factronics TTO Lab · CSV");
+        send.putExtra(Intent.EXTRA_STREAM, uri);
+        send.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        try {
+            startActivity(Intent.createChooser(send, t("android_csv")));
+        } catch (Exception e) {
+            toast(t("import_error"));
         }
     }
 
