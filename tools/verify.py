@@ -95,7 +95,7 @@ def verify_version() -> str:
     version_json = json.loads(read(ROOT / "version.json"))
     check(version_json.get("version") == version, "version.json version no coincide con VERSION")
     check(int(version_json.get("versionCode") or 0) == manifest_code, "version.json versionCode no coincide con AndroidManifest")
-    for name in ("index.html", "generator/index.html", "resultado/index.html"):
+    for name in ("index.html", "generator/index.html", "resultado/index.html", "verificar/index.html"):
         html = read(ROOT / name)
         meta = re.search(r'<meta name="app-version" content="([^"]+)"', html)
         check(bool(meta and meta.group(1) == version), f"{name}: meta app-version no coincide con VERSION")
@@ -104,7 +104,7 @@ def verify_version() -> str:
     m = re.search(r'RELEASE_TAG = "v([^"]+)"', publisher)
     check(bool(m and m.group(1) == version), "publish_github.py RELEASE_TAG no coincide con VERSION")
 
-    for name in ("index.html", "generator/index.html", "resultado/index.html"):
+    for name in ("index.html", "generator/index.html", "resultado/index.html", "verificar/index.html"):
         check(f"v{version}" in read(ROOT / name), f"{name} no muestra v{version}")
 
     check(f"versión `{version}`" in read(ROOT / "README.md"), "README no documenta la versión actual")
@@ -115,7 +115,7 @@ def verify_version() -> str:
 def verify_bank(bank: dict) -> dict[str, int]:
     questions = bank.get("questions") or []
     models = bank.get("models") or {}
-    check(len(questions) == 350, f"Se esperaban 350 preguntas, hay {len(questions)}")
+    check(len(questions) == 356, f"Se esperaban 356 preguntas, hay {len(questions)}")
     check(set(models) == MODEL_IDS, f"Modelos inesperados: {sorted(set(models) ^ MODEL_IDS)}")
 
     ids = [q.get("id") for q in questions]
@@ -163,7 +163,7 @@ def verify_bank(bank: dict) -> dict[str, int]:
                 check(bool(str(d.get("model", "")).strip()), f"{qid}/{lang}: abierta sin modelo")
                 check(bool(d.get("rubric")), f"{qid}/{lang}: abierta sin rúbrica")
 
-    check(len(statements) == 326, f"Se esperaban 304 enunciados únicos, hay {len(statements)}")
+    check(len(statements) == 332, f"Se esperaban 332 enunciados únicos, hay {len(statements)}")
     check(sum(by_type.values()) == len(questions), "El recuento por tipo no cuadra")
     check(all(by_model[m] > 0 for m in MODEL_IDS), "Algún modelo no tiene preguntas")
 
@@ -182,7 +182,7 @@ def verify_i18n(ui: dict) -> int:
         check(current == base, f"ui.json/{lang}: claves faltantes {sorted(base - current)[:5]} o extra {sorted(current - base)[:5]}")
 
     html_keys: set[str] = set()
-    for name in ("index.html", "generator/index.html", "resultado/index.html"):
+    for name in ("index.html", "generator/index.html", "resultado/index.html", "verificar/index.html"):
         html = read(ROOT / name)
         for attr in ("data-i18n", "data-i18n-aria", "data-i18n-title", "data-i18n-placeholder"):
             html_keys.update(re.findall(rf'{attr}="([^"]+)"', html))
@@ -202,7 +202,7 @@ def verify_i18n(ui: dict) -> int:
 
 
 def verify_html() -> None:
-    for name in ("index.html", "generator/index.html", "resultado/index.html"):
+    for name in ("index.html", "generator/index.html", "resultado/index.html", "verificar/index.html"):
         html = read(ROOT / name)
         check("<!DOCTYPE html>" in html, f"{name}: falta DOCTYPE")
         check(re.search(r'<html[^>]+lang="', html) is not None, f"{name}: falta lang en html")
@@ -215,7 +215,7 @@ def verify_html() -> None:
 
 
 def verify_links() -> None:
-    for name in ("index.html", "generator/index.html"):
+    for name in ("index.html", "generator/index.html", "resultado/index.html", "verificar/index.html"):
         source = ROOT / name
         html = read(source)
         for attr in ("href", "src"):
@@ -243,6 +243,52 @@ def verify_links() -> None:
             if path.is_dir():
                 path = path / "index.html"
             check(path.exists(), f"sw.js: recurso de caché inexistente {item}")
+
+
+def verify_result_flow() -> None:
+    for rel in (
+        "assets/js/result.js",
+        "assets/js/certificate.js",
+        "assets/js/verificar.js",
+        "assets/js/resultado.js",
+        "verificar/index.html",
+        "resultado/index.html",
+        "assets/js/vendor/qrcode.js",
+    ):
+        check((ROOT / rel).exists(), f"Falta {rel}")
+
+    verificar = read(ROOT / "verificar" / "index.html")
+    check('name="verify-base"' in verificar, "verificar/index.html: falta meta verify-base")
+    check("assets/js/certificate.js" in verificar, "verificar/index.html: no carga certificate.js")
+    check("assets/js/verificar.js" in verificar, "verificar/index.html: no carga verificar.js")
+    check('name="robots" content="noindex' in verificar, "verificar/index.html: deber��a ser noindex")
+
+    generator = read(ROOT / "generator" / "index.html")
+    for token in ("cert-png", "verify-open", "verify-copy", "resQr", "resCode", "certificate.js"):
+        check(token in generator, f"generator/index.html: falta {token}")
+    check('name="verify-base"' in generator, "generator/index.html: falta meta verify-base")
+
+    js = read(ROOT / "assets" / "js" / "generator.js")
+    for token in ("downloadCertificate", "verifyUrl", "renderResultVerify", "copyVerifyLink"):
+        check(token in js, f"generator.js: falta {token}")
+    check("mailto:" not in js, "generator.js: todav��a contiene mailto")
+
+    android = read(ROOT / "android" / "app" / "src" / "main" / "java" / "com" / "factronics" / "tto" / "lab" / "MainActivity.java")
+    check("verificar/?d=" in android, "Android: el QR no apunta a verificar/")
+    check("shareCsv" in android, "Android: falta compartir CSV")
+    check("EXTRA_EMAIL" not in android, "Android: todav��a contiene EXTRA_EMAIL")
+
+    result_js = read(ROOT / "assets" / "js" / "result.js")
+    for token in ("verifyUrl", "fingerprint", "VERIFY_BASE"):
+        check(token in result_js, f"result.js: falta {token}")
+
+    sw = read(ROOT / "sw.js")
+    for token in ("verificar/", "verificar/index.html", "certificate.js", "verificar.js"):
+        check(token in sw, f"sw.js: falta {token}")
+
+    i18n = read(ROOT / "assets" / "js" / "i18n.js")
+    for token in ("verify_ok", "verify_bad", "cert_doc_title", "android_csv", "doc_cert_hint"):
+        check(token in i18n, f"i18n.js: falta {token}")
 
 
 def verify_apk(version: str) -> tuple[int, str]:
@@ -292,6 +338,7 @@ def main() -> int:
     key_count = verify_i18n(ui)
     verify_html()
     verify_links()
+    verify_result_flow()
     apk_size, digest = verify_apk(version)
     verify_secrets()
 
