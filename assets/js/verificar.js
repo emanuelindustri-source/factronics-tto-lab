@@ -109,7 +109,7 @@
     }
     const d = state.data;
     const passed = Number(d.s) >= 70;
-    const qrSrc = window.TTOResult ? window.TTOResult.qrDataUrl(verifyUrl(), 300) : "";
+    const qrSrc = window.TTOResult ? window.TTOResult.qrDataUrl(verifyUrl(), 360) : "";
     const banner = state.valid
       ? `<div class="verify-banner ok"><span class="verify-badge">✓</span><div><b>${esc(T("verify_ok"))}</b><span>${esc(T("verify_ok_help"))}</span></div></div>`
       : `<div class="verify-banner bad"><span class="verify-badge">!</span><div><b>${esc(T("verify_bad"))}</b><span>${esc(T("verify_bad_help"))}</span></div></div>`;
@@ -120,7 +120,7 @@
       ? `<div class="verify-hash"><span>${esc(T("verify_checksum"))}</span><b>${esc(d.h)}</b></div>`
       : "";
     const qr = qrSrc
-      ? `<div class="verify-qr"><img src="${qrSrc}" width="190" height="190" alt="QR de verificación"><div><b>${esc(T("cert_doc_verify"))}</b><span>${esc(location.origin + location.pathname)}</span><code>${esc(d.c || "")}</code></div></div>`
+      ? `<div class="verify-qr"><img src="${qrSrc}" width="240" height="240" alt="QR de verificación"><div><b>${esc(T("cert_doc_verify"))}</b><span>${esc(location.origin + location.pathname)}</span><code>${esc(d.c || "")}</code></div></div>`
       : "";
     const scoreLabel = passed ? T("res_pass") : T("res_fail");
     root.innerHTML = `
