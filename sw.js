@@ -1,7 +1,7 @@
-/* Factronics TTO Lab service worker (rev 1.6.0).
+/* Factronics TTO Lab service worker (rev 1.7.0).
    Cache-first for static assets, network-first for page navigations. The
    question bank and the whole app shell are stored so the PWA opens offline. */
-const VERSION = "1.6.0";
+const VERSION = "1.7.0";
 const CACHE = "factronics-tto-" + VERSION;
 
 const CORE = [
@@ -11,6 +11,8 @@ const CORE = [
   "generator/index.html",
   "resultado/",
   "resultado/index.html",
+  "verificar/",
+  "verificar/index.html",
   "manifest.webmanifest",
   "assets/css/site.css",
   "assets/js/bank.js",
@@ -22,6 +24,8 @@ const CORE = [
   "assets/js/vendor/qrcode.js",
   "assets/js/result.js",
   "assets/js/resultado.js",
+  "assets/js/certificate.js",
+  "assets/js/verificar.js",
   "assets/js/update.js",
   "version.json",
   "assets/js/generator.js",
@@ -104,7 +108,7 @@ self.addEventListener("fetch", (event) => {
 
   event.respondWith((async () => {
     const cache = await caches.open(CACHE);
-    const hit = await cache.match(request);
+    const hit = await cache.match(request, { ignoreSearch: true });
     if (hit) return hit;
     try {
       const response = await fetch(request);
