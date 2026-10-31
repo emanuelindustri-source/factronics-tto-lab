@@ -43,6 +43,10 @@
       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
   function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
+  function truncate(text, max) {
+    const value = String(text == null ? "" : text);
+    return value.length <= max ? value : value.slice(0, Math.max(1, max - 1)) + "?";
+  }
   function shuffle(arr) {
     const a = arr.slice();
     for (let i = a.length - 1; i > 0; i--) {
@@ -1173,11 +1177,33 @@
   }
 
   /* --------------------------------------------------------------- report */
-  const REPORT_TO = "khristyan.hidalgo@factronics.com.ve,emanuel.industri@gmail.com";
   function reportCode() {
     const stamp = (state.exam && (state.exam.finishedAt || state.exam.startedAt)) || Date.now();
     const r = state.result || scoreExam();
     return "REF-" + stamp.toString(36).toUpperCase().slice(-6) + "-" + Math.round(r.percent);
+  }
+  function reportBreakdown(r) {
+    const out = {};
+    TYPE_ORDER.forEach((type) => {
+      const x = r.byType[type];
+      if (x && x.total) out[type] = Math.round((x.points / x.total) * 100);
+    });
+    return out;
+  }
+  function reportPayload(r, student, code) {
+    return window.TTOResult ? window.TTOResult.sign({
+      n: student.fullName || student.name || "",
+      e: student.email || "",
+      s: Math.round(r.percent),
+      p: Math.round(r.points * 100) / 100,
+      t: r.total,
+      d: new Date(state.exam && (state.exam.finishedAt || state.exam.startedAt) || Date.now()).toISOString(),
+      m: state.exam ? state.exam.models : [],
+      y: state.exam ? state.exam.types : [],
+      c: code,
+      b: reportBreakdown(r),
+      l: state.lang
+    }) : null;
   }
   function reportData() {
     const r = state.result || scoreExam();
@@ -1193,27 +1219,7 @@
       else a.bad++;
       return a;
     }, { ok: 0, bad: 0, blank: 0, pending: 0 });
-    return { r, student, percent, passed, duration, code, counts };
-  }
-  function reportMailto(data) {
-    const d = data || reportData();
-    const subject = T("report_email_subject")
-      .replace("{name}", d.student.fullName || d.student.name || "")
-      .replace("{score}", String(d.percent));
-    const body = T("report_email_body")
-      .replace("{name}", d.student.fullName || d.student.name || "")
-      .replace("{email}", d.student.email || "")
-      .replace("{score}", String(d.percent))
-      .replace("{models}", (state.exam ? state.exam.models : []).join(" + "))
-      .replace("{date}", formatDate(state.exam && (state.exam.finishedAt || state.exam.startedAt) || Date.now()))
-      .replace("{code}", d.code);
-    return "mailto:" + REPORT_TO + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body + "\n\n" + T("report_attach_note"));
-  }
-  function openEmail() {
-    if (!state.exam) { notify(T("report_no_data"), "warn"); return; }
-    const data = reportData();
-    window.location.href = reportMailto(data);
-    notify(T("report_sent"), "ok");
+    return { r, student, percent, passed, duration, code, counts, breakdown: reportBreakdown(r) };
   }
   function reportStatusLabel(status) {
     if (status === "ok") return T("res_correct_answer");
@@ -1222,16 +1228,107 @@
     if (status === "half") return T("res_partial");
     return T("res_wrong");
   }
+  function downloadQrCard() {
+    if (!state.exam) { notify(T("report_no_data"), "warn"); return; }
+    if (!window.TTOResult) { notify(T("qr_invalid"), "warn"); return; }
+    const { r, student, percent, passed, code } = reportData();
+    const payload = reportPayload(r, student, code);
+    if (!payload) { notify(T("qr_invalid"), "warn"); return; }
+    const resultUrl = window.TTOResult.resultUrl(payload);
+    const qrSrc = window.TTOResult.qrDataUrl(resultUrl, 420);
+    if (!qrSrc) { notify(T("qr_invalid"), "warn"); return; }
+    const canvas = document.createElement("canvas");
+    canvas.width = 1080;
+    canvas.height = 1350;
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#f3f7fb";
+    ctx.fillRect(0, 0, 1080, 1350);
+    const gradient = ctx.createLinearGradient(0, 0, 1080, 0);
+    gradient.addColorStop(0, "#072a49");
+    gradient.addColorStop(0.6, "#0b5cab");
+    gradient.addColorStop(1, "#00a3e0");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 1080, 280);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "800 38px Segoe UI, Arial, sans-serif";
+    ctx.fillText("FACTRONICS TTO LAB", 60, 105);
+    ctx.font = "600 22px Segoe UI, Arial, sans-serif";
+    ctx.fillStyle = "#c8e8fa";
+    ctx.fillText(T("report_subtitle"), 60, 142);
+    ctx.font = "800 44px Segoe UI, Arial, sans-serif";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText(T("qr_title"), 60, 220);
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.roundRect(40, 240, 1000, 1040, 24);
+    ctx.fill();
+    ctx.fillStyle = "#0a1b2c";
+    ctx.font = "800 56px Segoe UI, Arial, sans-serif";
+    ctx.fillText(student.fullName || student.name || "—", 90, 340);
+    ctx.fillStyle = "#556b7e";
+    ctx.font = "400 26px Segoe UI, Arial, sans-serif";
+    ctx.fillText(student.email || "—", 90, 392);
+    ctx.fillStyle = passed ? "#0b7a58" : "#b3261e";
+    ctx.font = "800 120px Segoe UI, Arial, sans-serif";
+    ctx.fillText(percent + "%", 86, 545);
+    ctx.fillStyle = "#0a1b2c";
+    ctx.font = "800 34px Segoe UI, Arial, sans-serif";
+    ctx.fillText(passed ? T("res_pass") : T("res_fail"), 92, 610);
+    ctx.fillStyle = "#556b7e";
+    ctx.font = "400 24px Segoe UI, Arial, sans-serif";
+    ctx.fillText(`${fmtNum(Math.round(r.points * 100) / 100)} / ${r.total} ${T("res_points")}`, 92, 654);
+    ctx.fillText(`${T("report_date")}: ${formatDate(state.exam.finishedAt || Date.now())}`, 92, 704);
+    ctx.fillText(`${T("report_models")}: ${(state.exam.models || []).join(" + ")}`, 92, 744);
+    ctx.fillText(`${T("report_code")}: ${code}`, 92, 784);
+    const qr = new Image();
+    qr.onload = () => {
+      ctx.drawImage(qr, 620, 380, 330, 330);
+      ctx.fillStyle = "#0a1b2c";
+      ctx.font = "700 22px Segoe UI, Arial, sans-serif";
+      ctx.fillText(T("qr_scan"), 620, 750);
+      ctx.fillStyle = "#556b7e";
+      ctx.font = "400 15px Segoe UI, Arial, sans-serif";
+      ctx.fillText(truncate(resultUrl.replace(/^https?:\/\//, ""), 50), 620, 780);
+      ctx.strokeStyle = "#d8e4ef";
+      ctx.beginPath();
+      ctx.moveTo(90, 840);
+      ctx.lineTo(990, 840);
+      ctx.stroke();
+      ctx.fillStyle = "#0b7a58";
+      ctx.font = "800 24px Segoe UI, Arial, sans-serif";
+      ctx.fillText(T("qr_integrity_ok"), 90, 890);
+      ctx.fillStyle = "#556b7e";
+      ctx.font = "400 20px Segoe UI, Arial, sans-serif";
+      ctx.fillText(T("report_footer"), 90, 1200, 900);
+      canvas.toBlob((blob) => {
+        if (!blob) { notify(T("qr_invalid"), "warn"); return; }
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "Factronics-TTO-Lab-QR-" + (student.fullName || "resultado").replace(/[^a-zA-Z0-9]+/g, "-") + ".png";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+        notify(T("qr_download"), "ok");
+      }, "image/png");
+    };
+    qr.onerror = () => notify(T("qr_invalid"), "warn");
+    qr.src = qrSrc;
+  }
   function openReport() {
     if (!state.exam) { notify(T("report_no_data"), "warn"); return; }
-    const { r, student, percent, passed, duration, code, counts } = reportData();
+    const { r, student, percent, passed, duration, code, counts, breakdown } = reportData();
+    const payload = reportPayload(r, student, code);
+    const resultUrl = payload && window.TTOResult ? window.TTOResult.resultUrl(payload) : "";
+    const qrSrc = resultUrl && window.TTOResult ? window.TTOResult.qrDataUrl(resultUrl, 220) : "";
     const win = window.open("", "_blank");
     if (!win) { notify(T("cert_blocked"), "warn"); return; }
     const logo = new URL("../assets/img/factronics-transparent.png", location.href).href;
     const date = formatDate(state.exam.finishedAt || Date.now());
     const mode = modeLabel(state.exam.mode);
     const models = state.exam.models.join(" + ");
-    const breakdown = TYPE_ORDER.filter((t) => r.byType[t]).map((t) => {
+    const breakdownHtml = TYPE_ORDER.filter((t) => r.byType[t]).map((t) => {
       const x = r.byType[t];
       const pct = x.total ? Math.round((x.points / x.total) * 100) : 0;
       return `<div class="bd"><span>${esc(typeLabel(t))}</span><div class="bar"><i style="width:${pct}%"></i></div><b>${pct}%</b></div>`;
@@ -1276,6 +1373,8 @@
         .chips{display:flex;gap:5px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:var(--soft);color:var(--ink2);border-radius:999px;padding:3px 8px;font-size:9px;font-weight:700}
         table{width:100%;border-collapse:collapse;font-size:8.5px;margin-top:6px}th{background:#eef5fb;color:var(--ink2);text-align:left;font-size:8px;letter-spacing:.05em;text-transform:uppercase;padding:6px 5px;border-bottom:1px solid var(--line)}td{padding:5px;border-bottom:1px solid #edf3f8;vertical-align:top}.q{min-width:120px}.num{text-align:center;font-family:Consolas,monospace;color:var(--mut)}
         .badge{display:inline-block;padding:2px 5px;border-radius:4px;font-size:7.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}.badge.ok{background:#e3f6ee;color:#0b7a58}.badge.bad{background:#fdeceb;color:#b3261e}.badge.warn{background:#fff2dc;color:#a35a00}
+        .qr-box{display:flex;align-items:center;gap:14px;margin:18px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--soft);break-inside:avoid}
+        .qr-box img{border-radius:4px;background:#fff}.qr-box b{display:block;font-size:10px}.qr-box span{display:block;font-size:7px;color:var(--mut);word-break:break-all;max-width:360px}
         .foot{display:flex;justify-content:space-between;gap:20px;margin-top:22px;padding-top:12px;border-top:1px solid var(--line);font-size:8.5px;color:var(--mut)}
         .sign{text-align:center;min-width:180px}.sign i{display:block;border-top:1px solid #8fa9c0;margin-bottom:5px}
         .actions{max-width:210mm;margin:0 auto 14px;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
@@ -1286,8 +1385,8 @@
       </style></head><body>
       <div class="actions no-print">
         <button class="primary" onclick="window.print()">${esc(T("report_download"))}</button>
-        <a class="ghost" href="${esc(reportMailto({ r, student, percent, passed, duration, code }))}">${esc(T("report_send"))}</a>
-        <span class="hint">${esc(T("report_attach_note"))}</span>
+        ${resultUrl ? `<a class="ghost" href="${esc(resultUrl)}" target="_blank" rel="noopener">${esc(T("qr_card"))}</a>` : ""}
+        <span class="hint">${esc(T("qr_scan"))}</span>
       </div>
       <section class="sheet">
         <header class="top">
@@ -1310,7 +1409,8 @@
             <div class="stat"><b>${counts.pending}</b><span>${esc(T("res_pending"))}</span></div>
             <div class="stat"><b>${r.total}</b><span>${esc(T("report_total"))}</span></div>
           </div>
-          <h4>${esc(T("report_breakdown"))}</h4>${breakdown}
+          ${qrSrc ? `<div class="qr-box"><img src="${qrSrc}" width="150" height="150" alt="QR"><div><b>${esc(T("qr_scan"))}</b><span>${esc(resultUrl)}</span></div></div>` : ""}
+          <h4>${esc(T("report_breakdown"))}</h4>${breakdownHtml}
           <h4>${esc(T("report_models"))}</h4><div class="chips">${state.exam.models.map((m) => `<span class="chip">${esc(m)}</span>`).join("")}</div>
           <h4>${esc(T("report_details"))}</h4>
           <table><thead><tr><th>#</th><th>${esc(T("report_type"))}</th><th>${esc(T("report_question"))}</th><th>${esc(T("report_answer"))}</th><th>${esc(T("report_correct"))}</th><th>${esc(T("report_status"))}</th><th>${esc(T("report_points"))}</th></tr></thead><tbody>${detail}</tbody></table>
@@ -1483,8 +1583,8 @@
       state.exam = null; state.result = null; localStorage.removeItem("tto.exam.v1"); showScreen("setup");
     } else if (a === "report") {
       openReport();
-    } else if (a === "email") {
-      openEmail();
+    } else if (a === "qrcard") {
+      downloadQrCard();
     } else if (a === "print") {
       openReport();
     } else if (a === "csv") {
