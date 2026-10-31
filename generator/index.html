@@ -12,8 +12,9 @@
   <link rel="apple-touch-icon" href="../assets/img/icon-192.png">
   <link rel="manifest" href="../manifest.webmanifest">
   <meta name="application-name" content="Factronics TTO Lab">
-  <meta name="app-version" content="1.5.0">
+  <meta name="app-version" content="1.6.0">
   <meta name="app-version-url" content="../version.json">
+  <meta name="result-base" content="../resultado/">
   <meta name="robots" content="index,follow">
   <link rel="stylesheet" href="../assets/css/site.css">
 </head>
@@ -271,7 +272,7 @@
             <p class="res-student" id="resStudent"></p>
             <div class="res-actions">
               <button class="btn primary" type="button" data-action="report" data-i18n="report_open">Informe para el jefe</button>
-              <button class="btn" type="button" data-action="email" data-i18n="report_send">Enviar informe por correo</button>
+              <button class="btn" type="button" data-action="qrcard" data-i18n="qr_card">Tarjeta QR</button>
               <button class="btn" type="button" data-action="retry" data-i18n="res_retry">Repetir</button>
               <button class="btn" type="button" data-action="new" data-i18n="res_new">Nuevo examen</button>
               <button class="btn" type="button" data-action="print" data-i18n="res_print">Imprimir / PDF</button>
@@ -324,12 +325,14 @@
     <div class="shell footer-note" style="border:0;margin:0;padding:0">
       <span data-i18n="footer_disclaimer">Proyecto de Factronics Venezuela, distribuidor oficial de Videojet. Desarrollado por Khristyan Hidalgo, técnico de campo certificado. Videojet es marca de Videojet Technologies; este material no fue solicitado ni autorizado por Videojet.</span>
       <span data-i18n="footer_gen">Los datos se guardan solo en este navegador.</span>
-      <span>v1.5.0</span>
+      <span>v1.6.0</span>
     </div>
   </footer>
 
+  <script src="../assets/js/vendor/qrcode.js"></script>
   <script src="../assets/js/bank.js"></script>
   <script src="../assets/js/i18n.js"></script>
+  <script src="../assets/js/result.js"></script>
   <script src="../assets/js/progress.js"></script>
   <script src="../assets/js/pwa.js"></script>
   <script src="../assets/js/motion.js"></script>
