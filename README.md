@@ -180,7 +180,7 @@ Los textos de interfaz viven en `assets/js/i18n.js`; `android/app/src/main/asset
 ├── tools/publish_github.py     Publicación por API
 ├── android/                    App nativa + build.py
 ├── download/Factronics-TTO-Lab.apk
-├── VERSION                     Versión única (1.3.0)
+├── VERSION                     Versión única (1.4.0)
 └── CHANGELOG.md
 ```
 
