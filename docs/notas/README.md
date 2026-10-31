@@ -32,6 +32,8 @@ Reglas:
 | 2026-10-30 | 1.2.0 | [Estado inicial y auditoría](2026-10-30-v1.2.0-estado.md) | Cerrada |
 | 2026-10-30 | 1.3.0 | [Plan de trabajo](2026-10-30-v1.3.0-plan.md) | Cerrada |
 | 2026-10-30 | 1.3.0 | [Resultado y pruebas](2026-10-30-v1.3.0-resultado.md) | Cerrada |
+| 2026-10-30 | 1.4.0 | [Plan de trabajo](2026-10-30-v1.4.0-plan.md) | Cerrada |
+| 2026-10-30 | 1.4.0 | [Resultado y pruebas](2026-10-30-v1.4.0-resultado.md) | Cerrada |
 | — | — | [Pendientes](PENDIENTES.md) | Vivo |
 
 ## Versión publicada
