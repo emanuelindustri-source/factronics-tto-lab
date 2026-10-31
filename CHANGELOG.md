@@ -3,6 +3,24 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 El histórico detallado, con auditoría y pruebas, vive en `docs/notas/`.
 
+## [1.5.0] — 2026-10-30
+
+### Añadido
+
+- 22 preguntas nuevas de ribbons y soportes OEM/universales, con fuentes revisadas.
+- Banco ampliado a 350 preguntas / 326 enunciados únicos.
+- Aviso de actualización web mediante `version.json` y botón **Actualizar**.
+- Comprobación de actualización Android cada 12 h y botón **Buscar actualizaciones**, con notas y enlace de descarga.
+- `version.json` público con versión, `versionCode`, notas y enlaces.
+- Ficha de versión y notas de fuentes en `docs/versiones/` y `docs/notas/`.
+
+### Cambiado
+
+- Versión web/PWA/Android a `1.5.0`; `versionCode` 6.
+- Service Worker `factronics-tto-1.5.0`.
+- La APK declara INTERNET solo para consultar `version.json`; no envía datos.
+- La landing, el generador y la documentación usan los nuevos totales 350/326.
+
 ## [1.4.0] — 2026-10-30
 
 ### Añadido
@@ -67,6 +85,7 @@ El histórico detallado, con auditoría y pruebas, vive en `docs/notas/`.
 - Reanudar sesión, PWA offline, constancia imprimible e import/export JSON.
 - APK nativa 1.2.0 (`versionCode` 3) con tema oscuro y compartir resultado.
 
+[1.5.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.5.0
 [1.4.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.4.0
 [1.3.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.2.0
