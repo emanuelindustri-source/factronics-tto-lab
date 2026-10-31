@@ -27,7 +27,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 API = "https://api.github.com"
 UPLOADS = "https://uploads.github.com"
-RELEASE_TAG = "v1.3.0"
+RELEASE_TAG = "v1.4.0"
 APK = ROOT / "download" / "Factronics-TTO-Lab.apk"
 EXCLUDED = {
     ".git", ".idea", ".vscode", "__pycache__", ".venv", "node_modules",
@@ -189,25 +189,24 @@ def ensure_release(owner: str, repo: str, branch: str) -> dict:
     status, data = request("POST", f"{API}/repos/{owner}/{repo}/releases", {
         "tag_name": RELEASE_TAG,
         "target_commitish": branch,
-        "name": "Factronics TTO Lab 1.3.0",
+        "name": "Factronics TTO Lab 1.4.0",
         "body": (
             "Aplicación Android nativa y generador web de evaluaciones TTO de Factronics Venezuela.\n\n"
+            "- Identificación del participante: nombre, apellido y correo\n"
+            "- Informe A4 con logo, puntaje, desglose y detalle de preguntas\n"
+            "- Envío por correo con destinatarios precargados y PDF adjunto en Android\n"
+            "- Partículas, animaciones modernas y soporte de movimiento reducido\n"
             "- 6 modelos: Videojet 6210, 6230 y DataFlex 6320, 6330, 6420, 6530\n"
-            "- 7 tipos de pregunta\n"
-            "- Modos examen, estudio y repaso\n"
-            "- Estudio con comprobación explícita en multi, completar y cálculo\n"
-            "- Cantidad (5–100) y duración (0–180 min) personalizadas\n"
-            "- Biblioteca con búsqueda en opciones y paginación completa\n"
+            "- 7 tipos de pregunta, modos examen/estudio/repaso\n"
             "- Progreso, historial, cuaderno de errores y repetición espaciada\n"
-            "- PWA instalable y APK con icono adaptativo y tema claro/oscuro\n"
-            "- Español, English, Português\n"
-            "- Offline, sin WebView, sin permisos de red\n\n"
+            "- Biblioteca con búsqueda y paginación completa\n"
+            "- Español, English, Português; offline y sin WebView\n\n"
             "Proyecto de Factronics Venezuela, distribuidor oficial de Videojet. "
             "Desarrollado por Khristyan Hidalgo, técnico de campo certificado. "
             "Videojet Technologies no solicitó, patrocinó ni autorizó este proyecto.\n\n"
             "APK firmado con clave de entrenamiento autofirmada. Si actualizas desde "
-            "1.2.0, desinstala la versión anterior si Android rechaza la instalación "
-            "por el cambio de clave; exporta el progreso antes de desinstalar."
+            "1.3.0 o 1.2.0 y Android rechaza la instalación por el cambio de clave, "
+            "exporta el progreso, desinstala la versión anterior e instala de nuevo."
         ),
         "draft": False,
         "prerelease": False,
