@@ -95,7 +95,7 @@ def verify_version() -> str:
     version_json = json.loads(read(ROOT / "version.json"))
     check(version_json.get("version") == version, "version.json version no coincide con VERSION")
     check(int(version_json.get("versionCode") or 0) == manifest_code, "version.json versionCode no coincide con AndroidManifest")
-    for name in ("index.html", "generator/index.html"):
+    for name in ("index.html", "generator/index.html", "resultado/index.html"):
         html = read(ROOT / name)
         meta = re.search(r'<meta name="app-version" content="([^"]+)"', html)
         check(bool(meta and meta.group(1) == version), f"{name}: meta app-version no coincide con VERSION")
@@ -104,7 +104,7 @@ def verify_version() -> str:
     m = re.search(r'RELEASE_TAG = "v([^"]+)"', publisher)
     check(bool(m and m.group(1) == version), "publish_github.py RELEASE_TAG no coincide con VERSION")
 
-    for name in ("index.html", "generator/index.html"):
+    for name in ("index.html", "generator/index.html", "resultado/index.html"):
         check(f"v{version}" in read(ROOT / name), f"{name} no muestra v{version}")
 
     check(f"versión `{version}`" in read(ROOT / "README.md"), "README no documenta la versión actual")
@@ -182,7 +182,7 @@ def verify_i18n(ui: dict) -> int:
         check(current == base, f"ui.json/{lang}: claves faltantes {sorted(base - current)[:5]} o extra {sorted(current - base)[:5]}")
 
     html_keys: set[str] = set()
-    for name in ("index.html", "generator/index.html"):
+    for name in ("index.html", "generator/index.html", "resultado/index.html"):
         html = read(ROOT / name)
         for attr in ("data-i18n", "data-i18n-aria", "data-i18n-title", "data-i18n-placeholder"):
             html_keys.update(re.findall(rf'{attr}="([^"]+)"', html))
@@ -202,7 +202,7 @@ def verify_i18n(ui: dict) -> int:
 
 
 def verify_html() -> None:
-    for name in ("index.html", "generator/index.html"):
+    for name in ("index.html", "generator/index.html", "resultado/index.html"):
         html = read(ROOT / name)
         check("<!DOCTYPE html>" in html, f"{name}: falta DOCTYPE")
         check(re.search(r'<html[^>]+lang="', html) is not None, f"{name}: falta lang en html")
