@@ -41,6 +41,9 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
       landscape y tablets con reflow.
 - [ ] **Historial completo de intentos** (la web muestra 6 y Android 4; permitir
       "ver todos" y borrar un intento).
+- [ ] **Calculadora integrada en preguntas de cálculo:** hoy el participante
+      resuelve las operaciones fuera de la app; evaluar un teclado/calculadora
+      simple que no altere la corrección.
 - [ ] **Preguntas con imágenes/diagramas** de componentes y errores.
 - [ ] **Más preguntas de CLARiSUITE/CLARiTY** y casos de diagnóstico.
 
