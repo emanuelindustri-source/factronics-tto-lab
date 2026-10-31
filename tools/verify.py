@@ -89,6 +89,16 @@ def verify_version() -> str:
     manifest = read(MANIFEST)
     m = re.search(r'android:versionName="([^"]+)"', manifest)
     check(bool(m and m.group(1) == version), "AndroidManifest versionName no coincide con VERSION")
+    code_match = re.search(r'android:versionCode="(\d+)"', manifest)
+    manifest_code = int(code_match.group(1)) if code_match else 0
+
+    version_json = json.loads(read(ROOT / "version.json"))
+    check(version_json.get("version") == version, "version.json version no coincide con VERSION")
+    check(int(version_json.get("versionCode") or 0) == manifest_code, "version.json versionCode no coincide con AndroidManifest")
+    for name in ("index.html", "generator/index.html"):
+        html = read(ROOT / name)
+        meta = re.search(r'<meta name="app-version" content="([^"]+)"', html)
+        check(bool(meta and meta.group(1) == version), f"{name}: meta app-version no coincide con VERSION")
 
     publisher = read(ROOT / "tools" / "publish_github.py")
     m = re.search(r'RELEASE_TAG = "v([^"]+)"', publisher)
@@ -105,7 +115,7 @@ def verify_version() -> str:
 def verify_bank(bank: dict) -> dict[str, int]:
     questions = bank.get("questions") or []
     models = bank.get("models") or {}
-    check(len(questions) == 328, f"Se esperaban 328 preguntas, hay {len(questions)}")
+    check(len(questions) == 350, f"Se esperaban 350 preguntas, hay {len(questions)}")
     check(set(models) == MODEL_IDS, f"Modelos inesperados: {sorted(set(models) ^ MODEL_IDS)}")
 
     ids = [q.get("id") for q in questions]
@@ -153,7 +163,7 @@ def verify_bank(bank: dict) -> dict[str, int]:
                 check(bool(str(d.get("model", "")).strip()), f"{qid}/{lang}: abierta sin modelo")
                 check(bool(d.get("rubric")), f"{qid}/{lang}: abierta sin rúbrica")
 
-    check(len(statements) == 304, f"Se esperaban 304 enunciados únicos, hay {len(statements)}")
+    check(len(statements) == 326, f"Se esperaban 304 enunciados únicos, hay {len(statements)}")
     check(sum(by_type.values()) == len(questions), "El recuento por tipo no cuadra")
     check(all(by_model[m] > 0 for m in MODEL_IDS), "Algún modelo no tiene preguntas")
 
