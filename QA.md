@@ -1,5 +1,47 @@
 # Verificación funcional
 
+## v1.7.0 · 2026-10-31
+
+Entorno: Windows 11, Python 3.13, Node.js 24, JDK 17, Android SDK 34/36,
+emulador Pixel 7 API 34, navegador Chromium integrado.
+
+### Automática
+
+| Comprobación | Resultado |
+|---|---|
+| `python tools/verify.py` | _pendiente de la compilación final_ |
+| Banco | 356 preguntas · 332 enunciados únicos |
+| i18n | 494 claves × ES/EN/PT |
+| Certificado web | PNG 1240×1754 descargado y revisado |
+| Tarjeta web | PNG 1080×1350 descargada y revisada |
+| APK | 193,5 KB · ersionCode 8 · SHA-256 68e025a5f0b66ac62d50776b301d02d8cf3df99511fb2ea12328e18315fda79a |
+
+### Web
+
+- Pantalla final con tarjetas **Informe PDF**, **Tarjeta QR**, **Certificado PNG**
+  y **CSV**, más panel de verificación con QR y código.
+- `verificar/?d=…` muestra “Resultado verificado”, el certificado, el sello
+  FNV-1a y la huella SHA-256; permite descargar PNG e imprimir.
+- Un payload alterado muestra “No se pudo verificar” y desactiva la descarga.
+- `resultado/` sigue funcionando y enlaza al certificado.
+- El informe PDF incluye QR principal y mini-QR junto al código.
+- Sin botones de correo; sin errores de consola.
+- Se conservan partículas, animaciones y actualización 1.7.0.
+
+### Android
+
+- APK `com.factronics.tto.lab` **1.7.0** (`versionCode 8`), _pendiente_.
+- Panel de verificación con QR, código y botón **Abrir verificación**.
+- Comparte **PDF**, **tarjeta PNG** y **CSV** con la hoja del sistema.
+- La tarjeta incluye sello “VERIFICADO” y checksum.
+- `apksigner` verifica v2/v3.
+
+### Limitaciones conocidas
+
+- El checksum del QR detecta cambios accidentales, no es una firma criptográfica.
+- La huella SHA-256 permite comparar el contenido, pero no prueba identidad.
+- Para autenticidad formal haría falta un backend o firma con clave privada.
+
 ## v1.6.0 · 2026-10-30
 
 Entorno: Windows 11, Python 3.13, Node.js 24, JDK 17, Android SDK 34/36,
