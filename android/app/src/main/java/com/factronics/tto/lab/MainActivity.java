@@ -9,9 +9,15 @@ import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +28,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -44,6 +51,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
@@ -104,6 +114,9 @@ public class MainActivity extends Activity {
     private boolean dark = false;
     private String mode = "exam";
     private final Map<String, Integer> seen = new HashMap<>();
+    private String studentFirst = "";
+    private String studentLast = "";
+    private String studentEmail = "";
     private Screen screen = Screen.SETUP;
     private Exam exam;
     private int reviewFilter = 0;
@@ -260,6 +273,9 @@ public class MainActivity extends Activity {
         minutes = Math.max(0, Math.min(180, prefs.getInt("minutes", 30)));
         partial = prefs.getBoolean("partial", true);
         unseen = prefs.getBoolean("unseen", true);
+        studentFirst = prefs.getString("studentFirst", "");
+        studentLast = prefs.getString("studentLast", "");
+        studentEmail = prefs.getString("studentEmail", "");
         mode = prefs.getString("mode", "exam");
         if (!"exam".equals(mode) && !"study".equals(mode) && !"review".equals(mode)) mode = "exam";
         try {
@@ -281,6 +297,51 @@ public class MainActivity extends Activity {
                 .putBoolean("unseen", unseen)
                 .putString("mode", mode)
                 .apply();
+    }
+
+    private void saveStudentPrefs() {
+        prefs.edit()
+                .putString("studentFirst", studentFirst)
+                .putString("studentLast", studentLast)
+                .putString("studentEmail", studentEmail)
+                .apply();
+    }
+
+    private String studentName() {
+        return (studentFirst + " " + studentLast).trim();
+    }
+
+    private void saveStudentData() {
+        saveStudentPrefs();
+        if (progressData == null) return;
+        try {
+            JSONObject s = new JSONObject();
+            s.put("firstName", studentFirst);
+            s.put("lastName", studentLast);
+            s.put("email", studentEmail);
+            progressData.put("student", s);
+            saveProgress();
+        } catch (Exception ignored) {}
+    }
+
+    private boolean validEmail(String value) {
+        return value != null && value.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$");
+    }
+
+    private boolean validateStudent() {
+        studentFirst = studentFirst == null ? "" : studentFirst.trim();
+        studentLast = studentLast == null ? "" : studentLast.trim();
+        studentEmail = studentEmail == null ? "" : studentEmail.trim();
+        if (studentFirst.isEmpty() || studentLast.isEmpty()) {
+            toast(t("student_required"));
+            return false;
+        }
+        if (!validEmail(studentEmail)) {
+            toast(t("student_email_invalid"));
+            return false;
+        }
+        saveStudentData();
+        return true;
     }
 
     private void saveSeen() {
@@ -386,6 +447,11 @@ public class MainActivity extends Activity {
             p.put("errors", new JSONObject());
             profiles.put("Técnico", p);
             root.put("profiles", profiles);
+            JSONObject student = new JSONObject();
+            student.put("firstName", studentFirst);
+            student.put("lastName", studentLast);
+            student.put("email", studentEmail);
+            root.put("student", student);
         } catch (Exception ignored) {}
         return root;
     }
@@ -398,6 +464,12 @@ public class MainActivity extends Activity {
         }
         if (progressData == null || progressData.optJSONObject("profiles") == null) {
             progressData = newProgressData();
+        }
+        JSONObject savedStudent = progressData.optJSONObject("student");
+        if (savedStudent != null) {
+            if (studentFirst.isEmpty()) studentFirst = savedStudent.optString("firstName", "");
+            if (studentLast.isEmpty()) studentLast = savedStudent.optString("lastName", "");
+            if (studentEmail.isEmpty()) studentEmail = savedStudent.optString("email", "");
         }
         ensureProfile();
     }
@@ -443,6 +515,13 @@ public class MainActivity extends Activity {
 
     private void saveProgress() {
         if (progressData == null) return;
+        try {
+            JSONObject student = new JSONObject();
+            student.put("firstName", studentFirst);
+            student.put("lastName", studentLast);
+            student.put("email", studentEmail);
+            progressData.put("student", student);
+        } catch (Exception ignored) {}
         prefs.edit().putString("progress_v2", progressData.toString()).apply();
     }
 
@@ -780,6 +859,7 @@ public class MainActivity extends Activity {
         c.addView(text(t("credit_line"), 11, MUT, false), top(6));
 
         if (hasSavedExam()) c.addView(resumeCard(), top(12));
+        c.addView(studentCard(), top(16));
         c.addView(modeCard(), top(16));
         c.addView(modelsCard(), top(10));
         c.addView(countTimeCard(), top(10));
@@ -807,7 +887,7 @@ public class MainActivity extends Activity {
         c.addView(bottom);
         sv.addView(c);
         root.addView(sv, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f));
-        setContentView(root);
+        setScreenRoot(root);
         updatePoolLabel();
     }
 
@@ -835,6 +915,43 @@ public class MainActivity extends Activity {
         r.addView(cont, weight());
         r.addView(discard, weightLeft(8));
         card.addView(r, top(10));
+        return card;
+    }
+
+    private LinearLayout studentCard() {
+        LinearLayout card = card();
+        addCardHeader(card, t("student_title"), t("student_help"));
+        LinearLayout row1 = row();
+        LinearLayout col1 = col();
+        col1.addView(text(t("student_first"), 12, INK2, true));
+        EditText first = edit(t("student_first"), studentFirst, android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        first.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int a, int b, int c) {}
+            public void onTextChanged(CharSequence s, int a, int b, int c) {}
+            public void afterTextChanged(Editable s) { studentFirst = s.toString().trim(); saveStudentPrefs(); }
+        });
+        col1.addView(first, top(5));
+        LinearLayout col2 = col();
+        col2.addView(text(t("student_last"), 12, INK2, true));
+        EditText last = edit(t("student_last"), studentLast, android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        last.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int a, int b, int c) {}
+            public void onTextChanged(CharSequence s, int a, int b, int c) {}
+            public void afterTextChanged(Editable s) { studentLast = s.toString().trim(); saveStudentPrefs(); }
+        });
+        col2.addView(last, top(5));
+        row1.addView(col1, weight());
+        row1.addView(col2, weightLeft(10));
+        card.addView(row1, top(10));
+        card.addView(text(t("student_email"), 12, INK2, true), top(10));
+        EditText email = edit(t("student_email_hint"), studentEmail, android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        email.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int a, int b, int c) {}
+            public void onTextChanged(CharSequence s, int a, int b, int c) {}
+            public void afterTextChanged(Editable s) { studentEmail = s.toString().trim(); saveStudentPrefs(); }
+        });
+        card.addView(email, top(5));
+        card.addView(text(t("report_recipients") + ": khristyan.hidalgo@factronics.com.ve · emanuel.industri@gmail.com", 9, MUT, false), top(8));
         return card;
     }
 
@@ -945,6 +1062,7 @@ public class MainActivity extends Activity {
     }
 
     private void startReview(List<String> ids) {
+        if (!validateStudent()) return;
         if (ids == null || ids.isEmpty()) { toast(t("review_none")); return; }
         List<Question> qs = new ArrayList<>();
         Set<String> used = new HashSet<>();
@@ -1088,6 +1206,13 @@ public class MainActivity extends Activity {
 
     private void mergeProgress(JSONObject imported) throws Exception {
         ensureProfile();
+        JSONObject importedStudent = imported.optJSONObject("student");
+        if (importedStudent != null && studentEmail.isEmpty()) {
+            studentFirst = importedStudent.optString("firstName", studentFirst);
+            studentLast = importedStudent.optString("lastName", studentLast);
+            studentEmail = importedStudent.optString("email", studentEmail);
+            saveStudentPrefs();
+        }
         JSONObject incoming = imported.optJSONObject("profiles");
         if (incoming == null) throw new Exception("profiles");
         JSONObject profiles = progressData.getJSONObject("profiles");
@@ -1348,6 +1473,7 @@ public class MainActivity extends Activity {
     }
 
     private void startExam() {
+        if (!validateStudent()) return;
         if ("review".equals(mode)) {
             List<String> ids = dueIds();
             if (ids.isEmpty()) { toast(t("review_none")); return; }
@@ -1469,7 +1595,7 @@ public class MainActivity extends Activity {
         nav.addView(flagButton, weightLeft(7));
         nav.addView(nextButton, weightLeft(7));
         root.addView(nav);
-        setContentView(root);
+        setScreenRoot(root);
         renderQuestion();
         updateChrome();
         saveExamState();
@@ -1864,7 +1990,14 @@ public class MainActivity extends Activity {
         scoreCard.addView(chip(pill, r.pending > 0 ? 0x33FFC46B : pass ? 0x3347C7A1 : 0x33FF8F87,
                 r.pending > 0 ? 0xFFFFD18A : pass ? 0xFF6FE0BC : 0xFFFFB0AA), top(8));
         scoreCard.addView(text(fmt(r.points) + " / " + r.total + " " + t("res_points") + " · " + t("res_threshold") + " 70 %", 12, 0xFF9FC7E4, false), top(10));
+        if (!studentName().isEmpty()) {
+            scoreCard.addView(text(studentName() + (studentEmail.isEmpty() ? "" : " · " + studentEmail), 10, 0xFFBFE5F8, false), top(6));
+        }
         c.addView(scoreCard);
+
+        Button report = button(t("report_send"), true);
+        report.setOnClickListener(v -> shareReportPdf(r));
+        c.addView(report, top(12));
 
         LinearLayout actions = row();
         Button retry = button(t("res_retry"), true);
@@ -1978,11 +2111,264 @@ public class MainActivity extends Activity {
 
         sv.addView(c);
         root.addView(sv, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f));
-        setContentView(root);
+        setScreenRoot(root);
         if (restoreScrollY >= 0) {
             final int y = restoreScrollY;
             restoreScrollY = -1;
             sv.post(() -> sv.scrollTo(0, y));
+        }
+    }
+
+    private Paint pdfPaint(float size, int color, boolean bold) {
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        p.setTextSize(size);
+        p.setColor(color);
+        p.setTypeface(Typeface.create(bold ? "sans-serif-medium" : "sans-serif", Typeface.NORMAL));
+        return p;
+    }
+
+    private void pdfText(Canvas c, String text, float x, float y, float size, int color, boolean bold) {
+        c.drawText(text == null ? "" : text, x, y, pdfPaint(size, color, bold));
+    }
+
+    private void pdfTextRight(Canvas c, String text, float x, float y, float size, int color, boolean bold) {
+        Paint p = pdfPaint(size, color, bold);
+        p.setTextAlign(Paint.Align.RIGHT);
+        c.drawText(text == null ? "" : text, x, y, p);
+    }
+
+    private void pdfTextCenter(Canvas c, String text, float x, float y, float size, int color, boolean bold) {
+        Paint p = pdfPaint(size, color, bold);
+        p.setTextAlign(Paint.Align.CENTER);
+        c.drawText(text == null ? "" : text, x, y, p);
+    }
+
+    private void pdfRect(Canvas c, float l, float t, float r, float b, int color, float radius) {
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        p.setColor(color);
+        c.drawRoundRect(new RectF(l, t, r, b), radius, radius, p);
+    }
+
+    private void pdfStrokeRect(Canvas c, float l, float t, float r, float b, int color, float radius, float width) {
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        p.setColor(color);
+        p.setStyle(Paint.Style.STROKE);
+        p.setStrokeWidth(width);
+        c.drawRoundRect(new RectF(l, t, r, b), radius, radius, p);
+    }
+
+    private void pdfLine(Canvas c, float x1, float y1, float x2, float y2, int color, float width) {
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        p.setColor(color);
+        p.setStrokeWidth(width);
+        c.drawLine(x1, y1, x2, y2, p);
+    }
+
+    private float pdfWrapped(Canvas c, String text, float x, float y, float width, float size, int color, boolean bold, float lineHeight, int maxLines) {
+        if (text == null) return y;
+        Paint p = pdfPaint(size, color, bold);
+        String remaining = text.trim();
+        int lines = 0;
+        while (!remaining.isEmpty() && lines < maxLines) {
+            int count = p.breakText(remaining, true, width, null);
+            if (count <= 0) break;
+            String line = remaining.substring(0, count).trim();
+            c.drawText(line, x, y, p);
+            y += lineHeight;
+            remaining = remaining.substring(count).trim();
+            lines++;
+        }
+        return y;
+    }
+
+    private String reportCode(Result r) {
+        long stamp = exam == null ? System.currentTimeMillis() : (exam.finishedAt > 0 ? exam.finishedAt : exam.startedAt);
+        String base = Long.toString(stamp, 36).toUpperCase(Locale.ROOT);
+        int pct = r.total == 0 ? 0 : (int) Math.round(r.points / r.total * 100);
+        return "REF-" + base.substring(Math.max(0, base.length() - 6)) + "-" + pct;
+    }
+
+    private String reportDuration() {
+        if (exam == null) return "00:00";
+        long end = exam.finishedAt > 0 ? exam.finishedAt : System.currentTimeMillis();
+        long sec = Math.max(0, (end - exam.startedAt) / 1000);
+        return String.format(Locale.US, "%02d:%02d", sec / 60, sec % 60);
+    }
+
+    private String formatDate(long ms) {
+        return new SimpleDateFormat("dd MMM yyyy", Locale.forLanguageTag(lang)).format(new Date(ms));
+    }
+
+    private String examModels() {
+        if (exam == null) return "";
+        Set<String> models = new LinkedHashSet<>();
+        for (Question q : exam.qs) models.addAll(q.models);
+        return join(models, " + ");
+    }
+
+    private String reportBody(Result r, int pct) {
+        String name = studentName();
+        return t("report_email_body")
+                .replace("{name}", name.isEmpty() ? "—" : name)
+                .replace("{email}", studentEmail.isEmpty() ? "—" : studentEmail)
+                .replace("{score}", String.valueOf(pct))
+                .replace("{models}", exam == null ? "" : examModels())
+                .replace("{date}", new SimpleDateFormat("dd MMM yyyy", Locale.forLanguageTag(lang)).format(new Date()))
+                .replace("{code}", reportCode(r));
+    }
+
+    private File createReportPdf(Result r) {
+        if (exam == null || r == null) return null;
+        int pct = r.total == 0 ? 0 : (int) Math.round(r.points / r.total * 100);
+        boolean pass = pct >= 70;
+        int totalPages = 1 + Math.max(1, (int) Math.ceil(r.rows.size() / 22.0));
+        File file = new File(getCacheDir(), "Factronics-TTO-Lab-Informe-" + System.currentTimeMillis() + ".pdf");
+        PdfDocument doc = new PdfDocument();
+        try {
+            PdfDocument.PageInfo info = new PdfDocument.PageInfo.Builder(595, 842, 1).create();
+            PdfDocument.Page page = doc.startPage(info);
+            Canvas c = page.getCanvas();
+            c.drawColor(WHITE);
+            Paint band = new Paint();
+            band.setShader(new LinearGradient(0, 0, 595, 0, 0xFF072A49, 0xFF00A3E0, Shader.TileMode.CLAMP));
+            c.drawRect(0, 0, 595, 92, band);
+            pdfRect(c, 30, 18, 158, 70, WHITE, 7);
+            if (logo != null) {
+                c.drawBitmap(logo, null, new RectF(36, 23, 152, 65), new Paint(Paint.FILTER_BITMAP_FLAG));
+            }
+            pdfText(c, "Factronics TTO Lab", 172, 38, 17, WHITE, true);
+            pdfText(c, t("report_subtitle"), 172, 55, 8.5f, 0xFFCFE8F8, false);
+            pdfTextRight(c, t("report_title").toUpperCase(Locale.ROOT), 563, 34, 9, WHITE, true);
+            pdfTextRight(c, reportCode(r), 563, 49, 8, 0xFFCFE8F8, false);
+            pdfTextRight(c, formatDate(exam.finishedAt > 0 ? exam.finishedAt : System.currentTimeMillis()), 563, 63, 8, 0xFFCFE8F8, false);
+
+            pdfText(c, t("report_student").toUpperCase(Locale.ROOT), 32, 116, 7.5f, 0xFF647D93, true);
+            pdfText(c, studentName().isEmpty() ? "—" : studentName(), 32, 138, 19, 0xFF0A1B2C, true);
+            pdfText(c, studentEmail.isEmpty() ? "—" : studentEmail, 32, 154, 10, 0xFF2F465C, false);
+            pdfTextRight(c, t("report_date") + ": " + formatDate(exam.finishedAt > 0 ? exam.finishedAt : System.currentTimeMillis()), 563, 116, 8, 0xFF647D93, false);
+            pdfTextRight(c, t("report_duration") + ": " + reportDuration(), 563, 132, 8, 0xFF647D93, false);
+            pdfTextRight(c, t("report_mode") + ": " + modeLabel(exam.mode), 563, 148, 8, 0xFF647D93, false);
+
+            pdfRect(c, 32, 172, 563, 292, 0xFFF3F8FD, 12);
+            pdfStrokeRect(c, 32, 172, 563, 292, 0xFFD8E4EF, 12, 1);
+            Paint ringBg = new Paint(Paint.ANTI_ALIAS_FLAG);
+            ringBg.setStyle(Paint.Style.STROKE);
+            ringBg.setStrokeWidth(8);
+            ringBg.setColor(0xFFE4EEF7);
+            c.drawCircle(102, 240, 50, ringBg);
+            Paint ring = new Paint(Paint.ANTI_ALIAS_FLAG);
+            ring.setStyle(Paint.Style.STROKE);
+            ring.setStrokeWidth(8);
+            ring.setColor(pass ? 0xFF0B7A58 : 0xFFB3261E);
+            if (pct > 0) c.drawArc(new RectF(52, 190, 152, 290), -90, Math.min(360, pct * 3.6f), false, ring);
+            pdfTextCenter(c, pct + "%", 102, 248, 27, 0xFF0A1B2C, true);
+            pdfText(c, pass ? t("res_pass") : t("res_fail"), 178, 212, 21, pass ? 0xFF0B7A58 : 0xFFB3261E, true);
+            pdfText(c, t("report_score") + ": " + fmt(r.points) + " / " + r.total + " " + t("res_points"), 178, 232, 10, 0xFF2F465C, false);
+            pdfText(c, t("res_threshold") + " 70 % · " + (r.pending > 0 ? t("res_pending") : pass ? t("res_pass") : t("res_fail")), 178, 248, 9, 0xFF647D93, false);
+            pdfText(c, (exam.qs.isEmpty() ? "" : examModels()), 178, 266, 9, 0xFF647D93, false);
+
+            int[] counts = {r.ok, r.bad, r.blank, r.pending};
+            int[] countColors = {0xFF0B7A58, 0xFFB3261E, 0xFF647D93, 0xFFA35A00};
+            String[] labels = {t("res_filter_ok"), t("res_filter_bad"), t("res_filter_blank"), t("res_pending")};
+            for (int i = 0; i < 4; i++) {
+                float x = 32 + i * 132;
+                pdfRect(c, x, 306, x + 124, 356, 0xFFF7FAFD, 9);
+                pdfText(c, String.valueOf(counts[i]), x + 10, 333, 17, countColors[i], true);
+                pdfText(c, labels[i], x + 10, 347, 7.5f, 0xFF647D93, false);
+            }
+
+            pdfText(c, t("report_breakdown").toUpperCase(Locale.ROOT), 32, 382, 8, 0xFF0B5CAB, true);
+            float y = 400;
+            for (String type : TYPE_ORDER) {
+                double[] vals = r.byType.get(type);
+                if (vals == null) continue;
+                int rowPct = vals[0] == 0 ? 0 : (int) Math.round(vals[1] / vals[0] * 100);
+                pdfText(c, typeLabel(type), 32, y, 9, 0xFF2F465C, false);
+                pdfRect(c, 210, y - 7, 470, y, 0xFFE4EEF7, 3);
+                pdfRect(c, 210, y - 7, 210 + 260 * rowPct / 100f, y, 0xFF0B5CAB, 3);
+                pdfTextRight(c, rowPct + "%", 563, y, 8, 0xFF2F465C, true);
+                y += 17;
+            }
+
+            pdfText(c, t("report_footer"), 32, 786, 7, 0xFF647D93, false);
+            pdfText(c, t("report_code") + ": " + reportCode(r), 32, 800, 7.5f, 0xFF2F465C, true);
+            pdfLine(c, 400, 804, 563, 804, 0xFF8FA9C0, 0.8f);
+            pdfText(c, t("report_signature"), 400, 816, 7, 0xFF647D93, false);
+            pdfTextRight(c, "1 / " + totalPages, 563, 816, 7, 0xFF647D93, false);
+            doc.finishPage(page);
+
+            int perPage = 22;
+            for (int start = 0, pageNo = 2; start < r.rows.size(); start += perPage, pageNo++) {
+                PdfDocument.PageInfo pi = new PdfDocument.PageInfo.Builder(595, 842, pageNo).create();
+                PdfDocument.Page p = doc.startPage(pi);
+                Canvas pc = p.getCanvas();
+                pc.drawColor(WHITE);
+                Paint band2 = new Paint();
+                band2.setColor(0xFF0B5CAB);
+                pc.drawRect(0, 0, 595, 50, band2);
+                pdfText(pc, t("report_details"), 32, 31, 13, WHITE, true);
+                pdfTextRight(pc, reportCode(r), 563, 31, 8, 0xFFCFE8F8, false);
+                pdfText(pc, "#", 32, 72, 7.5f, 0xFF647D93, true);
+                pdfText(pc, t("report_type"), 52, 72, 7.5f, 0xFF647D93, true);
+                pdfText(pc, t("report_question"), 132, 72, 7.5f, 0xFF647D93, true);
+                pdfText(pc, t("report_answer"), 390, 72, 7.5f, 0xFF647D93, true);
+                pdfText(pc, t("report_status"), 490, 72, 7.5f, 0xFF647D93, true);
+                pdfTextRight(pc, t("report_points"), 563, 72, 7.5f, 0xFF647D93, true);
+                pdfLine(pc, 32, 78, 563, 78, 0xFFD8E4EF, 0.8f);
+                float ry = 94;
+                int end = Math.min(r.rows.size(), start + perPage);
+                for (int i = start; i < end; i++) {
+                    Row row = r.rows.get(i);
+                    if (i % 2 == 1) pdfRect(pc, 32, ry - 9, 563, ry + 14, 0xFFF7FAFD, 0);
+                    pdfText(pc, String.valueOf(i + 1), 34, ry + 2, 7.5f, 0xFF647D93, false);
+                    pdfText(pc, typeLabel(row.q.type), 52, ry + 2, 7, 0xFF2F465C, false);
+                    float next = pdfWrapped(pc, row.q.text(lang), 132, ry + 2, 245, 7.3f, 0xFF0A1B2C, false, 9, 2);
+                    pdfText(pc, truncate(answerText(row.q, row.answer), 20), 390, ry + 2, 7, 0xFF2F465C, false);
+                    String st = "ok".equals(row.status) ? t("res_correct_answer") : "pending".equals(row.status) ? t("res_pending") : "blank".equals(row.status) ? t("res_no_answer") : t("res_wrong");
+                    pdfText(pc, truncate(st, 17), 490, ry + 2, 7, "ok".equals(row.status) ? 0xFF0B7A58 : 0xFFB3261E, true);
+                    pdfTextRight(pc, row.grade == null ? "—" : fmt(row.grade), 563, ry + 2, 7.5f, 0xFF2F465C, true);
+                    ry += Math.max(17, next - ry + 3);
+                }
+                pdfTextRight(pc, pageNo + " / " + totalPages, 563, 820, 7, 0xFF647D93, false);
+                doc.finishPage(p);
+            }
+
+            FileOutputStream out = new FileOutputStream(file);
+            doc.writeTo(out);
+            out.close();
+            return file;
+        } catch (Exception e) {
+            return null;
+        } finally {
+            doc.close();
+        }
+    }
+
+    private String truncate(String text, int max) {
+        if (text == null) return "";
+        String clean = text.replace('\n', ' ').trim();
+        return clean.length() <= max ? clean : clean.substring(0, Math.max(1, max - 1)) + "…";
+    }
+
+    private void shareReportPdf(Result r) {
+        if (exam == null || r == null) { toast(t("report_no_data")); return; }
+        File pdf = createReportPdf(r);
+        if (pdf == null) { toast(t("import_error")); return; }
+        Uri uri = ReportProvider.uriFor(this, pdf);
+        int pct = r.total == 0 ? 0 : (int) Math.round(r.points / r.total * 100);
+        Intent send = new Intent(Intent.ACTION_SEND);
+        send.setType("application/pdf");
+        send.putExtra(Intent.EXTRA_EMAIL, new String[]{"khristyan.hidalgo@factronics.com.ve", "emanuel.industri@gmail.com"});
+        send.putExtra(Intent.EXTRA_SUBJECT, t("report_email_subject")
+                .replace("{name}", studentName())
+                .replace("{score}", String.valueOf(pct)));
+        send.putExtra(Intent.EXTRA_TEXT, reportBody(r, pct));
+        send.putExtra(Intent.EXTRA_STREAM, uri);
+        send.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        try {
+            startActivity(Intent.createChooser(send, t("report_send")));
+        } catch (Exception e) {
+            toast(t("report_no_email"));
         }
     }
 
@@ -2174,6 +2560,20 @@ public class MainActivity extends Activity {
         return v;
     }
 
+    private EditText edit(String hint, String value, int inputType) {
+        EditText et = new EditText(this);
+        et.setHint(hint);
+        et.setText(value == null ? "" : value);
+        et.setTextSize(15);
+        et.setTextColor(INK);
+        et.setHintTextColor(MUT);
+        et.setSingleLine(true);
+        et.setInputType(inputType);
+        et.setBackground(round(CARD, 9, LINE, 1));
+        et.setPadding(dp(11), dp(8), dp(11), dp(8));
+        return et;
+    }
+
     private Button button(String s, boolean primary) {
         Button b = new Button(this);
         b.setText(s);
@@ -2266,6 +2666,13 @@ public class MainActivity extends Activity {
 
     private int dp(int v) {
         return Math.round(v * getResources().getDisplayMetrics().density);
+    }
+
+    private void setScreenRoot(LinearLayout root) {
+        root.setAlpha(0f);
+        root.setTranslationY(dp(8));
+        setContentView(root);
+        root.animate().alpha(1f).translationY(0f).setDuration(240).setInterpolator(new DecelerateInterpolator()).start();
     }
 
     private void toast(String s) { Toast.makeText(this, s, Toast.LENGTH_SHORT).show(); }
