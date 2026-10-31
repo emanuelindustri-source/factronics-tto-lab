@@ -14,7 +14,7 @@ emulador Pixel 7 API 34, navegador Chromium integrado.
 | i18n | 494 claves × ES/EN/PT |
 | Certificado web | PNG 1240×1754 descargado y revisado |
 | Tarjeta web | PNG 1080×1350 descargada y revisada |
-| APK | 193,5 KB · ersionCode 8 · SHA-256 68e025a5f0b66ac62d50776b301d02d8cf3df99511fb2ea12328e18315fda79a |
+| APK | 193,5 KB · `versionCode 8` · SHA-256 `429c66da60bdeff5cb328e6da1ee8f1ffa48bf072aa3d9696bb98a89ecf9a8ce` |
 
 ### Web
 
