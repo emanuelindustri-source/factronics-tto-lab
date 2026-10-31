@@ -3,6 +3,27 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 El histórico detallado, con auditoría y pruebas, vive en `docs/notas/`.
 
+## [1.4.0] — 2026-10-30
+
+### Añadido
+
+- Identificación obligatoria del participante: nombre, apellido y correo.
+- Informe A4 de calidad con logo, puntaje, desglose, equipos y detalle de preguntas.
+- Envío por correo a `khristyan.hidalgo@factronics.com.ve` y `emanuel.industri@gmail.com`, con destinatarios precargados.
+- Informe PDF nativo en Android y compartir con el PDF adjunto.
+- Partículas, revelado al hacer scroll, contadores y transiciones suaves.
+- Soporte de `prefers-reduced-motion` para desactivar animaciones.
+- Identidad del participante en exportación/importación de progreso.
+- `docs/versiones/` con ficha legible por versión.
+
+### Cambiado
+
+- Versión web/PWA/Android a `1.4.0`; `versionCode` 5.
+- Service Worker `factronics-tto-1.4.0`.
+- El botón «Imprimir / PDF» abre el informe diseñado en web.
+- La constancia incluye el correo del participante.
+- El APK incluye proveedor de archivos para compartir el PDF sin permisos de red.
+
 ## [1.3.0] — 2026-10-30
 
 ### Añadido
@@ -46,5 +67,6 @@ El histórico detallado, con auditoría y pruebas, vive en `docs/notas/`.
 - Reanudar sesión, PWA offline, constancia imprimible e import/export JSON.
 - APK nativa 1.2.0 (`versionCode` 3) con tema oscuro y compartir resultado.
 
+[1.4.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.4.0
 [1.3.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.2.0
