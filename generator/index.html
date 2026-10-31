@@ -12,11 +12,12 @@
   <link rel="apple-touch-icon" href="../assets/img/icon-192.png">
   <link rel="manifest" href="../manifest.webmanifest">
   <meta name="application-name" content="Factronics TTO Lab">
-  <meta name="app-version" content="1.6.0">
+  <meta name="app-version" content="1.7.0">
   <meta name="app-version-url" content="../version.json">
   <meta name="result-base" content="../resultado/">
+  <meta name="verify-base" content="../verificar/">
   <meta name="robots" content="index,follow">
-  <link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="stylesheet" href="../assets/css/site.css?v=17">
 </head>
 <body class="app-page">
   <a class="skip-link" href="#main" data-i18n="skip_link">Saltar al contenido</a>
@@ -270,16 +271,45 @@
             <h2 id="resHeadline">Evaluación completada</h2>
             <p id="resSubline"></p>
             <p class="res-student" id="resStudent"></p>
-            <div class="res-actions">
-              <button class="btn primary" type="button" data-action="report" data-i18n="report_open">Informe para el jefe</button>
-              <button class="btn" type="button" data-action="qrcard" data-i18n="qr_card">Tarjeta QR</button>
-              <button class="btn" type="button" data-action="retry" data-i18n="res_retry">Repetir</button>
-              <button class="btn" type="button" data-action="new" data-i18n="res_new">Nuevo examen</button>
-              <button class="btn" type="button" data-action="print" data-i18n="res_print">Imprimir / PDF</button>
-              <button class="btn" type="button" data-action="csv" data-i18n="res_csv">Descargar CSV</button>
-              <button class="btn" type="button" data-action="copy" data-i18n="res_copy">Copiar resumen</button>
-              <button class="btn" type="button" data-action="review-errors" data-i18n="res_review_errors">Repasar errores</button>
-              <button class="btn" type="button" data-action="cert" data-i18n="cert_btn">Constancia</button>
+            <div class="res-docs" role="group" aria-label="Documentos del resultado">
+              <button class="doc-card" type="button" data-action="report">
+                <span class="doc-ico pdf" aria-hidden="true">PDF</span>
+                <span class="doc-copy"><b data-i18n="report_open">Informe para el jefe</b><small data-i18n="doc_report_hint">Informe A4 con detalle y QR</small></span>
+              </button>
+              <button class="doc-card" type="button" data-action="qrcard">
+                <span class="doc-ico qr" aria-hidden="true">QR</span>
+                <span class="doc-copy"><b data-i18n="qr_card">Tarjeta QR</b><small data-i18n="doc_card_hint">PNG con tu puntaje y QR</small></span>
+              </button>
+              <button class="doc-card" type="button" data-action="cert-png">
+                <span class="doc-ico cert" aria-hidden="true">✓</span>
+                <span class="doc-copy"><b data-i18n="cert_png">Certificado PNG</b><small data-i18n="doc_cert_hint">Certificado formal en PNG</small></span>
+              </button>
+              <button class="doc-card" type="button" data-action="csv">
+                <span class="doc-ico csv" aria-hidden="true">CSV</span>
+                <span class="doc-copy"><b data-i18n="res_csv">Descargar CSV</b><small data-i18n="doc_csv_hint">Preguntas y respuestas en CSV</small></span>
+              </button>
+            </div>
+            <div class="res-verify" id="resVerify" hidden>
+              <div class="res-verify-qr">
+                <img id="resQr" alt="QR de verificación" width="132" height="132">
+              </div>
+              <div class="res-verify-copy">
+                <span class="res-verify-kicker" data-i18n="verify_code_label">Código de referencia</span>
+                <b class="res-code" id="resCode">—</b>
+                <p data-i18n="verify_scan_help">Escanea el QR o abre la verificación para comprobar que el resultado no fue alterado.</p>
+                <div class="res-verify-actions">
+                  <button class="btn sm primary" type="button" data-action="verify-open" data-i18n="verify_open">Abrir verificación</button>
+                  <button class="btn sm" type="button" data-action="verify-copy" data-i18n="verify_copy">Copiar enlace</button>
+                </div>
+              </div>
+            </div>
+            <div class="res-actions res-actions-secondary">
+              <button class="btn sm" type="button" data-action="retry" data-i18n="res_retry">Repetir</button>
+              <button class="btn sm" type="button" data-action="new" data-i18n="res_new">Nuevo examen</button>
+              <button class="btn sm" type="button" data-action="print" data-i18n="res_print">Imprimir / PDF</button>
+              <button class="btn sm" type="button" data-action="copy" data-i18n="res_copy">Copiar resumen</button>
+              <button class="btn sm" type="button" data-action="review-errors" data-i18n="res_review_errors">Repasar errores</button>
+              <button class="btn sm" type="button" data-action="cert" data-i18n="cert_btn">Constancia</button>
             </div>
             <div class="res-stats">
               <div class="res-stat"><b id="statCorrect">0</b><span data-i18n="res_filter_ok">Correctas</span></div>
@@ -325,18 +355,19 @@
     <div class="shell footer-note" style="border:0;margin:0;padding:0">
       <span data-i18n="footer_disclaimer">Proyecto de Factronics Venezuela, distribuidor oficial de Videojet. Desarrollado por Khristyan Hidalgo, técnico de campo certificado. Videojet es marca de Videojet Technologies; este material no fue solicitado ni autorizado por Videojet.</span>
       <span data-i18n="footer_gen">Los datos se guardan solo en este navegador.</span>
-      <span>v1.6.0</span>
+      <span>v1.7.0</span>
     </div>
   </footer>
 
-  <script src="../assets/js/vendor/qrcode.js"></script>
-  <script src="../assets/js/bank.js"></script>
-  <script src="../assets/js/i18n.js"></script>
-  <script src="../assets/js/result.js"></script>
-  <script src="../assets/js/progress.js"></script>
-  <script src="../assets/js/pwa.js"></script>
-  <script src="../assets/js/motion.js"></script>
-  <script src="../assets/js/update.js"></script>
-  <script src="../assets/js/generator.js"></script>
+  <script src="../assets/js/vendor/qrcode.js?v=17"></script>
+  <script src="../assets/js/bank.js?v=17"></script>
+  <script src="../assets/js/i18n.js?v=17"></script>
+  <script src="../assets/js/result.js?v=17"></script>
+  <script src="../assets/js/certificate.js?v=17"></script>
+  <script src="../assets/js/progress.js?v=17"></script>
+  <script src="../assets/js/pwa.js?v=17"></script>
+  <script src="../assets/js/motion.js?v=17"></script>
+  <script src="../assets/js/update.js?v=17"></script>
+  <script src="../assets/js/generator.js?v=17"></script>
 </body>
 </html>
