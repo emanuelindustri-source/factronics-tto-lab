@@ -38,6 +38,8 @@ Reglas:
 | 2026-10-30 | 1.5.0 | [Resultado y pruebas](2026-10-30-v1.5.0-resultado.md) | Cerrada |
 | 2026-10-30 | 1.6.0 | [Plan de trabajo](2026-10-30-v1.6.0-plan.md) | Cerrada |
 | 2026-10-30 | 1.6.0 | [Resultado y pruebas](2026-10-30-v1.6.0-resultado.md) | Cerrada |
+| 2026-10-31 | 1.7.0 | [Plan de trabajo](2026-10-31-v1.7.0-plan.md) | Cerrada |
+| 2026-10-31 | 1.7.0 | [Resultado y pruebas](2026-10-31-v1.7.0-resultado.md) | Cerrada |
 | — | — | [Pendientes](PENDIENTES.md) | Vivo |
 
 ## Versión publicada
