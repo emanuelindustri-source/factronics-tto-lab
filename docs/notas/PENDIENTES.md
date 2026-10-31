@@ -16,12 +16,15 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
       confirmar que el visor abre en móvil y que el checksum coincide.
 - [ ] **Probar el aviso de actualización** publicando una versión mayor temporal
       y confirmando el banner web y el diálogo Android en un dispositivo real.
-- [ ] **Revisar las 22 preguntas nuevas** de ribbons y soportes con un segundo
-      técnico; los P/N y tensiones deben contrastarse con la revisión vigente.
+- [ ] **Revisar las 22 preguntas de ribbons y soportes + las 6 de troubleshooting**
+      con un segundo técnico; los P/N y tensiones deben contrastarse con la
+      revisión vigente.
 - [x] **Permiso de Videojet:** el usuario confirmó el 2026-10-30 que cuenta con
       permiso para usar el material de las fuentes revisadas.
 - [ ] **Firma criptográfica del resultado** si se necesita autenticidad formal;
       hoy el QR usa checksum para detectar alteraciones accidentales.
+- [ ] **Probar el certificado en un móvil real:** escanear el QR de la tarjeta,
+      abrir `verificar/`, descargar el PNG y comprobar el sello y la huella.
 - [ ] **Firma de producción** si el APK se distribuirá de forma masiva: crear
       keystore propia, custodiar contraseñas y documentar el proceso. La clave
       actual es de entrenamiento.
@@ -31,7 +34,7 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
 - [ ] **PDF descargable directo en web:** hoy se usa el diálogo de impresión
       («Guardar como PDF»). Evaluar generar el PDF con una librería local.
 - [ ] **Constancia PDF nativa en Android** además del informe de evaluación.
-- [ ] **Exportación CSV nativa en Android** (la web ya la tiene).
+- [x] **Exportación CSV nativa en Android** (web y Android).
 - [ ] **Importar progreso con opción reemplazar/combinar** en web y Android.
 - [ ] **Tema oscuro real en diálogos Android.**
 - [ ] **Orientación/tablet:** la actividad está fija en vertical; evaluar
@@ -57,7 +60,7 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
       no solo recarga silenciosa.
 - [ ] **SEO:** `hreflang` si se separan versiones por idioma; revisar Rich
       Results de FAQ/SoftwareApplication.
-- [ ] **Rendimiento:** medir Lighthouse móvil y tamaño del banco (497 KB);
+- [ ] **Rendimiento:** medir Lighthouse móvil y tamaño del banco (496 KB);
       evaluar carga diferida en la landing.
 - [ ] **Licencia y marca:** revisar `NOTICE.md` antes de cualquier uso comercial
       o distribución fuera de Factronics.
