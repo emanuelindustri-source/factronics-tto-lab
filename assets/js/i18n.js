@@ -1476,7 +1476,8 @@
       calc_use: "Usar resultado",
       calc_clear: "Limpiar",
       calc_result: "Resultado",
-      calc_invalid: "Operación no válida"
+      calc_invalid: "Operación no válida",
+      cert_share: "Compartir certificado"
     },
     en: {
       calc_open: "Calculator",
@@ -1484,7 +1485,8 @@
       calc_use: "Use result",
       calc_clear: "Clear",
       calc_result: "Result",
-      calc_invalid: "Invalid operation"
+      calc_invalid: "Invalid operation",
+      cert_share: "Share certificate"
     },
     pt: {
       calc_open: "Calculadora",
@@ -1492,7 +1494,8 @@
       calc_use: "Usar resultado",
       calc_clear: "Limpar",
       calc_result: "Resultado",
-      calc_invalid: "Operação inválida"
+      calc_invalid: "Operação inválida",
+      cert_share: "Compartilhar certificado"
     }
   };
   Object.keys(V18).forEach((lang) => {
