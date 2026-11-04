@@ -2628,6 +2628,905 @@
         "ribbon",
         "troubleshooting"
       ]
+    },
+    {
+      "id": "R-21",
+      "type": "fill",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 3,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "Completa: la película portadora PET de un ribbon TTO tiene un espesor de ___ µm.",
+          "fields": [
+            {
+              "label": "Espesor",
+              "answers": [
+                4.5
+              ],
+              "unit": "µm",
+              "tolerance": 0.05
+            }
+          ],
+          "explanation": "La formación de DataFlex Plus indica una película PET de 4.5 µm, con alta resistencia al desgarro y buena conducción térmica."
+        },
+        "en": {
+          "q": "Complete: the PET carrier film of a TTO ribbon is ___ µm thick.",
+          "fields": [
+            {
+              "label": "Thickness",
+              "answers": [
+                4.5
+              ],
+              "unit": "µm",
+              "tolerance": 0.05
+            }
+          ],
+          "explanation": "The DataFlex Plus training states a 4.5 µm PET film with high tear resistance and good thermal conductivity."
+        },
+        "pt": {
+          "q": "Complete: o filme PET de um ribbon TTO tem espessura de ___ µm.",
+          "fields": [
+            {
+              "label": "Espessura",
+              "answers": [
+                4.5
+              ],
+              "unit": "µm",
+              "tolerance": 0.05
+            }
+          ],
+          "explanation": "O treinamento DataFlex Plus indica filme PET de 4.5 µm, com alta resistência ao rasgo e boa condutividade térmica."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "structure"
+      ]
+    },
+    {
+      "id": "R-22",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué tecnología de cabezal utiliza el TTO y por qué?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Corner edge, porque permite velocidades altas (hasta 1000 mm/s)"
+            },
+            {
+              "id": "b",
+              "text": "Flat head, porque mantiene contacto más tiempo"
+            },
+            {
+              "id": "c",
+              "text": "Inkjet térmico, porque no usa ribbon"
+            },
+            {
+              "id": "d",
+              "text": "Láser, porque evita el consumible"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "El TTO usa cabezales corner edge por su mayor velocidad; el flat head se usa en aplicadores de etiquetas y trabaja por debajo de 300 mm/s."
+        },
+        "en": {
+          "q": "Which printhead technology does TTO use and why?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Corner edge, because it allows high speeds (up to 1000 mm/s)"
+            },
+            {
+              "id": "b",
+              "text": "Flat head, because it stays in contact longer"
+            },
+            {
+              "id": "c",
+              "text": "Thermal inkjet, because it does not use ribbon"
+            },
+            {
+              "id": "d",
+              "text": "Laser, because it avoids consumables"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "TTO uses corner-edge printheads for higher speed; flat-head technology is used in label applicators below 300 mm/s."
+        },
+        "pt": {
+          "q": "Qual tecnologia de cabeçote o TTO utiliza e por quê?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Corner edge, porque permite altas velocidades (até 1000 mm/s)"
+            },
+            {
+              "id": "b",
+              "text": "Flat head, porque mantém contato por mais tempo"
+            },
+            {
+              "id": "c",
+              "text": "Inkjet térmico, porque não usa ribbon"
+            },
+            {
+              "id": "d",
+              "text": "Laser, porque evita o consumível"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "O TTO usa cabeçotes corner edge pela maior velocidade; o flat head é usado em aplicadores de etiquetas e trabalha abaixo de 300 mm/s."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "printhead"
+      ]
+    },
+    {
+      "id": "R-23",
+      "type": "fill",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "Completa: la vida útil recomendada del ribbon es de ___ meses en las condiciones de almacenamiento indicadas.",
+          "fields": [
+            {
+              "label": "Vida útil",
+              "answers": [
+                12
+              ],
+              "unit": "meses"
+            }
+          ],
+          "explanation": "La formación indica 12 meses de vida útil almacenando entre 5–35 °C y 20–80 % de humedad. La fecha de caducidad se calcula sumando 52 semanas a la fabricación."
+        },
+        "en": {
+          "q": "Complete: the recommended ribbon shelf life is ___ months under the stated storage conditions.",
+          "fields": [
+            {
+              "label": "Shelf life",
+              "answers": [
+                12
+              ],
+              "unit": "months"
+            }
+          ],
+          "explanation": "The training states a 12-month shelf life at 5–35 °C and 20–80 % humidity. Expiry is calculated by adding 52 weeks to the manufacturing date."
+        },
+        "pt": {
+          "q": "Complete: a vida útil recomendada do ribbon é de ___ meses nas condições de armazenamento indicadas.",
+          "fields": [
+            {
+              "label": "Vida útil",
+              "answers": [
+                12
+              ],
+              "unit": "meses"
+            }
+          ],
+          "explanation": "O treinamento indica 12 meses de vida útil armazenando entre 5–35 °C e 20–80 % de umidade. A validade é calculada somando 52 semanas à fabricação."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "storage"
+      ]
+    },
+    {
+      "id": "R-24",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué grado Wax/Resin está pensado para alta velocidad, hasta 1000 mm/s?",
+          "options": [
+            {
+              "id": "a",
+              "text": "APR 700 High Speed"
+            },
+            {
+              "id": "b",
+              "text": "APR 600 Standard"
+            },
+            {
+              "id": "c",
+              "text": "AXR 600 Premium"
+            },
+            {
+              "id": "d",
+              "text": "AXR 800 Chemical Resistant"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "APR 700 es el grado de alta velocidad de la familia Wax/Resin, con hasta 1000 mm/s y resistencia térmica de hasta 100 °C."
+        },
+        "en": {
+          "q": "Which Wax/Resin grade is intended for high speed, up to 1000 mm/s?",
+          "options": [
+            {
+              "id": "a",
+              "text": "APR 700 High Speed"
+            },
+            {
+              "id": "b",
+              "text": "APR 600 Standard"
+            },
+            {
+              "id": "c",
+              "text": "AXR 600 Premium"
+            },
+            {
+              "id": "d",
+              "text": "AXR 800 Chemical Resistant"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "APR 700 is the high-speed Wax/Resin grade, up to 1000 mm/s and heat resistance up to 100 °C."
+        },
+        "pt": {
+          "q": "Qual grau Wax/Resin é indicado para alta velocidade, até 1000 mm/s?",
+          "options": [
+            {
+              "id": "a",
+              "text": "APR 700 High Speed"
+            },
+            {
+              "id": "b",
+              "text": "APR 600 Standard"
+            },
+            {
+              "id": "c",
+              "text": "AXR 600 Premium"
+            },
+            {
+              "id": "d",
+              "text": "AXR 800 Chemical Resistant"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "APR 700 é o grau de alta velocidade da família Wax/Resin, com até 1000 mm/s e resistência térmica de até 100 °C."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "grades"
+      ]
+    },
+    {
+      "id": "R-25",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 3,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué grado Resin ofrece buena resistencia a solventes y trabaja hasta 250 mm/s?",
+          "options": [
+            {
+              "id": "a",
+              "text": "AXR 600 Premium"
+            },
+            {
+              "id": "b",
+              "text": "APR 700 High Speed"
+            },
+            {
+              "id": "c",
+              "text": "APX 650 Super Standard"
+            },
+            {
+              "id": "d",
+              "text": "APR 600 Standard"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "AXR 600 Premium es un Resin con buena resistencia a solventes, heat resistance hasta 180 °C y velocidad máxima de 250 mm/s."
+        },
+        "en": {
+          "q": "Which Resin grade offers good solvent resistance and runs up to 250 mm/s?",
+          "options": [
+            {
+              "id": "a",
+              "text": "AXR 600 Premium"
+            },
+            {
+              "id": "b",
+              "text": "APR 700 High Speed"
+            },
+            {
+              "id": "c",
+              "text": "APX 650 Super Standard"
+            },
+            {
+              "id": "d",
+              "text": "APR 600 Standard"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "AXR 600 Premium is a Resin grade with good solvent resistance, heat resistance up to 180 °C and a maximum speed of 250 mm/s."
+        },
+        "pt": {
+          "q": "Qual grau Resin oferece boa resistência a solventes e trabalha até 250 mm/s?",
+          "options": [
+            {
+              "id": "a",
+              "text": "AXR 600 Premium"
+            },
+            {
+              "id": "b",
+              "text": "APR 700 High Speed"
+            },
+            {
+              "id": "c",
+              "text": "APX 650 Super Standard"
+            },
+            {
+              "id": "d",
+              "text": "APR 600 Standard"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "AXR 600 Premium é um Resin com boa resistência a solventes, resistência térmica de até 180 °C e velocidade máxima de 250 mm/s."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "grades"
+      ]
+    },
+    {
+      "id": "R-26",
+      "type": "multi",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 3,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué diferencia a un ribbon Resin de uno Wax/Resin?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Mayor resistencia térmica, hasta 250 °C"
+            },
+            {
+              "id": "b",
+              "text": "Mejor resistencia al frotado y a los solventes"
+            },
+            {
+              "id": "c",
+              "text": "Está limitado a velocidades más bajas, hasta 250 mm/s"
+            },
+            {
+              "id": "d",
+              "text": "Tiene más colores disponibles que Wax/Resin"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "El Resin ofrece mejor resistencia térmica (hasta 250 °C), al frotado y a solventes, pero trabaja a velocidades menores (hasta 250 mm/s) y tiene menos colores que Wax/Resin."
+        },
+        "en": {
+          "q": "What distinguishes a Resin ribbon from a Wax/Resin ribbon?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Higher heat resistance, up to 250 °C"
+            },
+            {
+              "id": "b",
+              "text": "Better smudge and solvent resistance"
+            },
+            {
+              "id": "c",
+              "text": "It is limited to slower speeds, up to 250 mm/s"
+            },
+            {
+              "id": "d",
+              "text": "It has more colours available than Wax/Resin"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "Resin offers better heat resistance (up to 250 °C), smudge and solvent resistance, but runs at lower speeds (up to 250 mm/s) and has fewer colours than Wax/Resin."
+        },
+        "pt": {
+          "q": "O que diferencia um ribbon Resin de um Wax/Resin?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Maior resistência térmica, até 250 °C"
+            },
+            {
+              "id": "b",
+              "text": "Melhor resistência ao atrito e a solventes"
+            },
+            {
+              "id": "c",
+              "text": "Está limitado a velocidades menores, até 250 mm/s"
+            },
+            {
+              "id": "d",
+              "text": "Tem mais cores disponíveis que Wax/Resin"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "O Resin oferece melhor resistência térmica (até 250 °C), ao atrito e a solventes, mas trabalha em velocidades menores (até 250 mm/s) e tem menos cores que o Wax/Resin."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "grades"
+      ]
+    },
+    {
+      "id": "R-27",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 3,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué dos formas de bobinado existen para el ribbon y qué implica?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Tinta por dentro o por fuera; generalmente no son intercambiables"
+            },
+            {
+              "id": "b",
+              "text": "Bobinado lento o rápido; se elige por velocidad"
+            },
+            {
+              "id": "c",
+              "text": "Con o sin backcoat; siempre son intercambiables"
+            },
+            {
+              "id": "d",
+              "text": "Core de 1 o 2 pulgadas; no afecta la instalación"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "El ribbon puede venir con la tinta por dentro o por fuera. El bobinado depende del TTO y, en general, los tipos no se pueden intercambiar."
+        },
+        "en": {
+          "q": "What two ribbon winding options exist and what does that imply?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Ink wound inside or outside; they are generally not interchangeable"
+            },
+            {
+              "id": "b",
+              "text": "Slow or fast winding; chosen by speed"
+            },
+            {
+              "id": "c",
+              "text": "With or without backcoat; always interchangeable"
+            },
+            {
+              "id": "d",
+              "text": "1-inch or 2-inch core; does not affect installation"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "Ribbon can be supplied ink-wound inside or outside. The winding depends on the TTO and the types cannot generally be interchanged."
+        },
+        "pt": {
+          "q": "Quais duas formas de enrolamento existem para o ribbon e o que isso implica?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Tinta por dentro ou por fora; geralmente não são intercambiáveis"
+            },
+            {
+              "id": "b",
+              "text": "Enrolamento lento ou rápido; escolhido pela velocidade"
+            },
+            {
+              "id": "c",
+              "text": "Com ou sem backcoat; sempre intercambiáveis"
+            },
+            {
+              "id": "d",
+              "text": "Núcleo de 1 ou 2 polegadas; não afeta a instalação"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "O ribbon pode vir com a tinta por dentro ou por fora. O enrolamento depende do TTO e, em geral, os tipos não podem ser intercambiados."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "handling"
+      ]
+    },
+    {
+      "id": "R-28",
+      "type": "multi",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué beneficios aporta el backcoat del ribbon?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Protege el cabezal porque es no abrasivo"
+            },
+            {
+              "id": "b",
+              "text": "Reduce la carga estática"
+            },
+            {
+              "id": "c",
+              "text": "Ayuda a evitar que la película se queme por el calor"
+            },
+            {
+              "id": "d",
+              "text": "Aumenta el número de colores disponibles"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "El backcoat es no abrasivo, protege el cabezal, reduce la electricidad estática y tiene buena resistencia térmica para evitar que la película se queme."
+        },
+        "en": {
+          "q": "What benefits does the ribbon backcoat provide?",
+          "options": [
+            {
+              "id": "a",
+              "text": "It protects the printhead because it is non-abrasive"
+            },
+            {
+              "id": "b",
+              "text": "It reduces static charge"
+            },
+            {
+              "id": "c",
+              "text": "It helps prevent the film from burning from heat"
+            },
+            {
+              "id": "d",
+              "text": "It increases the number of available colours"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "The backcoat is non-abrasive, protects the printhead, reduces static electricity and has good heat resistance to prevent the film from burning."
+        },
+        "pt": {
+          "q": "Quais benefícios o backcoat do ribbon oferece?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Protege o cabeçote porque é não abrasivo"
+            },
+            {
+              "id": "b",
+              "text": "Reduz a carga estática"
+            },
+            {
+              "id": "c",
+              "text": "Ajuda a evitar que o filme queime pelo calor"
+            },
+            {
+              "id": "d",
+              "text": "Aumenta o número de cores disponíveis"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "O backcoat é não abrasivo, protege o cabeçote, reduz a eletricidade estática e tem boa resistência térmica para evitar que o filme queime."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "structure"
+      ]
+    },
+    {
+      "id": "R-29",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Se puede usar un ribbon de cera pura (wax only) en TTO?",
+          "options": [
+            {
+              "id": "a",
+              "text": "No, no es adecuado para TTO"
+            },
+            {
+              "id": "b",
+              "text": "Sí, a cualquier velocidad"
+            },
+            {
+              "id": "c",
+              "text": "Sí, solo con backcoat"
+            },
+            {
+              "id": "d",
+              "text": "Sí, pero solo en etiquetas de papel"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "La formación indica que la tinta wax only no es adecuada para aplicaciones TTO; se usan Wax/Resin o Resin."
+        },
+        "en": {
+          "q": "Can a wax-only ribbon be used in TTO?",
+          "options": [
+            {
+              "id": "a",
+              "text": "No, it is not suitable for TTO"
+            },
+            {
+              "id": "b",
+              "text": "Yes, at any speed"
+            },
+            {
+              "id": "c",
+              "text": "Yes, only with backcoat"
+            },
+            {
+              "id": "d",
+              "text": "Yes, but only on paper labels"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "The training states that wax-only ink is not suitable for TTO applications; Wax/Resin or Resin inks are used."
+        },
+        "pt": {
+          "q": "Pode-se usar um ribbon de cera pura (wax only) em TTO?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Não, não é adequado para TTO"
+            },
+            {
+              "id": "b",
+              "text": "Sim, em qualquer velocidade"
+            },
+            {
+              "id": "c",
+              "text": "Sim, somente com backcoat"
+            },
+            {
+              "id": "d",
+              "text": "Sim, mas somente em etiquetas de papel"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "O treinamento indica que a tinta wax only não é adequada para aplicações TTO; usam-se Wax/Resin ou Resin."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "grades"
+      ]
+    },
+    {
+      "id": "R-30",
+      "type": "multi",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 3,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "Relaciona problemas de impresión con su causa típica. ¿Qué combinaciones son correctas?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Pinholes: receptor demasiado rugoso"
+            },
+            {
+              "id": "b",
+              "text": "Sombreado gris: incompatibilidad entre ribbon y receptor"
+            },
+            {
+              "id": "c",
+              "text": "Líneas verticales: cabezal sucio o puntos inactivos"
+            },
+            {
+              "id": "d",
+              "text": "Transferencia parcial: exceso de colores en el ribbon"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "La guía asocia pinholes con receptor rugoso, sombreado gris con incompatibilidad ribbon/receptor, líneas verticales con cabezal sucio o puntos inactivos, y transferencia parcial con incompatibilidad (no con colores)."
+        },
+        "en": {
+          "q": "Match print problems with their typical cause. Which combinations are correct?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Pinholes: substrate too rough"
+            },
+            {
+              "id": "b",
+              "text": "Grey shading: ribbon/substrate incompatibility"
+            },
+            {
+              "id": "c",
+              "text": "Vertical lines: dirty printhead or inactive dots"
+            },
+            {
+              "id": "d",
+              "text": "Partial transfer: too many colours in the ribbon"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "The guide links pinholes to a rough substrate, grey shading to ribbon/substrate incompatibility, vertical lines to a dirty printhead or inactive dots, and partial transfer to incompatibility (not colour count)."
+        },
+        "pt": {
+          "q": "Relacione problemas de impressão com a causa típica. Quais combinações estão corretas?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Pinholes: receptor muito rugoso"
+            },
+            {
+              "id": "b",
+              "text": "Sombreamento cinza: incompatibilidade entre ribbon e receptor"
+            },
+            {
+              "id": "c",
+              "text": "Linhas verticais: cabeçote sujo ou pontos inativos"
+            },
+            {
+              "id": "d",
+              "text": "Transferência parcial: excesso de cores no ribbon"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "O guia associa pinholes a receptor rugoso, sombreamento cinza a incompatibilidade ribbon/receptor, linhas verticais a cabeçote sujo ou pontos inativos, e transferência parcial a incompatibilidade (não à quantidade de cores)."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "troubleshooting"
+      ]
     }
   ]
 }
