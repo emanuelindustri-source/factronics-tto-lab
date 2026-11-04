@@ -115,7 +115,7 @@ def verify_version() -> str:
 def verify_bank(bank: dict) -> dict[str, int]:
     questions = bank.get("questions") or []
     models = bank.get("models") or {}
-    check(len(questions) == 356, f"Se esperaban 356 preguntas, hay {len(questions)}")
+    check(len(questions) == 366, f"Se esperaban 366 preguntas, hay {len(questions)}")
     check(set(models) == MODEL_IDS, f"Modelos inesperados: {sorted(set(models) ^ MODEL_IDS)}")
 
     ids = [q.get("id") for q in questions]
@@ -163,7 +163,7 @@ def verify_bank(bank: dict) -> dict[str, int]:
                 check(bool(str(d.get("model", "")).strip()), f"{qid}/{lang}: abierta sin modelo")
                 check(bool(d.get("rubric")), f"{qid}/{lang}: abierta sin rúbrica")
 
-    check(len(statements) == 332, f"Se esperaban 332 enunciados únicos, hay {len(statements)}")
+    check(len(statements) == 342, f"Se esperaban 342 enunciados únicos, hay {len(statements)}")
     check(sum(by_type.values()) == len(questions), "El recuento por tipo no cuadra")
     check(all(by_model[m] > 0 for m in MODEL_IDS), "Algún modelo no tiene preguntas")
 
@@ -291,6 +291,18 @@ def verify_result_flow() -> None:
         check(token in i18n, f"i18n.js: falta {token}")
 
 
+def verify_calculator() -> None:
+    js = read(ROOT / "assets" / "js" / "generator.js")
+    for token in ("calcEval", "data-calc-expr", "calcUse", "calcPress"):
+        check(token in js, f"generator.js: falta calculadora {token}")
+    android = read(ROOT / "android" / "app" / "src" / "main" / "java" / "com" / "factronics" / "tto" / "lab" / "MainActivity.java")
+    for token in ("showCalculatorDialog", "evalCalc", "createCertificate", "shareCertificate"):
+        check(token in android, f"Android: falta {token}")
+    i18n = read(ROOT / "assets" / "js" / "i18n.js")
+    for token in ("calc_open", "calc_use", "calc_invalid"):
+        check(token in i18n, f"i18n.js: falta {token}")
+
+
 def verify_apk(version: str) -> tuple[int, str]:
     check(APK.exists(), "Falta download/Factronics-TTO-Lab.apk")
     check(APK_SHA.exists(), "Falta download/Factronics-TTO-Lab.apk.sha256")
@@ -339,6 +351,7 @@ def main() -> int:
     verify_html()
     verify_links()
     verify_result_flow()
+    verify_calculator()
     apk_size, digest = verify_apk(version)
     verify_secrets()
 
