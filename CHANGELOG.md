@@ -3,6 +3,21 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 El histórico detallado, con auditoría y pruebas, vive en `docs/notas/`.
 
+## [1.9.0] — 2026-11-04
+
+### Añadido
+
+- Escáner QR con cámara o imagen en `verificar/` (BarcodeDetector + jsQR).
+- Seis preguntas nuevas de ribbons; banco 372/348.
+- Workflow de GitHub Actions para verificar el proyecto.
+- CTA de escaneo en la landing.
+
+### Cambiado
+
+- Versión web/PWA/Android a `1.9.0`; `versionCode` 10.
+- Service Worker `factronics-tto-1.9.0`; jsQR en caché.
+- Assets `?v=190`.
+
 ## [1.8.0] — 2026-11-04
 
 ### Añadido
@@ -139,6 +154,7 @@ El histórico detallado, con auditoría y pruebas, vive en `docs/notas/`.
 - Reanudar sesión, PWA offline, constancia imprimible e import/export JSON.
 - APK nativa 1.2.0 (`versionCode` 3) con tema oscuro y compartir resultado.
 
+[1.9.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.9.0
 [1.8.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.8.0
 [1.7.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.7.0
 [1.6.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.6.0
