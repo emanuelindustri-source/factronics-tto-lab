@@ -646,6 +646,29 @@
     } else {
       body = `<textarea class="inp" data-open="${esc(q.id)}" placeholder="${esc(T("exam_instructions_open"))}">${esc(ans || "")}</textarea>`;
     }
+    const calcKeys = [
+      ["7", "7"], ["8", "8"], ["9", "9"], ["÷", "÷"],
+      ["4", "4"], ["5", "5"], ["6", "6"], ["×", "×"],
+      ["1", "1"], ["2", "2"], ["3", "3"], ["−", "−"],
+      ["0", "0"], [".", "."], ["(", "("], [")", ")"],
+      [T("calc_clear"), "clear"], ["⌫", "back"], ["+", "+"], ["=", "eq"]
+    ];
+    const calcTool = q.type === "calc" ? `
+      <div class="calc-wrap">
+        <div class="calc-head">
+          <button class="btn sm" type="button" data-action="calc-toggle">${esc(T("calc_open"))}</button>
+          <span class="hint">${esc(T("calc_hint"))}</span>
+        </div>
+        <div class="calc-tool" hidden>
+          <input class="calc-expr" data-calc-expr value="0" readonly inputmode="none" aria-label="${esc(T("calc_open"))}">
+          <div class="calc-keys">${calcKeys.map(([label, key]) => {
+            const attr = key === "clear" ? 'data-calc-clear="1"' : key === "back" ? 'data-calc-back="1"' : key === "eq" ? 'data-calc-eq="1"' : `data-calc-key="${esc(key)}"`;
+            const cls = key === "eq" ? "eq" : key === "clear" || key === "back" ? "alt" : "";
+            return `<button type="button" class="${cls}" ${attr}>${esc(label)}</button>`;
+          }).join("")}</div>
+          <div class="calc-foot"><span>${esc(T("calc_result"))}: <b data-calc-result>—</b></span><button class="btn sm primary" type="button" data-calc-use>${esc(T("calc_use"))}</button></div>
+        </div>
+      </div>` : "";
     const instant = !!state.exam.instant;
     const openType = q.type === "describe" || q.type === "errorfix";
     const checked = !!(state.exam.checked && state.exam.checked[q.id]);
@@ -666,12 +689,72 @@
         <p class="q-text">${esc(d.q)}</p>
         <p class="q-instr">${esc(instructions(q))}</p>
         ${body}
+        ${calcTool}
         ${instant && !openType ? `<div class="q-actions"><button class="btn sm" type="button" data-action="check" ${isAnswered(q, ans) ? "" : "disabled"}>${esc(T("exam_check"))}</button></div>` : ""}
         ${feedback}
       </div>`;
   }
 
   /* ------------------------------------------------------------- grading */
+  function calcEval(expr) {
+    const clean = String(expr == null ? "" : expr)
+      .replace(/×/g, "*").replace(/÷/g, "/").replace(/−/g, "-").replace(/,/g, ".");
+    if (!clean.trim() || !/^[0-9+\-*/().\s]+$/.test(clean)) return null;
+    try {
+      const value = Function('"use strict";return (' + clean + ")")();
+      return Number.isFinite(value) ? value : null;
+    } catch (e) {
+      return null;
+    }
+  }
+  function calcResultText(value) {
+    const rounded = Math.round(value * 1e10) / 1e10;
+    return String(rounded);
+  }
+  function calcPress(key) {
+    const input = document.querySelector("[data-calc-expr]");
+    if (!input) return;
+    let value = input.value === "0" ? "" : input.value;
+    if (value.length < 40) value += key;
+    input.value = value || "0";
+    const result = document.querySelector("[data-calc-result]");
+    if (result) result.textContent = "—";
+  }
+  function calcBack() {
+    const input = document.querySelector("[data-calc-expr]");
+    if (!input) return;
+    input.value = input.value.slice(0, -1) || "0";
+    const result = document.querySelector("[data-calc-result]");
+    if (result) result.textContent = "—";
+  }
+  function calcClear() {
+    const input = document.querySelector("[data-calc-expr]");
+    if (input) input.value = "0";
+    const result = document.querySelector("[data-calc-result]");
+    if (result) result.textContent = "—";
+  }
+  function calcEquals() {
+    const input = document.querySelector("[data-calc-expr]");
+    const result = document.querySelector("[data-calc-result]");
+    if (!input || !result) return null;
+    const value = calcEval(input.value);
+    if (value === null) {
+      result.textContent = T("calc_invalid");
+      return null;
+    }
+    result.textContent = calcResultText(value);
+    return value;
+  }
+  function calcUse() {
+    const value = calcEquals();
+    if (value === null) return;
+    const fields = Array.from(document.querySelectorAll("#qCard [data-field]"));
+    const target = state.calcTarget && fields.includes(state.calcTarget) ? state.calcTarget : fields[0];
+    if (!target) return;
+    target.value = calcResultText(value);
+    target.dispatchEvent(new Event("input", { bubbles: true }));
+    target.focus();
+  }
   function isAnswered(q, ans) {
     if (!q) return false;
     if (q.type === "single" || q.type === "errmap") return typeof ans === "string" && ans.length > 0;
@@ -1560,9 +1643,27 @@
       state.exam.index = Number(jump.getAttribute("data-jump"));
       closeModal(); renderExam(); return;
     }
+    const calcKey = e.target.closest("[data-calc-key]");
+    if (calcKey) { calcPress(calcKey.getAttribute("data-calc-key")); return; }
+    if (e.target.closest("[data-calc-back]")) { calcBack(); return; }
+    if (e.target.closest("[data-calc-clear]")) { calcClear(); return; }
+    if (e.target.closest("[data-calc-eq]")) { calcEquals(); return; }
+    if (e.target.closest("[data-calc-use]")) { calcUse(); return; }
     const act = e.target.closest("[data-action]");
     if (!act) return;
     const a = act.getAttribute("data-action");
+    if (a === "calc-toggle") {
+      const wrap = act.closest(".calc-wrap");
+      const tool = wrap && wrap.querySelector(".calc-tool");
+      if (tool) {
+        tool.hidden = !tool.hidden;
+        if (!tool.hidden) {
+          const expr = tool.querySelector("[data-calc-expr]");
+          if (expr) expr.focus();
+        }
+      }
+      return;
+    }
     if (a === "resume") {
       const saved = loadSavedExam();
       if (saved) { state.exam = saved; showScreen("exam"); startTimer(); }
@@ -1743,6 +1844,10 @@
       renderQuestion();
       updateChrome();
     }
+  });
+
+  document.addEventListener("focusin", (e) => {
+    if (e.target && e.target.matches && e.target.matches("[data-field]")) state.calcTarget = e.target;
   });
 
   document.addEventListener("input", (e) => {
