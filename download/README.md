@@ -26,4 +26,4 @@ Este APK se genera con `python android/build.py` y también se publica como asse
 
 > Videojet es una marca de Videojet Technologies; Factronics Venezuela es distribuidor oficial de Videojet. Material de entrenamiento de Factronics C.A.
 
-SHA-256: `c5382d5794bc5c31af0744e871dfb183eeefd8667328a8ae24b504a2263aed78` (`Factronics-TTO-Lab.apk.sha256`).
+SHA-256: `b41f0326042317a3284808dd8f88e74513436808a00d26c4b4724b8dc7b04f79` (`Factronics-TTO-Lab.apk.sha256`).
