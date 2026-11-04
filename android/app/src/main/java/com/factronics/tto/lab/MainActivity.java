@@ -2411,7 +2411,13 @@ public class MainActivity extends Activity {
         while (!remaining.isEmpty() && lines < maxLines) {
             int count = p.breakText(remaining, true, width, null);
             if (count <= 0) break;
-            String line = remaining.substring(0, count).trim();
+            String line = remaining.substring(0, count);
+            int lastSpace = line.lastIndexOf(' ');
+            if (lastSpace > 0 && count < remaining.length()) {
+                line = line.substring(0, lastSpace);
+                count = lastSpace + 1;
+            }
+            line = line.trim();
             c.drawText(line, x, y, p);
             y += lineHeight;
             remaining = remaining.substring(count).trim();
@@ -2937,12 +2943,31 @@ public class MainActivity extends Activity {
         return bitmap;
     }
 
-    private void shareCertificate(Result r) {
-        if (exam == null || r == null) { toast(t("report_no_data")); return; }
-        String code = reportCode(r);
-        String url = verificationUrl(r, code);
-        Bitmap bitmap = createCertificate(r, code, url);
-        File file = savePng(bitmap, "Factronics-TTO-Lab-Certificado");
+    private void previewBitmap(Bitmap bitmap, String prefix) {
+        if (bitmap == null) { toast(t("qr_invalid")); return; }
+        ImageView view = new ImageView(this);
+        view.setImageBitmap(bitmap);
+        view.setAdjustViewBounds(true);
+        view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        LinearLayout box = col();
+        box.setPadding(dp(8), dp(8), dp(8), dp(8));
+        int maxHeight = (int) (getResources().getDisplayMetrics().heightPixels * 0.62);
+        box.addView(view, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, maxHeight));
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(t("cert_png"))
+                .setView(box)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(t("cert_share"), null)
+                .create();
+        dialog.setOnShowListener(d -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            dialog.dismiss();
+            shareBitmap(bitmap, prefix);
+        }));
+        dialog.show();
+    }
+
+    private void shareBitmap(Bitmap bitmap, String prefix) {
+        File file = savePng(bitmap, prefix);
         if (file == null) { toast(t("qr_invalid")); return; }
         Uri uri = ReportProvider.uriFor(this, file);
         Intent send = new Intent(Intent.ACTION_SEND);
@@ -2955,6 +2980,14 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             toast(t("qr_invalid"));
         }
+    }
+
+    private void shareCertificate(Result r) {
+        if (exam == null || r == null) { toast(t("report_no_data")); return; }
+        String code = reportCode(r);
+        String url = verificationUrl(r, code);
+        Bitmap bitmap = createCertificate(r, code, url);
+        previewBitmap(bitmap, "Factronics-TTO-Lab-Certificado");
     }
 
     private File savePng(Bitmap bitmap, String prefix) {
