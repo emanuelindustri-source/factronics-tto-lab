@@ -69,7 +69,9 @@
     if (meta) meta.setAttribute("content", theme === "dark" ? "#06111d" : "#0b5cab");
   }
   function verifyUrl() {
-    return location.href.split("#")[0];
+    const d = params.get("d");
+    if (!d) return location.origin + location.pathname;
+    return location.origin + location.pathname + "?d=" + encodeURIComponent(d);
   }
   function errorBox(message) {
     root.innerHTML = `<div class="panel verify-error">
