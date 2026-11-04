@@ -1,7 +1,7 @@
 # Estado actual · Factronics TTO Lab 1.9.0
 
 **Fecha:** 2026-11-04  
-**Estado:** preparado para publicar en GitHub, GitHub Pages y Releases.
+**Estado:** publicado en GitHub, GitHub Pages y Releases; CI en verde.
 
 ## Enlaces
 
