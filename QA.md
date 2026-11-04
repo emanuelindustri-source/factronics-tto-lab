@@ -14,6 +14,7 @@ emulador Pixel 7 API 34, navegador Chromium integrado.
 | i18n | 501 claves × ES/EN/PT |
 | Calculadora web | `12+3=15` insertado en el campo |
 | Calculadora Android | `12+3=15` insertado en el campo |
+| QR (decodificación óptica) | Web y Android: URL `verificar/` con payload |
 | APK | 201,5 KB · `versionCode 9` · SHA-256 `b41f0326042317a3284808dd8f88e74513436808a00d26c4b4724b8dc7b04f79` |
 
 ### Web
