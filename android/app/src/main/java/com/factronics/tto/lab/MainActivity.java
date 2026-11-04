@@ -60,6 +60,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.TimeZone;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
@@ -1656,6 +1657,8 @@ public class MainActivity extends Activity {
         tick();
     }
 
+    private EditText calcTarget;
+
     private void renderQuestion() {
         if (qCard == null || exam == null) return;
         final Question q = exam.qs.get(exam.index);
@@ -1725,6 +1728,7 @@ public class MainActivity extends Activity {
         } else if ("fill".equals(q.type) || "calc".equals(q.type)) {
             List<Bank.Field> fields = q.fields(lang);
             List<String> vals = ans instanceof List ? castList(ans) : new ArrayList<>();
+            if ("calc".equals(q.type)) calcTarget = null;
             for (int i = 0; i < fields.size(); i++) {
                 Bank.Field f = fields.get(i);
                 LinearLayout box = col();
@@ -1739,6 +1743,10 @@ public class MainActivity extends Activity {
                 if ("calc".equals(q.type)) et.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL | android.text.InputType.TYPE_NUMBER_FLAG_SIGNED);
                 et.setText(i < vals.size() ? vals.get(i) : "");
                 final int idx = i;
+                if ("calc".equals(q.type)) {
+                    et.setOnFocusChangeListener((v, hasFocus) -> { if (hasFocus) calcTarget = et; });
+                    if (calcTarget == null) calcTarget = et;
+                }
                 et.addTextChangedListener(new TextWatcher() {
                     public void beforeTextChanged(CharSequence s, int a, int b, int c) {}
                     public void onTextChanged(CharSequence s, int a, int b, int c) {}
@@ -1759,6 +1767,11 @@ public class MainActivity extends Activity {
                 line.addView(unit);
                 box.addView(line, top(5));
                 qCard.addView(box);
+            }
+            if ("calc".equals(q.type)) {
+                Button calc = smallButton(t("calc_open"));
+                calc.setOnClickListener(v -> showCalculatorDialog());
+                qCard.addView(calc, top(8));
             }
         } else {
             EditText et = new EditText(this);
@@ -1784,6 +1797,147 @@ public class MainActivity extends Activity {
         feedbackHost = col();
         qCard.addView(feedbackHost);
         updateFeedback(q);
+    }
+
+    private static double evalCalc(String text) {
+        final String source = text.replace("×", "*").replace("÷", "/").replace("−", "-").replace(",", ".");
+        if (!source.matches("[0-9+\\-*/(). ]+")) throw new IllegalArgumentException();
+        return new Object() {
+            int pos = 0;
+
+            double parse() {
+                double value = term();
+                while (pos < source.length()) {
+                    char c = source.charAt(pos);
+                    if (c == '+') { pos++; value += term(); }
+                    else if (c == '-') { pos++; value -= term(); }
+                    else break;
+                }
+                if (pos != source.length()) throw new IllegalArgumentException();
+                return value;
+            }
+
+            double term() {
+                double value = factor();
+                while (pos < source.length()) {
+                    char c = source.charAt(pos);
+                    if (c == '*') { pos++; value *= factor(); }
+                    else if (c == '/') { pos++; value /= factor(); }
+                    else break;
+                }
+                return value;
+            }
+
+            double factor() {
+                while (pos < source.length() && source.charAt(pos) == ' ') pos++;
+                if (pos >= source.length()) throw new IllegalArgumentException();
+                char c = source.charAt(pos);
+                if (c == '+') { pos++; return factor(); }
+                if (c == '-') { pos++; return -factor(); }
+                if (c == '(') {
+                    pos++;
+                    double value = parse();
+                    if (pos >= source.length() || source.charAt(pos) != ')') throw new IllegalArgumentException();
+                    pos++;
+                    return value;
+                }
+                int start = pos;
+                while (pos < source.length() && (Character.isDigit(source.charAt(pos)) || source.charAt(pos) == '.')) pos++;
+                if (start == pos) throw new IllegalArgumentException();
+                return Double.parseDouble(source.substring(start, pos));
+            }
+        }.parse();
+    }
+
+    private static String calcFormat(double value) {
+        double rounded = Math.round(value * 1e10) / 1e10;
+        if (rounded == Math.rint(rounded)) return String.valueOf((long) rounded);
+        return String.valueOf(rounded);
+    }
+
+    private void showCalculatorDialog() {
+        LinearLayout root = col();
+        root.setPadding(dp(16), dp(8), dp(16), dp(8));
+        TextView display = text("0", 24, INK, true);
+        display.setGravity(Gravity.END);
+        display.setPadding(dp(12), dp(10), dp(12), dp(10));
+        display.setBackground(round(SOFT, 9, LINE, 1));
+        root.addView(display);
+        TextView result = text(t("calc_result") + ": —", 12, MUT, false);
+        root.addView(result, top(6));
+
+        final String[] expression = {"0"};
+        final double[] lastResult = {Double.NaN};
+        LinearLayout keys = col();
+        String[][] rows = {
+                {"7", "8", "9", "÷"},
+                {"4", "5", "6", "×"},
+                {"1", "2", "3", "−"},
+                {"0", ".", "(", ")"},
+                {t("calc_clear"), "⌫", "+", "="}
+        };
+        for (String[] rowKeys : rows) {
+            LinearLayout row = row();
+            for (String key : rowKeys) {
+                Button b = smallButton(key);
+                b.setOnClickListener(v -> {
+                    if (t("calc_clear").equals(key)) {
+                        expression[0] = "0";
+                        lastResult[0] = Double.NaN;
+                    } else if ("⌫".equals(key)) {
+                        expression[0] = expression[0].length() <= 1 ? "0" : expression[0].substring(0, expression[0].length() - 1);
+                    } else if ("=".equals(key)) {
+                        try {
+                            lastResult[0] = evalCalc(expression[0]);
+                            result.setText(t("calc_result") + ": " + calcFormat(lastResult[0]));
+                        } catch (Exception e) {
+                            lastResult[0] = Double.NaN;
+                            result.setText(t("calc_invalid"));
+                        }
+                    } else {
+                        if ("0".equals(expression[0])) expression[0] = "";
+                        if (expression[0].length() < 40) expression[0] += key;
+                        if (expression[0].isEmpty()) expression[0] = "0";
+                    }
+                    display.setText(expression[0]);
+                });
+                row.addView(b, weight());
+            }
+            keys.addView(row, top(6));
+        }
+        root.addView(keys);
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(t("calc_open"))
+                .setView(root)
+                .setNegativeButton(t("calc_clear"), null)
+                .setPositiveButton(t("calc_use"), null)
+                .create();
+        dialog.setOnShowListener(d -> {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+                if (Double.isNaN(lastResult[0])) {
+                    try {
+                        lastResult[0] = evalCalc(expression[0]);
+                        result.setText(t("calc_result") + ": " + calcFormat(lastResult[0]));
+                    } catch (Exception e) {
+                        result.setText(t("calc_invalid"));
+                        return;
+                    }
+                }
+                if (calcTarget != null) {
+                    calcTarget.setText(calcFormat(lastResult[0]));
+                    calcTarget.setSelection(calcTarget.getText().length());
+                }
+                dialog.dismiss();
+            });
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(v -> {
+                expression[0] = "0";
+                lastResult[0] = Double.NaN;
+                display.setText("0");
+                result.setText(t("calc_result") + ": —");
+            });
+        });
+        dialog.show();
     }
 
     private void updateFeedback(Question q) {
@@ -2053,10 +2207,10 @@ public class MainActivity extends Activity {
         verifyCard.setBackground(round(0xFFF3F8FD, 14, 0xFFD8E4EF, 1));
         verifyCard.setPadding(dp(12), dp(12), dp(12), dp(12));
         ImageView qrView = new ImageView(this);
-        Bitmap qrBitmap = makeQrBitmap(verificationUrl(r, reportCode(r)), 260);
+        Bitmap qrBitmap = makeQrBitmap(verificationUrl(r, reportCode(r)), 340);
         if (qrBitmap != null) qrView.setImageBitmap(qrBitmap);
         qrView.setBackgroundColor(WHITE);
-        verifyCard.addView(qrView, new LinearLayout.LayoutParams(dp(104), dp(104)));
+        verifyCard.addView(qrView, new LinearLayout.LayoutParams(dp(150), dp(150)));
         LinearLayout verifyCopy = col();
         verifyCopy.setPadding(dp(10), 0, 0, 0);
         verifyCopy.addView(text(t("verify_code_label"), 9, 0xFF647D93, true));
@@ -2073,8 +2227,11 @@ public class MainActivity extends Activity {
         report.setOnClickListener(v -> shareReportPdf(r));
         Button qrCard = button(t("qr_card"), false);
         qrCard.setOnClickListener(v -> shareQrCard(r));
+        Button cert = button(t("cert_png"), false);
+        cert.setOnClickListener(v -> shareCertificate(r));
         reportActions.addView(report, weight());
-        reportActions.addView(qrCard, weightLeft(8));
+        reportActions.addView(qrCard, weightLeft(6));
+        reportActions.addView(cert, weightLeft(6));
         c.addView(reportActions, top(12));
 
         LinearLayout csvRow = row();
@@ -2624,6 +2781,180 @@ public class MainActivity extends Activity {
         p.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         pdfWrapped(c, t("report_footer"), 90, 1200, 900, 20, 0xFF556B7E, false, 26, 2);
         return bitmap;
+    }
+
+    private String appVersion() {
+        try {
+            return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    private static String sha256Hex(String text) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] bytes = md.digest(text.getBytes(StandardCharsets.UTF_8));
+            StringBuilder out = new StringBuilder();
+            for (byte b : bytes) out.append(String.format(Locale.US, "%02x", b & 0xFF));
+            return out.toString();
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    private float fitTextSize(Paint paint, String text, float maxWidth, float start, float min, boolean bold) {
+        float size = start;
+        while (size > min) {
+            paint.setTextSize(size);
+            if (paint.measureText(text == null ? "" : text) <= maxWidth) break;
+            size -= 2;
+        }
+        return size;
+    }
+
+    private void drawCertFact(Canvas c, float x, float y, float w, float h, String label, String value) {
+        pdfRect(c, x, y, x + w, y + h, 0xFFFBFDFF, 12);
+        pdfStrokeRect(c, x, y, x + w, y + h, 0xFFE2EDF6, 12, 1.5f);
+        pdfText(c, label.toUpperCase(Locale.ROOT), x + 14, y + 24, 11, 0xFF8AA0B3, true);
+        Paint p = pdfPaint(19, 0xFF0A1B2C, true);
+        p.setTextSize(fitTextSize(p, value, w - 28, 19, 12, true));
+        c.drawText(value == null ? "—" : value, x + 14, y + 55, p);
+    }
+
+    private void drawSeal(Canvas c, float x, float y, float r, String label) {
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        p.setStyle(Paint.Style.STROKE);
+        p.setStrokeWidth(4);
+        p.setColor(0xFF0B7A58);
+        c.drawCircle(x, y, r, p);
+        p.setStrokeWidth(1.5f);
+        c.drawCircle(x, y, r - 12, p);
+        p.setStrokeWidth(7);
+        p.setStrokeCap(Paint.Cap.ROUND);
+        c.drawLine(x - r * 0.34f, y + r * 0.02f, x - r * 0.08f, y + r * 0.28f, p);
+        c.drawLine(x - r * 0.08f, y + r * 0.28f, x + r * 0.4f, y - r * 0.26f, p);
+        p.setStyle(Paint.Style.FILL);
+        p.setColor(0xFF0B7A58);
+        p.setTextAlign(Paint.Align.CENTER);
+        p.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        p.setTextSize(r * 0.19f);
+        c.drawText(label, x, y + r * 0.62f, p);
+        p.setTextSize(r * 0.11f);
+        p.setColor(0xFF3E6B5D);
+        c.drawText("Factronics TTO Lab", x, y + r * 0.8f, p);
+        p.setTextAlign(Paint.Align.LEFT);
+    }
+
+    private Bitmap createCertificate(Result r, String code, String url) {
+        int w = 1240, h = 1754;
+        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bitmap);
+        c.drawColor(WHITE);
+
+        Paint border = new Paint(Paint.ANTI_ALIAS_FLAG);
+        border.setStyle(Paint.Style.STROKE);
+        border.setStrokeWidth(18);
+        border.setColor(0xFF0B5CAB);
+        c.drawRect(9, 9, w - 9, h - 9, border);
+        border.setStrokeWidth(2);
+        border.setColor(0xFFBFE0F4);
+        c.drawRect(36, 36, w - 36, h - 36, border);
+
+        Paint band = new Paint();
+        band.setShader(new LinearGradient(36, 36, w - 36, 36, 0xFF072A49, 0xFF00A3E0, Shader.TileMode.CLAMP));
+        c.drawRect(36, 36, w - 36, 246, band);
+
+        pdfRect(c, 70, 70, 380, 152, WHITE, 12);
+        if (logo != null) {
+            c.drawBitmap(logo, null, new RectF(78, 77, 372, 145), new Paint(Paint.FILTER_BITMAP_FLAG));
+        }
+        pdfText(c, "FACTRONICS TTO LAB", 420, 112, 30, WHITE, true);
+        pdfText(c, t("report_subtitle"), 420, 144, 13, 0xFFC8E8FA, false);
+        pdfText(c, t("cert_doc_title").toUpperCase(Locale.ROOT), 420, 196, 22, WHITE, true);
+
+        pdfText(c, t("cert_doc_kicker"), 90, 330, 16, 0xFF0B5CAB, true);
+        pdfText(c, t("cert_doc_lead"), 90, 392, 24, 0xFF556B7E, false);
+        Paint namePaint = pdfPaint(66, 0xFF0A1B2C, true);
+        namePaint.setTextSize(fitTextSize(namePaint, studentName(), 1060, 66, 36, true));
+        c.drawText(studentName().isEmpty() ? "—" : studentName(), 90, 480, namePaint);
+        pdfText(c, studentEmail.isEmpty() ? "—" : studentEmail, 90, 528, 25, 0xFF556B7E, false);
+        pdfWrapped(c, t("cert_doc_body"), 90, 592, 1060, 23, 0xFF2F465C, false, 34, 3);
+
+        pdfRect(c, 90, 690, 1150, 895, 0xFFF3F8FD, 18);
+        pdfStrokeRect(c, 90, 690, 1150, 895, 0xFFD8E4EF, 18, 2);
+        int pct = r.total == 0 ? 0 : (int) Math.round(r.points / r.total * 100);
+        int scoreColor = pct >= 70 ? 0xFF0B7A58 : 0xFFB3261E;
+        pdfText(c, pct + "%", 120, 840, 100, scoreColor, true);
+        pdfText(c, t("cert_doc_score"), 430, 738, 13, 0xFF8AA0B3, true);
+        pdfText(c, pct >= 70 ? t("res_pass") : t("res_fail"), 430, 786, 32, 0xFF0A1B2C, true);
+        pdfText(c, fmt(r.points) + " / " + r.total + " " + t("res_points"), 430, 826, 20, 0xFF556B7E, false);
+        pdfText(c, t("res_threshold") + " 70 %", 430, 858, 16, 0xFF556B7E, false);
+
+        float fx = 90, fy = 950, fw = 330, fh = 86, gap = 15;
+        String[] labels = {t("cert_doc_date"), t("cert_doc_code"), t("cert_doc_models"),
+                t("cert_doc_mode"), t("cert_doc_duration"), t("cert_doc_total")};
+        String[] values = {
+                formatDate(exam.finishedAt > 0 ? exam.finishedAt : System.currentTimeMillis()),
+                code, examModels(), modeLabel(exam.mode), reportDuration(), String.valueOf(r.total)
+        };
+        for (int i = 0; i < labels.length; i++) {
+            float x = fx + (i % 3) * (fw + gap);
+            float y = fy + (i / 3) * (fh + gap);
+            drawCertFact(c, x, y, fw, fh, labels[i], values[i]);
+        }
+
+        Bitmap qr = makeQrBitmap(url, 580);
+        if (qr != null) {
+            pdfRect(c, 90, 1190, 380, 1480, WHITE, 16);
+            pdfStrokeRect(c, 90, 1190, 380, 1480, 0xFFD8E4EF, 16, 2);
+            c.drawBitmap(qr, null, new RectF(105, 1205, 365, 1465), new Paint(Paint.FILTER_BITMAP_FLAG));
+        }
+        pdfText(c, t("cert_doc_verify"), 420, 1235, 30, 0xFF0A1B2C, true);
+        String clean = url.replace("https://", "").replace("http://", "");
+        int slash = clean.indexOf('/');
+        String host = slash >= 0 ? clean.substring(0, slash) : clean;
+        String path = slash >= 0 ? clean.substring(slash).split("\\?")[0] : "";
+        pdfText(c, host, 420, 1268, 15, 0xFF556B7E, true);
+        pdfWrapped(c, path, 420, 1290, 450, 14, 0xFF556B7E, false, 19, 2);
+        pdfText(c, code, 420, 1350, 22, 0xFF0B5CAB, true);
+        pdfText(c, "FNV-1a " + fnv(resultCanonical(r, code)), 420, 1380, 14, 0xFF556B7E, false);
+        pdfText(c, t("cert_doc_scan"), 420, 1410, 14, 0xFF556B7E, false);
+        drawSeal(c, 1005, 1325, 112, t("cert_doc_seal"));
+
+        String fingerprint = sha256Hex(resultCanonical(r, code));
+        if (!fingerprint.isEmpty()) {
+            pdfText(c, t("verify_fingerprint"), 90, 1530, 12, 0xFF8AA0B3, true);
+            pdfText(c, fingerprint.substring(0, 48), 90, 1552, 12, 0xFF556B7E, false);
+            pdfText(c, fingerprint.substring(48), 90, 1572, 12, 0xFF556B7E, false);
+        }
+        pdfWrapped(c, t("cert_doc_disclaimer"), 90, 1610, 1060, 13, 0xFF7A90A3, false, 19, 4);
+        pdfText(c, "Khristyan Hidalgo", 720, 1688, 18, 0xFF0A1B2C, true);
+        pdfLine(c, 720, 1702, 1110, 1702, 0xFF8FA9C0, 1.5f);
+        pdfText(c, t("cert_doc_signature"), 720, 1724, 12, 0xFF556B7E, false);
+        pdfText(c, "Factronics C.A. · Factronics TTO Lab", 90, 1704, 12, 0xFF556B7E, true);
+        pdfText(c, "v" + appVersion(), 90, 1724, 11, 0xFF9AAFC0, false);
+        return bitmap;
+    }
+
+    private void shareCertificate(Result r) {
+        if (exam == null || r == null) { toast(t("report_no_data")); return; }
+        String code = reportCode(r);
+        String url = verificationUrl(r, code);
+        Bitmap bitmap = createCertificate(r, code, url);
+        File file = savePng(bitmap, "Factronics-TTO-Lab-Certificado");
+        if (file == null) { toast(t("qr_invalid")); return; }
+        Uri uri = ReportProvider.uriFor(this, file);
+        Intent send = new Intent(Intent.ACTION_SEND);
+        send.setType("image/png");
+        send.putExtra(Intent.EXTRA_SUBJECT, "Factronics TTO Lab · Certificado");
+        send.putExtra(Intent.EXTRA_STREAM, uri);
+        send.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        try {
+            startActivity(Intent.createChooser(send, t("cert_png")));
+        } catch (Exception e) {
+            toast(t("qr_invalid"));
+        }
     }
 
     private File savePng(Bitmap bitmap, String prefix) {
