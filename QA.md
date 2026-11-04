@@ -13,6 +13,8 @@ emulador Pixel 7 API 34, navegador Chromium integrado.
 | Banco | 372 preguntas · 348 enunciados únicos |
 | i18n | 511 claves × ES/EN/PT |
 | Escáner con imagen | PNG del certificado → abre `verificar/` |
+| Escáner en vivo | “Scan Test” abrió el resultado verificado |
+| CI | `Verify project`: success |
 | Escáner con cámara | requiere dispositivo físico y permiso |
 | APK | 205,5 KB · `versionCode 10` · SHA-256 `c04de8c15e60e30eee545081a5fdd1a2887101d6bb16c97d39e4855dd5b92ad2` |
 
