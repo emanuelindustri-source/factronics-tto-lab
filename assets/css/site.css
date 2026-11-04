@@ -937,3 +937,18 @@ details.faq p { margin: 10px 0 0; color: var(--ink-2); font-size: .8rem; line-he
 .result-verify span { display: block; font-size: .64rem; color: var(--ink-3); word-break: break-all; max-width: 520px; }
 .result-verify code { display: inline-block; margin-top: 5px; font-family: Consolas, monospace; font-size: .72rem; background: var(--surface); border: 1px solid var(--line); border-radius: 5px; padding: 2px 6px; }
 @media (max-width: 560px) { .result-verify { flex-direction: column; align-items: flex-start; } }
+
+/* ---------- v1.8: inline calculator for calc questions ---------- */
+.calc-wrap { margin-top: 14px; }
+.calc-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.calc-head .hint { font-size: .7rem; color: var(--ink-3); }
+.calc-tool { margin-top: 10px; max-width: 360px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); }
+.calc-expr { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); font: 600 1.1rem Consolas, "Courier New", monospace; text-align: right; color: var(--ink); }
+.calc-keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
+.calc-keys button { padding: 9px 0; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font-weight: 700; cursor: pointer; }
+.calc-keys button:hover, .calc-keys button:focus-visible { border-color: var(--brand); }
+.calc-keys .alt { background: var(--brand-soft); }
+.calc-keys .eq { background: var(--brand); color: #fff; border-color: var(--brand); }
+.calc-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 9px; font-size: .72rem; color: var(--ink-3); }
+.calc-foot b { color: var(--ink); font-family: Consolas, monospace; }
+@media (max-width: 420px) { .calc-tool { max-width: none; } }
