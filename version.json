@@ -1,10 +1,10 @@
 {
-  "version": "1.8.0",
-  "versionCode": 9,
+  "version": "1.9.0",
+  "versionCode": 10,
   "released": "2026-11-04",
-  "title": "Factronics TTO Lab 1.8.0",
-  "notes": "Calculadora integrada, certificado A4 en Android, 10 preguntas nuevas de ribbons y verificación QR mejorada.",
+  "title": "Factronics TTO Lab 1.9.0",
+  "notes": "Escáner QR con cámara o imagen, 6 preguntas nuevas de ribbons, CI y mejoras de verificación.",
   "apk": "https://github.com/emanuelindustri-source/factronics-tto-lab/releases/latest/download/Factronics-TTO-Lab.apk",
-  "release": "https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.8.0",
+  "release": "https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.9.0",
   "web": "https://emanuelindustri-source.github.io/factronics-tto-lab/"
 }
