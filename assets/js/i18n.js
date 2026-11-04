@@ -59,7 +59,7 @@
       feature_2_t: "Siete tipos de pregunta",
       feature_2_d: "Selección simple, múltiple, completar, descripción de componentes, corrección de fallas, cálculos y significado de errores.",
       feature_3_t: "Preguntas nuevas",
-      feature_3_d: "Banco de 356 preguntas y 100 cálculos con valores técnicos. El motor prioriza las que aún no has visto.",
+      feature_3_d: "Banco de 366 preguntas y 100 cálculos con valores técnicos. El motor prioriza las que aún no has visto.",
       feature_4_t: "Tiempo y cantidad",
       feature_4_d: "De 10 a 50 preguntas y de 10 a 90 minutos, o sin límite para práctica.",
       feature_5_t: "Tres idiomas",
@@ -310,7 +310,7 @@
       feature_2_t: "Seven question types",
       feature_2_d: "Single choice, multiple choice, fill-in, component description, fault correction, calculations and error meaning.",
       feature_3_t: "Fresh questions",
-      feature_3_d: "A 356-question bank and 100 calculations with technical values. The engine prioritises what you have not seen.",
+      feature_3_d: "A 366-question bank and 100 calculations with technical values. The engine prioritises what you have not seen.",
       feature_4_t: "Time and length",
       feature_4_d: "From 10 to 50 questions and 10 to 90 minutes, or no limit for practice.",
       feature_5_t: "Three languages",
@@ -557,7 +557,7 @@
       feature_2_t: "Sete tipos de pergunta",
       feature_2_d: "Escolha simples, múltipla, completar, descrição de componentes, correção de falhas, cálculos e significado de erros.",
       feature_3_t: "Perguntas novas",
-      feature_3_d: "Banco de 356 perguntas e 100 cálculos com valores técnicos. O motor prioriza o que você ainda não viu.",
+      feature_3_d: "Banco de 366 perguntas e 100 cálculos com valores técnicos. O motor prioriza o que você ainda não viu.",
       feature_4_t: "Tempo e quantidade",
       feature_4_d: "De 10 a 50 perguntas e de 10 a 90 minutos, ou sem limite para prática.",
       feature_5_t: "Três idiomas",
@@ -763,7 +763,7 @@
       demo_next: "Siguiente pregunta",
       demo_restart: "Repetir demo",
       demo_done: "Demo completada",
-      demo_done_lead: "Acertaste {score} de {total}. El generador completo tiene 332 preguntas únicas, siete tipos y repaso espaciado.",
+      demo_done_lead: "Acertaste {score} de {total}. El generador completo tiene 342 preguntas únicas, siete tipos y repaso espaciado.",
       demo_full: "Abrir generador completo",
       install_btn: "Instalar web app",
       install_hint: "Se instala desde el navegador y funciona sin conexión.",
@@ -775,7 +775,7 @@
       new_2_t: "Sesiones a tu medida",
       new_2_d: "Cantidad de 5 a 100 preguntas y duración de 0 a 180 minutos, además de los valores rápidos de siempre.",
       new_3_t: "Biblioteca completa",
-      new_3_d: "Búsqueda en opciones y respuestas, y paginación para recorrer los 332 enunciados sin quedarte en los primeros 80.",
+      new_3_d: "Búsqueda en opciones y respuestas, y paginación para recorrer los 342 enunciados sin quedarte en los primeros 80.",
       new_4_t: "APK 1.3",
       new_4_d: "Icono adaptativo, opción de guardar y salir del examen, y Atrás desde resultados vuelve a la configuración.",
       faq_kicker: "PREGUNTAS FRECUENTES",
@@ -890,7 +890,7 @@
       demo_next: "Next question",
       demo_restart: "Restart demo",
       demo_done: "Demo complete",
-      demo_done_lead: "You got {score} of {total}. The full generator has 332 unique questions, seven types and spaced review.",
+      demo_done_lead: "You got {score} of {total}. The full generator has 342 unique questions, seven types and spaced review.",
       demo_full: "Open the full generator",
       install_btn: "Install web app",
       install_hint: "Install it from the browser and use it offline.",
@@ -902,7 +902,7 @@
       new_2_t: "Sessions your way",
       new_2_d: "From 5 to 100 questions and from 0 to 180 minutes, in addition to the usual quick presets.",
       new_3_t: "The full library",
-      new_3_d: "Search options and answers, and page through all 332 statements instead of stopping at the first 80.",
+      new_3_d: "Search options and answers, and page through all 342 statements instead of stopping at the first 80.",
       new_4_t: "APK 1.3",
       new_4_d: "Adaptive icon, save-and-exit during an exam, and Back from results returns to setup.",
       faq_kicker: "FREQUENTLY ASKED QUESTIONS",
@@ -1029,7 +1029,7 @@
       new_2_t: "Sessões do seu jeito",
       new_2_d: "De 5 a 100 perguntas e de 0 a 180 minutos, além dos valores rápidos de sempre.",
       new_3_t: "Biblioteca completa",
-      new_3_d: "Busca em opções e respostas, e paginação para percorrer os 332 enunciados sem parar nos primeiros 80.",
+      new_3_d: "Busca em opções e respostas, e paginação para percorrer os 342 enunciados sem parar nos primeiros 80.",
       new_4_t: "APK 1.3",
       new_4_d: "Ícone adaptativo, opção de salvar e sair da prova, e Voltar dos resultados retorna à configuração.",
       faq_kicker: "PERGUNTAS FREQUENTES",
@@ -1367,8 +1367,8 @@
       new_title: "M?s preguntas, fuentes revisadas y avisos de actualizaci?n.",
       new_1_t: "22 preguntas nuevas",
       new_1_d: "Ribbons y soportes OEM/universales, con datos extra?dos de la documentaci?n t?cnica.",
-      new_2_t: "356 preguntas",
-      new_2_d: "332 enunciados ?nicos; el pool y la biblioteca se actualizan solos.",
+      new_2_t: "366 preguntas",
+      new_2_d: "342 enunciados ?nicos; el pool y la biblioteca se actualizan solos.",
       new_3_t: "Aviso de actualizaci?n",
       new_3_d: "Web y Android avisan cuando hay una versi?n nueva publicada en el repositorio.",
       new_4_t: "Todo lo de 1.4",
@@ -1387,8 +1387,8 @@
       new_title: "More questions, reviewed sources and update notices.",
       new_1_t: "22 new questions",
       new_1_d: "Ribbons and OEM/universal brackets, with data taken from the technical documentation.",
-      new_2_t: "356 questions",
-      new_2_d: "332 unique statements; the pool and library update automatically.",
+      new_2_t: "366 questions",
+      new_2_d: "342 unique statements; the pool and library update automatically.",
       new_3_t: "Update notice",
       new_3_d: "Web and Android notify you when a new version is published in the repository.",
       new_4_t: "Everything from 1.4",
@@ -1468,7 +1468,39 @@
       result_missing: "Este link n?o inclui dados do resultado."
     }
   };
-  /* v1.7: verification page, certificate and document actions */
+  /* v1.8: inline calculator for calculation questions */
+  const V18 = {
+    es: {
+      calc_open: "Calculadora",
+      calc_hint: "Calcula y usa el resultado en el campo activo.",
+      calc_use: "Usar resultado",
+      calc_clear: "Limpiar",
+      calc_result: "Resultado",
+      calc_invalid: "Operación no válida"
+    },
+    en: {
+      calc_open: "Calculator",
+      calc_hint: "Calculate and use the result in the active field.",
+      calc_use: "Use result",
+      calc_clear: "Clear",
+      calc_result: "Result",
+      calc_invalid: "Invalid operation"
+    },
+    pt: {
+      calc_open: "Calculadora",
+      calc_hint: "Calcule e use o resultado no campo ativo.",
+      calc_use: "Usar resultado",
+      calc_clear: "Limpar",
+      calc_result: "Resultado",
+      calc_invalid: "Operação inválida"
+    }
+  };
+  Object.keys(V18).forEach((lang) => {
+    if (!T[lang]) T[lang] = {};
+    Object.keys(V18[lang]).forEach((key) => { T[lang][key] = V18[lang][key]; });
+  });
+
+
   const V17 = {
     es: {
       doc_report_hint: "Informe A4 con detalle y QR",
