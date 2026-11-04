@@ -115,7 +115,7 @@ def verify_version() -> str:
 def verify_bank(bank: dict) -> dict[str, int]:
     questions = bank.get("questions") or []
     models = bank.get("models") or {}
-    check(len(questions) == 366, f"Se esperaban 366 preguntas, hay {len(questions)}")
+    check(len(questions) == 372, f"Se esperaban 372 preguntas, hay {len(questions)}")
     check(set(models) == MODEL_IDS, f"Modelos inesperados: {sorted(set(models) ^ MODEL_IDS)}")
 
     ids = [q.get("id") for q in questions]
@@ -163,7 +163,7 @@ def verify_bank(bank: dict) -> dict[str, int]:
                 check(bool(str(d.get("model", "")).strip()), f"{qid}/{lang}: abierta sin modelo")
                 check(bool(d.get("rubric")), f"{qid}/{lang}: abierta sin rúbrica")
 
-    check(len(statements) == 342, f"Se esperaban 342 enunciados únicos, hay {len(statements)}")
+    check(len(statements) == 348, f"Se esperaban 348 enunciados únicos, hay {len(statements)}")
     check(sum(by_type.values()) == len(questions), "El recuento por tipo no cuadra")
     check(all(by_model[m] > 0 for m in MODEL_IDS), "Algún modelo no tiene preguntas")
 
@@ -303,6 +303,27 @@ def verify_calculator() -> None:
         check(token in i18n, f"i18n.js: falta {token}")
 
 
+def verify_scanner() -> None:
+    for rel in (
+        "assets/js/vendor/jsqr.js",
+        "assets/js/verificar.js",
+        "verificar/index.html",
+        ".github/workflows/verify.yml",
+    ):
+        check((ROOT / rel).exists(), f"Falta {rel}")
+    html = read(ROOT / "verificar" / "index.html")
+    for token in ("scanCamera", "scanFile", "jsqr.js", "scanPanel"):
+        check(token in html, f"verificar/index.html: falta {token}")
+    js = read(ROOT / "assets" / "js" / "verificar.js")
+    for token in ("getUserMedia", "jsQR", "validScanUrl", "scanImageFile"):
+        check(token in js, f"verificar.js: falta {token}")
+    sw = read(ROOT / "sw.js")
+    check("jsqr.js" in sw, "sw.js: no cachea jsqr.js")
+    i18n = read(ROOT / "assets" / "js" / "i18n.js")
+    for token in ("scan_camera", "scan_invalid", "scan_none"):
+        check(token in i18n, f"i18n.js: falta {token}")
+
+
 def verify_apk(version: str) -> tuple[int, str]:
     check(APK.exists(), "Falta download/Factronics-TTO-Lab.apk")
     check(APK_SHA.exists(), "Falta download/Factronics-TTO-Lab.apk.sha256")
@@ -352,6 +373,7 @@ def main() -> int:
     verify_links()
     verify_result_flow()
     verify_calculator()
+    verify_scanner()
     apk_size, digest = verify_apk(version)
     verify_secrets()
 
