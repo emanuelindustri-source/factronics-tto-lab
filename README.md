@@ -53,7 +53,7 @@ Entrenamiento técnico para impresoras **Videojet TTO** (Thermal Transfer Overpr
 6. Significado de errores / primera acción.
 7. Corrección de fallas (caso abierto, con rúbrica).
 
-El banco generado contiene **356 preguntas y variantes**; al filtrar por modelo y tipo se eliminan duplicados de enunciado, por lo que el pool visible para “todos los modelos” es de **332 enunciados únicos**. Cada sesión prioriza preguntas no vistas y equilibra los tipos seleccionados.
+El banco generado contiene **366 preguntas y variantes**; al filtrar por modelo y tipo se eliminan duplicados de enunciado, por lo que el pool visible para “todos los modelos” es de **342 enunciados únicos**. Cada sesión prioriza preguntas no vistas y equilibra los tipos seleccionados.
 
 ## Generador web
 
@@ -100,7 +100,7 @@ Características:
 - Cronómetro, mapa de preguntas, navegación, marcado para revisar y autoevaluación.
 - Banco local en `assets/bank.json` y textos en `assets/ui.json`.
 - Funciona sin conexión.
-- `minSdk 24` (Android 7.0), `targetSdk 34`, versión `1.7.0`.
+- `minSdk 24` (Android 7.0), `targetSdk 34`, versión `1.8.0`.
 
 ### Instalar el APK
 
@@ -124,6 +124,18 @@ El script usa `aapt2`, `javac`, `d8`, `zipalign` y `apksigner` directamente; no 
 
 Variables opcionales: `ANDROID_HOME` / `ANDROID_SDK_ROOT` y `JAVA_HOME`.
 
+## Novedades 1.8
+
+- **Calculadora integrada:** disponible en las preguntas de cálculo de la web y de Android; inserta el resultado en el campo activo.
+- **Certificado A4 en Android:** PNG 1240×1754 con sello, firma, QR, FNV-1a y SHA-256, además de la tarjeta QR.
+- **Diez preguntas nuevas de ribbons:** película PET, cabezales, vida útil, grados APR/AXR, bobinado, backcoat, cera pura y diagnóstico.
+- **Banco:** 366 preguntas / 342 enunciados únicos.
+- **QR más legible:** mayor tamaño en pantalla, informe y certificado.
+- **Caché:** assets versionados con `?v=180` y service worker con coincidencia exacta.
+- **Documentación:** ficha 1.8.0 y notas en `docs/notas/`.
+
+La base de 1.7 (verificación QR, certificado web, CSV, PDF y tarjeta) se mantiene.
+
 ## Novedades 1.7
 
 - **Certificado QR verificable:** el QR del resultado abre `verificar/`, una página pública que comprueba el contenido y muestra el certificado.
@@ -146,7 +158,7 @@ La base de 1.4, 1.5 y 1.6 (identificación, informe PDF, partículas, animacione
 - **Compartir sin correo:** el PDF y la tarjeta PNG se comparten con la hoja del sistema (WhatsApp, Drive, archivos, etc.). No se envían datos a servidores.
 - **Banco de 350 preguntas / 326 enunciados únicos**, con las 22 preguntas de ribbons y soportes de 1.5.
 - **Avisos de actualización** web y Android mediante `version.json`.
-- **Documentación:** ficha 1.7.0 y histórico en `docs/versiones/` y `docs/notas/`.
+- **Documentación:** ficha 1.8.0 y histórico en `docs/versiones/` y `docs/notas/`.
 
 La base de 1.4 y 1.5 (identificación, informe PDF, partículas, animaciones y preguntas de fuentes) se mantiene.
 
@@ -219,7 +231,7 @@ python tools/verify.py
 
 Comprueba, sin dependencias externas:
 
-- 356 preguntas, 332 enunciados únicos y paridad entre web y Android.
+- 366 preguntas, 342 enunciados únicos y paridad entre web y Android.
 - Textos ES/EN/PT completos y claves `data-i18n` usadas en el HTML.
 - Enlaces y recursos locales, iconos del manifiesto y lista del service worker.
 - Coherencia de versión entre `VERSION`, `sw.js`, `AndroidManifest.xml` y release.
