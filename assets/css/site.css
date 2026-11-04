@@ -952,3 +952,15 @@ details.faq p { margin: 10px 0 0; color: var(--ink-2); font-size: .8rem; line-he
 .calc-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 9px; font-size: .72rem; color: var(--ink-3); }
 .calc-foot b { color: var(--ink); font-family: Consolas, monospace; }
 @media (max-width: 420px) { .calc-tool { max-width: none; } }
+
+/* ---------- v1.9: QR camera/file scanner ---------- */
+.scan-section { max-width: 980px; margin: 18px auto 0; }
+.scan-card { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 22px; }
+.scan-card .kicker { font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; color: var(--brand); font-weight: 800; }
+.scan-card p { margin: 4px 0 0; color: var(--ink-2); font-size: .82rem; }
+.scan-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.scan-panel { margin-top: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+.scan-panel video { display: block; width: 100%; max-height: 420px; border-radius: 10px; background: #000; object-fit: cover; }
+.scan-panel .btn { margin-top: 8px; }
+@media (max-width: 640px) { .scan-card { flex-direction: column; align-items: flex-start; } }
+.scan-section.drag .scan-card { border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 18%, transparent); }
