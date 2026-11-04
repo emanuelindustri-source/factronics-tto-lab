@@ -34,7 +34,7 @@
 - Histórico de versiones en `docs/versiones/` y `docs/notas/`.
 - Verificación automática con `python tools/verify.py`.
 - APK 1.8.0, `versionCode 9`, 201,5 KB, SHA-256
-  `c5382d5794bc5c31af0744e871dfb183eeefd8667328a8ae24b504a2263aed78`.
+  `b41f0326042317a3284808dd8f88e74513436808a00d26c4b4724b8dc7b04f79`.
 
 ## Lo que se está trabajando / siguiente
 
