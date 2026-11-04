@@ -28291,6 +28291,582 @@
         "ribbon",
         "troubleshooting"
       ]
+    },
+    {
+      "id": "R-31",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué características tiene el grado APR 600 Standard?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Excelente resistencia al frotado, hasta 100 °C y 600 mm/s"
+            },
+            {
+              "id": "b",
+              "text": "Resistencia química, hasta 250 °C y 250 mm/s"
+            },
+            {
+              "id": "c",
+              "text": "Alta velocidad, hasta 1000 mm/s y 100 °C"
+            },
+            {
+              "id": "d",
+              "text": "Resina premium, hasta 180 °C y 250 mm/s"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "APR 600 Standard es un Wax/Resin de propósito general: excelente resistencia al frotado, heat resistance hasta 100 °C y velocidad de hasta 600 mm/s."
+        },
+        "en": {
+          "q": "What characterizes the APR 600 Standard grade?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Excellent smudge resistance, up to 100 °C and 600 mm/s"
+            },
+            {
+              "id": "b",
+              "text": "Chemical resistance, up to 250 °C and 250 mm/s"
+            },
+            {
+              "id": "c",
+              "text": "High speed, up to 1000 mm/s and 100 °C"
+            },
+            {
+              "id": "d",
+              "text": "Premium resin, up to 180 °C and 250 mm/s"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "APR 600 Standard is a general-purpose Wax/Resin: excellent smudge resistance, heat resistance up to 100 °C and speeds up to 600 mm/s."
+        },
+        "pt": {
+          "q": "O que caracteriza o grau APR 600 Standard?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Excelente resistência ao atrito, até 100 °C e 600 mm/s"
+            },
+            {
+              "id": "b",
+              "text": "Resistência química, até 250 °C e 250 mm/s"
+            },
+            {
+              "id": "c",
+              "text": "Alta velocidade, até 1000 mm/s e 100 °C"
+            },
+            {
+              "id": "d",
+              "text": "Resina premium, até 180 °C e 250 mm/s"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "APR 600 Standard é um Wax/Resin de uso geral: excelente resistência ao atrito, resistência térmica até 100 °C e velocidades de até 600 mm/s."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "grades"
+      ]
+    },
+    {
+      "id": "R-32",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué grado Wax/Resin ofrece excelente resistencia al frotado y al rayado, hasta 110 °C y 600 mm/s?",
+          "options": [
+            {
+              "id": "a",
+              "text": "APX 650 Super Standard"
+            },
+            {
+              "id": "b",
+              "text": "APR 700 High Speed"
+            },
+            {
+              "id": "c",
+              "text": "AXR 600 Premium"
+            },
+            {
+              "id": "d",
+              "text": "AXR 800 Chemical Resistant"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "APX 650 Super Standard mejora la resistencia al frotado y al rayado respecto a APR 600, con heat resistance hasta 110 °C y 600 mm/s."
+        },
+        "en": {
+          "q": "Which Wax/Resin grade offers excellent smudge and scratch resistance, up to 110 °C and 600 mm/s?",
+          "options": [
+            {
+              "id": "a",
+              "text": "APX 650 Super Standard"
+            },
+            {
+              "id": "b",
+              "text": "APR 700 High Speed"
+            },
+            {
+              "id": "c",
+              "text": "AXR 600 Premium"
+            },
+            {
+              "id": "d",
+              "text": "AXR 800 Chemical Resistant"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "APX 650 Super Standard improves smudge and scratch resistance over APR 600, with heat resistance up to 110 °C and 600 mm/s."
+        },
+        "pt": {
+          "q": "Qual grau Wax/Resin oferece excelente resistência ao atrito e ao risco, até 110 °C e 600 mm/s?",
+          "options": [
+            {
+              "id": "a",
+              "text": "APX 650 Super Standard"
+            },
+            {
+              "id": "b",
+              "text": "APR 700 High Speed"
+            },
+            {
+              "id": "c",
+              "text": "AXR 600 Premium"
+            },
+            {
+              "id": "d",
+              "text": "AXR 800 Chemical Resistant"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "APX 650 Super Standard melhora a resistência ao atrito e ao risco em relação ao APR 600, com resistência térmica até 110 °C e 600 mm/s."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "grades"
+      ]
+    },
+    {
+      "id": "R-33",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 3,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué grado Resin está diseñado para resistencia química y térmica hasta 250 °C?",
+          "options": [
+            {
+              "id": "a",
+              "text": "AXR 800 Chemical Resistant"
+            },
+            {
+              "id": "b",
+              "text": "AXR 600 Premium"
+            },
+            {
+              "id": "c",
+              "text": "APX 650 Super Standard"
+            },
+            {
+              "id": "d",
+              "text": "APR 600 Standard"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "AXR 800 Chemical Resistant es un Resin con muy buena resistencia química y térmica hasta 250 °C; trabaja a velocidades de hasta 250 mm/s."
+        },
+        "en": {
+          "q": "Which Resin grade is designed for chemical and heat resistance up to 250 °C?",
+          "options": [
+            {
+              "id": "a",
+              "text": "AXR 800 Chemical Resistant"
+            },
+            {
+              "id": "b",
+              "text": "AXR 600 Premium"
+            },
+            {
+              "id": "c",
+              "text": "APX 650 Super Standard"
+            },
+            {
+              "id": "d",
+              "text": "APR 600 Standard"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "AXR 800 Chemical Resistant is a Resin with very good chemical and heat resistance up to 250 °C; it runs at speeds up to 250 mm/s."
+        },
+        "pt": {
+          "q": "Qual grau Resin é projetado para resistência química e térmica até 250 °C?",
+          "options": [
+            {
+              "id": "a",
+              "text": "AXR 800 Chemical Resistant"
+            },
+            {
+              "id": "b",
+              "text": "AXR 600 Premium"
+            },
+            {
+              "id": "c",
+              "text": "APX 650 Super Standard"
+            },
+            {
+              "id": "d",
+              "text": "APR 600 Standard"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "AXR 800 Chemical Resistant é um Resin com muito boa resistência química e térmica até 250 °C; trabalha em velocidades de até 250 mm/s."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "grades"
+      ]
+    },
+    {
+      "id": "R-34",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Cuál es el número de parte del cabezal térmico de 53 mm de las DataFlex 6330/6530?",
+          "options": [
+            {
+              "id": "a",
+              "text": "407933"
+            },
+            {
+              "id": "b",
+              "text": "408300"
+            },
+            {
+              "id": "c",
+              "text": "386659"
+            },
+            {
+              "id": "d",
+              "text": "215965"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "El cabezal de 53 mm es P/N 407933 y imprime a 300 ppp. La 6230 usa el cabezal de 32 mm P/N 408300."
+        },
+        "en": {
+          "q": "What is the part number of the 53 mm thermal printhead on the DataFlex 6330/6530?",
+          "options": [
+            {
+              "id": "a",
+              "text": "407933"
+            },
+            {
+              "id": "b",
+              "text": "408300"
+            },
+            {
+              "id": "c",
+              "text": "386659"
+            },
+            {
+              "id": "d",
+              "text": "215965"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "The 53 mm printhead is P/N 407933 and prints at 300 dpi. The 6230 uses the 32 mm printhead P/N 408300."
+        },
+        "pt": {
+          "q": "Qual é o número de peça do cabeçote térmico de 53 mm das DataFlex 6330/6530?",
+          "options": [
+            {
+              "id": "a",
+              "text": "407933"
+            },
+            {
+              "id": "b",
+              "text": "408300"
+            },
+            {
+              "id": "c",
+              "text": "386659"
+            },
+            {
+              "id": "d",
+              "text": "215965"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "O cabeçote de 53 mm é P/N 407933 e imprime a 300 dpi. A 6230 usa o cabeçote de 32 mm P/N 408300."
+        }
+      },
+      "tags": [
+        "printhead",
+        "parts"
+      ]
+    },
+    {
+      "id": "R-35",
+      "type": "single",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 3,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "En un cabezal corner edge, ¿a qué distancia del punto de impresión se produce el despegue del ribbon?",
+          "options": [
+            {
+              "id": "a",
+              "text": "0,1–0,3 mm después de la impresión"
+            },
+            {
+              "id": "b",
+              "text": "3–5 mm después de la impresión"
+            },
+            {
+              "id": "c",
+              "text": "10–15 mm después de la impresión"
+            },
+            {
+              "id": "d",
+              "text": "No hay despegue; el ribbon queda adherido"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "El cabezal corner edge usada en TTO despega el ribbon entre 0,1 y 0,3 mm después de la impresión; el flat head lo hace 3–5 mm después y trabaja a menor velocidad."
+        },
+        "en": {
+          "q": "On a corner-edge printhead, at what distance from the print point does the ribbon peel off?",
+          "options": [
+            {
+              "id": "a",
+              "text": "0.1–0.3 mm after printing"
+            },
+            {
+              "id": "b",
+              "text": "3–5 mm after printing"
+            },
+            {
+              "id": "c",
+              "text": "10–15 mm after printing"
+            },
+            {
+              "id": "d",
+              "text": "There is no peel; the ribbon stays attached"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "The corner-edge printhead used in TTO peels the ribbon 0.1–0.3 mm after printing; flat-head technology peels 3–5 mm after and runs at lower speed."
+        },
+        "pt": {
+          "q": "Em um cabeçote corner edge, a que distância do ponto de impressão o ribbon se descola?",
+          "options": [
+            {
+              "id": "a",
+              "text": "0,1–0,3 mm após a impressão"
+            },
+            {
+              "id": "b",
+              "text": "3–5 mm após a impressão"
+            },
+            {
+              "id": "c",
+              "text": "10–15 mm após a impressão"
+            },
+            {
+              "id": "d",
+              "text": "Não há descolamento; o ribbon fica aderido"
+            }
+          ],
+          "answer": [
+            "a"
+          ],
+          "explanation": "O cabeçote corner edge usado em TTO descola o ribbon entre 0,1 e 0,3 mm após a impressão; o flat head descola 3–5 mm depois e trabalha em menor velocidade."
+        }
+      },
+      "tags": [
+        "printhead",
+        "ribbon"
+      ]
+    },
+    {
+      "id": "R-36",
+      "type": "multi",
+      "models": [
+        "6210",
+        "6230",
+        "6320",
+        "6330",
+        "6420",
+        "6530"
+      ],
+      "difficulty": 2,
+      "source": "source",
+      "i18n": {
+        "es": {
+          "q": "¿Qué beneficios aporta el ribbon de Videojet al sistema TTO?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Longitud de hasta 1000 m, más tiempo de producción"
+            },
+            {
+              "id": "b",
+              "text": "Lubrica el cabezal y reduce la estática"
+            },
+            {
+              "id": "c",
+              "text": "Reduce la abrasión del cabezal"
+            },
+            {
+              "id": "d",
+              "text": "Aumenta el ancho máximo de impresión"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "El ribbon de hasta 1000 m reduce paradas; su formulación lubrica el cabezal, reduce la estática y la abrasión. El ancho de impresión lo define el cabezal, no el ribbon."
+        },
+        "en": {
+          "q": "What benefits does Videojet ribbon bring to the TTO system?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Lengths up to 1000 m, more production uptime"
+            },
+            {
+              "id": "b",
+              "text": "Lubricates the printhead and reduces static"
+            },
+            {
+              "id": "c",
+              "text": "Reduces printhead abrasion"
+            },
+            {
+              "id": "d",
+              "text": "Increases the maximum print width"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "Ribbon up to 1000 m reduces stops; its formulation lubricates the printhead and reduces static and abrasion. Print width is defined by the printhead, not the ribbon."
+        },
+        "pt": {
+          "q": "Quais benefícios o ribbon da Videojet traz ao sistema TTO?",
+          "options": [
+            {
+              "id": "a",
+              "text": "Comprimentos de até 1000 m, mais tempo de produção"
+            },
+            {
+              "id": "b",
+              "text": "Lubrifica o cabeçote e reduz a estática"
+            },
+            {
+              "id": "c",
+              "text": "Reduz o desgaste do cabeçote"
+            },
+            {
+              "id": "d",
+              "text": "Aumenta a largura máxima de impressão"
+            }
+          ],
+          "answer": [
+            "a",
+            "b",
+            "c"
+          ],
+          "explanation": "O ribbon de até 1000 m reduz paradas; sua formulação lubrifica o cabeçote e reduz a estática e o desgaste. A largura de impressão é definida pelo cabeçote, não pelo ribbon."
+        }
+      },
+      "tags": [
+        "ribbon",
+        "benefits"
+      ]
     }
   ]
 }
