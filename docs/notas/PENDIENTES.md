@@ -16,7 +16,7 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
       confirmar que el visor abre en móvil y que el checksum coincide.
 - [ ] **Probar el aviso de actualización** publicando una versión mayor temporal
       y confirmando el banner web y el diálogo Android en un dispositivo real.
-- [ ] **Revisar las 22 preguntas de ribbons y soportes + las 6 de troubleshooting**
+- [ ] **Revisar las 22 preguntas de ribbons/soportes + las 16 de gamas/troubleshooting**
       con un segundo técnico; los P/N y tensiones deben contrastarse con la
       revisión vigente.
 - [x] **Permiso de Videojet:** el usuario confirmó el 2026-10-30 que cuenta con
@@ -41,9 +41,8 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
       landscape y tablets con reflow.
 - [ ] **Historial completo de intentos** (la web muestra 6 y Android 4; permitir
       "ver todos" y borrar un intento).
-- [ ] **Calculadora integrada en preguntas de cálculo:** hoy el participante
-      resuelve las operaciones fuera de la app; evaluar un teclado/calculadora
-      simple que no altere la corrección.
+- [x] **Calculadora integrada en preguntas de cálculo:** web y Android, con
+      parser propio e inserción en el campo activo.
 - [ ] **Preguntas con imágenes/diagramas** de componentes y errores.
 - [ ] **Más preguntas de CLARiSUITE/CLARiTY** y casos de diagnóstico.
 
