@@ -1,5 +1,41 @@
 # Verificación funcional
 
+## v1.9.0 · 2026-11-04
+
+Entorno: Windows 11, Python 3.13, Node.js 24, JDK 17, Android SDK 34/36,
+emulador Pixel 7 API 34, navegador Chromium integrado.
+
+### Automática
+
+| Comprobación | Resultado |
+|---|---|
+| `python tools/verify.py` | **OK**, 8.114 comprobaciones |
+| Banco | 372 preguntas · 348 enunciados únicos |
+| i18n | 511 claves × ES/EN/PT |
+| Escáner con imagen | PNG del certificado → abre `verificar/` |
+| Escáner con cámara | requiere dispositivo físico y permiso |
+| APK | 205,5 KB · `versionCode 10` · SHA-256 `c04de8c15e60e30eee545081a5fdd1a2887101d6bb16c97d39e4855dd5b92ad2` |
+
+### Web
+
+- `verificar/` incluye **Escanear con cámara**, **Subir imagen** y
+  arrastrar/soltar.
+- La imagen del certificado se decodifica con jsQR y abre el resultado.
+- La cámara se detiene al cerrar o salir de la página.
+- Solo se aceptan URLs de `verificar/` de Factronics.
+- Se mantiene la calculadora, el certificado y el CSV.
+
+### Android
+
+- APK 1.9.0 con calculadora, certificado A4 y CSV.
+- Sin cambios funcionales nuevos en esta versión.
+
+### Limitaciones conocidas
+
+- La cámara no se pudo probar en un teléfono físico desde este entorno.
+- jsQR puede ser más lento en móviles antiguos.
+- El checksum no es una firma criptográfica.
+
 ## v1.8.0 · 2026-11-04
 
 Entorno: Windows 11, Python 3.13, Node.js 24, JDK 17, Android SDK 34/36,
