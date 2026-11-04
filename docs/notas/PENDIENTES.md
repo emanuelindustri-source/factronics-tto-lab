@@ -16,7 +16,7 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
       confirmar que el visor abre en móvil y que el checksum coincide.
 - [ ] **Probar el aviso de actualización** publicando una versión mayor temporal
       y confirmando el banner web y el diálogo Android en un dispositivo real.
-- [ ] **Revisar las 22 preguntas de ribbons/soportes + las 16 de gamas/troubleshooting**
+- [ ] **Revisar las 22 preguntas de ribbons/soportes + las 22 de gamas/troubleshooting**
       con un segundo técnico; los P/N y tensiones deben contrastarse con la
       revisión vigente.
 - [x] **Permiso de Videojet:** el usuario confirmó el 2026-10-30 que cuenta con
@@ -48,8 +48,8 @@ Backlog vivo. Se actualiza en cada versión; el historial de lo hecho queda en
 
 ## P3 · Calidad y mantenimiento
 
-- [ ] **CI en GitHub Actions:** ejecutar `tools/verify.py` y `node tools/export_ui.js --check`
-      en cada push; publicar Pages solo si pasa.
+- [x] **CI en GitHub Actions:** `.github/workflows/verify.yml` ejecuta
+      `tools/verify.py` y `node tools/export_ui.js --check` en cada push.
 - [ ] **Pruebas E2E automatizadas** (Playwright) para landing, examen multi,
       cálculo, biblioteca, QR, idioma y PWA.
 - [ ] **Pruebas unitarias del motor** extrayendo `gradeQuestion`,
