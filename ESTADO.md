@@ -1,7 +1,7 @@
-# Estado actual · Factronics TTO Lab 1.8.0
+# Estado actual · Factronics TTO Lab 1.9.0
 
 **Fecha:** 2026-11-04  
-**Estado:** publicado en GitHub, GitHub Pages y Releases.
+**Estado:** preparado para publicar en GitHub, GitHub Pages y Releases.
 
 ## Enlaces
 
@@ -10,47 +10,39 @@
 - Verificación: https://emanuelindustri-source.github.io/factronics-tto-lab/verificar/
 - Resultado (QR antiguos): https://emanuelindustri-source.github.io/factronics-tto-lab/resultado/
 - Repositorio: https://github.com/emanuelindustri-source/factronics-tto-lab
-- Release: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.8.0
+- Release: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.9.0
 - APK: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/latest/download/Factronics-TTO-Lab.apk
 - Versión para apps: https://raw.githubusercontent.com/emanuelindustri-source/factronics-tto-lab/main/version.json
 
 ## Lo que ya está hecho
 
-- Identificación obligatoria: nombre, apellido y correo antes de iniciar.
-- **Calculadora integrada** en preguntas de cálculo, web y Android; inserta el
-  resultado en el campo activo.
-- **Certificado QR verificable:** `verificar/` comprueba el checksum, muestra el
-  certificado y permite descargar PNG o imprimir.
-- **Código de referencia con QR** en la pantalla final, el informe PDF y la
-  tarjeta.
-- **Tarjeta PNG 1080×1350** y **certificado A4 1240×1754** con sello, firma,
-  FNV-1a y huella SHA-256; certificado A4 también en Android.
-- **Panel de resultados:** Informe PDF, Tarjeta QR, Certificado PNG, CSV y
-  acciones secundarias.
-- **CSV en Android** y apertura de la verificación desde la app.
-- **366 preguntas / 342 enunciados únicos**; 10 nuevas de ribbons (PET,
-  cabezales, vida útil, grados APR/AXR, bobinado, backcoat y diagnóstico).
-- Partículas, animaciones, movimiento reducido y avisos de actualización.
+- **Escáner QR** en `verificar/`: cámara, carga de imagen o arrastrar/soltar;
+  BarcodeDetector con respaldo jsQR. Sin subir archivos a servidores.
+- Calculadora integrada en web y Android.
+- Certificado QR verificable, tarjeta PNG y certificado A4 (web y Android).
+- Código de referencia con QR en pantalla, PDF y tarjeta.
+- **372 preguntas / 348 enunciados únicos**; 16 nuevas de ribbons desde 1.7.
+- CSV, PDF, tarjeta, verificación pública y avisos de actualización.
+- **CI** con GitHub Actions (`tools/verify.py` y `export_ui --check`).
+- Partículas, animaciones y movimiento reducido.
 - Histórico de versiones en `docs/versiones/` y `docs/notas/`.
-- Verificación automática con `python tools/verify.py`.
-- APK 1.8.0, `versionCode 9`, 201,5 KB, SHA-256
-  `b41f0326042317a3284808dd8f88e74513436808a00d26c4b4724b8dc7b04f79`.
+- APK 1.9.0, `versionCode 10`, 205,5 KB, SHA-256
+  `c04de8c15e60e30eee545081a5fdd1a2887101d6bb16c97d39e4855dd5b92ad2`.
 
 ## Lo que se está trabajando / siguiente
 
-1. Probar el escaneo del QR con cámara real en el dispositivo físico.
-2. Revisar el certificado A4 de Android en otro equipo/impresión.
+1. Probar la cámara en un teléfono físico con buena y poca luz.
+2. Medir el rendimiento de jsQR en móviles de gama baja.
 3. Revisar las preguntas nuevas con un segundo técnico.
-4. Medir el rendimiento de la calculadora en móviles de gama baja.
+4. Revisar el certificado A4 impreso en otro equipo.
 
 ## Lo que queda pendiente
 
-- Firma criptográfica del resultado si se necesita autenticidad formal; hoy el
-  QR usa checksum para detectar alteraciones accidentales.
+- Firma criptográfica del resultado si se necesita autenticidad formal.
 - PDF descargable directo en web sin pasar por el diálogo de impresión.
 - Tema oscuro real en diálogos Android.
 - Más preguntas de CLARiSUITE/CLARiTY y casos de diagnóstico.
-- CI con GitHub Actions y pruebas E2E.
+- Pruebas E2E automatizadas además de la verificación estática.
 
 El detalle completo está en `docs/notas/PENDIENTES.md`.
 
