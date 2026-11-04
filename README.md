@@ -1,10 +1,12 @@
 # Factronics TTO Lab
 
+[![Verify](https://github.com/emanuelindustri-source/factronics-tto-lab/actions/workflows/verify.yml/badge.svg)](https://github.com/emanuelindustri-source/factronics-tto-lab/actions/workflows/verify.yml)
+
 Entrenamiento técnico para impresoras **Videojet TTO** (Thermal Transfer Overprint): generador de evaluaciones para navegador y aplicación Android nativa, en español, inglés y portugués.
 
 **Factronics TTO Lab** es un proyecto de **Factronics C.A. (Factronics Venezuela)**, distribuidor oficial de Videojet en Venezuela. Fue desarrollado por **Khristyan Hidalgo**, técnico de campo certificado de Factronics.
 
-> **Alcance y autoría:** este material pertenece a Factronics Venezuela y a Khristyan Hidalgo. **Videojet Technologies no solicitó, patrocinó ni autorizó este proyecto.** “Videojet” y “DataFlex” son marcas de Videojet Technologies y se usan aquí para identificar los equipos estudiados. Consulta [NOTICE.md](NOTICE.md) antes de reutilizar el contenido.
+> **Alcance y autoría:** este material pertenece a Factronics Venezuela y a Khristyan Hidalgo. **Videojet es una marca de Videojet Technologies** y se usa aquí para identificar los equipos estudiados. Material de entrenamiento de Factronics C.A. Consulta [NOTICE.md](NOTICE.md) antes de reutilizar el contenido.
 
 ## Enlaces
 
@@ -53,7 +55,7 @@ Entrenamiento técnico para impresoras **Videojet TTO** (Thermal Transfer Overpr
 6. Significado de errores / primera acción.
 7. Corrección de fallas (caso abierto, con rúbrica).
 
-El banco generado contiene **366 preguntas y variantes**; al filtrar por modelo y tipo se eliminan duplicados de enunciado, por lo que el pool visible para “todos los modelos” es de **342 enunciados únicos**. Cada sesión prioriza preguntas no vistas y equilibra los tipos seleccionados.
+El banco generado contiene **372 preguntas y variantes**; al filtrar por modelo y tipo se eliminan duplicados de enunciado, por lo que el pool visible para “todos los modelos” es de **348 enunciados únicos**. Cada sesión prioriza preguntas no vistas y equilibra los tipos seleccionados.
 
 ## Generador web
 
@@ -100,7 +102,7 @@ Características:
 - Cronómetro, mapa de preguntas, navegación, marcado para revisar y autoevaluación.
 - Banco local en `assets/bank.json` y textos en `assets/ui.json`.
 - Funciona sin conexión.
-- `minSdk 24` (Android 7.0), `targetSdk 34`, versión `1.8.0`.
+- `minSdk 24` (Android 7.0), `targetSdk 34`, versión `1.9.0`.
 
 ### Instalar el APK
 
@@ -123,6 +125,17 @@ El script usa `aapt2`, `javac`, `d8`, `zipalign` y `apksigner` directamente; no 
 - `download/Factronics-TTO-Lab.apk` (copia para el sitio)
 
 Variables opcionales: `ANDROID_HOME` / `ANDROID_SDK_ROOT` y `JAVA_HOME`.
+
+## Novedades 1.9
+
+- **Escáner QR en `verificar/`:** cámara del teléfono o carga de una captura, con lector local (BarcodeDetector/jsQR). Sin subir imágenes a servidores.
+- **Seis preguntas nuevas de ribbons:** APR 600, APX 650, AXR 800, cabezal 407933, despegue corner edge y beneficios del ribbon.
+- **Banco:** 372 preguntas / 348 enunciados únicos.
+- **CI:** GitHub Actions ejecuta `tools/verify.py` y `node tools/export_ui.js --check` en cada push.
+- **Landing:** CTA de escaneo y textos de novedades 1.9.
+- **Caché:** assets versionados `?v=190`.
+
+La base de 1.8 (calculadora, certificado Android y verificación) se mantiene.
 
 ## Novedades 1.8
 
@@ -158,7 +171,7 @@ La base de 1.4, 1.5 y 1.6 (identificación, informe PDF, partículas, animacione
 - **Compartir sin correo:** el PDF y la tarjeta PNG se comparten con la hoja del sistema (WhatsApp, Drive, archivos, etc.). No se envían datos a servidores.
 - **Banco de 350 preguntas / 326 enunciados únicos**, con las 22 preguntas de ribbons y soportes de 1.5.
 - **Avisos de actualización** web y Android mediante `version.json`.
-- **Documentación:** ficha 1.8.0 y histórico en `docs/versiones/` y `docs/notas/`.
+- **Documentación:** ficha 1.9.0 y histórico en `docs/versiones/` y `docs/notas/`.
 
 La base de 1.4 y 1.5 (identificación, informe PDF, partículas, animaciones y preguntas de fuentes) se mantiene.
 
@@ -231,7 +244,7 @@ python tools/verify.py
 
 Comprueba, sin dependencias externas:
 
-- 366 preguntas, 342 enunciados únicos y paridad entre web y Android.
+- 372 preguntas, 348 enunciados únicos y paridad entre web y Android.
 - Textos ES/EN/PT completos y claves `data-i18n` usadas en el HTML.
 - Enlaces y recursos locales, iconos del manifiesto y lista del service worker.
 - Coherencia de versión entre `VERSION`, `sw.js`, `AndroidManifest.xml` y release.
