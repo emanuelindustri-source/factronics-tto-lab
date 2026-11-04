@@ -1,5 +1,45 @@
 # Verificación funcional
 
+## v1.8.0 · 2026-11-04
+
+Entorno: Windows 11, Python 3.13, Node.js 24, JDK 17, Android SDK 34/36,
+emulador Pixel 7 API 34, navegador Chromium integrado.
+
+### Automática
+
+| Comprobación | Resultado |
+|---|---|
+| `python tools/verify.py` | **OK**, 7.937 comprobaciones |
+| Banco | 366 preguntas · 342 enunciados únicos |
+| i18n | 500 claves × ES/EN/PT |
+| Calculadora web | `12+3=15` insertado en el campo |
+| Calculadora Android | `12+3=15` insertado en el campo |
+| APK | 201,5 KB · `versionCode 9` · SHA-256 `c5382d5794bc5c31af0744e871dfb183eeefd8667328a8ae24b504a2263aed78` |
+
+### Web
+
+- La calculadora aparece en preguntas de cálculo, con paréntesis, decimales y
+  botón **Usar resultado**.
+- El resultado se inserta en el último campo enfocado (o el primero) y dispara
+  el guardado de la respuesta.
+- Se mantiene la verificación QR, el certificado PNG y el CSV.
+- QR más grande en pantalla, informe y certificado.
+- Assets `?v=180`; sin errores de consola.
+
+### Android
+
+- Calculadora nativa con parser recursivo; inserta en el campo activo.
+- Botón **Certificado PNG** que genera un A4 1240×1754 y lo comparte.
+- La tarjeta QR y el PDF siguen funcionando.
+- CSV y apertura de `verificar/`.
+- `apksigner` verifica v2/v3.
+
+### Limitaciones conocidas
+
+- La calculadora es aritmética; no interpreta unidades ni fórmulas.
+- El checksum del QR detecta cambios accidentales, no es una firma criptográfica.
+- La verificación requiere conexión al escanear.
+
 ## v1.7.0 · 2026-10-31
 
 Entorno: Windows 11, Python 3.13, Node.js 24, JDK 17, Android SDK 34/36,
