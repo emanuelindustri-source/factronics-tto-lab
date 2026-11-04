@@ -199,7 +199,7 @@
         fingerprint: state.fingerprint,
         lang: state.lang,
         logoUrl: new URL("../assets/img/factronics-transparent.png", location.href).href,
-        appVersion: "1.7.0"
+        appVersion: (document.querySelector('meta[name="app-version"]') || {}).content || "1.8.0"
       };
       const canvas = await window.TTOCert.render("cert", data);
       await window.TTOCert.download(canvas, window.TTOCert.filename(data, "cert"));
