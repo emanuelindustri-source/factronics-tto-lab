@@ -246,5 +246,148 @@
     }
   });
 
+  const scan = { stream: null, timer: 0, detector: null, canvas: null };
+  const scanButton = document.getElementById("scanCamera");
+  const scanFile = document.getElementById("scanFile");
+  const scanPanel = document.getElementById("scanPanel");
+  const scanVideo = document.getElementById("scanVideo");
+  const scanStatus = document.getElementById("scanStatus");
+  const scanStopBtn = document.getElementById("scanStop");
+
+  function scanMessage(key, text) {
+    if (scanStatus) scanStatus.textContent = text || T(key);
+  }
+  function stopScan() {
+    if (scan.timer) { clearInterval(scan.timer); scan.timer = 0; }
+    if (scan.stream) {
+      scan.stream.getTracks().forEach((track) => track.stop());
+      scan.stream = null;
+    }
+    if (scanVideo) scanVideo.srcObject = null;
+    if (scanPanel) scanPanel.hidden = true;
+    scan.detector = null;
+  }
+  function validScanUrl(text) {
+    try {
+      const url = new URL(text);
+      const allowedHosts = [location.host, "emanuelindustri-source.github.io"];
+      if (!allowedHosts.includes(url.host)) return null;
+      if (!/\/verificar\/(?:index\.html)?$/.test(url.pathname)) return null;
+      if (!url.searchParams.get("d")) return null;
+      return url;
+    } catch (e) {
+      return null;
+    }
+  }
+  function handleScan(text) {
+    const url = validScanUrl(text);
+    if (!url) { scanMessage("scan_invalid"); return false; }
+    scanMessage("scan_ok");
+    stopScan();
+    location.href = url.href;
+    return true;
+  }
+  async function decodeCanvas(canvas) {
+    if (window.BarcodeDetector) {
+      try {
+        const detector = new BarcodeDetector({ formats: ["qr_code"] });
+        const codes = await detector.detect(canvas);
+        if (codes && codes.length) return codes[0].rawValue;
+      } catch (e) { /* fall through to jsQR */ }
+    }
+    if (typeof window.jsQR !== "function") return null;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const code = window.jsQR(data.data, canvas.width, canvas.height, { inversionAttempts: "attemptBoth" });
+    return code ? code.data : null;
+  }
+  async function scanFrame() {
+    if (!scan.stream || !scanVideo || scanVideo.readyState < 2) return;
+    if (scan.detector) {
+      try {
+        const codes = await scan.detector.detect(scanVideo);
+        if (codes && codes.length) { handleScan(codes[0].rawValue); return; }
+        return;
+      } catch (e) {
+        scan.detector = null;
+      }
+    }
+    if (typeof window.jsQR !== "function") return;
+    const vw = scanVideo.videoWidth, vh = scanVideo.videoHeight;
+    if (!vw || !vh) return;
+    const max = 720;
+    const scale = Math.min(1, max / Math.max(vw, vh));
+    const canvas = scan.canvas || (scan.canvas = document.getElementById("scanCanvas"));
+    canvas.width = Math.round(vw * scale);
+    canvas.height = Math.round(vh * scale);
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    ctx.drawImage(scanVideo, 0, 0, canvas.width, canvas.height);
+    const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const code = window.jsQR(data.data, canvas.width, canvas.height, { inversionAttempts: "attemptBoth" });
+    if (code) handleScan(code.data);
+  }
+  async function startScan() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      scanMessage("scan_error");
+      return;
+    }
+    try {
+      scan.stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false });
+      if (!scanVideo) return;
+      scanPanel.hidden = false;
+      scanVideo.srcObject = scan.stream;
+      await scanVideo.play();
+      if (window.BarcodeDetector) {
+        try { scan.detector = new BarcodeDetector({ formats: ["qr_code"] }); } catch (e) { scan.detector = null; }
+      }
+      scanMessage("scan_reading");
+      scan.timer = setInterval(scanFrame, 350);
+    } catch (e) {
+      scanMessage("scan_error");
+      stopScan();
+    }
+  }
+  function scanImageFile(file) {
+    if (!file) return;
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = async () => {
+      const canvas = document.getElementById("scanCanvas");
+      const max = 1400;
+      const scale = Math.min(1, max / Math.max(img.width, img.height));
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(objectUrl);
+      scanMessage("scan_reading");
+      const text = await decodeCanvas(canvas);
+      if (!text) { scanMessage("scan_none"); return; }
+      handleScan(text);
+    };
+    img.onerror = () => { URL.revokeObjectURL(objectUrl); scanMessage("scan_none"); };
+    img.src = objectUrl;
+  }
+  if (scanButton) scanButton.addEventListener("click", startScan);
+  if (scanStopBtn) scanStopBtn.addEventListener("click", stopScan);
+  if (scanFile) scanFile.addEventListener("change", (e) => {
+    scanImageFile(e.target.files && e.target.files[0]);
+    e.target.value = "";
+  });
+  const scanSection = document.getElementById("scanSection");
+  if (scanSection) {
+    ["dragenter", "dragover"].forEach((name) => scanSection.addEventListener(name, (e) => {
+      e.preventDefault();
+      scanSection.classList.add("drag");
+    }));
+    ["dragleave", "dragend"].forEach((name) => scanSection.addEventListener(name, () => scanSection.classList.remove("drag")));
+    scanSection.addEventListener("drop", (e) => {
+      e.preventDefault();
+      scanSection.classList.remove("drag");
+      scanImageFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]);
+    });
+  }
+  window.addEventListener("pagehide", stopScan);
+
   setTheme(state.theme);
 })();
