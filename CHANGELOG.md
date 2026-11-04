@@ -3,6 +3,22 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 El histórico detallado, con auditoría y pruebas, vive en `docs/notas/`.
 
+## [1.8.0] — 2026-11-04
+
+### Añadido
+
+- Calculadora integrada en preguntas de cálculo (web y Android).
+- Certificado A4 nativo en Android (1240×1754) con sello, firma, QR y SHA-256.
+- Diez preguntas nuevas de ribbons; banco 366/342.
+- QR más grande en pantalla, informe y certificado.
+- Assets versionados `?v=180` y service worker con coincidencia exacta.
+
+### Cambiado
+
+- Versión web/PWA/Android a `1.8.0`; `versionCode` 9.
+- Service Worker `factronics-tto-1.8.0`.
+- Documentación y notas de 1.8.0; se conserva el histórico anterior.
+
 ## [1.7.0] — 2026-10-31
 
 ### Añadido
@@ -123,6 +139,7 @@ El histórico detallado, con auditoría y pruebas, vive en `docs/notas/`.
 - Reanudar sesión, PWA offline, constancia imprimible e import/export JSON.
 - APK nativa 1.2.0 (`versionCode` 3) con tema oscuro y compartir resultado.
 
+[1.8.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.8.0
 [1.7.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.7.0
 [1.6.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.6.0
 [1.5.0]: https://github.com/emanuelindustri-source/factronics-tto-lab/releases/tag/v1.5.0
